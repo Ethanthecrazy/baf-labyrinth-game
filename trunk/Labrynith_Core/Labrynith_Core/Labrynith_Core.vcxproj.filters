@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Wrappers">
+      <UniqueIdentifier>{fba39e87-4d85-459c-bcbd-0062e586914a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStates">
+      <UniqueIdentifier>{81ea65c4-7cd2-4a16-80d4-b125e7fe4793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager">
+      <UniqueIdentifier>{da9e7d4e-9a9d-4c31-a645-fabd3f66ba89}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\winmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_Direct3D.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_DirectInput.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_TextureManager.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CGamePlayState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CMainMenuState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\MObjectManager.cpp">
+      <Filter>ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\MLayer.cpp">
+      <Filter>ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\MFlake.cpp">
+      <Filter>ObjectManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\CSGD_DirectInput.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\CSGD_TextureManager.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGame.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CGamePlayState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CMainMenuState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\IGameState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\SGD_Util.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\MObjectManager.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\MLayer.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\MFlake.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\IFlakeInterface.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BST.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
