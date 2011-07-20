@@ -1,0 +1,9 @@
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Debug\Labrinthium___World_Editor.Form1.resources
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Debug\Labrinthium___World_Editor.Properties.Resources.resources
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\bin\Debug\Labrinthium - World Editor.exe
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\bin\Debug\Labrinthium - World Editor.pdb
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Debug\Labrinthium - World Editor.exe
+C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Debug\Labrinthium - World Editor.pdb
