@@ -1,6 +1,6 @@
 ﻿namespace Labrinthium___World_Editor
 {
-    partial class Form2
+    partial class OptForm
     {
         /// <summary>
         /// Required designer variable.

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Labrinthium___World_Editor
 {
-    public partial class Form2 : Form
+    public partial class OptForm : Form
     {
-        public Form2()
+        public OptForm()
         {
             InitializeComponent();
         }
