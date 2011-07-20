@@ -74,8 +74,10 @@ namespace Labrinthium___World_Editor
 
         public TileMap()
         {
-            mapsize = new Size(Properties.Settings.Default.DefaultNewWidth, Properties.Settings.Default.DefaultNewHeight);
-            tiles = new Tile[Properties.Settings.Default.DefaultNewWidth, Properties.Settings.Default.DefaultNewHeight];
+          //  mapsize = new Size(Properties.Settings.Default.DefaultNewWidth, Properties.Settings.Default.DefaultNewHeight);
+            // tiles = new Tile[Properties.Settings.Default.DefaultNewWidth, Properties.Settings.Default.DefaultNewHeight];
+              mapsize = new Size(20, 20);
+             tiles = new Tile[20, 20];
 
             tileSize = new Size(32, 32);
 

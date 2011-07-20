@@ -59,12 +59,10 @@ namespace Labrinthium___World_Editor
             ManagedDirect3D.Instance.Clear(splitContainer1.Panel1, 0, 0, 0);
 
             ManagedDirect3D.Instance.DeviceBegin();
-            ManagedDirect3D.Instance.SpriteBegin();
+
             // draw verticle lines on map
             for (int i = 0; i <= tilemap.MapSize.Width * tilemap.TileSize.Width; i += tilemap.TileSize.Width)
             {
-               // Pen pen = new Pen(Color.White, 3);
-               // e.Graphics.DrawLine(pen, new Point(i + offset.X, 0 + offset.Y), new Point(i + offset.X, tilemap.MapSize.Height * tilemap.TileSize.Height + offset.Y));
                 ManagedDirect3D.Instance.DrawLine(i + cameraPos.X, cameraPos.Y, i + cameraPos.Y, tilemap.MapSize.Height * tilemap.TileSize.Height + cameraPos.Y,
                                                     255, 255, 255);
             }
@@ -72,12 +70,10 @@ namespace Labrinthium___World_Editor
             // draw horizontal lines on tilemap
             for (int i = 0; i <= tilemap.MapSize.Height * tilemap.TileSize.Height; i += tilemap.TileSize.Height)
             {
-               // Pen pen = new Pen(Color.White, 3);
-                // e.Graphics.DrawLine(pen, new Point(0 + offset.X, i + offset.Y), new Point(tilemap.MapSize.Width * tilemap.TileSize.Width + offset.X, i + offset.Y));
                 ManagedDirect3D.Instance.DrawLine(cameraPos.X, i + cameraPos.Y, tilemap.MapSize.Width * tilemap.TileSize.Width + cameraPos.X, i + cameraPos.Y,
                                                     255, 255, 255);
             }
-            ManagedDirect3D.Instance.SpriteEnd();
+
             ManagedDirect3D.Instance.DeviceEnd();
 
 

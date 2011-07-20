@@ -25,7 +25,7 @@ namespace Labrinthium___World_Editor.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int DefaultNewWidth {
             get {
                 return ((int)(this["DefaultNewWidth"]));
@@ -34,7 +34,7 @@ namespace Labrinthium___World_Editor.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int DefaultNewHeight {
             get {
                 return ((int)(this["DefaultNewHeight"]));
