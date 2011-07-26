@@ -1,0 +1,9 @@
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\bin\Debug\AnimationEditor.exe
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\bin\Debug\AnimationEditor.pdb
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\obj\x86\Debug\AnimationEditor.Form1.resources
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\obj\x86\Debug\AnimationEditor.Properties.Resources.resources
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\obj\x86\Debug\AnimationEditor.exe
+C:\Users\Rob Taylor\Documents\Structure of Game Production\AnimationEditor\obj\x86\Debug\AnimationEditor.pdb
