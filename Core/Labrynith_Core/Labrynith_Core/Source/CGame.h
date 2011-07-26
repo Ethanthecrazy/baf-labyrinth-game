@@ -11,6 +11,7 @@ using namespace std;
 #include "Wrappers\CSGD_Direct3D.h"
 #include "Wrappers\CSGD_DirectInput.h"
 #include "Wrappers\CSGD_TextureManager.h"
+#include "UTimer.h"
 
 class IGameState;
 
@@ -25,6 +26,8 @@ class CGame
 	int m_nScreenWidth;
 	int m_nScreenHeight;
 
+	UTimer TheTimer;
+
 	// default constructor
 	CGame();
 	// copy constructor
@@ -38,6 +41,7 @@ class CGame
 	bool Input();
 	void Update();
 	void Render();
+	void EnterCommand();
 
 public:
 
@@ -61,4 +65,6 @@ public:
 	void PushState(IGameState* pNextState);
 
 };
+
+
 #endif // CGame_h__

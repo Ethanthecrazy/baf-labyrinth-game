@@ -1,6 +1,7 @@
 
 #include "CGame.h"
 #include <string>
+#include <iostream>
 using std::string;
 
 #include "GameStates\CMainMenuState.h"
@@ -31,19 +32,31 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 	// initialize singletons
 	CSGD_Direct3D::GetInstance()->InitDirect3D(hWnd, nScreenWidth, nScreenHeight, 
 		bIsWindowed, true);
+
 	CSGD_TextureManager::GetInstance()->InitTextureManager(CSGD_Direct3D::GetInstance()->GetDirect3DDevice(),
 		CSGD_Direct3D::GetInstance()->GetSprite());
-	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
 
+#ifdef _DEBUG
+	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE );
+#endif
+
+#ifndef _DEBUG
+	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
+#endif
+	
 	ChangeState( CMainMenuState::GetInstance() );
 
+	TheTimer.Reset();
+	TheTimer.Start();
 }
 
 // execution
 bool CGame::Main()
 {
-	m_fElapsedTime = 1.0f;
+	m_fElapsedTime = TheTimer.GetElapsedTime();
 	
+	TheTimer.Reset();
+
 	if (Input() == false)
 		return false;
 
@@ -56,6 +69,11 @@ bool CGame::Main()
 bool CGame::Input()
 {
 	CSGD_DirectInput::GetInstance()->ReadDevices();
+
+	if( CSGD_DirectInput::GetInstance()->KeyPressed( DIK_GRAVE ) )
+	{
+		m_pGameStates[m_pGameStates.size() - 1]->EnterCommand();
+	}
 
 	static bool Is_Fullscreen = false;
 

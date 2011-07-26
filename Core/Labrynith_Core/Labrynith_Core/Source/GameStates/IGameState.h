@@ -12,6 +12,7 @@ public:
 	virtual void Render(void) = 0; // Draw
 	virtual void Exit(void) = 0; // Leaves the Game State
 	virtual ~IGameState() = 0 {};	// destructor
+	virtual void EnterCommand() = 0;
 
 };
 

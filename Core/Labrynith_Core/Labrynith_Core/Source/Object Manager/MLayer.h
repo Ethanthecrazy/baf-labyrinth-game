@@ -1,3 +1,5 @@
+#pragma once
+
 #include "MFlake.h"
 #include <vector>
 using namespace std;
@@ -6,6 +8,42 @@ using namespace std;
 
 class MLayer
 {
-	BST<int> SearchIndex;
+private:
+
+	BST<int> FlakeIndex;
 	vector<MFlake> m_vFlakes;
+	int m_nSize;
+
+	int LayerWidth;
+	int LayerHeight;
+
+	int OffSetFromCenterX;
+	int OffSetFromCenterY;
+
+public:
+
+	MLayer();
+
+	int AddUnit( IUnitInterface* _toAdd );
+	int AddUnitIndexed( IUnitInterface* _toAdd );
+	bool RemoveUnit( int _Ident );
+	void RemoveAllUnits( void );
+
+	void Resize( int newWidth, int newHeight );
+
+	IUnitInterface* GetUnit( int _Ident );
+
+	void Update( float fDT );
+	void Render( int CameraX, int CameraY );
+	void CheckCollisions( void );
+
+	MFlake& FindFlake( int _Ident );
+
+	MFlake& GetFlake( int _Index ) { return m_vFlakes[_Index]; }
+
+	int GetValueInFlakeAtIndex( int _flake, int _x, int _y );
+
+	int GetLayerWidth(void) { return LayerWidth; }
+	int GetLayerHeight(void) { return LayerHeight; }
+
 };

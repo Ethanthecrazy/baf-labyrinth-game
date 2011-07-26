@@ -2,6 +2,7 @@
 #define CGamePlayState_h__
 
 #include "IGameState.h"
+#include "../Object Manager/MObjectManager.h"
 
 class CGamePlayState : public IGameState
 {
@@ -16,6 +17,8 @@ class CGamePlayState : public IGameState
 
 public:
 
+	int testVaribale;
+
 	static CGamePlayState* GetInstance();
 
 	void Enter(void);
@@ -23,6 +26,8 @@ public:
 	void Update(float fDT);
 	void Render(void);
 	void Exit(void);
+
+	void EnterCommand(void);
 };
 
 #endif // CGamePlayState_h__

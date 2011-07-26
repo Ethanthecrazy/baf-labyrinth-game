@@ -6,6 +6,8 @@
 #include "../Wrappers/CSGD_DirectInput.h"
 #include "../CGame.h"
 
+#include <iostream>
+
 
 // default constructor
 CMainMenuState::CMainMenuState() 
@@ -23,7 +25,7 @@ CMainMenuState* CMainMenuState::GetInstance()
 
 void CMainMenuState::Enter(void)
 {
-
+	cout << "MainMenu\n";
 }
 
 bool CMainMenuState::Input(void)
@@ -56,4 +58,35 @@ void CMainMenuState::Render(void)
 
 void CMainMenuState::Exit(void)
 {
+	cout << "MainMenu -> ";
+}
+
+void CMainMenuState::EnterCommand(void)
+{
+	while( true )
+	{
+		cout << "Command>";
+		string command;
+		cin >> command;
+
+		if( command == "help" )
+		{
+			cout << "\n==============================\n";
+			cout << "Command\t\tDescription\n\n";
+
+			cout << "help\t\tthis list\n";
+			cout << "return\t\tcontinues the game\n";
+			
+			cout << endl;
+
+		}
+		else if( command == "return" )
+		{	
+			break;
+		}
+		else
+		{
+			cout << "Unknown command '" << command <<"' - type 'help' for command list.\n";
+		}
+	}
 }

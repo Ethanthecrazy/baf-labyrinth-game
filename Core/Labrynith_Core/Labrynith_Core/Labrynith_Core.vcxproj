@@ -54,6 +54,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,6 +82,10 @@
     <ClCompile Include="Source\Object Manager\MFlake.cpp" />
     <ClCompile Include="Source\Object Manager\MLayer.cpp" />
     <ClCompile Include="Source\Object Manager\MObjectManager.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\CBaseEntity.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp" />
+    <ClCompile Include="Source\Threading\MSyncManager.cpp" />
+    <ClCompile Include="Source\UTimer.cpp" />
     <ClCompile Include="Source\winmain.cpp" />
     <ClCompile Include="Source\Wrappers\CSGD_Direct3D.cpp" />
     <ClCompile Include="Source\Wrappers\CSGD_DirectInput.cpp" />
@@ -91,14 +97,23 @@
     <ClInclude Include="Source\GameStates\CGamePlayState.h" />
     <ClInclude Include="Source\GameStates\CMainMenuState.h" />
     <ClInclude Include="Source\GameStates\IGameState.h" />
-    <ClInclude Include="Source\Object Manager\IFlakeInterface.h" />
+    <ClInclude Include="Source\Object Manager\IUnitInterface.h" />
     <ClInclude Include="Source\Object Manager\MFlake.h" />
     <ClInclude Include="Source\Object Manager\MLayer.h" />
     <ClInclude Include="Source\Object Manager\MObjectManager.h" />
+    <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h" />
+    <ClInclude Include="Source\Object Manager\Units\CBaseObject.h" />
+    <ClInclude Include="Source\Threading\MSyncManager.h" />
+    <ClInclude Include="Source\UTimer.h" />
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h" />
     <ClInclude Include="Source\Wrappers\CSGD_DirectInput.h" />
     <ClInclude Include="Source\Wrappers\CSGD_TextureManager.h" />
     <ClInclude Include="Source\Wrappers\SGD_Util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Inspector Results\r000mi4\r000mi4.insp" />
+    <None Include="My Inspector Results\r001mi4\r001mi4.insp" />
+    <None Include="My Inspector Results\r002mi4\r002mi4.insp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

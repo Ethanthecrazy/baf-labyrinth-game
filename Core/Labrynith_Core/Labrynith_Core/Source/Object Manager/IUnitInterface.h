@@ -1,0 +1,86 @@
+#pragma once
+
+enum { OBJECT_TILE, OBJECT_OBJECT, OBJECT_ENTITY, OBJECT_LIGHT };
+enum { FLAG_MOVE_NONE, FLAG_MOVE_UP, FLAG_MOVE_DOWN, FLAG_MOVE_LEFT, FLAG_MOVE_RIGHT };
+enum { FLAG_MOVESTATE_MOVING, FLAG_MOVESTATE_ATDESTINATION };
+
+
+class IUnitInterface
+{
+
+private:
+		// position
+	float m_fPosX;
+	float m_fPosY;
+
+	float m_fLastPosX;
+	float m_fLastPosY;
+
+	int m_nIndexLocationX;
+	int m_nIndexLocationY;
+
+	int m_nLayerLocation;
+
+	float m_fVelX;
+	float m_fVelY;
+
+	float m_fDistanceLeft;
+
+	int FLAG_DirectionToMove;
+	int	FLAG_MovementState;
+	int	FLAG_prev_DirectionToMove;
+	int FLAG_prev_MovementState;
+
+public:
+
+	// The type of Unit
+	int m_nUnitType;
+
+	// The identification number used to reference the object in the Manager.
+	int m_nIdentificationNumber; 
+
+	//virtual ~IUnitInterface(void) = 0 { }
+	IUnitInterface() : FLAG_DirectionToMove( 0 ), FLAG_MovementState( 0 ), FLAG_prev_DirectionToMove( 0 ), FLAG_prev_MovementState( 0 ) {}
+
+	virtual void Update(float fDT) = 0;
+	virtual void Render( int CameraPosX, int CameraPosY ) = 0;
+
+	virtual void AddRef(void) = 0;
+	virtual void Release(void) = 0;
+
+	virtual int GetType(void) = 0;
+
+	virtual bool CheckCollision(IUnitInterface* pBase) = 0;
+
+		// accessors
+	float GetPosX(void) { return m_fPosX; }
+	float GetPosY(void) { return m_fPosY; }
+	float GetLastPosX(void) { return m_fLastPosX; }
+	float GetLastPosY(void) { return m_fLastPosY; }
+	float GetVelX(void) { return m_fVelX; }
+	float GetVelY(void) { return m_fVelY; }
+	int GetIndexPosX(void) { return m_nIndexLocationX; }
+	int GetIndexPosY(void) { return m_nIndexLocationY; }
+	int GetLayerLocation(void) { return m_nLayerLocation; }
+	float GetDistanceLeft(void){ return m_fDistanceLeft; }
+	
+	// modifiers
+	void SetPosX(float nPosX) { m_fPosX = nPosX; }
+	void SetPosY(float nPosY) { m_fPosY = nPosY; }
+	void SetLastPosX(float nPosX) { m_fLastPosX = nPosX; }
+	void SetLastPosY(float nPosY) { m_fLastPosY = nPosY; }
+	void SetVelX(float nVelX) { m_fVelX = nVelX; }
+	void SetVelY(float nVelY) { m_fVelY = nVelY; }
+	void SetIndexPosX(int nPosX) { m_nIndexLocationX = nPosX; }
+	void SetIndexPosY(int nPosY) { m_nIndexLocationY = nPosY; }
+	void SetLayerLocation( int nLayer ) { m_nLayerLocation = nLayer; }
+	void SetDistanceLeft( float _distance ) { m_fDistanceLeft = _distance; }
+
+	int GetFlag_DirectionToMove( void ){ return FLAG_DirectionToMove; }
+	int GetFlag_MovementState( void ){ return FLAG_MovementState; }
+	int GetFlag_prev_DirectionToMove( void ){ return FLAG_prev_DirectionToMove; }
+	int GetFlag_prev_MovementState( void ){ return FLAG_MovementState; }
+
+	void SetFlag_DirectionToMove( int newFlag ){ FLAG_prev_DirectionToMove = FLAG_DirectionToMove; FLAG_DirectionToMove = newFlag; }
+	void SetFlag_MovementState( int newFlag ){ FLAG_prev_MovementState = FLAG_MovementState; FLAG_MovementState = newFlag; }
+};

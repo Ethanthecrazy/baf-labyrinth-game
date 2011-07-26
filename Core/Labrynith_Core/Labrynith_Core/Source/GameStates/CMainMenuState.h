@@ -18,6 +18,7 @@ class CMainMenuState : public IGameState
 	~CMainMenuState();
 
 public:
+
 	static CMainMenuState* GetInstance();
 
 	void Enter(void);
@@ -25,6 +26,8 @@ public:
 	void Update(float fDT);
 	void Render(void);
 	void Exit(void);
+
+	void EnterCommand(void);
 };
 
 #endif // CMainMenuState_h__

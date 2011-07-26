@@ -22,6 +22,15 @@
     <Filter Include="ObjectManager">
       <UniqueIdentifier>{da9e7d4e-9a9d-4c31-a645-fabd3f66ba89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ObjectManager\Units">
+      <UniqueIdentifier>{85215bec-9ffc-408c-8ccd-64c4626dabc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="My Inspector Results">
+      <UniqueIdentifier>{7ec7d430-d5e0-4dc0-9a73-1747200a55f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{abee72b9-e52f-4b90-9bf1-ddb859189abe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\winmain.cpp">
@@ -53,6 +62,18 @@
     </ClCompile>
     <ClCompile Include="Source\Object Manager\MFlake.cpp">
       <Filter>ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\CBaseEntity.cpp">
+      <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Threading\MSyncManager.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp">
+      <Filter>ObjectManager\Units</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,11 +110,34 @@
     <ClInclude Include="Source\Object Manager\MFlake.h">
       <Filter>ObjectManager</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object Manager\IFlakeInterface.h">
-      <Filter>ObjectManager</Filter>
-    </ClInclude>
     <ClInclude Include="Source\BST.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Object Manager\IUnitInterface.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h">
+      <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UTimer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Threading\MSyncManager.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CBaseObject.h">
+      <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Inspector Results\r000mi4\r000mi4.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
+    <None Include="My Inspector Results\r001mi4\r001mi4.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
+    <None Include="My Inspector Results\r002mi4\r002mi4.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
   </ItemGroup>
 </Project>

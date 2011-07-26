@@ -108,6 +108,10 @@ public:
 	int ConvertTrueValue( const Type& _searchKey );
 	int rConvertTrueValue( Node* input, const Type& _searchKey );
 
+
+	void DecrementFromNode( int _testValue );
+	void rDecrementFromNode( Node* input, int _testValue );
+
 };
 
 
@@ -417,6 +421,8 @@ BST<Type>::rFind( Node* input, const Type& v ) const
 		else
 			return 0;
 	}
+	else
+		return 0;
 }
 
 template< typename Type >
@@ -501,6 +507,32 @@ BST<Type>::rConvertTrueValue( Node* input, const Type& _searchKey )
 		else
 			return -1;
 	}
+	else
+		return -1;
 }
+
+
+template< typename Type >
+void 
+BST<Type>::DecrementFromNode( int _testValue )
+{
+	rDecrementFromNode( Root, _testValue );
+
+}
+
+template< typename Type >
+void 
+BST<Type>::rDecrementFromNode( Node* input, int _testValue )
+{
+	if( input )
+	{
+		if( input->nTrueID > _testValue )
+			input->nTrueID -= 1;
+
+			rDecrementFromNode( input->Left, _testValue );
+			rDecrementFromNode( input->Right, _testValue );
+	}
+}
+
 
 #endif

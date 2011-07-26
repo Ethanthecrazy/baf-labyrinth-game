@@ -27,17 +27,20 @@
 */
 
 #include <windows.h>	//	Needed for Windows Applications.
+#include <iostream>
 
 #include <ctime>
 
 #include "CGame.h"
 
+#pragma comment( linker, "/SUBSYSTEM:Console" )
+
 const char* g_szWINDOW_CLASS_NAME	= "LabyrinthCore";			//	Window Class Name.
 
 const char* g_szWINDOW_TITLE		= "Core Build 1.0";		//	Window Title.
-const int	g_nWINDOW_WIDTH			= 1024;						//	Window Width.
-const int	g_nWINDOW_HEIGHT		= 768;						//	Window Height.
-const BOOL	g_bIS_WINDOWED			= false;						
+const int	g_nWINDOW_WIDTH			= 800;						//	Window Width.
+const int	g_nWINDOW_HEIGHT		= 600;						//	Window Height.
+const BOOL	g_bIS_WINDOWED			= true;						
 
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -139,7 +142,6 @@ BOOL CheckIfAlreadyRunning(void)
 	return FALSE;
 }
 
-
 BOOL RegisterWindowClass(HINSTANCE hInstance)
 {
 	WNDCLASSEX	winClassEx;	//	This will describe the window class we will create.
@@ -216,7 +218,7 @@ HWND MakeWindow(HINSTANCE hInstance)
 //		WinMain			//
 //////////////////////////
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	MSG		msg;	//	Generic message.
 	HWND	hWnd;	//	Main Window Handle.
@@ -250,6 +252,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//////////////////////////////////////////
 	//	Initialize Game here
 	//////////////////////////////////////////
+
 
 	CGame* theGame = CGame::GetInstance();
 
@@ -296,4 +299,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//	Return to Windows like this.
 	return (int)(msg.wParam);
+}
+
+int main(void)
+{
+	WinMain(GetModuleHandle(NULL), NULL,
+		GetCommandLine(), SW_SHOWDEFAULT);
+	return 0;
 }
