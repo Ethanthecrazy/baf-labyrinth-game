@@ -4,6 +4,7 @@
 
 MObjectManager::MObjectManager() : m_nSize( 0 )
 {
+	MEventSystem::GetInstance()->RegisterClient( "Add.Object", this );
 	for( int i = 0; i < 9; ++i )
 		m_vLayers.push_back( MLayer() );
 }
@@ -118,6 +119,9 @@ bool MObjectManager::MoveEntUp( int _Ident )
 
 	int otherEntity;
 
+	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) )
+		return false;
+
 	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) > 0 )
 	{
 		cout << "Collided With Something\n";
@@ -142,6 +146,9 @@ bool MObjectManager::MoveEntDown( int _Ident )
 
 	int otherEntity;
 
+	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) )
+		return false;
+
 	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) > 0 )
 	{
 		cout << "Collided With Something\n";
@@ -165,6 +172,10 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	IUnitInterface* toCheck = GetUnit( _Ident );
 
 	int otherEntity;
+
+
+	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY()  ) )
+		return false;
 
 	if( toCheck->GetIndexPosX() - 1 < 0 )
 	{
@@ -199,9 +210,11 @@ bool MObjectManager::MoveEntRight( int _Ident )
 		cout << "Movement Denied in MoveEntRight\n";
 		return false;
 	}
-		
 
 	int otherEntity;
+
+	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) )
+		return false;
 
 	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) > 0 )
 	{
@@ -237,4 +250,13 @@ int MObjectManager::FindValueInFlakeInLayerAtIndex( int _layer, int _flake, int 
 		return m_vLayers[_layer].GetValueInFlakeAtIndex( _flake, _x, _y );
 	else
 		return -1;
+}
+
+void MObjectManager::HandleEvent( Event* _toHandle )
+{
+	if( _toHandle->GetEventID() == "Add.Object" )
+	{
+		if( _toHandle->GetParam() )
+			MObjectManager::AddUnit( (IUnitInterface*)_toHandle->GetParam(), 1 );
+	}
 }

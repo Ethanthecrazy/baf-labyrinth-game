@@ -1,13 +1,13 @@
 #pragma once
 
 #include "MLayer.h"
+#include "../Messaging/MEventSystem.h"
 #include <vector>
-
 using namespace std;
 
 #include "../BST.h"
 
-class MObjectManager
+class MObjectManager : public IListener
 {
 
 private:
@@ -55,5 +55,7 @@ public:
 	MFlake& FindFlake( int _Ident );
 
 	int FindValueInFlakeInLayerAtIndex( int _layer, int _flake, int _x, int _y ); 
+
+	void MObjectManager::HandleEvent( Event* _toHandle );
 
 };

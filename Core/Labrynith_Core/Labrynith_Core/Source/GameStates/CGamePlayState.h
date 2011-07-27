@@ -3,6 +3,7 @@
 
 #include "IGameState.h"
 #include "../Object Manager/MObjectManager.h"
+#include "../Messaging/MMessageSystem.h"
 
 class CGamePlayState : public IGameState
 {
@@ -28,6 +29,8 @@ public:
 	void Exit(void);
 
 	void EnterCommand(void);
+
+	static void MessageProc(CBaseMessage* _message);
 };
 
 #endif // CGamePlayState_h__

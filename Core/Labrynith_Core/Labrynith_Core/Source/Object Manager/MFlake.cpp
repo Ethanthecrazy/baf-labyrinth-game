@@ -5,11 +5,10 @@
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "MObjectManager.h"
 
-MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY, MLayer* toParent ) : LayerWidth( _LayerWidth ), 
+MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY ) : LayerWidth( _LayerWidth ), 
 	LayerHeight( _LayerHeight ), 
 	OffSetFromCenterX( _OffSetFromCenterX ), 
-	OffSetFromCenterY( OffSetFromCenterY ), 
-	parentLayer( toParent )
+	OffSetFromCenterY( OffSetFromCenterY )
 {
 	InformationArray = new int[ _LayerWidth * _LayerHeight ];
 
@@ -113,37 +112,54 @@ void MFlake::Render( int CameraX, int CameraY )
 	switch ( m_nFlakeType )
 	{
 	case OBJECT_TILE:
-
-		for( int y = 0; y < LayerHeight; ++y )
 		{
-			for( int x = 0; x < LayerWidth; ++x )
-			{
-				if( InformationArray[ x + y * LayerWidth] > -1 )
-				{
-					switch( InformationArray[ x + y * LayerWidth] )
-					{
-					case 0:
-						{
-							int toUnload;
-							CSGD_TextureManager::GetInstance()->Draw( toUnload = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ),
-								x * 32 - CameraX,
-								y * 32 - CameraY );	
+			//char temp[64];
 
-							//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
-							break;
+			for( int y = 0; y < LayerHeight; ++y )
+			{
+				for( int x = 0; x < LayerWidth; ++x )
+				{
+					//sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
+
+					//CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+
+					if( InformationArray[ x + y * LayerWidth] > 0 )
+					{
+						switch( InformationArray[ x + y * LayerWidth] )
+						{
+						case 1:
+							{
+								int toUnload;
+								CSGD_TextureManager::GetInstance()->Draw( toUnload = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ),
+									x * 32 - CameraX,
+									y * 32 - CameraY );	
+
+								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
+								break;
+							}
+
+						case 2:
+							{
+								int toUnload;
+								CSGD_TextureManager::GetInstance()->Draw( toUnload = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ),
+									x * 32 - CameraX,
+									y * 32 - CameraY );	
+
+								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
+								break;
+							}
 						}
-					}
-				}	
+					}	
+				}
+			}
+
+			CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+
+			for( unsigned int i = 0; i < m_vObjects.size(); ++i )
+			{
+				m_vObjects[i]->Render( CameraX, CameraY );
 			}
 		}
-
-		CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
-
-		for( unsigned int i = 0; i < m_vObjects.size(); ++i )
-		{
-			m_vObjects[i]->Render( CameraX, CameraY );
-		}
-
 		break;
 
 	case OBJECT_OBJECT:
@@ -165,26 +181,38 @@ void MFlake::Render( int CameraX, int CameraY )
 			{
 				m_vObjects[i]->Render( CameraX, CameraY );
 			}
+
+			//char temp[64];
+
+			//for( int y = 0; y < LayerHeight; ++y )
+			//{
+			//	for( int x = 0; x < LayerWidth; ++x )
+			//	{
+			//		sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
+
+			//		CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+			//	}
+			//}
 		}
 
 		break;
 
 	case OBJECT_LIGHT:
-
-		char temp[64];
-
-		for( int y = 0; y < LayerHeight; ++y )
 		{
-			for( int x = 0; x < LayerWidth; ++x )
+			//char temp[64];
+
+			for( int y = 0; y < LayerHeight; ++y )
 			{
-				CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+				for( int x = 0; x < LayerWidth; ++x )
+				{
+					CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 
-				//sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] / 100 ); 
+					//sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] / 100 ); 
 
-				//CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+					//CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+				}
 			}
 		}
-
 		break;
 	}
 }
@@ -200,7 +228,6 @@ int MFlake::GetInfoAtIndex( int _x, int _y )
 
 	if( _y < 0 )
 	{
-		cout << "\tMFlake: Y out of range\n";
 		return -1;
 	}
 
@@ -210,7 +237,6 @@ int MFlake::GetInfoAtIndex( int _x, int _y )
 	}
 	else
 	{
-		cout << "\tMFlake: total out of range\n";
 		return -1;
 	}
 }

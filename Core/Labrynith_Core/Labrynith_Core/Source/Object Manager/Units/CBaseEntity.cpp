@@ -31,7 +31,7 @@ void CBaseEntity::Update(float fDT)
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
 
-		SetDistanceLeft( GetDistanceLeft() - 150 * fDT );
+		SetDistanceLeft( GetDistanceLeft() - 125 * fDT );
 
 		if( GetDistanceLeft() >= 0 )
 		{
@@ -40,16 +40,16 @@ void CBaseEntity::Update(float fDT)
 			{
 
 			case FLAG_MOVE_RIGHT:
-				SetPosX( GetPosX() + 150 * fDT );
+				SetPosX( GetPosX() + 125 * fDT );
 				break;
 			case FLAG_MOVE_LEFT:
-				SetPosX( GetPosX() - 150 * fDT );
+				SetPosX( GetPosX() - 125 * fDT );
 				break;
 			case FLAG_MOVE_UP:
-				SetPosY( GetPosY() - 150 * fDT );
+				SetPosY( GetPosY() - 125 * fDT );
 				break;
 			case FLAG_MOVE_DOWN:
-				SetPosY( GetPosY() + 150 * fDT );
+				SetPosY( GetPosY() + 125 * fDT );
 				break;
 			}
 		}

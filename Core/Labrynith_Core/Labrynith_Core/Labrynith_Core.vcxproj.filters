@@ -31,6 +31,9 @@
     <Filter Include="Threading">
       <UniqueIdentifier>{abee72b9-e52f-4b90-9bf1-ddb859189abe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Messaging">
+      <UniqueIdentifier>{1a7c9705-ad45-4bb1-a638-d4bfd3797794}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\winmain.cpp">
@@ -74,6 +77,15 @@
     </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp">
       <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Messaging\MEventSystem.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Messaging\MMessageSystem.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Messaging\Messages.cpp">
+      <Filter>Messaging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +139,21 @@
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\CBaseObject.h">
       <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\Event.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\IListener.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\MEventSystem.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\Messages.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\MMessageSystem.h">
+      <Filter>Messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

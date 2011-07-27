@@ -79,6 +79,9 @@
     <ClCompile Include="Source\CGame.cpp" />
     <ClCompile Include="Source\GameStates\CGamePlayState.cpp" />
     <ClCompile Include="Source\GameStates\CMainMenuState.cpp" />
+    <ClCompile Include="Source\Messaging\Messages.cpp" />
+    <ClCompile Include="Source\Messaging\MEventSystem.cpp" />
+    <ClCompile Include="Source\Messaging\MMessageSystem.cpp" />
     <ClCompile Include="Source\Object Manager\MFlake.cpp" />
     <ClCompile Include="Source\Object Manager\MLayer.cpp" />
     <ClCompile Include="Source\Object Manager\MObjectManager.cpp" />
@@ -97,6 +100,11 @@
     <ClInclude Include="Source\GameStates\CGamePlayState.h" />
     <ClInclude Include="Source\GameStates\CMainMenuState.h" />
     <ClInclude Include="Source\GameStates\IGameState.h" />
+    <ClInclude Include="Source\Messaging\Event.h" />
+    <ClInclude Include="Source\Messaging\IListener.h" />
+    <ClInclude Include="Source\Messaging\Messages.h" />
+    <ClInclude Include="Source\Messaging\MEventSystem.h" />
+    <ClInclude Include="Source\Messaging\MMessageSystem.h" />
     <ClInclude Include="Source\Object Manager\IUnitInterface.h" />
     <ClInclude Include="Source\Object Manager\MFlake.h" />
     <ClInclude Include="Source\Object Manager\MLayer.h" />

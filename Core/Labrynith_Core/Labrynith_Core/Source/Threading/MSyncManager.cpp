@@ -96,7 +96,7 @@ void MSyncManager::CloseSyncSystem()
 {
 	EnterCriticalSection( &ObjectProtection );
 
-	for( int i = 0; i < Objects.size(); ++i )
+	for( unsigned int i = 0; i < Objects.size(); ++i )
 	{
 		DeleteCriticalSection( &Objects[i].mutex );
 	}

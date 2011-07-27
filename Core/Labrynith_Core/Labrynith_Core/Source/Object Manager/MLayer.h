@@ -42,6 +42,7 @@ public:
 	MFlake& GetFlake( int _Index ) { return m_vFlakes[_Index]; }
 
 	int GetValueInFlakeAtIndex( int _flake, int _x, int _y );
+	void SetValueInFlakeAtIndex( int _value, int _flake, int _x, int _y );
 
 	int GetLayerWidth(void) { return LayerWidth; }
 	int GetLayerHeight(void) { return LayerHeight; }

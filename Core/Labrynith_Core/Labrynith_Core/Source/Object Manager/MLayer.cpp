@@ -3,7 +3,6 @@
 
 MLayer::MLayer()
 {
-
 	LayerWidth = 0;
 	LayerHeight = 0;
 
@@ -14,8 +13,16 @@ MLayer::MLayer()
 
 	for( int i = 0; i < 9; ++i )
 	{
-		m_vFlakes.push_back( MFlake( LayerWidth, LayerHeight, OffSetFromCenterX, OffSetFromCenterY, this ) );
+		m_vFlakes.push_back( MFlake( LayerWidth, LayerHeight, OffSetFromCenterX, OffSetFromCenterY ) );
 		m_vFlakes[ m_vFlakes.size() - 1].SetFlakeType( i );
+	}
+
+	for( int y = 0; y < LayerHeight; ++y )
+	{
+		for( int x = 0; x < LayerWidth; ++x )
+		{
+			m_vFlakes[ OBJECT_TILE ].SetInfoAtIndex( x, y, rand() % 2 + 1 );
+		}
 	}
 }
 
@@ -151,4 +158,9 @@ int MLayer::GetValueInFlakeAtIndex( int _flake, int _x, int _y )
 		return m_vFlakes[ _flake ].GetInfoAtIndex( _x, _y );
 	else
 		return -1;
+}
+
+void MLayer::SetValueInFlakeAtIndex( int _value, int _flake, int _x, int _y )
+{
+	m_vFlakes[ _flake ].SetInfoAtIndex( _x, _y, _value );
 }

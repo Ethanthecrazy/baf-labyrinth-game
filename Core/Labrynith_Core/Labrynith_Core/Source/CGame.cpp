@@ -2,6 +2,7 @@
 #include "CGame.h"
 #include <string>
 #include <iostream>
+#include <time.h>
 using std::string;
 
 #include "GameStates\CMainMenuState.h"
@@ -26,6 +27,8 @@ CGame* CGame::GetInstance()
 void CGame::Initialize(HWND hWnd, HINSTANCE hInstance, 
 	int nScreenWidth, int nScreenHeight, bool bIsWindowed)
 {
+
+	srand( unsigned int( time( 0 ) ) );
 	m_nScreenWidth = nScreenWidth;
 	m_nScreenHeight = nScreenHeight;
 
@@ -53,7 +56,7 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 // execution
 bool CGame::Main()
 {
-	m_fElapsedTime = TheTimer.GetElapsedTime();
+	m_fElapsedTime = (float)TheTimer.GetElapsedTime();
 	
 	TheTimer.Reset();
 

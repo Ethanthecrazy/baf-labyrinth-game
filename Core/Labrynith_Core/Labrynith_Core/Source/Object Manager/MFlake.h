@@ -29,7 +29,7 @@ private:
 
 public:
 
-	MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY, MLayer* toParent );
+	MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY );
 	~MFlake();
 
 	int AddUnit( IUnitInterface* _toAdd );
