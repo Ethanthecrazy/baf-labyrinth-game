@@ -298,8 +298,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 					}
 					//Load basic movement animations
 					((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
-					((CBaseGolem*)(temp))->SetPosX( posX*32 );
-					((CBaseGolem*)(temp))->SetPosY( posY*32 );
+					((CBaseGolem*)(temp))->SetPosX( (float)(posX*32) );
+					((CBaseGolem*)(temp))->SetPosY( (float)(posY*32) );
 					((CBaseGolem*)(temp))->SetIndexPosX( posX );
 					((CBaseGolem*)(temp))->SetIndexPosY( posY );
 

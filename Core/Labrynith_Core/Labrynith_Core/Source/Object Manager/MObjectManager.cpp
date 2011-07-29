@@ -122,7 +122,9 @@ bool MObjectManager::MoveEntUp( int _Ident )
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) )
 		return false;
 
-	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) > 0 )
+	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 );
+
+	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
@@ -149,7 +151,9 @@ bool MObjectManager::MoveEntDown( int _Ident )
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) )
 		return false;
 
-	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) > 0 )
+	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 );
+
+	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
 		
@@ -184,7 +188,9 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 		return false;
 	}
 
-	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY() ) > 0 )
+	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY() );
+
+	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
@@ -217,7 +223,9 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) )
 		return false;
 
-	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) > 0 )
+	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() );
+
+	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
@@ -261,6 +269,6 @@ void MObjectManager::HandleEvent( Event* _toHandle )
 	if( _toHandle->GetEventID() == "Add.Object" )
 	{
 		if( _toHandle->GetParam() )
-			MObjectManager::AddUnitIndexed( (IUnitInterface*)_toHandle->GetParam(), 1 );
+			MObjectManager::GetInstance()->AddUnitIndexed( (IUnitInterface*)_toHandle->GetParam(), 1 );
 	}
 }

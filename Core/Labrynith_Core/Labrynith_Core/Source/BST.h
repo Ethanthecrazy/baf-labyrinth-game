@@ -435,7 +435,7 @@ void
 {
 	if( !Root )
 	{
-		Root = new Node;
+		Root = new Node();
 		Root->element = _searchKey;
 		Root->nTrueID = _trueValue;
 		Root->Left = nullptr;
@@ -464,7 +464,7 @@ void
 		{
 			if( input->Left == nullptr)
 			{
-				input->Left = new Node;
+				input->Left = new Node();
 				input->Left->element = _searchKey;
 				input->Left->nTrueID = _trueValue;
 				input->Left->Left = nullptr;

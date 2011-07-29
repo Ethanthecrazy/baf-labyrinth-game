@@ -189,13 +189,13 @@ void MFlake::Render( int CameraX, int CameraY )
 	{
 	case OBJECT_TILE:
 		{
-			char temp[64];
+			//char temp[64];
 
 			for( int y = 0; y < LayerHeight; ++y )
 			{
 				for( int x = 0; x < LayerWidth; ++x )
 				{
-					sprintf( temp, "%i", MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ) ); 
+					//sprintf( temp, "%i", MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ) ); 
 
 					if( InformationArray[ x + y * LayerWidth] >= 0 )
 					{

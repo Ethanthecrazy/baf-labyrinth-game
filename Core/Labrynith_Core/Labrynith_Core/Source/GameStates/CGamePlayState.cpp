@@ -53,7 +53,7 @@ bool CGamePlayState::Input(void)
 
 	if( player )
 	{
-		if( pDI->KeyDown( DIK_SPACE ) )
+		//if( pDI->KeyDown( DIK_SPACE ) )
 			MObjectManager::GetInstance()->FindLayer( testVaribale ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( player->GetIndexPosX(), player->GetIndexPosY(), rand() % 15 + 240 );
 				
 		if( player->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
@@ -133,20 +133,20 @@ void CGamePlayState::Render(void)
 
 	pD3D->DrawTextA( "Gameplay State", 100, 100 );
 
-	char temp[64];
+	//char temp[64];
 
-	sprintf( temp, "%f", timestep ); 
+	//sprintf( temp, "%f", timestep ); 
 
-	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
+	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
 
-	sprintf( temp, "%f", 1.0f / timestep ); 
+	//sprintf( temp, "%f", 1.0f / timestep ); 
 
-	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
+	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
 }
 
 void CGamePlayState::Exit(void)
 {
-	MObjectManager::GetInstance()->RemoveUnit( testVaribale ); 
+	//MObjectManager::GetInstance()->RemoveUnit( testVaribale ); 
 	MObjectManager::GetInstance()->RemoveAllUnits();
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
 	cout << "GamePlay -> ";
@@ -201,13 +201,15 @@ void CGamePlayState::EnterCommand(void)
 			cin >> PosY;
 
 			IUnitInterface* temp = new CBaseObject();
-			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
-			((CBaseEntity*)(temp))->SetIndexPosX( PosX );
-			((CBaseEntity*)(temp))->SetIndexPosY( PosY );
-			((CBaseEntity*)(temp))->SetPosX( (float)PosX * 32.0f );
-			((CBaseEntity*)(temp))->SetPosY( (float)PosY * 32.0f );
+			((CBaseObject*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)(temp))->SetIndexPosX( PosX );
+			((CBaseObject*)(temp))->SetIndexPosY( PosY );
+			((CBaseObject*)(temp))->SetPosX( (float)PosX * 32.0f );
+			((CBaseObject*)(temp))->SetPosY( (float)PosY * 32.0f );
 
-			MEventSystem::GetInstance()->SendEvent( "Add.Object", temp );
+			//MEventSystem::GetInstance()->SendEvent( "Add.Object", temp );
+
+			MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 
 		}
 		else if( command == "settile" )
