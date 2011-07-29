@@ -14,7 +14,7 @@
 #include <string>
 using std::string;
 
-#include "../Object Manager/Units/CBaseEntity.h"
+#include "../Object Manager/Units/CBaseGolem.h"
 
 #include "../TinyXML/tinyxml.h"
 
@@ -110,7 +110,8 @@ void CLoadLevelState::EnterCommand(void)
 
 
 bool CLoadLevelState::LoadLevel(int _level)
-{	
+{		
+
 	char filename[255] = {0};
 
 	sprintf(filename, "resource/Levels/%d.xml", _level);
@@ -149,6 +150,15 @@ bool CLoadLevelState::LoadLevel(int _level)
 		
 		MObjectManager::GetInstance()->ResizeLayer( 1, width, height );
 	}
+	
+	IUnitInterface* ptemp = new CBaseEntity();
+	((CBaseEntity*)(ptemp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
+	//Load basic movement animations
+	((CBaseEntity*)(ptemp))->LoadEntMoveAnimIDs();
+	((CBaseEntity*)(ptemp))->SetIndexPosX( 0 );
+	((CBaseEntity*)(ptemp))->SetIndexPosY( 0 );
+
+	CGamePlayState::GetInstance()->testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( ptemp, 1 );
 
 	TiXmlElement* pTiles = pRoot->FirstChildElement("Tiles");	
 	if(pTiles)
@@ -239,8 +249,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 			{			
 				string sposX, sposY;
 
-				sposX = pMapSize->FirstChildElement("X")->GetText();
-				sposY = pMapSize->FirstChildElement("Y")->GetText();
+				sposX = pPos->FirstChildElement("X")->GetText();
+				sposY = pPos->FirstChildElement("Y")->GetText();
 
 				posX = atoi(sposX.c_str());
 				posY = atoi(sposY.c_str());
@@ -250,54 +260,58 @@ bool CLoadLevelState::LoadLevel(int _level)
 			switch(theType)
 			{
 			case 0:				
-				IUnitInterface* temp = new CBaseEntity();
-				int random = rand() % 10;
-				switch(random)
 				{
-				case 0:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/AirGolem.png" );
-					break;
-				case 1:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/FireGolem.png" );
-					break;
-				case 2:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" );
-					break;
-				case 3:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" );
-					break;
-				case 4:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LightGolem.png" );
-					break;
-				case 5:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/ShadowGolem.png" );
-					break;
-				case 6:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LavaGolem.png" );
-					break;
-				case 7:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" );
-					break;
-				case 8:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/GlassGolem.png" );
-					break;
-				case 8:
-					((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" );
-					break;
-				}
-				//Load basic movement animations
-				((CBaseEntity*)(temp))->LoadEntMoveAnimIDs();
-				((CBaseEntity*)(temp))->SetIndexPosX( posX );
-				((CBaseEntity*)(temp))->SetIndexPosY( posY );
+					IUnitInterface* temp = new CBaseGolem();
+					int random = rand() % 10;
+					switch(random)
+					{
+					case 0:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/AirGolem.png" ));
+						break;
+					case 1:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/FireGolem.png" ));
+						break;
+					case 2:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" ));
+						break;
+					case 3:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
+						break;
+					case 4:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LightGolem.png" ));
+						break;
+					case 5:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/ShadowGolem.png" ));
+						break;
+					case 6:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LavaGolem.png" ));
+						break;
+					case 7:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" ));
+						break;
+					case 8:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/GlassGolem.png" ));
+						break;
+					case 9:
+						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+						break;
+					}
+					//Load basic movement animations
+					((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
+					((CBaseGolem*)(temp))->SetPosX( posX*32 );
+					((CBaseGolem*)(temp))->SetPosY( posY*32 );
+					((CBaseGolem*)(temp))->SetIndexPosX( posX );
+					((CBaseGolem*)(temp))->SetIndexPosY( posY );
 
-				MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+					MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+				}
 				break;
 
 			default:
 				break;
 			}
 			
-			pObject = pObject->NextSiblingElement("Object");
+			pObject = pObject->NextSiblingElement("TileObject");
 		}
 	}
 
