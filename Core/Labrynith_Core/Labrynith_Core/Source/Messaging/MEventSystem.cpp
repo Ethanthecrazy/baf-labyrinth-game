@@ -54,7 +54,6 @@ void MEventSystem::ProcessEvents(void)
 		DispatchEvent( &m_lEvents.front() );
 		m_lEvents.pop_front();
 	}
-
 }
 
 void MEventSystem::ClearEvents(void)
