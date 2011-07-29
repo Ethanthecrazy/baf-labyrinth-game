@@ -76,6 +76,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CDataManager.cpp" />
+    <ClCompile Include="Source\CBitFont.cpp" />
     <ClCompile Include="Source\CGame.cpp" />
     <ClCompile Include="Source\GameStates\CGamePlayState.cpp" />
     <ClCompile Include="Source\GameStates\CMainMenuState.cpp" />
@@ -88,6 +90,10 @@
     <ClCompile Include="Source\Object Manager\Units\CBaseEntity.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp" />
     <ClCompile Include="Source\Threading\MSyncManager.cpp" />
+    <ClCompile Include="Source\TinyXML\tinystr.cpp" />
+    <ClCompile Include="Source\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="Source\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Source\UTimer.cpp" />
     <ClCompile Include="Source\winmain.cpp" />
     <ClCompile Include="Source\Wrappers\CSGD_Direct3D.cpp" />
@@ -95,7 +101,9 @@
     <ClCompile Include="Source\Wrappers\CSGD_TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CDataManagerState.h" />
     <ClInclude Include="Source\BST.h" />
+    <ClInclude Include="Source\CBitFont.h" />
     <ClInclude Include="Source\CGame.h" />
     <ClInclude Include="Source\GameStates\CGamePlayState.h" />
     <ClInclude Include="Source\GameStates\CMainMenuState.h" />
@@ -112,6 +120,8 @@
     <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h" />
     <ClInclude Include="Source\Object Manager\Units\CBaseObject.h" />
     <ClInclude Include="Source\Threading\MSyncManager.h" />
+    <ClInclude Include="Source\TinyXML\tinystr.h" />
+    <ClInclude Include="Source\TinyXML\tinyxml.h" />
     <ClInclude Include="Source\UTimer.h" />
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h" />
     <ClInclude Include="Source\Wrappers\CSGD_DirectInput.h" />

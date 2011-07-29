@@ -6,7 +6,7 @@ MObjectManager::MObjectManager() : m_nSize( 0 )
 {
 	MEventSystem::GetInstance()->RegisterClient( "Add.Object", this );
 	for( int i = 0; i < 9; ++i )
-		m_vLayers.push_back( MLayer() );
+		m_vLayers.push_back( MLayer( i ) );
 }
 
 MObjectManager::~MObjectManager()
@@ -241,7 +241,10 @@ MLayer& MObjectManager::FindLayer( int _Ident )
 
 MFlake& MObjectManager::FindFlake( int _Ident )
 {
-	return m_vLayers[ LayerIndex.ConvertTrueValue( _Ident ) ].FindFlake( _Ident );
+	if( LayerIndex.ConvertTrueValue( _Ident ) > -1 )
+		return m_vLayers[ LayerIndex.ConvertTrueValue( _Ident ) ].FindFlake( _Ident );
+	else
+		return m_vLayers[ 0 ].GetFlake( 0 );
 }
 
 int MObjectManager::FindValueInFlakeInLayerAtIndex( int _layer, int _flake, int _x, int _y )
@@ -257,6 +260,6 @@ void MObjectManager::HandleEvent( Event* _toHandle )
 	if( _toHandle->GetEventID() == "Add.Object" )
 	{
 		if( _toHandle->GetParam() )
-			MObjectManager::AddUnit( (IUnitInterface*)_toHandle->GetParam(), 1 );
+			MObjectManager::AddUnitIndexed( (IUnitInterface*)_toHandle->GetParam(), 1 );
 	}
 }

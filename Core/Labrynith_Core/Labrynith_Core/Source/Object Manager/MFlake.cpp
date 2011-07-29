@@ -3,13 +3,20 @@
 
 #include "../Wrappers/CSGD_TextureManager.h"
 #include "../Wrappers/CSGD_Direct3D.h"
+
+#include "../Messaging/MMessageSystem.h"
+
 #include "MObjectManager.h"
 
-MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY ) : LayerWidth( _LayerWidth ), 
+MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY, int _parentLayer ) : LayerWidth( _LayerWidth ), 
 	LayerHeight( _LayerHeight ), 
 	OffSetFromCenterX( _OffSetFromCenterX ), 
-	OffSetFromCenterY( OffSetFromCenterY )
+	OffSetFromCenterY( OffSetFromCenterY ),
+	parentLayer( _parentLayer )
 {
+
+	ArrayIndex.clear();
+
 	InformationArray = new int[ _LayerWidth * _LayerHeight ];
 
 	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
@@ -37,6 +44,7 @@ int MFlake::AddUnit( IUnitInterface* _toAdd )
 	_toAdd->m_nIdentificationNumber += m_vObjects.size();
 	ArrayIndex.InsertEntry( _toAdd->m_nIdentificationNumber, m_vObjects.size() );
 	m_vObjects.push_back( _toAdd );
+	cout << "\tFlake " << m_nFlakeType << ": Added " << _toAdd->m_nIdentificationNumber << "\n"; 
 	return _toAdd->m_nIdentificationNumber;
 }
 
@@ -81,7 +89,6 @@ bool MFlake::RemoveUnit( int _Ident )
 	}
 }
 
-
 void MFlake::RemoveAllUnits( void )
 {
 	m_nSize = 0;
@@ -100,10 +107,79 @@ IUnitInterface* MFlake::GetUnit( int _Ident )
 
 void MFlake::Update( float fDT )
 {
+	if( m_nFlakeType == OBJECT_LIGHT )
+	{
+		int decision = rand() % 4;
+		switch( decision )
+		{
+		case 0:
+			for( int y = 0; y < LayerHeight; ++y )
+			{
+				for( int x = 0; x < LayerWidth; ++x )
+				{
+					LightingProcess( x, y );
+				}
+			}
+			break;
+		case 1:
+			for( int x = 0; x < LayerWidth; ++x )
+			{
+				for( int y = 0; y < LayerHeight; ++y )
+				{
+					LightingProcess( x, y );
+				}
+			}
+			break;
+		case 2:
+			for( int y = LayerHeight - 1; y  > -1; --y )
+			{
+				for( int x = LayerWidth - 1; x > - 1; --x )
+				{
+					LightingProcess( x, y );
+				}
+			}
+			break;
+		case 3:
+			for( int x = LayerWidth - 1; x > - 1; --x )
+			{
+				for( int y = LayerHeight - 1; y  > -1; --y )
+				{
+					LightingProcess( x, y );
+				}
+			}
+			break;
+		}
+	}
+
 	for( unsigned int i = 0; i < m_vObjects.size(); ++i )
 	{
 		m_vObjects[i]->Update( fDT );
 	}
+}
+
+void MFlake::LightingProcess( int x, int y )
+{
+	bool bCanTransfer = false;
+
+	if( GetInfoAtIndex( x, y ) > 254 )
+		bCanTransfer = true;
+
+	//SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 10 );
+
+	if( GetInfoAtIndex( x, y ) < 10 )
+	{
+		SetInfoAtIndex( x, y, 0 );
+		return;
+	}
+
+	if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x + 1, y ) )
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, GetInfoAtIndex( x, y ) - 5 , this ) );
+	if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x - 1, y ) )
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, GetInfoAtIndex( x, y ) - 5 , this ) );
+	if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y + 1 ) )
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, GetInfoAtIndex( x, y ) - 5 , this ) );
+	if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y - 1 ) )
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, GetInfoAtIndex( x, y ) - 5 , this ) );
 }
 
 void MFlake::Render( int CameraX, int CameraY )
@@ -113,37 +189,102 @@ void MFlake::Render( int CameraX, int CameraY )
 	{
 	case OBJECT_TILE:
 		{
-			//char temp[64];
+			char temp[64];
 
 			for( int y = 0; y < LayerHeight; ++y )
 			{
 				for( int x = 0; x < LayerWidth; ++x )
 				{
-					//sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
+					sprintf( temp, "%i", MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ) ); 
 
-					//CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
-
-					if( InformationArray[ x + y * LayerWidth] > 0 )
+					if( InformationArray[ x + y * LayerWidth] >= 0 )
 					{
 						switch( InformationArray[ x + y * LayerWidth] )
 						{
-						case 1:
-							{
-								int toUnload;
-								CSGD_TextureManager::GetInstance()->Draw( toUnload = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ),
-									x * 32 - CameraX,
-									y * 32 - CameraY );	
 
-								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
+						case 0:
+							{
+								if( GetInfoAtIndex( x, y - 1 ) > 0 )
+								{
+									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitUpper.png" ),
+										x * 32 - CameraX,
+										y * 32 - CameraY,
+										1.0f,
+										1.0f,
+										0,
+										0.0f,
+										0.0f,
+										0.0f,
+										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+
+
+								}
+								/*		if( GetInfoAtIndex( x, y + 1 ) > 0 )
+								{
+								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLower.png" ),
+								x * 32 - CameraX,
+								y * 32 - CameraY );	
+
+								}
+
+								*/
+								if( GetInfoAtIndex( x - 1, y ) > 0 )
+								{
+									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLeft.png" ),
+										x * 32 - CameraX,
+										y * 32 - CameraY,
+										1.0f,
+										1.0f,
+										0,
+										0.0f,
+										0.0f,
+										0.0f,
+										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+
+
+								}
+								if( GetInfoAtIndex( x + 1, y ) > 0 )
+								{
+									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitRight.png" ),
+										x * 32 - CameraX,
+										y * 32 - CameraY,
+										1.0f,
+										1.0f,
+										0,
+										0.0f,
+										0.0f,
+										0.0f,
+										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+
+
+								}
+
 								break;
 							}
 
-						case 2:
+						case 1:
 							{
-								int toUnload;
-								CSGD_TextureManager::GetInstance()->Draw( toUnload = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ),
+								//int toUnload;
+								//CSGD_TextureManager::GetInstance()->Draw( toUnload = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ),
+								//	x * 32 - CameraX,
+								//	y * 32 - CameraY );	
+
+								////CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
+								//break;
+							}
+
+						case 2:
+							{	
+								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ),
 									x * 32 - CameraX,
-									y * 32 - CameraY );	
+									y * 32 - CameraY,
+									1.0f,
+									1.0f,
+									0,
+									0.0f,
+									0.0f,
+									0.0f,
+									D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
 
 								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
 								break;
@@ -243,14 +384,14 @@ int MFlake::GetInfoAtIndex( int _x, int _y )
 
 void MFlake::SetInfoAtIndex( int _x, int _y, int _value )
 {
-	if( _x > LayerWidth || _x < 0 )
-		return;
-
-	int trueIndex = _x + _y * LayerHeight;
-
-	if( trueIndex < LayerHeight * LayerWidth )
+	if( _x < LayerWidth && _x >= 0 )
 	{
-		InformationArray[trueIndex] = _value;
+		int trueIndex = _x + _y * LayerHeight;
+
+		if( trueIndex < LayerHeight * LayerWidth )
+		{
+			InformationArray[trueIndex] = _value;
+		}
 	}
 }
 
@@ -259,7 +400,7 @@ void MFlake::Resize( int newWidth, int newHeight )
 	LayerWidth = newWidth; 
 	LayerHeight = newHeight; 
 
-	delete[] InformationArray;
+	//delete[] InformationArray;
 
 	InformationArray = new int[ LayerWidth * LayerHeight ];
 

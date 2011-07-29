@@ -34,6 +34,12 @@
     <Filter Include="Messaging">
       <UniqueIdentifier>{1a7c9705-ad45-4bb1-a638-d4bfd3797794}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{6fae13a9-45bb-4573-b1d6-febdfcf0a7fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units\Objects">
+      <UniqueIdentifier>{c775d871-98ae-4249-b0ca-39d2419dc077}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\winmain.cpp">
@@ -86,6 +92,24 @@
     </ClCompile>
     <ClCompile Include="Source\Messaging\Messages.cpp">
       <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="CDataManager.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CBitFont.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +178,18 @@
     </ClInclude>
     <ClInclude Include="Source\Messaging\MMessageSystem.h">
       <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="CDataManagerState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CBitFont.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

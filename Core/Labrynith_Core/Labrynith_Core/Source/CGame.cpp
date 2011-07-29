@@ -91,7 +91,7 @@ void CGame::Update()
 
 void CGame::Render()
 {
-	CSGD_Direct3D::GetInstance()->Clear(56, 56, 128);
+	CSGD_Direct3D::GetInstance()->Clear(0, 0, 0);
 	CSGD_Direct3D::GetInstance()->DeviceBegin();
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
 

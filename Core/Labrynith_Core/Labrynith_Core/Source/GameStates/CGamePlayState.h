@@ -16,6 +16,8 @@ class CGamePlayState : public IGameState
 	// destructor
 	~CGamePlayState();
 
+	float timestep;
+
 public:
 
 	int testVaribale;

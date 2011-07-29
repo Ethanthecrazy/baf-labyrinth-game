@@ -10,6 +10,8 @@ class MLayer
 {
 private:
 
+	int LayerID;
+
 	BST<int> FlakeIndex;
 	vector<MFlake> m_vFlakes;
 	int m_nSize;
@@ -22,7 +24,7 @@ private:
 
 public:
 
-	MLayer();
+	MLayer( int _layerID );
 
 	int AddUnit( IUnitInterface* _toAdd );
 	int AddUnitIndexed( IUnitInterface* _toAdd );
@@ -46,5 +48,7 @@ public:
 
 	int GetLayerWidth(void) { return LayerWidth; }
 	int GetLayerHeight(void) { return LayerHeight; }
+
+	int GetLayerID(void) { return LayerID; }
 
 };

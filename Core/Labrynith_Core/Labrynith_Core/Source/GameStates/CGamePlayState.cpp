@@ -10,7 +10,6 @@
 #include "../CGame.h"
 #include "../Object Manager/Units/CBaseEntity.h"
 #include "../Object Manager/Units/CBaseObject.h"
-
 #include "../Messaging/MEventSystem.h"
 
 #include <iostream>
@@ -37,7 +36,7 @@ void CGamePlayState::Enter(void)
 
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
 
-	MObjectManager::GetInstance()->ResizeLayer( 1, 30, 30 );
+	MObjectManager::GetInstance()->ResizeLayer( 1, 50, 50 );
 
 	IUnitInterface* temp = new CBaseEntity();
 	((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
@@ -46,6 +45,14 @@ void CGamePlayState::Enter(void)
 	((CBaseEntity*)(temp))->SetIndexPosY( 0 );
 
 	testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+
+	for( int x = 0; x < MObjectManager::GetInstance()->GetLayer( 1 ).GetLayerWidth(); ++x )
+	{
+		for( int y = 0; y < MObjectManager::GetInstance()->GetLayer( 1 ).GetLayerHeight(); ++y )
+		{
+			MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, rand() % 3 );
+		}
+	}
 }
 
 bool CGamePlayState::Input(void)
@@ -59,6 +66,9 @@ bool CGamePlayState::Input(void)
 
 	if( player )
 	{
+		if( pDI->KeyDown( DIK_SPACE ) )
+			MObjectManager::GetInstance()->FindLayer( testVaribale ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( player->GetIndexPosX(), player->GetIndexPosY(), rand() % 15 + 240 );
+				
 		if( player->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 		{
 
@@ -97,6 +107,8 @@ bool CGamePlayState::Input(void)
 
 void CGamePlayState::Update(float fDT)
 {
+	timestep = fDT;
+
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
 	MObjectManager::GetInstance()->Update( fDT );
@@ -133,6 +145,16 @@ void CGamePlayState::Render(void)
 	}
 
 	pD3D->DrawTextA( "Gameplay State", 100, 100 );
+
+	char temp[64];
+
+	sprintf( temp, "%f", timestep ); 
+
+	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
+
+	sprintf( temp, "%f", 1.0f / timestep ); 
+
+	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
 }
 
 void CGamePlayState::Exit(void)
@@ -153,7 +175,22 @@ void CGamePlayState::EnterCommand(void)
 		string command;
 		cin >> command;
 
-		if( command == "addentity" )
+		if( command == "setlight" )
+		{	
+			cout << "Set Light\n";
+			cout << "\tValue:";
+			int _value;
+			cin >> _value;
+			cout << "\tX:";
+			int PosX;
+			cin >> PosX;
+			cout << "\tY:";
+			int PosY;
+			cin >> PosY;
+
+			MObjectManager::GetInstance()->FindLayer( testVaribale ).SetValueInFlakeAtIndex( _value, OBJECT_LIGHT, PosX, PosY );
+		}
+		else if( command == "addentity" )
 		{	
 			cout << "Add Entity\n";
 			cout << "\tX:";
@@ -260,16 +297,35 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 	switch(_message->GetMsgID())
 	{
 	case MSG_CREATE_ENTITY:
+		{
+			msgCreateEntity* NewMessage = (msgCreateEntity*)_message;
 
-		msgCreateEntity* NewMessage = (msgCreateEntity*)_message;
+			IUnitInterface* temp = new CBaseEntity();
+			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
+			((CBaseEntity*)(temp))->SetIndexPosX( NewMessage->GetX() );
+			((CBaseEntity*)(temp))->SetIndexPosY( NewMessage->GetY() );
+			((CBaseEntity*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );
+			((CBaseEntity*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
+			MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+		}
+		break;
 
-		IUnitInterface* temp = new CBaseEntity();
-		((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
-		((CBaseEntity*)(temp))->SetIndexPosX( NewMessage->GetX() );
-		((CBaseEntity*)(temp))->SetIndexPosY( NewMessage->GetY() );
-		((CBaseEntity*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );
-		((CBaseEntity*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
-		MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+	case MSG_REMOVE_UNIT:
+		{
+			msgRemoveUnit* NewMessage = (msgRemoveUnit*)_message;
+			MObjectManager::GetInstance()->RemoveUnit( NewMessage->GetTarget() );
+		}
+		break;
+
+	case MSG_TRANSFER_LIGHT:
+		{
+			msgTransferLight* NewMessage = (msgTransferLight*)_message;
+			MFlake* FlakeScope = (MFlake*)NewMessage->GetFlake(); 
+
+			//FlakeScope->SetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY(), FlakeScope->GetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY() ) - NewMessage->GetTransferValue() );
+			FlakeScope->SetInfoAtIndex( NewMessage->GetTwoX(), NewMessage->GetTwoY(), NewMessage->GetTransferValue() );
+
+		}
 		break;
 	}
 

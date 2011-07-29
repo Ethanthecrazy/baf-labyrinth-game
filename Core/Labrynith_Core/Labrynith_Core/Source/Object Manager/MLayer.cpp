@@ -1,7 +1,7 @@
 #include "MLayer.h"
 #include <iostream>
 
-MLayer::MLayer()
+MLayer::MLayer( int _layerID ) : LayerID( _layerID )
 {
 	LayerWidth = 0;
 	LayerHeight = 0;
@@ -13,7 +13,7 @@ MLayer::MLayer()
 
 	for( int i = 0; i < 9; ++i )
 	{
-		m_vFlakes.push_back( MFlake( LayerWidth, LayerHeight, OffSetFromCenterX, OffSetFromCenterY ) );
+		m_vFlakes.push_back( MFlake( LayerWidth, LayerHeight, OffSetFromCenterX, OffSetFromCenterY, LayerID ) );
 		m_vFlakes[ m_vFlakes.size() - 1].SetFlakeType( i );
 	}
 

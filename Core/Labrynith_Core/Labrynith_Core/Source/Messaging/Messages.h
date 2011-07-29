@@ -1,7 +1,7 @@
 #ifndef MESSAGES_H
 #define MESSAGES_H
 
-enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_MAX };
+enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_MAX };
 
 class CBaseMessage
 {
@@ -33,6 +33,39 @@ public:
 	int GetY( void ) { return m_nPosY; }
 
 };
+
+class msgRemoveUnit : public CBaseMessage
+{
+	int m_pToRemove;
+
+public:
+
+	msgRemoveUnit( int _toRemove );
+	int GetTarget( void ) { return m_pToRemove; }
+
+};
+
+class msgTransferLight : public CBaseMessage
+{
+	int OneX;
+	int	OneY;
+	int TwoX;
+	int TwoY;
+	int TransferValue;
+	void* Flake;
+
+public:
+
+	msgTransferLight( int _OneX, int _OneY, int _TwoX, int _TwoY, int _TransferValue, void* _Flake );
+	int GetOneX( void ) { return OneX; }
+	int GetOneY( void ) { return OneY; }
+	int GetTwoX( void ) { return TwoX; }
+	int GetTwoY( void ) { return TwoY; }
+	int GetTransferValue(void) { return TransferValue; }
+	void* GetFlake( void ) { return Flake; } 
+
+};
+
 
 
 #endif

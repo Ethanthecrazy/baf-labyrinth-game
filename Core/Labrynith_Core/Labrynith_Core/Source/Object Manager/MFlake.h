@@ -12,7 +12,7 @@ class MFlake
 {
 private:
 
-	MLayer* parentLayer;
+	int parentLayer;
 
 	BST<int> ArrayIndex;
 	int* InformationArray;
@@ -27,9 +27,11 @@ private:
 	int OffSetFromCenterX;
 	int OffSetFromCenterY;
 
+	void LightingProcess( int _X, int _Y );
+
 public:
 
-	MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY );
+	MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY, int _parentLayer );
 	~MFlake();
 
 	int AddUnit( IUnitInterface* _toAdd );

@@ -4,6 +4,7 @@
 
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "../Wrappers/CSGD_DirectInput.h"
+#include "../Wrappers/CSGD_TextureManager.h"
 #include "../CGame.h"
 
 #include <iostream>
@@ -26,6 +27,12 @@ CMainMenuState* CMainMenuState::GetInstance()
 void CMainMenuState::Enter(void)
 {
 	cout << "MainMenu\n";
+
+	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
+		' ',
+		64,
+		64,
+		10 );
 }
 
 bool CMainMenuState::Input(void)
@@ -51,7 +58,12 @@ void CMainMenuState::Render(void)
 	
 	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
 
-	pD3D->DrawTextA( "Main Menu State", 100, 100 );
+	MetalText.Print( "Main Menu", 100, 100, 0.6f );
+
+	MetalText.Print( "New", 110, 230, 0.5f );
+	MetalText.Print( "Load", 110, 260, 0.5f );
+	MetalText.Print( "Options", 110, 290, 0.5f );
+	MetalText.Print( "Exit", 110, 320, 0.5f );
 
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 }

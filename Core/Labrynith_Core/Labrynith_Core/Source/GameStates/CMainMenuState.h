@@ -4,10 +4,14 @@
 
 #include "IGameState.h"
 
+#include "../CBitFont.h"
+
 enum MenuItems{ PLAY, OPTIONS, HOWTOPLAY, HIGHSCORES, CREDITS, EXIT, NUM_MENUITEMS };
 
 class CMainMenuState : public IGameState
 {
+	CBitFont MetalText;
+
 	// default constructor
 	CMainMenuState();
 	// copy constructor

@@ -37,7 +37,7 @@
 
 const char* g_szWINDOW_CLASS_NAME	= "LabyrinthCore";			//	Window Class Name.
 
-const char* g_szWINDOW_TITLE		= "Core Build 1.0";		//	Window Title.
+const char* g_szWINDOW_TITLE		= "Core Build 1.0";			//	Window Title.
 const int	g_nWINDOW_WIDTH			= 800;						//	Window Width.
 const int	g_nWINDOW_HEIGHT		= 600;						//	Window Height.
 const BOOL	g_bIS_WINDOWED			= true;						

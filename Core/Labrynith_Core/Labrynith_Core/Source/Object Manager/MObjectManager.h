@@ -52,6 +52,8 @@ public:
 	bool MoveEntRight( int _Ident );
 
 	MLayer& FindLayer( int _Ident );
+	MLayer& GetLayer( int _index ) { return m_vLayers[ _index ]; }
+
 	MFlake& FindFlake( int _Ident );
 
 	int FindValueInFlakeInLayerAtIndex( int _layer, int _flake, int _x, int _y ); 

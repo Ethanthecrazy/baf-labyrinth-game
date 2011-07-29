@@ -28,6 +28,8 @@ CBaseEntity::~CBaseEntity(void)
 
 void CBaseEntity::Update(float fDT)
 {
+	//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
 
@@ -41,15 +43,19 @@ void CBaseEntity::Update(float fDT)
 
 			case FLAG_MOVE_RIGHT:
 				SetPosX( GetPosX() + 125 * fDT );
+				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_LEFT:
 				SetPosX( GetPosX() - 125 * fDT );
+				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_UP:
 				SetPosY( GetPosY() - 125 * fDT );
+				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_DOWN:
 				SetPosY( GetPosY() + 125 * fDT );
+				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			}
 		}
@@ -91,6 +97,9 @@ void CBaseEntity::Update(float fDT)
 		SetLastPosX( GetPosX() );
 		SetLastPosY( GetPosY() );
 	}
+
+	
+
 }
 
 void CBaseEntity::Render( int CameraPosX, int CameraPosY )
@@ -100,7 +109,15 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 		int DrawPositionX = (int)GetPosX() - CameraPosX;
 		int DrawPositionY = (int)GetPosY() - CameraPosY;
 
-		CSGD_TextureManager::GetInstance()->Draw( m_nImageID, DrawPositionX, DrawPositionY );
+		CSGD_TextureManager::GetInstance()->Draw( m_nImageID, DrawPositionX, DrawPositionY,
+			1.0f,
+			1.0f,
+			0,
+			0.0f,
+			0.0f,
+			0.0f,
+			D3DCOLOR_ARGB( MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
+
 	}
 }
 

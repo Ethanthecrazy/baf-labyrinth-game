@@ -92,13 +92,13 @@ public:
 	void rPrint( Node* input ) const;
 
 	void 
-	rClear( Node* input ); 
+		rClear( Node* input ); 
 
 	Node* 
-	rCopy( Node* input );
+		rCopy( Node* input );
 
 	void
-	rInsert( Node* input, const Type& v );
+		rInsert( Node* input, const Type& v );
 
 	bool rFind( Node* input, const Type& v ) const;
 
@@ -112,6 +112,8 @@ public:
 	void DecrementFromNode( int _testValue );
 	void rDecrementFromNode( Node* input, int _testValue );
 
+	bool NewFindandRemove( const Type& v );
+
 };
 
 
@@ -123,7 +125,7 @@ BST<Type>::~BST()
 
 template< typename Type >
 BST<Type>& 
-BST<Type>::operator=( const BST& that )
+	BST<Type>::operator=( const BST& that )
 {
 	if( this != &that )
 	{
@@ -145,7 +147,7 @@ BST<Type>::BST(const BST& that)
 
 	if( that.Root )
 	{
-			Root = rCopy( that.Root );
+		Root = rCopy( that.Root );
 	}
 	else
 		Root = nullptr;
@@ -156,7 +158,7 @@ BST<Type>::BST(const BST& that)
 
 template< typename Type >
 void
-BST<Type>::insert(const Type& v)
+	BST<Type>::insert(const Type& v)
 {
 	if( !Root )
 	{
@@ -173,11 +175,11 @@ BST<Type>::insert(const Type& v)
 
 template< typename Type >
 bool
-BST<Type>::findAndRemove(const Type& v)
+	BST<Type>::findAndRemove(const Type& v)
 {
 	Node* Curr = Root;
 	Node* Prnt = nullptr;
-	Node* temp;
+	Node* temp = nullptr;
 
 	for( ; Curr != nullptr ; )
 	{
@@ -195,106 +197,108 @@ BST<Type>::findAndRemove(const Type& v)
 			break;
 	}
 
-	if( Curr == nullptr )
-		return false;
+		if( Curr == nullptr )
+			return false;
 
-	if( Curr->Left && Curr->Right )
-	{
-		temp = Curr;
-		Curr = Curr->Right;
-
-		for( ; Curr->Left != nullptr; )
+		if( Curr->Left && Curr->Right )
 		{
-			Prnt = Curr;
-			Curr = Curr->Left;
-		}
+			temp = Curr;
+			Curr = Curr->Right;
 
-		temp->element = Curr->element;
-	}
-
-
-	if( !Curr->Left && !Curr->Right )
-	{
-		if( Curr == Root )
-		{
-			Root = nullptr; 
-		}
-		else
-		{
-			if( Curr == Prnt->Left )
+			for( ; Curr->Left != nullptr; )
 			{
-				Prnt->Left = nullptr;
+				Prnt = Curr;
+				Curr = Curr->Left;
+			}
+
+			temp->element = Curr->element;
+		}
+
+
+		if( !Curr->Left && !Curr->Right )
+		{
+			if( Curr == Root )
+			{
+				Root = nullptr; 
 			}
 			else
 			{
-				Prnt->Right = nullptr;
-			}
-		}
-
-		delete Curr;
-	}
-	else if( Curr->Right || Curr->Left )
-	{
-
-		if( Curr == Root )
-		{
-		
-			if( Root->Left )
-			{
-				Root = Curr->Left;
-			}
-			else
-			{
-				Root = Curr->Right;
-			}
-
-		}
-		else
-		{
-
-
-			if( Curr == Prnt->Left )
-			{
-				if( Curr->Left)
+				if( Curr == Prnt->Left )
 				{
-					Prnt->Left = Curr->Left;
+					Prnt->Left = nullptr;
 				}
 				else
 				{
-					Prnt->Left = Curr->Right;
+					Prnt->Right = nullptr;
+				}
+			}
+
+			delete Curr;
+		}
+		else if( Curr->Right || Curr->Left )
+		{
+
+			if( Curr == Root )
+			{
+
+				if( Root->Left )
+				{
+					Root = Curr->Left;
+				}
+				else
+				{
+					Root = Curr->Right;
 				}
 
 			}
 			else
 			{
-				if( Curr->Left)
+				if( Prnt )
 				{
-					Prnt->Right = Curr->Left;
+					if( Curr == Prnt->Left )
+					{
+						if( Curr->Left)
+						{
+							Prnt->Left = Curr->Left;
+						}
+						else
+						{
+							Prnt->Left = Curr->Right;
+						}
+
+					}
 				}
 				else
 				{
-					Prnt->Right = Curr->Right;
+					if( Curr->Left)
+					{
+						Prnt->Right = Curr->Left;
+					}
+					else
+					{
+						Prnt->Right = Curr->Right;
+					}
+
 				}
 
 			}
 
+			delete Curr;
 		}
-		delete Curr;
-	}
 
 	return true;
 }
 
 template< typename Type >
 bool 
-BST<Type>::find(const Type& v) const
+	BST<Type>::find(const Type& v) const
 {	
 	return rFind( Root, v );
 }
 
 template< typename Type >
 void
-BST<Type>::clear()
+	BST<Type>::clear()
 {
 	rClear( Root );
 	Root = nullptr;
@@ -302,8 +306,8 @@ BST<Type>::clear()
 
 template< typename Type >
 void
-BST<Type>::printInOrder()
-const
+	BST<Type>::printInOrder()
+	const
 {
 
 	rPrint( Root );
@@ -313,7 +317,7 @@ const
 
 template< typename Type >
 void
-BST<Type>::rClear( Node* input )
+	BST<Type>::rClear( Node* input )
 {
 	if( input )
 	{
@@ -328,7 +332,7 @@ BST<Type>::rClear( Node* input )
 
 template< typename Type >
 typename BST<Type>::Node* 
-BST<Type>::rCopy( Node* input )
+	BST<Type>::rCopy( Node* input )
 {
 	if( input )
 	{
@@ -354,7 +358,7 @@ BST<Type>::rCopy( Node* input )
 
 template< typename Type >
 void
-BST<Type>::rInsert( Node* input, const Type& v )
+	BST<Type>::rInsert( Node* input, const Type& v )
 {
 
 	if( input != nullptr )
@@ -392,13 +396,13 @@ BST<Type>::rInsert( Node* input, const Type& v )
 
 template< typename Type>
 void
-BST<Type>::rPrint( Node* input ) const
+	BST<Type>::rPrint( Node* input ) const
 {
 	if( input )
 	{
 		if( input->Left )
 			rPrint( input->Left );
-		
+
 		cout << input->element << " ";
 
 		if( input->Right )
@@ -408,7 +412,7 @@ BST<Type>::rPrint( Node* input ) const
 
 template< typename Type >
 bool
-BST<Type>::rFind( Node* input, const Type& v ) const
+	BST<Type>::rFind( Node* input, const Type& v ) const
 {
 	if( input )
 	{
@@ -427,7 +431,7 @@ BST<Type>::rFind( Node* input, const Type& v ) const
 
 template< typename Type >
 void 
-BST<Type>::InsertEntry( const Type& _searchKey, int _trueValue )
+	BST<Type>::InsertEntry( const Type& _searchKey, int _trueValue )
 {
 	if( !Root )
 	{
@@ -444,7 +448,7 @@ BST<Type>::InsertEntry( const Type& _searchKey, int _trueValue )
 
 template< typename Type >
 void 
-BST<Type>::rInsertEntry( Node* input, const Type& _searchKey, int _trueValue )
+	BST<Type>::rInsertEntry( Node* input, const Type& _searchKey, int _trueValue )
 {
 	if( input != nullptr )
 	{
@@ -487,16 +491,16 @@ BST<Type>::rInsertEntry( Node* input, const Type& _searchKey, int _trueValue )
 
 template< typename Type >
 int 
-BST<Type>::ConvertTrueValue( const Type& _searchKey )
+	BST<Type>::ConvertTrueValue( const Type& _searchKey )
 {
 	return rConvertTrueValue( Root, _searchKey );
 }
-	
+
 template< typename Type >
 int 
-BST<Type>::rConvertTrueValue( Node* input, const Type& _searchKey )
+	BST<Type>::rConvertTrueValue( Node* input, const Type& _searchKey )
 {
-	if( input )
+	if( input && input != (void*)0xfeeefeee  )
 	{
 		if( _searchKey == input->element)
 			return input->nTrueID;
@@ -514,7 +518,7 @@ BST<Type>::rConvertTrueValue( Node* input, const Type& _searchKey )
 
 template< typename Type >
 void 
-BST<Type>::DecrementFromNode( int _testValue )
+	BST<Type>::DecrementFromNode( int _testValue )
 {
 	rDecrementFromNode( Root, _testValue );
 
@@ -522,17 +526,26 @@ BST<Type>::DecrementFromNode( int _testValue )
 
 template< typename Type >
 void 
-BST<Type>::rDecrementFromNode( Node* input, int _testValue )
+	BST<Type>::rDecrementFromNode( Node* input, int _testValue )
 {
 	if( input )
 	{
 		if( input->nTrueID > _testValue )
 			input->nTrueID -= 1;
 
-			rDecrementFromNode( input->Left, _testValue );
-			rDecrementFromNode( input->Right, _testValue );
+		rDecrementFromNode( input->Left, _testValue );
+		rDecrementFromNode( input->Right, _testValue );
 	}
 }
 
+template< typename Type >
+bool 
+	BST<Type>::NewFindandRemove( const Type& v )
+{
+	Node* Curr = Root;
+	Node* Prnt = nullptr;
+	Node* temp = nullptr;
+	return false;
+}
 
 #endif
