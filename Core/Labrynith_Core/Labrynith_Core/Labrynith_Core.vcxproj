@@ -92,6 +92,7 @@
     <ClCompile Include="Source\Object Manager\MLayer.cpp" />
     <ClCompile Include="Source\Object Manager\MObjectManager.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CBaseEntity.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\CBaseGolem.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp" />
     <ClCompile Include="Source\Threading\MSyncManager.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Source\Object Manager\MLayer.h" />
     <ClInclude Include="Source\Object Manager\MObjectManager.h" />
     <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h" />
+    <ClInclude Include="Source\Object Manager\Units\CBaseGolem.h" />
     <ClInclude Include="Source\Object Manager\Units\CBaseObject.h" />
     <ClInclude Include="Source\Threading\MSyncManager.h" />
     <ClInclude Include="Source\TinyXML\tinystr.h" />
