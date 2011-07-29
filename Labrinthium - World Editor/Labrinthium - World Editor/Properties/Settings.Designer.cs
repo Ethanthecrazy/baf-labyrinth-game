@@ -23,21 +23,87 @@ namespace Labrinthium___World_Editor.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
         public int DefaultNewWidth {
             get {
                 return ((int)(this["DefaultNewWidth"]));
             }
+            set {
+                this["DefaultNewWidth"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public int DefaultNewHeight {
             get {
                 return ((int)(this["DefaultNewHeight"]));
+            }
+            set {
+                this["DefaultNewHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoSave {
+            get {
+                return ((bool)(this["autoSave"]));
+            }
+            set {
+                this["autoSave"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int AutoSaveInterval {
+            get {
+                return ((int)(this["AutoSaveInterval"]));
+            }
+            set {
+                this["AutoSaveInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int DefaultNewDepth {
+            get {
+                return ((int)(this["DefaultNewDepth"]));
+            }
+            set {
+                this["DefaultNewDepth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Override {
+            get {
+                return ((bool)(this["Override"]));
+            }
+            set {
+                this["Override"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TileSelection {
+            get {
+                return ((bool)(this["TileSelection"]));
+            }
+            set {
+                this["TileSelection"] = value;
             }
         }
     }

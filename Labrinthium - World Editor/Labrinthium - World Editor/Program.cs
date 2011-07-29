@@ -18,7 +18,6 @@ namespace Labrinthium___World_Editor
            // Application.Run(new MainForm());
 
             MainForm theform = new MainForm();
-
             
 
             theform.Show();
@@ -33,6 +32,7 @@ namespace Labrinthium___World_Editor
                 
             }
 
+            Application.Exit();
         }
     }
 }

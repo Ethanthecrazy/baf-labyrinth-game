@@ -656,7 +656,7 @@ namespace SGD
 
             System.Drawing.Rectangle[] regions = new System.Drawing.Rectangle[1];
             regions[0] = rect;
-
+            
             device.Clear(ClearFlags.Target, System.Drawing.Color.FromArgb(red, green, blue), 1.0f, 0, regions);
 
             return true;
