@@ -1,5 +1,6 @@
 #include "CGamePlayState.h"
 #include "CMainMenuState.h"
+#include "CLoadLevelState.h"
 
 #include <string>
 
@@ -18,7 +19,7 @@ using namespace std;
 
 CGamePlayState::CGamePlayState()
 {
-	
+	m_nCurrLevel = 0;
 }
 
 // destructor
@@ -35,8 +36,8 @@ void CGamePlayState::Enter(void)
 	cout << "GamePlay\n";
 
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
-
-	MObjectManager::GetInstance()->ResizeLayer( 1, 50, 50 );
+	
+	CGame::GetInstance()->PushState( CLoadLevelState::GetInstance() );
 
 	IUnitInterface* temp = new CBaseEntity();
 	((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
@@ -46,13 +47,6 @@ void CGamePlayState::Enter(void)
 
 	testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 
-	for( int x = 0; x < MObjectManager::GetInstance()->GetLayer( 1 ).GetLayerWidth(); ++x )
-	{
-		for( int y = 0; y < MObjectManager::GetInstance()->GetLayer( 1 ).GetLayerHeight(); ++y )
-		{
-			MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, rand() % 3 );
-		}
-	}
 }
 
 bool CGamePlayState::Input(void)

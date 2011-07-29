@@ -17,6 +17,7 @@ class CGamePlayState : public IGameState
 	~CGamePlayState();
 
 	float timestep;
+	int m_nCurrLevel;
 
 public:
 
@@ -31,6 +32,9 @@ public:
 	void Exit(void);
 
 	void EnterCommand(void);
+
+	int GetCurrentLevel(void) {return m_nCurrLevel;}
+	void SetCurrentLevel(const int _level) {m_nCurrLevel = _level;}
 
 	static void MessageProc(CBaseMessage* _message);
 };
