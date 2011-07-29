@@ -1,0 +1,14 @@
+7/29/2011
+CGame - In Initialize() Animation Manager loads files.
+      - In Shutdown() AM cleans up after itself
+CEntity - added Animation ID
+        - Added SetImageID()
+        - Added LoadEntMoveAnimIDs()(loads basic movement anims.)
+	- Added a bool to let animations play whe an entity isnt moving
+	- Edited Update(It handles the animations now)
+	- Edited Render(It can render both animations and normal images)
+CGamePlayState - Makes entities that sue animations now
+	- Edited Enter() - get animation ids for player movement
+			 - load in a diff image
+	- Edited MessageProc() - Create entity message loads in a
+                               - diff image and sets up animation ids 

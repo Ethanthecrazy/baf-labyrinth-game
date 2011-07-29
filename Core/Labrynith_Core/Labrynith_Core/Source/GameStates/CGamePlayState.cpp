@@ -40,8 +40,10 @@ void CGamePlayState::Enter(void)
 	CGame::GetInstance()->PushState( CLoadLevelState::GetInstance() );
 
 	IUnitInterface* temp = new CBaseEntity();
-	((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
-	
+	//((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
+	((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/$rob.png" );
+	//Load basic movement animations
+	((CBaseEntity*)(temp))->LoadEntMoveAnimIDs();
 	((CBaseEntity*)(temp))->SetIndexPosX( 0 );
 	((CBaseEntity*)(temp))->SetIndexPosY( 0 );
 
@@ -295,7 +297,10 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgCreateEntity* NewMessage = (msgCreateEntity*)_message;
 
 			IUnitInterface* temp = new CBaseEntity();
-			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
+			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/$rob.png" );
+			//Load basic movement animations
+			((CBaseEntity*)(temp))->LoadEntMoveAnimIDs();
+			((CBaseEntity*)(temp))->SetPlayAnimWhileStill(true);
 			((CBaseEntity*)(temp))->SetIndexPosX( NewMessage->GetX() );
 			((CBaseEntity*)(temp))->SetIndexPosY( NewMessage->GetY() );
 			((CBaseEntity*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );

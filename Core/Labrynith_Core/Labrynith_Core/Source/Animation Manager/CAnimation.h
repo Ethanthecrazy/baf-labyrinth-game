@@ -29,7 +29,9 @@ public:
 	friend ostream& operator<<(ostream& os, const CAnimation& anim);
 
 	void Update(float fDelta);
-	void Draw(int nPosX, int nPosY);
+	void Draw(int nPosX, int nPosY, float fScaleX, 
+		     float fScaleY, float fRotCenterX,
+	         float fRotCenterY, float fRotation, DWORD dwColor);
 
 	void Play();
 	void Stop();

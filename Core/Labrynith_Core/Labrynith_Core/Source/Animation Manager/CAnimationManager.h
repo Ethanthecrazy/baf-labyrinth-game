@@ -15,6 +15,11 @@ class CAnimationManager
 	static CAnimationManager* instance;
 	CAnimationManager();
 	CAnimationManager(const CAnimationManager* c);
+	//private
+	CAnimation* GetListAnimation(int nAnimID) const;
+	CAnimation* GetAnimation(int nAnimID) const;
+	CAnimation* GetAnimation(std::string szName) const;
+	void AddAnimation(const CAnimation* anim);
 protected:
 	~CAnimationManager();
 public:
@@ -23,14 +28,15 @@ public:
 	bool LoadBinary(std::string szFilename);
 	bool LoadXML(std::string szFilename);
 	bool LoadAnimation(std::string szFilename, bool bIsXML);
-	void AddAnimation(const CAnimation* anim);
 	void AddPoolAnimation(const CAnimation* anim);
 
 	static CAnimationManager* GetInstance();
 	static void DeleteInstance();
 
 	bool UpdateAnimation(float fDelta, int nAnimID);
-	bool Draw(int nIndex, int nPosX, int nPosY);
+	bool Draw(int nIndex, int nPosX, int nPosY, 
+	          float fScaleX, float fScaleY, float fRotCenterX,
+	          float fRotCenterY, float fRotation, DWORD dwColor);
 
 	bool PlayAnimation(int nAnimID);
 	bool StopAnimation(int nAnimID);
@@ -42,9 +48,6 @@ public:
 	int GetID(std::string szName) const;
     bool IsAnimationPlaying(int nAnimID) const;
 	bool SetAnimTexture(const int nAnimID, const int nImageID); 
-	CAnimation* GetAnimation(int nAnimID) const;
-	CAnimation* GetListAnimation(int nAnimID) const;
-	CAnimation* GetAnimation(std::string szName) const;
 }; 
 
 #endif

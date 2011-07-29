@@ -1,6 +1,7 @@
 #include "CBaseEntity.h"
 #include "../../Wrappers/CSGD_TextureManager.h"
 #include "../MObjectManager.h"
+#include "../../Animation Manager/CAnimationManager.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -17,8 +18,9 @@ CBaseEntity::CBaseEntity()
 	 SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 
 	 m_nImageID = -1;
-
+	 SetAnimID(-1);
 	 m_uiRefCount = 1;
+	 SetPlayAnimWhileStill(false);
 }
 
 CBaseEntity::~CBaseEntity(void)
@@ -29,6 +31,13 @@ CBaseEntity::~CBaseEntity(void)
 void CBaseEntity::Update(float fDT)
 {
 	//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+	
+	//If the animation isnt playing, play it
+	if(!CAnimationManager::GetInstance()->IsAnimationPlaying(GetCurrentAnimID()))
+		CAnimationManager::GetInstance()->PlayAnimation(GetCurrentAnimID());
+
+	CAnimationManager::GetInstance()->UpdateAnimation(fDT, GetCurrentAnimID());
+
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
@@ -40,21 +49,30 @@ void CBaseEntity::Update(float fDT)
 
 			switch ( GetFlag_DirectionToMove() )
 			{
+				//Change all animations based on direction
 
 			case FLAG_MOVE_RIGHT:
 				SetPosX( GetPosX() + 125 * fDT );
+				if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[2]);
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_LEFT:
 				SetPosX( GetPosX() - 125 * fDT );
+				if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[1]);
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_UP:
 				SetPosY( GetPosY() - 125 * fDT );
+				if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[3]);
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_DOWN:
 				SetPosY( GetPosY() + 125 * fDT );
+				if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[0]);
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			}
@@ -96,6 +114,13 @@ void CBaseEntity::Update(float fDT)
 	{
 		SetLastPosX( GetPosX() );
 		SetLastPosY( GetPosY() );
+		
+		if(!PlayAnimWhileStill)
+		{
+			//When we are not moving stop the animation at the
+			//first frame(which is idle) 
+			CAnimationManager::GetInstance()->StopAnimationAtFrame(GetCurrentAnimID(), 0);
+		}
 	}
 
 	
@@ -109,6 +134,8 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 		int DrawPositionX = (int)GetPosX() - CameraPosX;
 		int DrawPositionY = (int)GetPosY() - CameraPosY;
 
+		if(GetCurrentAnimID() <= -1)
+		{
 		CSGD_TextureManager::GetInstance()->Draw( m_nImageID, DrawPositionX, DrawPositionY,
 			1.0f,
 			1.0f,
@@ -117,6 +144,21 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 			0.0f,
 			0.0f,
 			D3DCOLOR_ARGB( MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
+		}
+		else
+		{
+			CAnimationManager::GetInstance()->Draw(GetCurrentAnimID(), DrawPositionX,
+				DrawPositionY,
+				1.0f,
+				1.0f,
+				0,
+				0.0f,
+				0.0f,
+				D3DCOLOR_ARGB( MObjectManager::GetInstance()->
+				FindLayer( m_nIdentificationNumber ).
+				GetFlake( OBJECT_LIGHT ).
+				GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );
+		}
 
 	}
 }
@@ -137,4 +179,27 @@ void CBaseEntity::Release(void)
 
 	if (m_uiRefCount == 0)
 		delete this;
+}
+
+void CBaseEntity::LoadEntMoveAnimIDs()
+{
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("entity-movedown"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("entity-moveleft"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("entity-moveright"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("entity-moveup"));
+	//down animation by default
+	SetAnimID(m_vMovementAnimIDs[0]);
+}
+
+void CBaseEntity::SetAnimID(const int nAnimID)
+{
+	m_nCurrAnimID = nAnimID;
+	//update animations texture to render with
+	CAnimationManager::GetInstance()->SetAnimTexture(GetCurrentAnimID(), m_nImageID);
+}
+void CBaseEntity::SetImageID(const int nImageID)
+{
+	m_nImageID = nImageID;
+	//update animations texture to render with
+	CAnimationManager::GetInstance()->SetAnimTexture(GetCurrentAnimID(), m_nImageID);
 }

@@ -39,7 +39,10 @@ bool CAnimationManager::LoadBinary(std::string szFilename)
 	ifstream in;
 	in.open(szFilename, ios_base::in | ios_base::binary);
 	if(!in.is_open())
+	{
+		cout << "Failed to load Animation(from binary file)" << endl;
 		return false;
+	}
 
 	//file is open
 	if(in.good())
@@ -152,7 +155,10 @@ bool CAnimationManager::LoadXML(std::string szFilename)
 {
 	TiXmlDocument doc;
 	if( doc.LoadFile(szFilename.c_str()) == false)
+	{
+		cout << "Failed to load Animation(from XML file)" << endl;
 		return false;
+	}
 
 	TiXmlElement* pRoot = doc.RootElement();
 	if(!pRoot)
@@ -320,12 +326,15 @@ bool CAnimationManager::UpdateAnimation(float fDelta, int nAnimID)
 	}
 	return false;
 }
-bool CAnimationManager::Draw(int nAnimID, int nPosX, int nPosY)
+bool CAnimationManager::Draw(int nAnimID,int nPosX, int nPosY, 
+	float fScaleX, float fScaleY, float fRotCenterX,
+	float fRotCenterY, float fRotation, DWORD dwColor)
 {
 	CAnimation* anim = GetAnimation(nAnimID);
 	if(anim)
 	{
-		anim->Draw(nPosX, nPosY);
+		anim->Draw(nPosX, nPosY, fScaleX, fScaleY, fRotCenterX,
+			fRotCenterY, fRotation, dwColor);
 		return true;
 	}
 	return false;

@@ -74,13 +74,16 @@ void CAnimation::Update(float fDelta)
         }
     }
 }
-void CAnimation::Draw(int nPosX, int nPosY)
+void CAnimation::Draw(int nPosX, int nPosY, 
+	float fScaleX, float fScaleY, float fRotCenterX,
+	float fRotCenterY, float fRotation, DWORD dwColor)
 {
 	if (GetImageID() == -1)
 		return;
 
 	CSGD_TextureManager::GetInstance()->Draw(GetImageID(), nPosX, nPosY, 
-		1.0f, 1.0f, &GetCurFrame()->GetDrawRect());
+		1.0f, 1.0f, &GetCurFrame()->GetDrawRect(), fRotCenterX,
+		fRotCenterY, fRotation, dwColor);
 }
 
 void CAnimation::Play()
