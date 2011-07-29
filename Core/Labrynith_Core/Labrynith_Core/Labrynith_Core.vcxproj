@@ -77,9 +77,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CDataManager.cpp" />
+    <ClCompile Include="Source\Animation Manager\CAnimation.cpp" />
+    <ClCompile Include="Source\Animation Manager\CAnimationManager.cpp" />
+    <ClCompile Include="Source\Animation Manager\CFrame.cpp" />
     <ClCompile Include="Source\CBitFont.cpp" />
     <ClCompile Include="Source\CGame.cpp" />
     <ClCompile Include="Source\GameStates\CGamePlayState.cpp" />
+    <ClCompile Include="Source\GameStates\CLoadLevelState.cpp" />
     <ClCompile Include="Source\GameStates\CMainMenuState.cpp" />
     <ClCompile Include="Source\Messaging\Messages.cpp" />
     <ClCompile Include="Source\Messaging\MEventSystem.cpp" />
@@ -102,10 +106,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDataManagerState.h" />
+    <ClInclude Include="Source\Animation Manager\CAnimation.h" />
+    <ClInclude Include="Source\Animation Manager\CAnimationManager.h" />
+    <ClInclude Include="Source\Animation Manager\CFrame.h" />
+    <ClInclude Include="Source\Animation Manager\precompiled_header.h" />
     <ClInclude Include="Source\BST.h" />
     <ClInclude Include="Source\CBitFont.h" />
     <ClInclude Include="Source\CGame.h" />
     <ClInclude Include="Source\GameStates\CGamePlayState.h" />
+    <ClInclude Include="Source\GameStates\CLoadLevelState.h" />
     <ClInclude Include="Source\GameStates\CMainMenuState.h" />
     <ClInclude Include="Source\GameStates\IGameState.h" />
     <ClInclude Include="Source\Messaging\Event.h" />

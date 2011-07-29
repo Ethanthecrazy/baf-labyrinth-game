@@ -124,7 +124,7 @@ bool MObjectManager::MoveEntUp( int _Ident )
 
 	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) > 0 )
 	{
-		cout << "Collided With Something\n";
+		cout << "Collided With unit " << otherEntity << "\n";
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) == 0 )
@@ -151,7 +151,8 @@ bool MObjectManager::MoveEntDown( int _Ident )
 
 	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) > 0 )
 	{
-		cout << "Collided With Something\n";
+		cout << "Collided With unit " << otherEntity << "\n";
+		
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) == 0 )
@@ -185,7 +186,7 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 
 	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY() ) > 0 )
 	{
-		cout << "Collided With Something\n";
+		cout << "Collided With unit " << otherEntity << "\n";
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY() ) == 0 )
@@ -218,7 +219,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 
 	if( otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) > 0 )
 	{
-		cout << "Collided With Something\n";
+		cout << "Collided With unit " << otherEntity << "\n";
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) == 0 )

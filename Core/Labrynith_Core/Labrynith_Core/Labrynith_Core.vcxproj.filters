@@ -40,6 +40,9 @@
     <Filter Include="ObjectManager\Units\Objects">
       <UniqueIdentifier>{c775d871-98ae-4249-b0ca-39d2419dc077}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Animation Manager">
+      <UniqueIdentifier>{7ac88a11-bb10-4005-a53a-299c7eaba835}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\winmain.cpp">
@@ -110,6 +113,18 @@
     </ClCompile>
     <ClCompile Include="Source\CBitFont.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation Manager\CAnimation.cpp">
+      <Filter>Animation Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation Manager\CAnimationManager.cpp">
+      <Filter>Animation Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation Manager\CFrame.cpp">
+      <Filter>Animation Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CLoadLevelState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +205,21 @@
     </ClInclude>
     <ClInclude Include="Source\CBitFont.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\CAnimation.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\CAnimationManager.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\CFrame.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\precompiled_header.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CLoadLevelState.h">
+      <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
