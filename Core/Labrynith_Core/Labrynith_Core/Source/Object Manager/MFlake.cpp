@@ -164,7 +164,7 @@ void MFlake::LightingProcess( int x, int y )
 	if( GetInfoAtIndex( x, y ) > 254 )
 		bCanTransfer = true;
 
-	//SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 10 );
+		SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 10 );
 
 	if( GetInfoAtIndex( x, y ) < 10 )
 	{
@@ -177,9 +177,9 @@ void MFlake::LightingProcess( int x, int y )
 	if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x - 1, y ) )
 		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, GetInfoAtIndex( x, y ) - 5 , this ) );
 	if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y + 1 ) )
-		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, GetInfoAtIndex( x, y ) - 5 , this ) );
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, GetInfoAtIndex( x, y ) - 5, this ) );
 	if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y - 1 ) )
-		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, GetInfoAtIndex( x, y ) - 5 , this ) );
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, GetInfoAtIndex( x, y ) - 5, this ) );
 }
 
 void MFlake::Render( int CameraX, int CameraY )
