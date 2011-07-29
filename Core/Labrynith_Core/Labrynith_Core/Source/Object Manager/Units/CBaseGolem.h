@@ -8,6 +8,7 @@ class CBaseGolem : public CBaseEntity
 {
 
 	int m_nGolemType;
+	float fCollectedTime;
 public:
 	CBaseGolem(void);
 	virtual ~CBaseGolem(void);

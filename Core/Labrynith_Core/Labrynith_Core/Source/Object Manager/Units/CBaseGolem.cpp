@@ -4,6 +4,7 @@
 CBaseGolem::CBaseGolem(void)
 {
 	CBaseEntity::CBaseEntity();
+	fCollectedTime = 0.0f;
 }
 CBaseGolem::~CBaseGolem(void)
 {
@@ -13,7 +14,6 @@ CBaseGolem::~CBaseGolem(void)
 void CBaseGolem::Update(float fDT)
 {
 	CBaseEntity::Update(fDT);
-	static float fCollectedTime = 0.0f;
 	fCollectedTime += fDT;
 	if(fCollectedTime >= 2.0f)
 	{
@@ -49,6 +49,7 @@ void CBaseGolem::Update(float fDT)
 			}
 			break;
 		}
+		fCollectedTime = 0.0f;
 	}
 }
 void CBaseGolem::Render( int CameraPosX, int CameraPosY )
