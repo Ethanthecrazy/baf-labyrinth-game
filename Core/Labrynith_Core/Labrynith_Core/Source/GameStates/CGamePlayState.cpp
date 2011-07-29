@@ -19,7 +19,7 @@ using namespace std;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 0;
+	m_nCurrLevel = 1;
 }
 
 // destructor
@@ -41,7 +41,7 @@ void CGamePlayState::Enter(void)
 
 	IUnitInterface* temp = new CBaseEntity();
 	//((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" );
-	((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png");
+	((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/$rob.png" );
 	//Load basic movement animations
 	((CBaseEntity*)(temp))->LoadEntMoveAnimIDs();
 	((CBaseEntity*)(temp))->SetIndexPosX( 0 );
@@ -297,7 +297,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgCreateEntity* NewMessage = (msgCreateEntity*)_message;
 
 			IUnitInterface* temp = new CBaseEntity();
-			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" );
+			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/$rob.png" );
 			//Load basic movement animations
 			((CBaseEntity*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseEntity*)(temp))->SetPlayAnimWhileStill(true);

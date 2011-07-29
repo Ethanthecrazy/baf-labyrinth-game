@@ -199,5 +199,64 @@ bool CLoadLevelState::LoadLevel(int _level)
 			}
 		}
 	}
+
+
+	TiXmlElement* pObjects = pRoot->FirstChildElement("Objects");	
+	if(pObjects)
+	{
+		TiXmlElement* pObject = pObjects->FirstChildElement("TileObject");
+		while(pObject)
+		{			
+			int TypeX, TypeY, theType;
+			int posX, posY;
+			TiXmlElement* pType = pObject->FirstChildElement("Type");
+			if(pType)
+			{
+				string sTypeX, sTypeY;
+
+				sTypeX = pType->FirstChildElement("X")->GetText();
+				sTypeY = pType->FirstChildElement("Y")->GetText();
+
+				TypeX = atoi(sTypeX.c_str());
+				TypeY = atoi(sTypeY.c_str());
+
+				if(TypeX == -1 && TypeY == -1)
+					theType = -1;
+				else if(TypeX == 0 && TypeY == 0)
+					theType = 0;
+				else if(TypeX == 1 && TypeY == 0)
+					theType = 1;
+
+				// 0 = pit
+				// 1 & 2 = ground
+			}
+			
+			TiXmlElement* pPos = pObject->FirstChildElement("Position");
+			if(pPos)
+			{			
+				string sposX, sposY;
+
+				sposX = pMapSize->FirstChildElement("X")->GetText();
+				sposY = pMapSize->FirstChildElement("Y")->GetText();
+
+				posX = atoi(sposX.c_str());
+				posY = atoi(sposY.c_str());
+		
+			}
+
+			switch(theType)
+			{
+			case 0:
+
+				break;
+
+			default:
+				break;
+			}
+			
+			pObject = pObject->NextSiblingElement("Object");
+		}
+	}
+
 	return true;
 }
