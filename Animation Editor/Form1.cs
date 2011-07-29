@@ -174,7 +174,7 @@ namespace AnimationEditor
 
             Rectangle DrawRect = new Rectangle(offset.X, offset.Y,
                                    TM.GetTextureWidth(currAnim.ImageID),//panelFrames.ClientRectangle.Width,
-                                   TM.GetTextureWidth(currAnim.ImageID));//panelFrames.ClientRectangle.Height);
+                                   TM.GetTextureHeight(currAnim.ImageID));//panelFrames.ClientRectangle.Height);
        
             TM.Draw(currAnim.ImageID, 0, 0, 1.0f,
                     1.0f, DrawRect, 0, 0, 0.0f, Color.White.ToArgb());
