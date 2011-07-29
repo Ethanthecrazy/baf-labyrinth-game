@@ -364,7 +364,7 @@ private void openToolStripMenuItem_Click(object sender, EventArgs e)
                     newMap = (TileMap)serializer.Deserialize(reader);
                     newMap.TilesetID = ManagedTextureManager.Instance.LoadTexture(newMap.Tilesetpath, 0);
                     newMap.ObjectTilesetID = ManagedTextureManager.Instance.LoadTexture(newMap.ObjectTilesetpath, 0);
-
+                    newMap.FileName = ofd.FileName;
                     tilemap = newMap;
 
                     renderDepth = 0;
