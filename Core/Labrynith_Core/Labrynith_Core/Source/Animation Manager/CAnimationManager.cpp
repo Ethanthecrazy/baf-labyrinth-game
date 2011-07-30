@@ -212,6 +212,7 @@ bool CAnimationManager::LoadXML(std::string szFilename)
 					ny = atoi(y.c_str()); 
 					pDataChild = pData->FirstChildElement("RDrawRect");
 					pDataChild = pDataChild->FirstChildElement("Width");
+					width = pDataChild->GetText();
 					nwidth = atoi(width.c_str());
 					pDataChild = pData->FirstChildElement("RDrawRect");
 					pDataChild = pDataChild->FirstChildElement("Height");
@@ -230,7 +231,7 @@ bool CAnimationManager::LoadXML(std::string szFilename)
 					if(pDataChild->GetText())
 						name = pDataChild->GetText();
 					//Add Frame
-					frame = new CFrame(fdur, name, nx, ny, (ny + nheight), (nx + nwidth));
+					frame = new CFrame(fdur, name, ny, nx, (ny + nheight), (nx + nwidth));
 					anim->AddFrame(frame);
 					pFrames = pFrames->NextSiblingElement("CFrame");
 				}//end CFrame	

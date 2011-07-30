@@ -40,7 +40,7 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 	CSGD_TextureManager::GetInstance()->InitTextureManager(CSGD_Direct3D::GetInstance()->GetDirect3DDevice(),
 		CSGD_Direct3D::GetInstance()->GetSprite());
 
-	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/entity-movement.dat", false);
+	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/entity-movement.xml", true);
 
 #ifdef _DEBUG
 	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE );
