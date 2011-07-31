@@ -149,8 +149,8 @@ namespace AnimationEditor
 
             //Draw Bitmap
             TM.Draw(ImageID, 
-                    150 + (DrawRect.Left - pAnchor.X),
-                    100 + (DrawRect.Top - pAnchor.Y),
+                    150 + (pAnchor.X - DrawRect.Right),
+                    100 + (pAnchor.Y - DrawRect.Bottom),
                     1.0f, 1.0f, DrawRect,
                     0, 0, 0, color.ToArgb());
         }

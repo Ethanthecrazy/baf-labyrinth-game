@@ -28,8 +28,7 @@ namespace AnimationEditor
         Size Moving = new Size();
         int FrameIndex;
         string SystemPath;
-        bool isRightClick;
-        bool isMovingPoint;
+        int isRightClick;
         public bool Exit;
         
 
@@ -45,6 +44,7 @@ namespace AnimationEditor
             Exit = false;
             animations = new List<CAnimation>();
             buttonRemoveFrame.Enabled = false;
+            isRightClick = -1;
             FrameIndex = 0;
             //If we cant load settings create a new path
             if (!LoadSettings())
@@ -1033,28 +1033,23 @@ namespace AnimationEditor
         }
         private void panelFrames_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Right)
-                isRightClick = true;
-            else
-                isRightClick = false;
+            if (e.Button == MouseButtons.Right)
+                isRightClick = 1;
+            else if(e.Button == MouseButtons.Left)
+                isRightClick = 0;
 
             //Scrolling
             Point offset = Point.Empty;
             offset.X -= panelFrames.AutoScrollPosition.X;
             offset.Y -= panelFrames.AutoScrollPosition.Y;
-            offset.X += e.Location.X;
-            offset.Y += e.Location.Y;
-            if ((offset.X >= currAnim.frames[FrameIndex].PAnchor.X //Top
-                && offset.X <= currAnim.frames[FrameIndex].PAnchor.X + 7) //Bottom
-                && (offset.Y >= currAnim.frames[FrameIndex].PAnchor.Y //Left
-                && offset.Y <= currAnim.frames[FrameIndex].PAnchor.Y + 7)) //Right
+            offset.Offset(e.Location);
+
+            if (e.Button == MouseButtons.Middle) 
             {
-                isMovingPoint = true;
+                isRightClick = 2;
+                currAnim.frames[FrameIndex].PAnchor = SetPoint(offset);
+                UpdateControls();
                 return;
-            }
-            else 
-            {
-                isMovingPoint = false;
             }
 
             Selected = offset;
@@ -1062,21 +1057,13 @@ namespace AnimationEditor
         }
         private void panelFrames_MouseMove(object sender, MouseEventArgs e)
         {
+            if (isRightClick != 1 && isRightClick != 0)
+                return;
+
             //Scrolling
             Point offset = Point.Empty;
             offset.X -= panelFrames.AutoScrollPosition.X;
             offset.Y -= panelFrames.AutoScrollPosition.Y;
-
-            if (isMovingPoint) 
-            {
-                offset.Offset(e.Location);
-                currAnim.frames[FrameIndex].PAnchor = SetPoint(offset);
-                UpdateControls();
-                return;
-            }
-
-            if (Selected.X == 0)
-                return;
 
             Moving.Width = ((e.X + offset.X) - Selected.X);
             Moving.Height = ((e.Y + offset.Y) - Selected.Y);
@@ -1085,19 +1072,18 @@ namespace AnimationEditor
         }
         private void panelFrames_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isMovingPoint)
-            {
-                isMovingPoint = false;
+            if (isRightClick == 2)
                 return;
-            }
 
             Rectangle rect = new Rectangle(Selected, Moving);
             rect = FlipRect(rect);
-            if (isRightClick)
-                currAnim.frames[FrameIndex].RDrawRect = SetRect(isRightClick, rect);
-            else
-                currAnim.frames[FrameIndex].RCollisionRect = SetRect(isRightClick, rect);
+            if (isRightClick == 1)
+                currAnim.frames[FrameIndex].RCollisionRect = SetRect(true, rect);
+            else if (isRightClick == 0)
+                currAnim.frames[FrameIndex].RDrawRect = SetRect(false, rect);
+
             UpdateControls();
+            isRightClick = -1;
             Selected = new Point(0, 0);
             Moving = new Size(0, 0);
         }
