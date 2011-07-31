@@ -15,7 +15,7 @@ void CBaseGolem::Update(float fDT)
 {
 	CBaseEntity::Update(fDT);
 	fCollectedTime += fDT;
-	if(fCollectedTime > 2.0f)
+	if(fCollectedTime > 1.0f)
 	{
 		MObjectManager* OM = MObjectManager::GetInstance();
 		//random movement

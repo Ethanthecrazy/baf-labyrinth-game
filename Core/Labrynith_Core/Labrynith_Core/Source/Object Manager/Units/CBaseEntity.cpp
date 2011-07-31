@@ -72,7 +72,7 @@ void CBaseEntity::Update(float fDT)
 
 		SetDistanceLeft( GetDistanceLeft() - 125 * fDT );
 
-		if( GetDistanceLeft() >= 0 )
+		if( GetDistanceLeft() > 0 )
 		{
 
 			switch ( GetFlag_DirectionToMove() )

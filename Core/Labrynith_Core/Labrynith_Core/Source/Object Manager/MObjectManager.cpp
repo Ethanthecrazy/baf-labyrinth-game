@@ -116,14 +116,19 @@ void MObjectManager::CheckCollisions( void )
 bool MObjectManager::MoveEntUp( int _Ident )
 {
 	IUnitInterface* toCheck = GetUnit( _Ident );
-
+	if(!toCheck)
+		return false;
+	//allow direction to change, 
+	//even if we are out of range 
+	//or if we collide with an entity
+	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
 	int otherEntity;
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) )
 		return false;
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 );
-
+	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
@@ -131,6 +136,7 @@ bool MObjectManager::MoveEntUp( int _Ident )
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) == 0 )
 	{
+		//we can move
 		FindFlake( _Ident ).SetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1, _Ident );
 
 		toCheck->SetIndexPosY( toCheck->GetIndexPosY() - 1 );
@@ -145,22 +151,28 @@ bool MObjectManager::MoveEntUp( int _Ident )
 bool MObjectManager::MoveEntDown( int _Ident )
 {
 	IUnitInterface* toCheck = GetUnit( _Ident );
-
+	if(!toCheck)
+		return false;
+	//allow direction to change, 
+	//even if we are out of range 
+	//or if we collide with an entity
+	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_DOWN );
 	int otherEntity;
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) )
 		return false;
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 );
-
+	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
-		
+
 		return toCheck->CheckCollision( GetUnit( otherEntity ) );
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) == 0 )
 	{
+		//we can move
 		FindFlake( _Ident ).SetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY(), _Ident );
 
 		toCheck->SetIndexPosY( toCheck->GetIndexPosY() + 1 );
@@ -175,7 +187,12 @@ bool MObjectManager::MoveEntDown( int _Ident )
 bool MObjectManager::MoveEntLeft( int _Ident )
 {
 	IUnitInterface* toCheck = GetUnit( _Ident );
-
+	if(!toCheck)
+		return false;
+	//allow direction to change, 
+	//even if we are out of range 
+	//or if we collide with an entity
+	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
 	int otherEntity;
 
 
@@ -189,7 +206,7 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	}
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY() );
-
+	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
@@ -197,11 +214,11 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY() ) == 0 )
 	{
+		//we can move
 		FindFlake( _Ident ).SetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY(), _Ident );
 
 		toCheck->SetIndexPosX( toCheck->GetIndexPosX() - 1 );
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
-		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
 		toCheck->SetDistanceLeft( 32.0f );
 	}
 
@@ -211,6 +228,12 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 bool MObjectManager::MoveEntRight( int _Ident )
 {
 	IUnitInterface* toCheck = GetUnit( _Ident );
+	if(!toCheck)
+		return false;
+	//allow direction to change, 
+	//even if we are out of range 
+	//or if we collide with an entity
+	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
 
 	if( toCheck->GetIndexPosX() + 1 > FindLayer( _Ident).GetLayerWidth() - 1 )
 	{
@@ -224,7 +247,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 		return false;
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() );
-
+	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
 		cout << "Collided With unit " << otherEntity << "\n";
@@ -232,6 +255,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	}
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) == 0 )
 	{
+		//we can move
 		FindFlake( _Ident ).SetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY(), _Ident );
 
 		toCheck->SetIndexPosX( toCheck->GetIndexPosX() + 1 );
