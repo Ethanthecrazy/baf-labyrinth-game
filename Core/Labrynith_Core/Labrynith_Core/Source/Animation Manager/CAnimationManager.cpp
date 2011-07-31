@@ -89,7 +89,10 @@ bool CAnimationManager::LoadBinary(std::string szFilename)
                     in.read((char *)&szletter, sizeof(char));
 					szTriggerID.push_back(szletter);
                 }
-				frame = new CFrame(fDuration, szTriggerID, nTop, nLeft, nBottom, nRight);
+				frame = new CFrame(fDuration, szTriggerID,
+					               nAPointX - nRight, nAPointY - nBottom,
+					               nTop, nLeft, nBottom, nRight,
+								   nCTop, nCLeft, nCBottom, nCRight);
 				anim->AddFrame(frame);
 			}//end frame loop
 			//Path & Filename
@@ -196,11 +199,20 @@ bool CAnimationManager::LoadXML(std::string szFilename)
 					std::string x, y;
 					std::string width, height;
 					std::string dur;
+					int anchorx, anchory;
 					int nx, ny, nwidth, nheight;
+					int cx, cy, cwidth, cheight;
 					float fdur;
 					pData = pFrames;
 					//Anchor Point
-					//pData = pFrames->FirstChildElement("PAnchor");
+					pDataChild = pData->FirstChildElement("PAnchor");
+					pDataChild = pDataChild->FirstChildElement("X");
+					x = pDataChild->GetText();
+					anchorx = atoi(x.c_str());
+					pDataChild = pData->FirstChildElement("PAnchor");
+					pDataChild = pDataChild->FirstChildElement("Y");
+					y = pDataChild->GetText();
+					anchory = atoi(y.c_str());
 					//Draw Rect
 					pDataChild = pData->FirstChildElement("RDrawRect");
 					pDataChild = pDataChild->FirstChildElement("X");
@@ -219,7 +231,22 @@ bool CAnimationManager::LoadXML(std::string szFilename)
 					height = pDataChild->GetText();
 					nheight = atoi(height.c_str());
 					//Collision Rect
-					//pDataChild = pData->FirstChildElement("RCollisionRect");
+					pDataChild = pData->FirstChildElement("RCollisionRect");
+					pDataChild = pDataChild->FirstChildElement("X");
+					x = pDataChild->GetText();
+					cx = atoi(x.c_str()); 
+					pDataChild = pData->FirstChildElement("RCollisionRect");
+					pDataChild = pDataChild->FirstChildElement("Y");
+					y = pDataChild->GetText();
+					cy = atoi(y.c_str()); 
+					pDataChild = pData->FirstChildElement("RCollisionRect");
+					pDataChild = pDataChild->FirstChildElement("Width");
+					width = pDataChild->GetText();
+					cwidth = atoi(width.c_str());
+					pDataChild = pData->FirstChildElement("RCollisionRect");
+					pDataChild = pDataChild->FirstChildElement("Height");
+					height = pDataChild->GetText();
+					cheight = atoi(height.c_str());
 					//Duration
 					pData = pFrames;
 					pDataChild = pData->FirstChildElement("FDuration");
@@ -231,7 +258,10 @@ bool CAnimationManager::LoadXML(std::string szFilename)
 					if(pDataChild->GetText())
 						name = pDataChild->GetText();
 					//Add Frame
-					frame = new CFrame(fdur, name, ny, nx, (ny + nheight), (nx + nwidth));
+					frame = new CFrame(fdur, name, 
+						anchorx - (nx + nwidth), anchory - (ny + nheight),
+						ny, nx, (ny + nheight), (nx + nwidth),
+						cy, cx, (cy + cheight), (cx + cwidth));
 					anim->AddFrame(frame);
 					pFrames = pFrames->NextSiblingElement("CFrame");
 				}//end CFrame	

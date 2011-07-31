@@ -38,6 +38,34 @@ void CBaseEntity::Update(float fDT)
 
 	CAnimationManager::GetInstance()->UpdateAnimation(fDT, GetCurrentAnimID());
 
+	//Change animation w/o moving
+	switch(GetFlag_DirectionToMove())
+	{
+	case FLAG_MOVE_RIGHT:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[2]);
+			break;
+		}
+	case FLAG_MOVE_LEFT:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[1]);
+			break;
+		}
+	case FLAG_MOVE_UP:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[3]);
+			break;
+		}
+	case FLAG_MOVE_DOWN:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[0]);
+			break;
+		}
+	}
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
@@ -53,26 +81,18 @@ void CBaseEntity::Update(float fDT)
 
 			case FLAG_MOVE_RIGHT:
 				SetPosX( GetPosX() + 125 * fDT );
-				if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[2]);
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_LEFT:
 				SetPosX( GetPosX() - 125 * fDT );
-				if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[1]);
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_UP:
-				SetPosY( GetPosY() - 125 * fDT );
-				if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[3]);
+				SetPosY( GetPosY() - 125 * fDT );				
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_DOWN:
 				SetPosY( GetPosY() + 125 * fDT );
-				if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[0]);
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			}
