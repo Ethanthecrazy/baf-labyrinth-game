@@ -21,7 +21,7 @@ class CGamePlayState : public IGameState
 
 public:
 
-	int testVaribale;
+	static int testVaribale;
 
 	static CGamePlayState* GetInstance();
 

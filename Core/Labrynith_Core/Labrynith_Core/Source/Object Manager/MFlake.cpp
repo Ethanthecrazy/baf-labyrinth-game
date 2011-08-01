@@ -329,6 +329,9 @@ void MFlake::Render( int CameraX, int CameraY )
 			{
 				for( int x = 0; x < LayerWidth; ++x )
 				{
+					if(InformationArray[ x + y * LayerWidth ] == 0)
+						continue;
+
 					sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
 
 					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );

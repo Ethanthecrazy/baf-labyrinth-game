@@ -29,8 +29,4 @@ public:
 	void Release(void);
 
 };
-
-
-
-
 #endif

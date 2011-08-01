@@ -1,7 +1,8 @@
 #ifndef MESSAGES_H
 #define MESSAGES_H
 
-enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_MAX };
+enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
+	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_MAX };
 
 class CBaseMessage
 {
@@ -29,6 +30,19 @@ class msgCreateEntity : public CBaseMessage
 public:
 
 	msgCreateEntity( int _PosX, int _PosY );
+	int GetX( void ) { return m_nPosX; }
+	int GetY( void ) { return m_nPosY; }
+
+};
+
+class msgCreatePlayer : public CBaseMessage
+{
+	int m_nPosX;
+	int m_nPosY;
+
+public:
+
+	msgCreatePlayer( int _PosX, int _PosY );
 	int GetX( void ) { return m_nPosX; }
 	int GetY( void ) { return m_nPosY; }
 

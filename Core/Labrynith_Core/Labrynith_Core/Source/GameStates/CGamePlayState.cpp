@@ -11,15 +11,19 @@
 #include "../CGame.h"
 #include "../Object Manager/Units/CBaseEntity.h"
 #include "../Object Manager/Units/CBaseObject.h"
+#include "../Object Manager/Units/CPlayer.h"
 #include "../Messaging/MEventSystem.h"
 
 #include <iostream>
 
 using namespace std;
 
+int CGamePlayState::testVaribale = -1;
+
 CGamePlayState::CGamePlayState()
 {
 	m_nCurrLevel = 1;
+	//testVaribale = -1;
 }
 
 // destructor
@@ -39,7 +43,6 @@ void CGamePlayState::Enter(void)
 	
 	CGame::GetInstance()->PushState( CLoadLevelState::GetInstance() );
 
-
 }
 
 bool CGamePlayState::Input(void)
@@ -48,46 +51,6 @@ bool CGamePlayState::Input(void)
 
 	if( pDI->KeyPressed( DIK_ESCAPE ) )
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
-
-	CBaseEntity* player = (CBaseEntity*)MObjectManager::GetInstance()->GetUnit( testVaribale );
-
-	if( player )
-	{
-		//if( pDI->KeyDown( DIK_SPACE ) )
-			MObjectManager::GetInstance()->FindLayer( testVaribale ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( player->GetIndexPosX(), player->GetIndexPosY(), rand() % 15 + 240 );
-				
-		if( player->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
-		{
-
-			if( pDI->KeyDown( DIK_UP ) )
-			{
-				MObjectManager::GetInstance()->MoveEntUp( player->m_nIdentificationNumber );
-				return true;
-			}
-
-			if( pDI->KeyDown( DIK_DOWN ) )
-			{
-				MObjectManager::GetInstance()->MoveEntDown( player->m_nIdentificationNumber );
-				return true;
-			}
-
-			if( pDI->KeyDown( DIK_LEFT ) )
-			{
-				MObjectManager::GetInstance()->MoveEntLeft( player->m_nIdentificationNumber );
-				return true;
-			}
-
-			if( pDI->KeyDown( DIK_RIGHT ) )
-			{
-				MObjectManager::GetInstance()->MoveEntRight( player->m_nIdentificationNumber );
-				return true;
-			}
-
-		}
-
-		return true;
-
-	}
 
 	return true;
 }
@@ -290,7 +253,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgCreateEntity* NewMessage = (msgCreateEntity*)_message;
 
 			IUnitInterface* temp = new CBaseEntity();
-			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/$rob.png" );
+			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" );
 			//Load basic movement animations
 			((CBaseEntity*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseEntity*)(temp))->SetPlayAnimWhileStill(true);
@@ -299,6 +262,27 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			((CBaseEntity*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );
 			((CBaseEntity*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
 			MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+		}
+		break;
+
+	case MSG_CREATE_PLAYER:
+		{
+			//we only need one player object
+			if(testVaribale != -1)
+				return;
+
+			msgCreatePlayer* NewMessage = (msgCreatePlayer*)_message;
+
+			IUnitInterface* temp = new CPlayer();
+			((CPlayer*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/MainCharacter.png" ));
+			//Load basic movement animations
+			((CPlayer*)(temp))->LoadEntMoveAnimIDs();
+			((CPlayer*)(temp))->SetPlayAnimWhileStill(false);
+			((CPlayer*)(temp))->SetIndexPosX( NewMessage->GetX() );
+			((CPlayer*)(temp))->SetIndexPosY( NewMessage->GetY() );
+			((CPlayer*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );
+			((CPlayer*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
+			testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 		}
 		break;
 

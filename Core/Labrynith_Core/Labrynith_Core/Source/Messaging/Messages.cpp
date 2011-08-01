@@ -6,6 +6,12 @@ msgCreateEntity::msgCreateEntity( int _PosX, int _PosY ) : CBaseMessage( MSG_CRE
 	m_nPosY = _PosY;
 }
 
+msgCreatePlayer::msgCreatePlayer( int _PosX, int _PosY ) : CBaseMessage( MSG_CREATE_PLAYER )
+{
+	m_nPosX = _PosX;
+	m_nPosY = _PosY;
+}
+
 msgRemoveUnit::msgRemoveUnit( int _toRemove ) : CBaseMessage( MSG_REMOVE_UNIT )
 {
 	m_pToRemove = _toRemove;

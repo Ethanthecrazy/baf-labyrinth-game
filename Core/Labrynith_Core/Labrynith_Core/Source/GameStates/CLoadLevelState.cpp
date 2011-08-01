@@ -108,7 +108,6 @@ void CLoadLevelState::EnterCommand(void)
 	}
 }
 
-
 bool CLoadLevelState::LoadLevel(int _level)
 {		
 
@@ -151,14 +150,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 		MObjectManager::GetInstance()->ResizeLayer( 1, width, height );
 	}
 	
-	IUnitInterface* ptemp = new CBaseEntity();
-	((CBaseEntity*)(ptemp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
-	//Load basic movement animations
-	((CBaseEntity*)(ptemp))->LoadEntMoveAnimIDs();
-	((CBaseEntity*)(ptemp))->SetIndexPosX( 0 );
-	((CBaseEntity*)(ptemp))->SetIndexPosY( 0 );
-
-	CGamePlayState::GetInstance()->testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( ptemp, 1 );
+	MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( 0, 0 ) ); 
 
 	TiXmlElement* pTiles = pRoot->FirstChildElement("Tiles");	
 	if(pTiles)
