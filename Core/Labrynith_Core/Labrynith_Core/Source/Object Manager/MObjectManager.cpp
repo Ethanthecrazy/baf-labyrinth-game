@@ -173,7 +173,7 @@ bool MObjectManager::MoveEntDown( int _Ident )
 	else if( FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) == 0 )
 	{
 		//we can move
-		FindFlake( _Ident ).SetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY(), _Ident );
+		FindFlake( _Ident ).SetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1, _Ident );
 
 		toCheck->SetIndexPosY( toCheck->GetIndexPosY() + 1 );
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
