@@ -13,6 +13,7 @@
 #include "../Object Manager/Units/CBaseObject.h"
 #include "../Object Manager/Units/CPlayer.h"
 #include "../Messaging/MEventSystem.h"
+#include "../HUD/CHUD.h"
 
 #include <iostream>
 
@@ -42,7 +43,7 @@ void CGamePlayState::Enter(void)
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
 	
 	CGame::GetInstance()->PushState( CLoadLevelState::GetInstance() );
-
+	
 }
 
 bool CGamePlayState::Input(void)
@@ -93,7 +94,8 @@ void CGamePlayState::Render(void)
 	{
 		MObjectManager::GetInstance()->Render( 0, 0 );
 	}
-
+	//Draw the HUD
+	CHUD::GetInstance()->Render();
 	pD3D->DrawTextA( "Gameplay State", 100, 100 );
 
 	//char temp[64];
@@ -282,6 +284,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			((CPlayer*)(temp))->SetIndexPosY( NewMessage->GetY() );
 			((CPlayer*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );
 			((CPlayer*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
+			//set-up the HUD so it renders player info
+			CHUD::GetInstance()->SetPlayer(((CPlayer*)(temp)));
 			testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 		}
 		break;

@@ -43,6 +43,9 @@
     <Filter Include="Animation Manager">
       <UniqueIdentifier>{7ac88a11-bb10-4005-a53a-299c7eaba835}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{42edb9e5-55a0-4763-b099-f607f3aef62b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\winmain.cpp">
@@ -128,6 +131,15 @@
     </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\CBaseGolem.cpp">
       <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp">
+      <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HUD\CHUD.cpp">
+      <Filter>HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +238,15 @@
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\CBaseGolem.h">
       <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CPlayer.h">
+      <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HUD\CHUD.h">
+      <Filter>HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

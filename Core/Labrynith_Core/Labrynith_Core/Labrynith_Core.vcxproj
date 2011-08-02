@@ -85,6 +85,7 @@
     <ClCompile Include="Source\GameStates\CGamePlayState.cpp" />
     <ClCompile Include="Source\GameStates\CLoadLevelState.cpp" />
     <ClCompile Include="Source\GameStates\CMainMenuState.cpp" />
+    <ClCompile Include="Source\HUD\CHUD.cpp" />
     <ClCompile Include="Source\Messaging\Messages.cpp" />
     <ClCompile Include="Source\Messaging\MEventSystem.cpp" />
     <ClCompile Include="Source\Messaging\MMessageSystem.cpp" />
@@ -94,6 +95,8 @@
     <ClCompile Include="Source\Object Manager\Units\CBaseEntity.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CBaseGolem.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp" />
     <ClCompile Include="Source\Threading\MSyncManager.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxml.cpp" />
@@ -118,6 +121,7 @@
     <ClInclude Include="Source\GameStates\CLoadLevelState.h" />
     <ClInclude Include="Source\GameStates\CMainMenuState.h" />
     <ClInclude Include="Source\GameStates\IGameState.h" />
+    <ClInclude Include="Source\HUD\CHUD.h" />
     <ClInclude Include="Source\Messaging\Event.h" />
     <ClInclude Include="Source\Messaging\IListener.h" />
     <ClInclude Include="Source\Messaging\Messages.h" />
@@ -130,6 +134,8 @@
     <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h" />
     <ClInclude Include="Source\Object Manager\Units\CBaseGolem.h" />
     <ClInclude Include="Source\Object Manager\Units\CBaseObject.h" />
+    <ClInclude Include="Source\Object Manager\Units\CPlayer.h" />
+    <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h" />
     <ClInclude Include="Source\Threading\MSyncManager.h" />
     <ClInclude Include="Source\TinyXML\tinystr.h" />
     <ClInclude Include="Source\TinyXML\tinyxml.h" />
