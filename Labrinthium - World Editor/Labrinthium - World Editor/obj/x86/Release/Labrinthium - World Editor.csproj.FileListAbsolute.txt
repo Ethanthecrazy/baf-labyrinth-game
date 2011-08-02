@@ -10,3 +10,15 @@ C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Edi
 C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\GenerateResource-ResGen.write.1.tlog
 C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\Labrinthium - World Editor.exe
 C:\Users\Jon M Taylor\Desktop\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\Labrinthium - World Editor.pdb
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\Labrinthium - World Editor.exe.config
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\Labrinthium - World Editor.exe
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\Labrinthium - World Editor.pdb
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\Labrinthium - World Editor.exe
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\Labrinthium - World Editor.pdb
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\Labrinthium___World_Editor.MainForm.resources
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\Labrinthium___World_Editor.OptForm.resources
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\Labrinthium___World_Editor.Properties.Resources.resources
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\GenerateResource-ResGen.read.4.tlog
+C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\obj\x86\Release\GenerateResource-ResGen.write.1.tlog
