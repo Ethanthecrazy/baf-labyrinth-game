@@ -101,13 +101,11 @@ namespace Labrinthium___World_Editor
             set { type = value; }
         }
 
-
-        private List<string> eventNames;
-        [XmlIgnore]
-        public List<string> EventNames
+        private string property;
+        public string Property
         {
-            get { return eventNames; }
-            set { eventNames = value; }
+            get { return property; }
+            set { property = value; }
         }
 
         private bool selected = false;
@@ -120,8 +118,8 @@ namespace Labrinthium___World_Editor
 
         public Tile()
         {
-            type.X = -1;
-            type.Y = -1;
+            type.X = 0;
+            type.Y = 0;
         }
 
         public override string ToString()
@@ -148,12 +146,11 @@ namespace Labrinthium___World_Editor
             set { selected = value; }
         }
 
-        private List<string> eventNames;
-        [XmlIgnore]
-        public List<string> EventNames
+        private string property;
+        public string Property
         {
-            get { return eventNames; }
-            set { eventNames = value; }
+            get { return property; }
+            set { property = value; }
         }
 
         private Point3D position;

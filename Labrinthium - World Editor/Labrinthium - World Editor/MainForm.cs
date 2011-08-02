@@ -186,6 +186,8 @@ public MainForm()
             {
                 CreateAppDataPath();
             }
+            ToolTip test = new ToolTip();
+    
             
             string path = Path.Combine(Environment.CurrentDirectory, @"..\..\selectBox.png");
             if (File.Exists(path))
@@ -674,10 +676,7 @@ private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
                         saved = true;
                         break;
                 }
-
-                saved = true;
-            }
-            
+            }            
         }
 
 private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1568,8 +1567,39 @@ new public void Update()
             if (tilemap.Tiles.Count == 9 && button_RemoveLayer.Enabled)
                 button_AddLayer.Enabled = false;
             else if (tilemap.Tiles.Count < 9 && !button_AddLayer.Enabled)
-                button_AddLayer.Enabled = true;            
+                button_AddLayer.Enabled = true;
 
+
+            if (tileFocused)
+            {
+                for (int h = 0; h < tilemap.MapSize.Height; ++h)
+                {
+                    for (int w = 0; w < tilemap.MapSize.Width; ++w)
+                    {
+                        if (tilemap.Tiles[renderDepth][w][h].Selected)
+                        {
+                            label2.Text = tilemap.Tiles[renderDepth][w][h].Property;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                bool oneselected = false;
+                for (int i = 0; i < tilemap.Objects.Count; ++i)
+                {
+                    if (tilemap.Objects[i].Selected)
+                    {
+                        label2.Text = tilemap.Objects[i].Property;
+                        oneselected = true;
+                        break;
+                    }
+                }
+
+                if (!oneselected)
+                    label2.Text = "";
+            }
         }
 
 private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -1701,6 +1731,8 @@ private void saveToolStripButton_Click(object sender, EventArgs e)
             serializer.Serialize(writer, tilemap);
 
             writer.Close();
+
+            saved = true;
         }
         else if(filetype == "dat")
         {
@@ -1767,7 +1799,6 @@ private void SaveSettings()
 {
     try
     {
-
         string pathtoEXE = Application.UserAppDataPath;
         string pathtofile = Path.Combine(pathtoEXE, @"Settings\settings.dat");
         BinaryWriter bw = new BinaryWriter(File.Open(pathtofile, FileMode.Truncate));
@@ -1843,7 +1874,43 @@ private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
             saveToolStripButton_Click(this, e);
             e.Cancel = true;
         }
+    }
+}
 
+private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+{
+    if (e.KeyChar == (char)Keys.Enter)
+    {
+        if (tileFocused)
+        {
+            for (int h = 0; h < tilemap.MapSize.Height; ++h)
+            {
+                for (int w = 0; w < tilemap.MapSize.Width; ++w)
+                {
+                    if (tilemap.Tiles[renderDepth][w][h].Selected)
+                    {
+                        tilemap.Tiles[renderDepth][w][h].Property = textBox1.Text;
+                        saved = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            bool oneselected = false;
+            for (int i = 0; i < tilemap.Objects.Count; ++i)
+            {
+                if (tilemap.Objects[i].Selected)
+                {
+                    tilemap.Objects[i].Property = textBox1.Text;
+                    oneselected = true;
+                    saved = false;
+                }
+            }
+
+            if (!oneselected)
+                label2.Text = "";
+        }
     }
 }
 
