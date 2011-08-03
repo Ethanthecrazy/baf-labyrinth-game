@@ -108,18 +108,22 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase)
 
 	//if we collide with an object
 
-	if(pBase->m_nUnitType == OBJECT_OBJECT)
+	if(pBase->GetType() == OBJECT_OBJECT)
 	{
-		//if we can hold the object we collided with...		
-		//allow the player to hold it unless 
-		//the player is already holding onto something
-		if( GetHeldItem() != NULL )
-			return true ;
-		else
+		CBaseObject* temp = (CBaseObject*)pBase;
+		if( temp->GetType() == ENT_ATTRACTOR )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
+			//if we can hold the object we collided with...		
+			//allow the player to hold it unless 
+			//the player is already holding onto something
+			if( GetHeldItem() != NULL )
+				return true ;
+			else
+			{
+				MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
+			}
+			return true;
 		}
-		return true;
 	}
 	return false;
 }

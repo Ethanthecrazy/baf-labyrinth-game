@@ -12,6 +12,7 @@ CBaseGolem::CBaseGolem(void)
 	m_nType = ENT_GOLEM;
 	ClearTarget();
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED" , this ) ;
+	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED" , this ) ;
 	m_nEatSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/creature_snarl1.mp3" ) ;
 }
 CBaseGolem::~CBaseGolem(void)
@@ -103,6 +104,16 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 			SetTargetPos( placedAttr->GetIndexPosX() , placedAttr->GetIndexPosY() ) ;
 		}
 	}
+	else if( _toHandle->GetEventID() == "ATTRACTORREMOVED" )
+	{
+		CAttractor* attr = (CAttractor*)_toHandle->GetParam() ;
+		if( !attr )
+			return ;
+		if( GetTargetPosX() == attr->GetIndexPosX() && GetTargetPosY() == attr->GetIndexPosY() )
+		{
+			ClearTarget() ;
+		}
+	}
 }
 
 bool CBaseGolem::CheckCollision(IUnitInterface* pBase)
@@ -119,16 +130,33 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase)
 		int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
 		int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
 
-		int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+		int ObjectID = pBase->m_nIdentificationNumber ;
+		//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+		MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
 		MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
 		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
 
-		SetAnimID( CAnimationManager::GetInstance()->GetID("EatDown") ) ;
+
+		switch( GetFlag_DirectionToMove() )
+		{
+		case FLAG_MOVE_LEFT:
+			SetAnimID( CAnimationManager::GetInstance()->GetID("EatLeft") ) ;
+			break;
+		case FLAG_MOVE_UP:
+			SetAnimID( CAnimationManager::GetInstance()->GetID("EatUp") ) ;
+			break;
+		case FLAG_MOVE_RIGHT:
+			SetAnimID( CAnimationManager::GetInstance()->GetID("EatRight") ) ;
+			break;
+		case FLAG_MOVE_DOWN:
+			SetAnimID( CAnimationManager::GetInstance()->GetID("EatDown") ) ;
+			break;
+		}
 		CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
 		CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
 		
 
-		return true;
+		return false;
 	}
-	return false;
+	return true;
 }

@@ -136,7 +136,8 @@ bool MObjectManager::MoveEntUp( int _Ident )
 	if( objectID > 0 )
 	{
 		cout << "Collided With Object " << objectID << "\n";
-		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+		if( toCheck->CheckCollision( GetUnit( objectID ) ) )
+			return true;
 	}
 	//if we collide with an entity...
 	if( otherEntity > 0 )
@@ -180,7 +181,8 @@ bool MObjectManager::MoveEntDown( int _Ident )
 	if( objectID > 0 )
 	{
 		cout << "Collided With Object " << objectID << "\n";
-		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+		if( toCheck->CheckCollision( GetUnit( objectID ) ) )
+			return true;
 	}
 
 	//if we collide with an entity...
@@ -231,7 +233,8 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	if( objectID > 0 )
 	{
 		cout << "Collided With Object " << objectID << "\n";
-		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+		if( toCheck->CheckCollision( GetUnit( objectID ) ) )
+			return true;
 	}
 
 	//if we collide with an entity...
@@ -280,7 +283,8 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	if( objectID > 0 )
 	{
 		cout << "Collided With Object " << objectID << "\n";
-		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+		if( toCheck->CheckCollision( GetUnit( objectID ) ) )
+			return true;
 	}
 
 	//if we collide with an entity...

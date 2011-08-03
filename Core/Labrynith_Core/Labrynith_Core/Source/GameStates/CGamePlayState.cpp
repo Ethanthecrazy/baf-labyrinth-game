@@ -459,8 +459,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
 			MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
 			player->SetHeldItem(pBase);
-			pBase->SetIndexPosX(-1);
-			pBase->SetIndexPosY(-1);
+			//pBase->SetIndexPosX(-1);
+			//pBase->SetIndexPosY(-1);
+			MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , pBase ) ;
 		}
 		break;
 	}
