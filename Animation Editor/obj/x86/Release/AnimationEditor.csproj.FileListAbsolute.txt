@@ -18,3 +18,13 @@ C:\Users\Rob Taylor\Desktop\SGP Game\Animation Editor\obj\x86\Release\AnimationE
 C:\Users\Rob Taylor\Desktop\SGP Game\Animation Editor\obj\x86\Release\AnimationEditor.Properties.Resources.resources
 C:\Users\Rob Taylor\Desktop\SGP Game\Animation Editor\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
 C:\Users\Rob Taylor\Desktop\SGP Game\Animation Editor\obj\x86\Release\GenerateResource-ResGen.write.1.tlog
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\bin\Release\AnimationEditor.exe.config
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\obj\x86\Release\AnimationEditor.exe
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\obj\x86\Release\AnimationEditor.pdb
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\bin\Release\AnimationEditor.exe
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\bin\Release\AnimationEditor.pdb
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\obj\x86\Release\AnimationEditor.Form1.resources
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\obj\x86\Release\AnimationEditor.Properties.Resources.resources
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
+C:\Users\Nathan\Desktop\BattleFinch Labrynth\Animation Editor\obj\x86\Release\GenerateResource-ResGen.write.1.tlog

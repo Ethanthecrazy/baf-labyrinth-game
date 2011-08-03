@@ -10,11 +10,13 @@
 
 #include "../CGame.h"
 #include "../Object Manager/Units/CBaseEntity.h"
-#include "../Object Manager/Units/CBaseObject.h"
+//#include "../Object Manager/Units/CBaseObject.h"
+#include "../Object Manager/Units/Objects/CAttractor.h"
 #include "../Object Manager/Units/CPlayer.h"
 #include "../Object Manager/Units/CBaseGolem.h"
 #include "../Messaging/MEventSystem.h"
 #include "../HUD/CHUD.h"
+
 
 #include <iostream>
 
@@ -260,6 +262,25 @@ void CGamePlayState::EnterCommand(void)
 			MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 
 		}
+		else if( command == "addattractorfire" )
+		{
+			cout << "Add fire attractor\n";
+			cout << "\tX:";
+			int PosX;
+			cin >> PosX;
+			cout << "\tY:";
+			int PosY;
+			cin >> PosY;
+
+			CAttractor* temp = new CAttractor(FIRE_GOLEM) ;
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			temp->SetIndexPosX( PosX ) ;
+			temp->SetIndexPosY( PosY ) ;
+			temp->SetPosX( (float)PosX * 32.0f ) ;
+			temp->SetPosY( (float)PosY * 32.0f ) ;
+
+			MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+		}
 		else if( command == "settile" )
 		{	
 			cout << "Set Tile\n";
@@ -325,6 +346,7 @@ void CGamePlayState::EnterCommand(void)
 		{
 			cout << "Unknown command '" << command <<"' - type 'help' for command list.\n";
 		}
+		
 	}
 }
 
@@ -405,11 +427,19 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			int checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			if( checkObject == 0 ) //	if tile is empty
 			{
+				IUnitInterface* object = player->GetHeldItem() ;
+				object->SetIndexPosX( tileXPos ) ;
+				object->SetIndexPosY( tileYPos ) ;
 				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem() , 1 ) ;
 				MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
 				player->GetHeldItem()->SetPosX( tileXPos * 32 ) ;
 				player->GetHeldItem()->SetPosY( tileYPos * 32 ) ;
 				player->SetHeldItem(NULL);
+
+				if( object->GetType() == ENT_ATTRACTOR )
+				{
+					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , object ) ;
+				}
 			}
 		}
 		break;

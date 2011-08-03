@@ -308,23 +308,50 @@ bool CLoadLevelState::LoadLevel(int _level)
 						IUnitInterface* temp = new CBaseGolem();
 
 						if(typeofgolem == "earth")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(EARTH_GOLEM);
+						}
 						else if(typeofgolem == "air")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/AirGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(AIR_GOLEM);
+						}
 						else if(typeofgolem == "fire")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/FireGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(FIRE_GOLEM);
+						}
 						else if(typeofgolem == "water")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(WATER_GOLEM);
+						}
 						else if(typeofgolem == "ice")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(ICE_GOLEM);
+						}
 						else if(typeofgolem == "shadow")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/ShadowGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(SHADOW_GOLEM);
+						}
 						else if(typeofgolem == "light")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LightGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(LIGHT_GOLEM);
+						}
 						else if(typeofgolem == "iron")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(IRON_GOLEM);
+						}
 						else if(typeofgolem == "lava")
+						{
 							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LavaGolem.png" ));
+							((CBaseGolem*)(temp))->SetGolemType(LAVA_GOLEM);
+						}
 
 						//Load basic movement animations
 						((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();

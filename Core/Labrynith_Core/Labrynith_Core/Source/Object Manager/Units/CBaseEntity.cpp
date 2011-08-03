@@ -40,35 +40,6 @@ void CBaseEntity::Update(float fDT)
 
 	CAnimationManager::GetInstance()->UpdateAnimation(fDT, GetCurrentAnimID());
 
-	//Change animation w/o moving
-	switch(GetFlag_DirectionToMove())
-	{
-	case FLAG_MOVE_RIGHT:
-		{
-			if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[2]);
-			break;
-		}
-	case FLAG_MOVE_LEFT:
-		{
-			if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[1]);
-			break;
-		}
-	case FLAG_MOVE_UP:
-		{
-			if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[3]);
-			break;
-		}
-	case FLAG_MOVE_DOWN:
-		{
-			if(GetCurrentAnimID() > -1)
-					SetAnimID(m_vMovementAnimIDs[0]);
-			break;
-		}
-	}
-
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
 
@@ -222,4 +193,40 @@ void CBaseEntity::SetImageID(const int nImageID)
 	m_nImageID = nImageID;
 	//update animations texture to render with
 	CAnimationManager::GetInstance()->SetAnimTexture(GetCurrentAnimID(), m_nImageID);
+}
+
+void CBaseEntity::SetFlag_DirectionToMove( int newFlag )
+{  
+	if( IUnitInterface::GetFlag_DirectionToMove() == newFlag )
+		return ;
+	IUnitInterface::SetFlag_DirectionToMove(newFlag);
+	
+	//Change animation when direction changes
+	switch(newFlag)
+	{
+	case FLAG_MOVE_RIGHT:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[2]);
+			break;
+		}
+	case FLAG_MOVE_LEFT:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[1]);
+			break;
+		}
+	case FLAG_MOVE_UP:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[3]);
+			break;
+		}
+	case FLAG_MOVE_DOWN:
+		{
+			if(GetCurrentAnimID() > -1)
+					SetAnimID(m_vMovementAnimIDs[0]);
+			break;
+		}
+	}
 }

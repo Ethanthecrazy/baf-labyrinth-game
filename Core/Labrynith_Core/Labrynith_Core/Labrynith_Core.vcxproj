@@ -98,6 +98,7 @@
     <ClCompile Include="Source\Object Manager\Units\CBaseGolem.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Objects\CAttractor.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp" />
     <ClCompile Include="Source\Threading\MSyncManager.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="Source\winmain.cpp" />
     <ClCompile Include="Source\Wrappers\CSGD_Direct3D.cpp" />
     <ClCompile Include="Source\Wrappers\CSGD_DirectInput.cpp" />
+    <ClCompile Include="Source\Wrappers\CSGD_FModManager.cpp" />
     <ClCompile Include="Source\Wrappers\CSGD_TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +141,7 @@
     <ClInclude Include="Source\Object Manager\Units\CBaseGolem.h" />
     <ClInclude Include="Source\Object Manager\Units\CBaseObject.h" />
     <ClInclude Include="Source\Object Manager\Units\CPlayer.h" />
+    <ClInclude Include="Source\Object Manager\Units\Objects\CAttractor.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h" />
     <ClInclude Include="Source\Threading\MSyncManager.h" />
     <ClInclude Include="Source\TinyXML\tinystr.h" />
@@ -146,6 +149,7 @@
     <ClInclude Include="Source\UTimer.h" />
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h" />
     <ClInclude Include="Source\Wrappers\CSGD_DirectInput.h" />
+    <ClInclude Include="Source\Wrappers\CSGD_FModManager.h" />
     <ClInclude Include="Source\Wrappers\CSGD_TextureManager.h" />
     <ClInclude Include="Source\Wrappers\SGD_Util.h" />
   </ItemGroup>

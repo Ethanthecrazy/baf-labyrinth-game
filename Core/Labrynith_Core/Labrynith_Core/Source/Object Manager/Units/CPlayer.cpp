@@ -4,6 +4,7 @@
 #include "../../GameStates/CGamePlayState.h"
 #include "CBaseObject.h"
 #include <iostream>
+#include "../../Wrappers/CSGD_Direct3D.h"
 
 CPlayer::CPlayer(void)
 {
@@ -28,6 +29,28 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
 		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 	CBaseEntity::Render(CameraPosX, CameraPosY);
+
+	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
+
+	if( GetHeldItem() == NULL )
+		return ;
+
+	int cameraX = 0 , cameraY = 0 ;
+	CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+	int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
+	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+
+	if( MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) == 0 && MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) == 0 && MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) == 1 )
+	if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
+	{
+		int xPos1 = tileXPos * 32 - cameraX ;
+		int yPos1 = tileYPos * 32 - cameraY ;
+		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 ) ;
+		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 ) ;
+		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 ) ;
+		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 ) ;
+	}
+
 }
 void CPlayer::Input()
 {
@@ -71,7 +94,9 @@ void CPlayer::Input()
 				if( GetHeldItem() == NULL )
 					return ;
 
-				MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
+				if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
+					MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
+
 			}
 
 		}

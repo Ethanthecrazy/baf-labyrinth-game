@@ -1,4 +1,3 @@
-
 #ifndef CATTRACTOR_H
 #define CATTRACTOR_H
 
@@ -6,18 +5,17 @@
 
 class CAttractor : public CBaseObject
 {
-	int m_nElemType ;	// tells us what element this attractor is
-
+private:
+	int m_nElemType ;
 public:
 	CAttractor(void) ;
-	~CAttractor(void) ;
-
-	//	Accessor
-	int GetElemType(void) { return m_nElemType ; } ;
+	CAttractor(int elemType) ;
 
 	//	mutators
 	void SetElemType(int type) { m_nElemType = type ; } ;
-}
 
+	//	accessors
+	int GetElemType(void) { return m_nElemType ; } ;
+} ;
 
 #endif

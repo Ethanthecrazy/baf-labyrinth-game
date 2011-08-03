@@ -7,6 +7,7 @@ using std::string;
 
 #include "GameStates\CMainMenuState.h"
 #include "Animation Manager\CAnimationManager.h"
+#include "Wrappers\CSGD_FModManager.h"
 
 // default constructor
 CGame::CGame()
@@ -41,8 +42,11 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 		CSGD_Direct3D::GetInstance()->GetSprite());
 
 	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/entity-movement.xml", true);
+	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/entity-Eating.xml", true );	
 
 	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
+
+	CSGD_FModManager::GetInstance()->InitFModManager( hWnd ) ;
 
 	
 	ChangeState( CMainMenuState::GetInstance() );

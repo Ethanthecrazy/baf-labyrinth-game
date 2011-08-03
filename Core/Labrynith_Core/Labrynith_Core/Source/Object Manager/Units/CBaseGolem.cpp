@@ -1,16 +1,22 @@
 #include "../MObjectManager.h"
 #include "../../AI Handler/CAI_Handler.h"
 #include "CBaseGolem.h"
-
+#include "Objects\CAttractor.h"
+#include "../../GameStates/CGamePlayState.h"
+#include "../../Animation Manager/CAnimationManager.h"
+#include "../../Wrappers/CSGD_FModManager.h"
 CBaseGolem::CBaseGolem(void)
 {
 	CBaseEntity::CBaseEntity();
 	fCollectedTime = 0.0f;
 	m_nType = ENT_GOLEM;
 	ClearTarget();
+	MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED" , this ) ;
+	m_nEatSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/creature_snarl1.mp3" ) ;
 }
 CBaseGolem::~CBaseGolem(void)
 {
+	MEventSystem::GetInstance()->UnregisterClient("ATTRACTORPLACED" , this ) ;
 	CBaseEntity::~CBaseEntity();
 }
 
@@ -85,4 +91,44 @@ void CBaseGolem::SetTargetPos(const int nTargetX, const int nTargetY)
 void CBaseGolem::SetMoveType(const int nMovementType)
 {
 	m_nMovementType = nMovementType;
+}
+
+void CBaseGolem::HandleEvent( Event* _toHandle )
+{
+	if( _toHandle->GetEventID() == "ATTRACTORPLACED" )
+	{
+		CAttractor* placedAttr = (CAttractor*)_toHandle->GetParam() ;
+		if( placedAttr->GetElemType() == this->GetGolemType() )
+		{
+			SetTargetPos( placedAttr->GetIndexPosX() , placedAttr->GetIndexPosY() ) ;
+		}
+	}
+}
+
+bool CBaseGolem::CheckCollision(IUnitInterface* pBase)
+{
+	if(!pBase)
+		return false;
+
+	//if we collide with an object
+
+	if(pBase->GetType() == ENT_ATTRACTOR )
+	{
+		int cameraX = 0 , cameraY = 0 ;
+		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+		int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
+		int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
+
+		int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+		MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
+		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
+
+		SetAnimID( CAnimationManager::GetInstance()->GetID("EatDown") ) ;
+		CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
+		CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
+		
+
+		return true;
+	}
+	return false;
 }

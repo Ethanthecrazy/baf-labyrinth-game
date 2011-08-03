@@ -40,6 +40,7 @@ public:
 
 	void AddRef(void);
 	void Release(void);
+	void SetFlag_DirectionToMove( int newFlag );
 
 };
 

@@ -150,6 +150,12 @@
     <ClCompile Include="Source\AI Handler\CAI_Handler.cpp">
       <Filter>AI Handler</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CAttractor.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_FModManager.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -187,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="Source\BST.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object Manager\IUnitInterface.h">
-      <Filter>ObjectManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h">
       <Filter>ObjectManager\Units</Filter>
@@ -262,6 +265,15 @@
     </ClInclude>
     <ClInclude Include="Source\AI Handler\CAI_Handler.h">
       <Filter>AI Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\IUnitInterface.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CAttractor.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\CSGD_FModManager.h">
+      <Filter>Wrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

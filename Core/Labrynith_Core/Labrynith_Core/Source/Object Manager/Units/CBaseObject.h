@@ -3,7 +3,6 @@
 
 #include "../IUnitInterface.h"
 
-enum OBJECT_TYPE{ attractor } ;
 
 class CBaseObject : public IUnitInterface
 {

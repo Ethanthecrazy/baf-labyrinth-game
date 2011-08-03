@@ -1,11 +1,12 @@
-#pragma once
+#ifndef IUNITINTERFACE_H
+#define IUNITINTERFACE_H
 
 //the type of object
 enum UNIT_TYPES { OBJECT_TILE, OBJECT_OBJECT, OBJECT_ENTITY, OBJECT_LIGHT };
 enum { FLAG_MOVE_NONE, FLAG_MOVE_UP, FLAG_MOVE_DOWN, FLAG_MOVE_LEFT, FLAG_MOVE_RIGHT };
 enum { FLAG_MOVESTATE_MOVING, FLAG_MOVESTATE_ATDESTINATION };
 //huge list of types
-enum OBJECT_TYPES {ENT_PLAYER, ENT_GOLEM};
+enum OBJECT_TYPES {ENT_PLAYER, ENT_ATTRACTOR , ENT_GOLEM};
 //all of our golems
 enum GOLEM_TYPES { EARTH_GOLEM, FIRE_GOLEM, WATER_GOLEM, 
 	 ICE_GOLEM, AIR_GOLEM, LAVA_GOLEM, IRON_GOLEM, 
@@ -87,6 +88,8 @@ public:
 	int GetFlag_prev_DirectionToMove( void ){ return FLAG_prev_DirectionToMove; }
 	int GetFlag_prev_MovementState( void ){ return FLAG_MovementState; }
 
-	void SetFlag_DirectionToMove( int newFlag ){ FLAG_prev_DirectionToMove = FLAG_DirectionToMove; FLAG_DirectionToMove = newFlag; }
+	virtual void SetFlag_DirectionToMove( int newFlag ){ FLAG_prev_DirectionToMove = FLAG_DirectionToMove; FLAG_DirectionToMove = newFlag; }
 	void SetFlag_MovementState( int newFlag ){ FLAG_prev_MovementState = FLAG_MovementState; FLAG_MovementState = newFlag; }
 };
+
+#endif
