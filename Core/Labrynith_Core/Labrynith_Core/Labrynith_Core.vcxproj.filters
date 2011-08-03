@@ -46,6 +46,9 @@
     <Filter Include="HUD">
       <UniqueIdentifier>{42edb9e5-55a0-4763-b099-f607f3aef62b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI Handler">
+      <UniqueIdentifier>{4b0e1c12-b134-4942-9c4f-fd57b89fa058}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\winmain.cpp">
@@ -140,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="Source\HUD\CHUD.cpp">
       <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CSaveSlotState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI Handler\CAI_Handler.cpp">
+      <Filter>AI Handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="Source\HUD\CHUD.h">
       <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CSaveSlotState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI Handler\CAI_Handler.h">
+      <Filter>AI Handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

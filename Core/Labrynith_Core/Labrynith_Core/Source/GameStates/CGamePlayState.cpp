@@ -12,6 +12,7 @@
 #include "../Object Manager/Units/CBaseEntity.h"
 #include "../Object Manager/Units/CBaseObject.h"
 #include "../Object Manager/Units/CPlayer.h"
+#include "../Object Manager/Units/CBaseGolem.h"
 #include "../Messaging/MEventSystem.h"
 #include "../HUD/CHUD.h"
 
@@ -23,12 +24,15 @@ int CGamePlayState::testVaribale = -1;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 1;
+	m_nCurrLevel = 2;
 	//testVaribale = -1;
 }
 
 // destructor
-CGamePlayState::~CGamePlayState() { }
+CGamePlayState::~CGamePlayState() 
+{
+
+}
 
 CGamePlayState* CGamePlayState::GetInstance()
 {
@@ -116,6 +120,7 @@ void CGamePlayState::Exit(void)
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
 	cout << "GamePlay -> ";
 
+	testVaribale = -1;
 	//MObjectManager::GetInstance()->DeleteInstance();
 }
 
@@ -154,6 +159,45 @@ void CGamePlayState::EnterCommand(void)
 
 			MMessageSystem::GetInstance()->SendMsg( new msgCreateEntity( PosX, PosY ) ); 
 
+		}
+		else if( command == "setgolemtarget")
+		{
+			cout << "Set Target\n";
+			cout << "\tID:";
+			int golemID;
+			cin >> golemID;
+			cout << "\tX:";
+			int PosX;
+			cin >> PosX;
+			cout << "\tY:";
+			int PosY;
+			cin >> PosY;
+
+			//get the object corresponding to the id
+			IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(golemID);
+			if(golem)
+			{		
+				if(golem->m_nUnitType == OBJECT_ENTITY)
+				{
+					if(((CBaseEntity*)(golem))->GetType() == ENT_GOLEM)
+					{
+						//we have a golem
+						((CBaseGolem*)(golem))->SetTargetPos(PosX, PosY);
+					}
+					else
+					{
+						cout << "Entity is not a golem" << endl;
+					}
+				}
+				else
+				{
+					cout << "Object is not an entity!" << endl;
+				}
+			}
+			else
+			{
+				cout << golemID << " is invalid!" << endl;
+			}
 		}
 		else if( command == "addobject" )
 		{	

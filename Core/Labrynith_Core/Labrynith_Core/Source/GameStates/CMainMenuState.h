@@ -6,12 +6,21 @@
 
 #include "../CBitFont.h"
 
-enum MenuItems{ PLAY, OPTIONS, HOWTOPLAY, HIGHSCORES, CREDITS, EXIT, NUM_MENUITEMS };
+//HowToPlay State
+//Controls will be displayed in-game + tutorial level
+//HighScore State
+//no highscores
+enum MenuItems{ PLAY, LOAD, OPTIONS, CREDITS, EXIT, NUM_MENUITEMS };
 
 class CMainMenuState : public IGameState
 {
+	//Data Members
 	CBitFont MetalText;
-
+	int m_nIndex;
+	//Asset ids:
+	int		m_nImageID;
+	int		m_nSoundID;
+	
 	// default constructor
 	CMainMenuState();
 	// copy constructor
@@ -21,6 +30,7 @@ class CMainMenuState : public IGameState
 	// destructor
 	~CMainMenuState();
 
+	bool SetMenuIndex(const int nIndex);
 public:
 
 	static CMainMenuState* GetInstance();

@@ -7,6 +7,7 @@ CPlayer::CPlayer(void)
 	CBaseEntity::CBaseEntity();
 	m_pHeldItem = NULL;
 	SetLives(4);
+	m_nType = ENT_PLAYER;
 }
 CPlayer::~CPlayer(void)
 {
@@ -60,6 +61,9 @@ void CPlayer::Input()
 }
 bool CPlayer::CheckCollision(IUnitInterface* pBase)
 {
+	if(!pBase)
+		return false;
+
 	//if we collide with an object
 	if(pBase->m_nUnitType == OBJECT_OBJECT)
 	{

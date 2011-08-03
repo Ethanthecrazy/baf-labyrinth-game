@@ -77,8 +77,6 @@ void CBaseEntity::Update(float fDT)
 
 			switch ( GetFlag_DirectionToMove() )
 			{
-				//Change all animations based on direction
-
 			case FLAG_MOVE_RIGHT:
 				SetPosX( GetPosX() + 125 * fDT );
 				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
@@ -120,10 +118,10 @@ void CBaseEntity::Update(float fDT)
 			SetLastPosX( GetPosX() );
 			SetLastPosY( GetPosY() );
 
-			int itemCollision = MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetValueInFlakeAtIndex( OBJECT_OBJECT, GetIndexPosX(), GetIndexPosY() );
+			//int itemCollision = MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetValueInFlakeAtIndex( OBJECT_OBJECT, GetIndexPosX(), GetIndexPosY() );
 			
-			if( itemCollision > 0 )
-				MObjectManager::GetInstance()->RemoveUnit( itemCollision );
+			//if( itemCollision > 0 )
+				//MObjectManager::GetInstance()->RemoveUnit( itemCollision );
 
 			MObjectManager::GetInstance()->FindFlake( this->m_nIdentificationNumber ).FinishMovingEnt( this );
 

@@ -3,6 +3,8 @@
 
 #include "CBaseEntity.h"
 
+class CBaseObject;
+
 class CPlayer : public CBaseEntity
 {
 	int m_nLives;
@@ -11,6 +13,8 @@ class CPlayer : public CBaseEntity
 	IUnitInterface *m_pHeldItem;
 public:
 	CPlayer(void);
+	//BUG - this constructor will change as development continues
+	CPlayer(float fPosX, float fPosY, int nLives, CBaseObject* pHeldItem);
 	virtual ~CPlayer(void);
 
 	virtual void Update(float fDT);
