@@ -202,20 +202,16 @@ bool
 
 		if( Curr->Left && Curr->Right )
 		{
-			temp = Curr;
-			Curr = Curr->Right;
-
-			for( ; Curr->Left != nullptr; )
+			temp = Curr->Right;
+			while( temp->Left != nullptr )
 			{
-				Prnt = Curr;
-				Curr = Curr->Left;
+				temp = temp->Left ;
 			}
 
-			temp->element = Curr->element;
+			Curr->element = temp->element;
+			Curr = temp ;
 		}
-
-
-		if( !Curr->Left && !Curr->Right )
+		else if( !Curr->Left && !Curr->Right )
 		{
 			if( Curr == Root )
 			{
@@ -223,13 +219,16 @@ bool
 			}
 			else
 			{
-				if( Curr == Prnt->Left )
+				if( Prnt)
 				{
-					Prnt->Left = nullptr;
-				}
-				else
-				{
-					Prnt->Right = nullptr;
+					if( Curr == Prnt->Left )
+					{
+						Prnt->Left = nullptr;
+					}
+					else
+					{
+						Prnt->Right = nullptr;
+					}
 				}
 			}
 
@@ -265,22 +264,20 @@ bool
 						{
 							Prnt->Left = Curr->Right;
 						}
+					}
+					else if( Curr == Prnt->Right )
+					{
+						if( Curr->Left)
+						{
+							Prnt->Right = Curr->Left;
+						}
+						else
+						{
+							Prnt->Right = Curr->Right;
+						}
 
 					}
 				}
-				else
-				{
-					if( Curr->Left)
-					{
-						Prnt->Right = Curr->Left;
-					}
-					else
-					{
-						Prnt->Right = Curr->Right;
-					}
-
-				}
-
 			}
 
 			delete Curr;

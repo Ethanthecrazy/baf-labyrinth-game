@@ -5,6 +5,8 @@
 
 CBaseEntity::CBaseEntity()
 {
+	m_nIdentificationNumber = 0 ;
+
 	// position
 	 SetPosX(0);
 	 SetPosY(0);

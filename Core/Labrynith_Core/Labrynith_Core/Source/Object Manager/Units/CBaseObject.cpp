@@ -19,6 +19,8 @@ CBaseObject::CBaseObject()
 	 m_nImageID = -1;
 
 	 m_uiRefCount = 1;
+
+	 m_nIdentificationNumber = 0 ;
 }
 
 CBaseObject::~CBaseObject(void)

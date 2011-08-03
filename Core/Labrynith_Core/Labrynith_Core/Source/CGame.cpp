@@ -42,13 +42,8 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 
 	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/entity-movement.xml", true);
 
-#ifdef _DEBUG
-	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE );
-#endif
-
-#ifndef _DEBUG
 	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
-#endif
+
 	
 	ChangeState( CMainMenuState::GetInstance() );
 

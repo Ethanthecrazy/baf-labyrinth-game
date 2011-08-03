@@ -37,8 +37,11 @@ int MObjectManager::AddUnit( IUnitInterface* _toAdd, int _layer )
 
 int MObjectManager::AddUnitIndexed( IUnitInterface* _toAdd, int _layer )
 {
-	m_nSize += 1;
-	_toAdd->m_nIdentificationNumber = _layer * 100000;
+	if( _toAdd->m_nIdentificationNumber == 0 )
+	{
+		m_nSize += 1;
+		//_toAdd->m_nIdentificationNumber = _layer * 100000;
+	}
 	int tempnumber = m_vLayers[_layer].AddUnitIndexed( _toAdd );
 	LayerIndex.InsertEntry( tempnumber, _layer );
 	cout << "\tObjectManager: Adding Unit - Id " << tempnumber << "\n";
@@ -50,7 +53,7 @@ bool MObjectManager::RemoveUnit( int _Ident )
 	if( LayerIndex.ConvertTrueValue( _Ident ) < 0 )
 		return false;
 
-	m_nSize -= 1;
+	//m_nSize -= 1;
 	m_vLayers[ LayerIndex.ConvertTrueValue( _Ident ) ].RemoveUnit( _Ident );
 	LayerIndex.findAndRemove( _Ident );
 	return true;
@@ -128,6 +131,13 @@ bool MObjectManager::MoveEntUp( int _Ident )
 		return false;
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 );
+
+	int objectID = FindLayer( _Ident ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( toCheck->GetIndexPosX() , toCheck->GetIndexPosY() - 1 ) ;
+	if( objectID > 0 )
+	{
+		cout << "Collided With Object " << objectID << "\n";
+		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+	}
 	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
@@ -144,6 +154,8 @@ bool MObjectManager::MoveEntUp( int _Ident )
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
 		toCheck->SetDistanceLeft( 32.0f );
 	}
+
+
 
 	return true;
 }
@@ -163,6 +175,14 @@ bool MObjectManager::MoveEntDown( int _Ident )
 		return false;
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 );
+
+	int objectID = FindLayer( _Ident ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( toCheck->GetIndexPosX() , toCheck->GetIndexPosY() + 1 ) ;
+	if( objectID > 0 )
+	{
+		cout << "Collided With Object " << objectID << "\n";
+		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+	}
+
 	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
@@ -206,6 +226,14 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	}
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY() );
+
+	int objectID = FindLayer( _Ident ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1 , toCheck->GetIndexPosY() ) ;
+	if( objectID > 0 )
+	{
+		cout << "Collided With Object " << objectID << "\n";
+		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+	}
+
 	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
@@ -247,6 +275,14 @@ bool MObjectManager::MoveEntRight( int _Ident )
 		return false;
 
 	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() );
+
+	int objectID = FindLayer( _Ident ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1 , toCheck->GetIndexPosY() ) ;
+	if( objectID > 0 )
+	{
+		cout << "Collided With Object " << objectID << "\n";
+		return toCheck->CheckCollision( GetUnit( objectID ) ) ;
+	}
+
 	//if we collide with an entity...
 	if( otherEntity > 0 )
 	{
@@ -272,7 +308,7 @@ MLayer& MObjectManager::FindLayer( int _Ident )
 	return m_vLayers[ LayerIndex.ConvertTrueValue( _Ident ) ];
 }
 
-MFlake& MObjectManager::FindFlake( int _Ident )
+MFlake& MObjectManager::FindFlake( int _Ident ) // pass in identity of the object you are trying to find
 {
 	if( LayerIndex.ConvertTrueValue( _Ident ) > -1 )
 		return m_vLayers[ LayerIndex.ConvertTrueValue( _Ident ) ].FindFlake( _Ident );

@@ -3,6 +3,8 @@
 
 #include "../IUnitInterface.h"
 
+enum OBJECT_TYPE{ attractor } ;
+
 class CBaseObject : public IUnitInterface
 {
 	unsigned int m_uiRefCount;

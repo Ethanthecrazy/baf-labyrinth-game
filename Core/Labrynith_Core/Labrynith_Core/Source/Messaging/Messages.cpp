@@ -1,4 +1,5 @@
 #include "Messages.h"
+#include "../Object Manager/Units/CBaseObject.h"
 
 msgCreateEntity::msgCreateEntity( int _PosX, int _PosY ) : CBaseMessage( MSG_CREATE_ENTITY )
 {
@@ -26,4 +27,15 @@ msgTransferLight::msgTransferLight( int _OneX, int _OneY, int _TwoX, int _TwoY, 
 	TwoY = _TwoY;
 	TransferValue = _TransferValue;
 	Flake = _Flake;
+}
+
+msgPlaceObject::msgPlaceObject( int tileXPos , int tileYPos ) : CBaseMessage( MSG_PLACE_OBJECT )
+{
+	m_nTileXPos = tileXPos ;
+	m_nTileYPos = tileYPos ;
+}
+
+msgPickUpObject::msgPickUpObject( CBaseObject* object ) : CBaseMessage( MSG_PICKUP_OBJECT )
+{
+	m_pObject = object ;
 }

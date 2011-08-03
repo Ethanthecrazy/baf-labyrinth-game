@@ -26,6 +26,9 @@ CGamePlayState::CGamePlayState()
 {
 	m_nCurrLevel = 2;
 	testVaribale = -1;
+	m_nMouseID = -1 ;
+	m_nCurrLevel = 1;
+	//testVaribale = -1;
 }
 
 // destructor
@@ -42,6 +45,8 @@ CGamePlayState* CGamePlayState::GetInstance()
 
 void CGamePlayState::Enter(void)
 {
+	m_nMouseID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource\\mouse.png" ) ;
+
 	cout << "GamePlay\n";
 
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
@@ -67,6 +72,31 @@ void CGamePlayState::Update(float fDT)
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
 	MObjectManager::GetInstance()->Update( fDT );
+}
+
+void CGamePlayState::GetCamera( int& X , int& Y )
+{
+	CBaseEntity* player = (CBaseEntity*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+
+	if( player )
+	{
+		X = (int)player->GetPosX() - 800/2 + 16;
+		Y = (int)player->GetPosY() - 600/2 + 16;
+
+		if( X + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * 32 )
+			X = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * 32 - 800;
+		
+		if( Y + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * 32 )
+			Y = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * 32 - 600;
+
+		if( X < 0 )
+			X = 0;
+
+		if( Y < 0 )
+			Y = 0;
+
+	}
+	return ;
 }
 
 void CGamePlayState::Render(void)
@@ -102,6 +132,11 @@ void CGamePlayState::Render(void)
 	CHUD::GetInstance()->Render();
 	pD3D->DrawTextA( "Gameplay State", 100, 100 );
 
+	int mouseX = CSGD_DirectInput::GetInstance()->MouseGetPosX() ;
+	int mouseY = CSGD_DirectInput::GetInstance()->MouseGetPosY() ;
+
+	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
+
 	//char temp[64];
 
 	//sprintf( temp, "%f", timestep ); 
@@ -113,6 +148,8 @@ void CGamePlayState::Render(void)
 	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
 }
 
+
+
 void CGamePlayState::Exit(void)
 {
 	//MObjectManager::GetInstance()->RemoveUnit( testVaribale ); 
@@ -121,6 +158,8 @@ void CGamePlayState::Exit(void)
 	cout << "GamePlay -> ";
 	testVaribale = -1;
 	testVaribale = -1;
+	testVaribale = -1;
+
 	//MObjectManager::GetInstance()->DeleteInstance();
 }
 
@@ -349,6 +388,49 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			//FlakeScope->SetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY(), FlakeScope->GetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY() ) - NewMessage->GetTransferValue() );
 			FlakeScope->SetInfoAtIndex( NewMessage->GetTwoX(), NewMessage->GetTwoY(), NewMessage->GetTransferValue() );
 
+		}
+		break;
+	
+	case MSG_PLACE_OBJECT:
+		{
+			msgPlaceObject* NewMessage = (msgPlaceObject*)_message;
+			int tileXPos = NewMessage->GetTileXPos() ;
+			int tileYPos = NewMessage->GetTileYPos() ;
+			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+
+			if( !player->GetHeldItem() )	//	break if the player isnt holding an item
+				break;
+
+			// place object in that tile
+			int checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			if( checkObject == 0 ) //	if tile is empty
+			{
+				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem() , 1 ) ;
+				MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
+				player->GetHeldItem()->SetPosX( tileXPos * 32 ) ;
+				player->GetHeldItem()->SetPosY( tileYPos * 32 ) ;
+				player->SetHeldItem(NULL);
+			}
+		}
+		break;
+
+	case MSG_PICKUP_OBJECT:
+		{
+			msgPickUpObject* NewMessage = (msgPickUpObject*)_message;
+			CBaseObject* pBase = NewMessage->GetMsgObject() ;
+			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+
+			int cameraX = 0 , cameraY = 0 ;
+			CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+			int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
+			int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
+
+			int ObjectID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
+			MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
+			player->SetHeldItem(pBase);
+			pBase->SetIndexPosX(-1);
+			pBase->SetIndexPosY(-1);
 		}
 		break;
 	}

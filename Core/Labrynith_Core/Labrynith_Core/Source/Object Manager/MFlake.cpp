@@ -23,6 +23,8 @@ MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _
 	{
 		InformationArray[i] = 0;
 	}
+
+	m_nSize = 0 ;
 }
 
 
@@ -41,7 +43,7 @@ int MFlake::AddUnit( IUnitInterface* _toAdd )
 		return -2;
 
 	m_nSize += 1;
-	_toAdd->m_nIdentificationNumber += m_vObjects.size();
+	_toAdd->m_nIdentificationNumber += m_nSize;
 	ArrayIndex.InsertEntry( _toAdd->m_nIdentificationNumber, m_vObjects.size() );
 	m_vObjects.push_back( _toAdd );
 	cout << "\tFlake " << m_nFlakeType << ": Added " << _toAdd->m_nIdentificationNumber << "\n"; 
@@ -53,9 +55,22 @@ int MFlake::AddUnitIndexed( IUnitInterface* _toAdd )
 	if( m_nSize + 1 > 3499 )
 		return -2;
 
-	m_nSize += 1;
+	
+	if( _toAdd->m_nIdentificationNumber == 0 )
+	{
+		// generate a new number
+		m_nSize += 1;
+		_toAdd->m_nIdentificationNumber = this->parentLayer * 100000 + this->GetFlakeType() * 10000 + m_nSize ;
+	}
+	else
+	{
+		while( GetUnit( _toAdd->m_nIdentificationNumber ) )
+			_toAdd->m_nIdentificationNumber++ ;
+	}
 
-	_toAdd->m_nIdentificationNumber += m_vObjects.size();
+
+
+	//_toAdd->m_nIdentificationNumber += m_nSize;
 	ArrayIndex.InsertEntry( _toAdd->m_nIdentificationNumber, m_vObjects.size() );
 	m_vObjects.push_back( _toAdd );
 
@@ -70,7 +85,7 @@ int MFlake::AddUnitIndexed( IUnitInterface* _toAdd )
 bool MFlake::RemoveUnit( int _Ident )
 {
 	cout << "\tFlake " << m_nFlakeType << ": Removing " << _Ident << " "; 
-	m_nSize -= 1;
+	//m_nSize -= 1;
 	if( ArrayIndex.ConvertTrueValue( _Ident ) > -1 )
 	{
 		IUnitInterface* toDelete = m_vObjects[ ArrayIndex.ConvertTrueValue( _Ident ) ];
@@ -308,6 +323,21 @@ void MFlake::Render( int CameraX, int CameraY )
 		for( unsigned int i = 0; i < m_vObjects.size(); ++i )
 		{
 			m_vObjects[i]->Render( CameraX, CameraY );
+		}
+
+		char temp[64];
+
+		for( int y = 0; y < LayerHeight; ++y )
+		{
+			for( int x = 0; x < LayerWidth; ++x )
+			{
+				if(InformationArray[ x + y * LayerWidth ] == 0)
+					continue;
+
+				sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
+
+				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+			}
 		}
 
 		break;

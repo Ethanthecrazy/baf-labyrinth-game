@@ -26,6 +26,6 @@ public:
 	IUnitInterface* GetHeldItem() const;
 	//mutators
 	void SetLives(const int nLives);
-	void SetHeldItem(const IUnitInterface* pHeldItem);
+	void SetHeldItem(IUnitInterface* const pHeldItem);
 };
 #endif

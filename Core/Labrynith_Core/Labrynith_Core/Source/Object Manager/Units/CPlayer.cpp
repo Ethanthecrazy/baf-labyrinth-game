@@ -1,6 +1,9 @@
 #include "CPlayer.h"	
 #include "../MObjectManager.h"
 #include "../../Wrappers/CSGD_DirectInput.h"
+#include "../../GameStates/CGamePlayState.h"
+#include "CBaseObject.h"
+#include <iostream>
 
 CPlayer::CPlayer(void)
 {
@@ -57,6 +60,20 @@ void CPlayer::Input()
 				return;
 			}
 
+			if( pDI->MouseButtonPressed( 0 ) )
+			{
+				int cameraX = 0 , cameraY = 0 ;
+				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+				int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
+				int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+				cout << " mouse clicked at ( " << tileXPos << " , " << tileYPos << " )\n" ;
+
+				if( GetHeldItem() == NULL )
+					return ;
+
+				MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
+			}
+
 		}
 }
 bool CPlayer::CheckCollision(IUnitInterface* pBase)
@@ -65,11 +82,18 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase)
 		return false;
 
 	//if we collide with an object
+
 	if(pBase->m_nUnitType == OBJECT_OBJECT)
 	{
-		//if we can hold the object we collided with...
+		//if we can hold the object we collided with...		
 		//allow the player to hold it unless 
 		//the player is already holding onto something
+		if( GetHeldItem() != NULL )
+			return true ;
+		else
+		{
+			MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
+		}
 		return true;
 	}
 	return false;
@@ -89,16 +113,7 @@ void CPlayer::SetLives(const int nLives)
 	if(nLives >= 0)
 		m_nLives = nLives;
 }
-void CPlayer::SetHeldItem(const IUnitInterface* pHeldItem)
+void CPlayer::SetHeldItem(IUnitInterface* const pHeldItem)
 {
-	if(pHeldItem)
-	{
-		//add the item we have back into the object manager
-		//'switch' the item to hold with the one sent in
-	}
-	else
-	{
-		//the item to hold is null, aka the player is dropping it
-		//add the item we have back into the object manager
-	}
+	m_pHeldItem = pHeldItem;
 }

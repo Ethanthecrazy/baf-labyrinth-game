@@ -7,6 +7,8 @@
 
 class CGamePlayState : public IGameState
 {
+	int m_nMouseID;
+
 	// default constructor
 	CGamePlayState();
 	// copy constructor
@@ -30,6 +32,8 @@ public:
 	void Update(float fDT);
 	void Render(void);
 	void Exit(void);
+
+	void GetCamera( int& X , int& Y ) ;
 
 	void EnterCommand(void);
 

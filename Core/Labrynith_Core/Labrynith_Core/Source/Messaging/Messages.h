@@ -2,7 +2,7 @@
 #define MESSAGES_H
 
 enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
-	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_MAX };
+	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_PLACE_OBJECT , MSG_PICKUP_OBJECT , MSG_MAX };
 
 class CBaseMessage
 {
@@ -81,5 +81,24 @@ public:
 };
 
 
+class CBaseObject;
+class msgPlaceObject : public CBaseMessage
+{
+	int m_nTileXPos ;
+	int m_nTileYPos ;
+public:
+	msgPlaceObject( int tileXPos , int tileYPos ) ;
+	int GetTileXPos(void) { return m_nTileXPos ; } ;
+	int GetTileYPos(void) { return m_nTileYPos ; } ;
+};
+
+class msgPickUpObject : public CBaseMessage
+{
+	CBaseObject* m_pObject;
+
+public:
+	msgPickUpObject( CBaseObject* object ) ;
+	CBaseObject* GetMsgObject(void) { return m_pObject ; } ;
+} ;
 
 #endif

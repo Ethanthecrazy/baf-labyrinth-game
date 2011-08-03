@@ -56,7 +56,8 @@ int MLayer::AddUnit( IUnitInterface* _toAdd )
 
 int MLayer::AddUnitIndexed( IUnitInterface* _toAdd )
 {
-	m_nSize += 1;
+	if( _toAdd->m_nIdentificationNumber == 0 )
+		m_nSize += 1;
 
 	// Loop through the array of flakes.
 	for( unsigned int i = 0; i < m_vFlakes.size(); ++i )
@@ -65,7 +66,7 @@ int MLayer::AddUnitIndexed( IUnitInterface* _toAdd )
 		if( _toAdd->m_nUnitType == m_vFlakes[i].GetFlakeType() )
 		{
 			//Modify the unit's ID number.
-			_toAdd->m_nIdentificationNumber += i * 10000;
+			//_toAdd->m_nIdentificationNumber += i * 10000;
 
 			// Tell the flake to add the new unit and store it's return value.
 			int tempnum = m_vFlakes[i].AddUnitIndexed( _toAdd );
@@ -82,7 +83,7 @@ int MLayer::AddUnitIndexed( IUnitInterface* _toAdd )
 }
 bool MLayer::RemoveUnit( int _Ident )
 {
-	m_nSize -= 1;
+	//m_nSize -= 1;
 	m_vFlakes[ FlakeIndex.ConvertTrueValue( _Ident ) ].RemoveUnit( _Ident );
 	FlakeIndex.findAndRemove( _Ident );
 	return true;
