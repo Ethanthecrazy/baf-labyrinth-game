@@ -236,13 +236,20 @@ void MFlake::Render( int CameraX, int CameraY )
 								}
 								/*		if( GetInfoAtIndex( x, y + 1 ) > 0 )
 								{
-								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLower.png" ),
-								x * 32 - CameraX,
-								y * 32 - CameraY );	
+									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLower.png" ),
+										x * 32 - CameraX,
+										y * 32 - CameraY,
+										1.0f,
+										1.0f,
+										0,
+										0.0f,
+										0.0f,
+										0.0f,
+										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
 
-								}
+								}*/
 
-								*/
+								
 								if( GetInfoAtIndex( x - 1, y ) > 0 )
 								{
 									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLeft.png" ),
@@ -279,18 +286,24 @@ void MFlake::Render( int CameraX, int CameraY )
 
 						case 1:
 							{
-								//int toUnload;
-								//CSGD_TextureManager::GetInstance()->Draw( toUnload = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ),
-								//	x * 32 - CameraX,
-								//	y * 32 - CameraY );	
+								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ),
+									x * 32 - CameraX,
+									y * 32 - CameraY,
+									1.0f,
+									1.0f,
+									0,
+									0.0f,
+									0.0f,
+									0.0f,
+									D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
 
-								////CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
-								//break;
+								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
+								break;
 							}
 
 						case 2:
 							{	
-								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ),
+								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" ),
 									x * 32 - CameraX,
 									y * 32 - CameraY,
 									1.0f,

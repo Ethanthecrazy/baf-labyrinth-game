@@ -43,11 +43,17 @@
     <Filter Include="Animation Manager">
       <UniqueIdentifier>{7ac88a11-bb10-4005-a53a-299c7eaba835}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HUD">
-      <UniqueIdentifier>{42edb9e5-55a0-4763-b099-f607f3aef62b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AI Handler">
-      <UniqueIdentifier>{4b0e1c12-b134-4942-9c4f-fd57b89fa058}</UniqueIdentifier>
+      <UniqueIdentifier>{00e930f2-0086-425c-b323-e8c003a95d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units\Tiles">
+      <UniqueIdentifier>{4c81865b-1839-4bad-876e-e1496756107c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units\Tiles\Headers">
+      <UniqueIdentifier>{f7f19de1-97c0-4296-a001-1280bedd260a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units\Tiles\Source">
+      <UniqueIdentifier>{3e408184-0755-48fa-9ca0-d669d8a0d8bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,17 +141,17 @@
     <ClCompile Include="Source\Object Manager\Units\CBaseGolem.cpp">
       <Filter>ObjectManager\Units</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp">
-      <Filter>ObjectManager\Units\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp">
       <Filter>ObjectManager\Units</Filter>
     </ClCompile>
-    <ClCompile Include="Source\HUD\CHUD.cpp">
-      <Filter>HUD</Filter>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameStates\CSaveSlotState.cpp">
-      <Filter>GameStates</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HUD\CHUD.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\AI Handler\CAI_Handler.cpp">
       <Filter>AI Handler</Filter>
@@ -251,17 +257,17 @@
     <ClInclude Include="Source\Object Manager\Units\CBaseGolem.h">
       <Filter>ObjectManager\Units</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h">
-      <Filter>ObjectManager\Units\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\CPlayer.h">
       <Filter>ObjectManager\Units</Filter>
     </ClInclude>
-    <ClInclude Include="Source\HUD\CHUD.h">
-      <Filter>HUD</Filter>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameStates\CSaveSlotState.h">
-      <Filter>GameStates</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HUD\CHUD.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\AI Handler\CAI_Handler.h">
       <Filter>AI Handler</Filter>

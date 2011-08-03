@@ -125,6 +125,8 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase)
 			return true;
 		}
 	}
+
+
 	return false;
 }
 //accessors

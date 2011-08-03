@@ -14,7 +14,9 @@
 #include <string>
 using std::string;
 
-#include "../Object Manager/Units/CBaseGolem.h"
+#include "../Object Manager/Units/Objects/CSpawner.h"
+#include "../Object Manager/Units/Tiles/CButton.h"
+#include "../Object Manager/Units/Tiles/CDoor.h"
 
 #include "../TinyXML/tinyxml.h"
 
@@ -163,7 +165,15 @@ bool CLoadLevelState::LoadLevel(int _level)
 				TiXmlElement* pTile = pArray->FirstChildElement("Tile");
 				int y = 0;
 				while(pTile)
-				{			
+				{								
+					string prop = "";
+
+					TiXmlElement* pProp = pTile->FirstChildElement("Property");
+					if(pProp)
+					{			
+						//prop = pProp->GetText();
+					}
+
 					TiXmlElement* pType = pTile->FirstChildElement("Type");
 					if(pType)
 					{
@@ -176,14 +186,46 @@ bool CLoadLevelState::LoadLevel(int _level)
 						TypeX = atoi(sTypeX.c_str());
 						TypeY = atoi(sTypeY.c_str());
 
-						if(TypeX == -1 && TypeY == -1)
+						theType = TypeX + (TypeY * 5);
+						
+						switch(theType)
+						{
+						case -6: // -1, -1 wall
 							theType = 0;
-						else if(TypeX == 0 && TypeY == 0)
+							break;
+
+						case 0: // 0, 0 floor
 							theType = 1;
-						else if(TypeX == 1 && TypeY == 0)
-							theType = 0;
-						else
-							theType = -1;
+							break;
+
+						case 1: // 0, 1 button
+							{
+							IUnitInterface* temp = new CButton(prop.c_str());
+							((CButton*)temp)->SetPosX((float)(x * 32));
+							((CButton*)temp)->SetPosY((float)(y * 32));
+							((CButton*)temp)->SetIndexPosX(x);
+							((CButton*)temp)->SetIndexPosY(y);
+							((CButton*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+
+							theType = 1;
+							break;
+							}
+							
+						case 2: // 0, 2 door
+							{
+							IUnitInterface* temp = new CDoor(prop.c_str());
+							((CDoor*)temp)->SetPosX((float)(x * 32));
+							((CDoor*)temp)->SetPosY((float)(y * 32));
+							((CDoor*)temp)->SetIndexPosX(x);
+							((CDoor*)temp)->SetIndexPosY(y);
+							((CButton*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" ));
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+
+							theType = 1;
+							break;
+							}
+						}
 
 						// 0 = pit
 						// 1 & 2 = ground
@@ -269,11 +311,16 @@ bool CLoadLevelState::LoadLevel(int _level)
 					if(typeofspawner == "player")
 					{
 						// change this code to a spawner of Player type
-						MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( posX, posY ) );
+						IUnitInterface* temp = new CSpawner(SPAWNER_PLAYER);
+						((CSpawner*)temp)->SetPosX((float)(posX * 32));
+						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetIndexPosX(posX);
+						((CSpawner*)temp)->SetIndexPosY(posY);
+
+						MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 						break;
 					}
-
-					if(typeofspawner == "attractor")
+					else if(typeofspawner == "attractor")
 					{
 						string typeofattractor;
 						bool beginreading = false;
@@ -286,12 +333,37 @@ bool CLoadLevelState::LoadLevel(int _level)
 								beginreading = true;
 						}
 						
-						// change this code to a spawner of Attractor X type
+						IUnitInterface* temp;
+						if(typeofattractor == "earth")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_EARTH);
+						else if(typeofattractor == "air")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_AIR);
+						else if(typeofattractor == "fire")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_FIRE);
+						else if(typeofattractor == "water")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_WATER);
+						else if(typeofattractor == "ice")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_ICE);
+						else if(typeofattractor == "shadow")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_SHADOW);
+						else if(typeofattractor == "light")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_LIGHT);
+						else if(typeofattractor == "iron")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_IRON);
+						else if(typeofattractor == "lava")
+							temp = new CSpawner(SPAWNER_ATTRACTOR_LAVA);
+
+						
+						((CSpawner*)temp)->SetPosX((float)(posX * 32));
+						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetIndexPosX(posX);
+						((CSpawner*)temp)->SetIndexPosY(posY);
+
+						MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 
 						break;
 					}
-
-					if(typeofspawner == "golem")
+					else if(typeofspawner == "golem")
 					{
 						string typeofgolem;
 						bool beginreading = false;
@@ -303,62 +375,50 @@ bool CLoadLevelState::LoadLevel(int _level)
 							if(prop[i] == '.')
 								beginreading = true;
 						}
-
-						// change this code to a spawner of Golem X type
-						IUnitInterface* temp = new CBaseGolem();
-
+						
+						IUnitInterface* temp;
 						if(typeofgolem == "earth")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+							temp = new CSpawner(SPAWNER_EARTH);
 							((CBaseGolem*)(temp))->SetGolemType(EARTH_GOLEM);
 						}
 						else if(typeofgolem == "air")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/AirGolem.png" ));
+							temp = new CSpawner(SPAWNER_AIR);
 							((CBaseGolem*)(temp))->SetGolemType(AIR_GOLEM);
 						}
 						else if(typeofgolem == "fire")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/FireGolem.png" ));
+							temp = new CSpawner(SPAWNER_FIRE);
 							((CBaseGolem*)(temp))->SetGolemType(FIRE_GOLEM);
 						}
 						else if(typeofgolem == "water")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" ));
+							temp = new CSpawner(SPAWNER_WATER);
 							((CBaseGolem*)(temp))->SetGolemType(WATER_GOLEM);
 						}
 						else if(typeofgolem == "ice")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
+							temp = new CSpawner(SPAWNER_ICE);
 							((CBaseGolem*)(temp))->SetGolemType(ICE_GOLEM);
 						}
 						else if(typeofgolem == "shadow")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/ShadowGolem.png" ));
+							temp = new CSpawner(SPAWNER_SHADOW);
 							((CBaseGolem*)(temp))->SetGolemType(SHADOW_GOLEM);
 						}
 						else if(typeofgolem == "light")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LightGolem.png" ));
+							temp = new CSpawner(SPAWNER_LIGHT);
 							((CBaseGolem*)(temp))->SetGolemType(LIGHT_GOLEM);
 						}
 						else if(typeofgolem == "iron")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" ));
+							temp = new CSpawner(SPAWNER_IRON);
 							((CBaseGolem*)(temp))->SetGolemType(IRON_GOLEM);
 						}
 						else if(typeofgolem == "lava")
-						{
-							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LavaGolem.png" ));
+							temp = new CSpawner(SPAWNER_LAVA);
 							((CBaseGolem*)(temp))->SetGolemType(LAVA_GOLEM);
 						}
 
-						//Load basic movement animations
-						((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
-						((CBaseGolem*)(temp))->SetPosX( (float)(posX*32) );
-						((CBaseGolem*)(temp))->SetPosY( (float)(posY*32) );
-						((CBaseGolem*)(temp))->SetIndexPosX( posX );
-						((CBaseGolem*)(temp))->SetIndexPosY( posY );
+						
+						((CSpawner*)temp)->SetPosX((float)(posX * 32));
+						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetIndexPosX(posX);
+						((CSpawner*)temp)->SetIndexPosY(posY);
 
 						MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 						break;

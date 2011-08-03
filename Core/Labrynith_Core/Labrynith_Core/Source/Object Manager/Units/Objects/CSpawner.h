@@ -1,34 +1,33 @@
-#ifndef CGOLEMSPAWNER_H_
-#define CGOLEMSPAWNER_H_
+#ifndef CSPAWNER_H_
+#define CSPAWNER_H_
 
 #include "../CBaseObject.h"
+#include "../CBaseEntity.h"
 
 enum SPAWNERTYPE{ 
-				  SPAWNER_EARTH, SPAWNER_FIRE, SPAWNER_WATER, SPAWNER_AIR,
+				  SPAWNER_EARTH, SPAWNER_FIRE, SPAWNER_WATER, SPAWNER_ICE, SPAWNER_AIR,
 				  SPAWNER_LAVA, SPAWNER_IRON, SPAWNER_LIGHT, SPAWNER_SHADOW,
-				  SPAWNER_GLASS, 
 
-				  SPAWNER_ATTRACTOR_EARTH, SPAWNER_ATTRACTOR_FIRE, SPAWNER_ATTRACTOR_WATER, SPAWNER_ATTRACTOR_AIR,
+				  SPAWNER_ATTRACTOR_EARTH, SPAWNER_ATTRACTOR_FIRE, SPAWNER_ATTRACTOR_WATER, SPAWNER_ATTRACTOR_ICE, SPAWNER_ATTRACTOR_AIR,
 				  SPAWNER_ATTRACTOR_LAVA, SPAWNER_ATTRACTOR_IRON, SPAWNER_ATTRACTOR_LIGHT, SPAWNER_ATTRACTOR_SHADOW,
-				  SPAWNER_ATTRACTOR_GLASS,
 
 				  SPAWNER_PLAYER 
 				};
 
-class CSpawner : public CBaseObject
+class CSpawner : public CBaseEntity
 {
 private:
 	int m_nSpawnerType;
-	int* m_nSpawnedID;
+	int m_nSpawnedID;
 
 public:
 
 	CSpawner(int nSpawnerType);
 
-	~CSpawner(void);
+	virtual ~CSpawner(void);
 
-	void Update(float fDT);
-	//void Render(int CameraPosX, int CameraPosY);
+	virtual void Update(float fDT);
+	virtual void Render(int CameraPosX, int CameraPosY);
 
 	int GetSpawnerType(void) {return m_nSpawnerType;}
 };

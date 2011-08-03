@@ -100,6 +100,8 @@
     <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CAttractor.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp" />
     <ClCompile Include="Source\Threading\MSyncManager.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxml.cpp" />
@@ -143,6 +145,8 @@
     <ClInclude Include="Source\Object Manager\Units\CPlayer.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CAttractor.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h" />
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h" />
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h" />
     <ClInclude Include="Source\Threading\MSyncManager.h" />
     <ClInclude Include="Source\TinyXML\tinystr.h" />
     <ClInclude Include="Source\TinyXML\tinyxml.h" />
