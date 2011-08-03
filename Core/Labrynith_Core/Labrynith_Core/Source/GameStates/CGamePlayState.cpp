@@ -25,7 +25,7 @@ int CGamePlayState::testVaribale = -1;
 CGamePlayState::CGamePlayState()
 {
 	m_nCurrLevel = 2;
-	//testVaribale = -1;
+	testVaribale = -1;
 }
 
 // destructor
@@ -119,7 +119,7 @@ void CGamePlayState::Exit(void)
 	MObjectManager::GetInstance()->RemoveAllUnits();
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
 	cout << "GamePlay -> ";
-
+	testVaribale = -1;
 	testVaribale = -1;
 	//MObjectManager::GetInstance()->DeleteInstance();
 }

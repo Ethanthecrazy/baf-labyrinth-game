@@ -149,8 +149,6 @@ bool CLoadLevelState::LoadLevel(int _level)
 		
 		MObjectManager::GetInstance()->ResizeLayer( 1, width, height );
 	}
-	
-	MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( 0, 0 ) ); 
 
 	TiXmlElement* pTiles = pRoot->FirstChildElement("Tiles");	
 	if(pTiles)
@@ -213,6 +211,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 		{			
 			int TypeX, TypeY, theType;
 			int posX, posY;
+			string prop = "";
 
 			TiXmlElement* pType = pObject->FirstChildElement("Type");
 			if(pType)
@@ -225,15 +224,14 @@ bool CLoadLevelState::LoadLevel(int _level)
 				TypeX = atoi(sTypeX.c_str());
 				TypeY = atoi(sTypeY.c_str());
 
-				if(TypeX == -1 && TypeY == -1)
-					theType = -1;
-				else if(TypeX == 0 && TypeY == 0) // 0 == Golem
-					theType = 0;
-				else if(TypeX == 1 && TypeY == 0)
-					theType = 1;
+				//if(TypeX == -1 && TypeY == -1)
+				//	theType = -1;
+				//else if(TypeX == 0 && TypeY == 0) // 0 == Golem
+				//	theType = 0;
+				//else if(TypeX == 1 && TypeY == 0) // 1 == Button
+				//	theType = 1;
 
-				// 0 = pit
-				// 1 & 2 = ground
+				theType = TypeX + (TypeY * 5); //Type.X + (Type.Y * tileSetSize.Width)
 			}
 			
 			TiXmlElement* pPos = pObject->FirstChildElement("Position");
@@ -248,58 +246,97 @@ bool CLoadLevelState::LoadLevel(int _level)
 				posY = atoi(sposY.c_str());
 		
 			}
+
+			TiXmlElement* pProp = pObject->FirstChildElement("Property");
+			if(pProp)
+			{			
+				prop = pProp->GetText();
+			}
 			
 			switch(theType)
 			{
 			case 0:				
 				{
-					IUnitInterface* temp = new CBaseGolem();
-					int random = rand() % 10;
-					switch(random)
+					string typeofspawner;
+					for(int i = 0; i < prop.length(); ++i)
 					{
-					case 0:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/AirGolem.png" ));
-						break;
-					case 1:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/FireGolem.png" ));
-						break;
-					case 2:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" ));
-						break;
-					case 3:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
-						break;
-					case 4:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LightGolem.png" ));
-						break;
-					case 5:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/ShadowGolem.png" ));
-						break;
-					case 6:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LavaGolem.png" ));
-						break;
-					case 7:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" ));
-						break;
-					case 8:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/GlassGolem.png" ));
-						break;
-					case 9:
-						((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+						if(prop[i] == '.')
+							break;
+
+						typeofspawner += prop[i];
+					}
+
+					if(typeofspawner == "player")
+					{
+						// change this code to a spawner of Player type
+						MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( posX, posY ) );
 						break;
 					}
-					//Load basic movement animations
-					((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
-					((CBaseGolem*)(temp))->SetPosX( (float)(posX*32) );
-					((CBaseGolem*)(temp))->SetPosY( (float)(posY*32) );
-					((CBaseGolem*)(temp))->SetIndexPosX( posX );
-					((CBaseGolem*)(temp))->SetIndexPosY( posY );
 
-					MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+					if(typeofspawner == "attractor")
+					{
+						string typeofattractor;
+						bool beginreading = false;
+						for(int i = 0; i < prop.length(); ++i)
+						{
+							if(beginreading)
+								typeofattractor += prop[i];
+
+							if(prop[i] == '.')
+								beginreading = true;
+						}
+						
+						// change this code to a spawner of Attractor X type
+
+						break;
+					}
+
+					if(typeofspawner == "golem")
+					{
+						string typeofgolem;
+						bool beginreading = false;
+						for(int i = 0; i < prop.length(); ++i)
+						{
+							if(beginreading)
+								typeofgolem += prop[i];
+
+							if(prop[i] == '.')
+								beginreading = true;
+						}
+
+						// change this code to a spawner of Golem X type
+						IUnitInterface* temp = new CBaseGolem();
+
+						if(typeofgolem == "earth")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+						else if(typeofgolem == "air")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/AirGolem.png" ));
+						else if(typeofgolem == "fire")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/FireGolem.png" ));
+						else if(typeofgolem == "water")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" ));
+						else if(typeofgolem == "ice")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
+						else if(typeofgolem == "shadow")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/ShadowGolem.png" ));
+						else if(typeofgolem == "light")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LightGolem.png" ));
+						else if(typeofgolem == "iron")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" ));
+						else if(typeofgolem == "lava")
+							((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LavaGolem.png" ));
+
+						//Load basic movement animations
+						((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
+						((CBaseGolem*)(temp))->SetPosX( (float)(posX*32) );
+						((CBaseGolem*)(temp))->SetPosY( (float)(posY*32) );
+						((CBaseGolem*)(temp))->SetIndexPosX( posX );
+						((CBaseGolem*)(temp))->SetIndexPosY( posY );
+
+						MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+						break;
+					}
 				}
-				break;
-
-			default:
 				break;
 			}
 			

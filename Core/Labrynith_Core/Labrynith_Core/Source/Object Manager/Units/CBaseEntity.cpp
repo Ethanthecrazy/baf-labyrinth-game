@@ -30,7 +30,7 @@ CBaseEntity::~CBaseEntity(void)
 
 void CBaseEntity::Update(float fDT)
 {
-	//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+	//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX(), GetIndexPosY(),  125 );
 	
 	//If the animation isnt playing, play it
 	if(!CAnimationManager::GetInstance()->IsAnimationPlaying(GetCurrentAnimID()))
