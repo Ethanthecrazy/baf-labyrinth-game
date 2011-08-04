@@ -108,7 +108,7 @@ void CPlayer::Input()
 
 		}
 }
-bool CPlayer::CheckCollision(IUnitInterface* pBase)
+bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	if(!pBase || pBase == this)
 		return false;

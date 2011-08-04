@@ -141,7 +141,7 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 
 	}
 }
-bool CBaseEntity::CheckCollision(IUnitInterface* pBase)
+bool CBaseEntity::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	return true;
 }

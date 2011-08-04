@@ -57,7 +57,7 @@ public:
 
 	virtual int GetType(void) = 0;
 
-	virtual bool CheckCollision(IUnitInterface* pBase) = 0;
+	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision) = 0;
 
 		// accessors
 	float GetPosX(void) { return m_fPosX; }

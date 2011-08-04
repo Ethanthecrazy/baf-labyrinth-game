@@ -16,6 +16,7 @@ CAI_Handler::~CAI_Handler()
 //helpers
 bool CAI_Handler::HorizontalMove(const CBaseEntity* pEntity, const int nTargetX)
 {
+	//BUG equal to is missing
 	//see where the target is from our position...
 	if(((CBaseEntity*)(pEntity))->GetIndexPosX() > nTargetX)
 	{
@@ -31,6 +32,7 @@ bool CAI_Handler::HorizontalMove(const CBaseEntity* pEntity, const int nTargetX)
 }
 bool CAI_Handler::VerticalMove(const CBaseEntity* pEntity, const int nTargetY)
 {
+	//BUG equal to is missing
 	//see where the target is from our position...
 	if(((CBaseEntity*)(pEntity))->GetIndexPosY() > nTargetY)
 	{
@@ -99,13 +101,8 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	if( objectID > 0 )
 	{
 		cout << "AI:Collided With Object " << objectID << "\n";
-		if(nCanHandleCollision)
-		{
-			//Let the Entity handle its object collision
-			return ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(objectID));
-		}
-		else
-			return true;
+		//Let the Entity handle its object collision
+		return ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(objectID), nCanHandleCollision);
 	}
 
 	//Check to see if we are colliding with an entity
@@ -114,13 +111,8 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	if( EntityID > 0 )
 	{
 		cout << "AI:Collided With Entity " << EntityID << "\n";
-		if(nCanHandleCollision)
-		{
-			//Let the Entity handle its collision
-			return ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(EntityID));
-		}
-		else
-			return true;
+		//Let the Entity handle its collision
+		return ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(EntityID), nCanHandleCollision);
 	}
 
 	//we are not colliding with anything

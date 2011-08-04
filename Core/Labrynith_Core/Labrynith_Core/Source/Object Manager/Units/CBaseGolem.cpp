@@ -40,7 +40,7 @@ void CBaseGolem::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseEntity::Render(CameraPosX, CameraPosY);
 }
-bool CBaseGolem::CheckCollision(IUnitInterface* pBase)
+bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	if(!pBase)
 		return false;
@@ -49,6 +49,43 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase)
 	{
 	case OBJECT_OBJECT:
 		{
+			if(pBase->GetType() == ENT_ATTRACTOR )
+			{
+				if(nCanHandleCollision)
+				{
+				int cameraX = 0 , cameraY = 0 ;
+				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+				int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
+				int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
+
+				int ObjectID = pBase->m_nIdentificationNumber ;
+				//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+				MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
+				MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
+				MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
+
+
+				switch( GetFlag_DirectionToMove() )
+				{
+				case FLAG_MOVE_LEFT:
+					SetAnimID( CAnimationManager::GetInstance()->GetID("EatLeft") ) ;
+					break;
+				case FLAG_MOVE_UP:
+					SetAnimID( CAnimationManager::GetInstance()->GetID("EatUp") ) ;
+					break;
+				case FLAG_MOVE_RIGHT:
+					SetAnimID( CAnimationManager::GetInstance()->GetID("EatRight") ) ;
+					break;
+				case FLAG_MOVE_DOWN:
+					SetAnimID( CAnimationManager::GetInstance()->GetID("EatDown") ) ;
+					break;
+				}
+				CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
+				CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
+				MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
+				}
+				return false;
+			}
 			return true;
 		}
 		break;
@@ -169,7 +206,7 @@ bool CBaseGolem::CheckEntCollision(CBaseEntity* pEntity)
 		CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
 		MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
 
-		return true;
+		return false;
 	}
 	return true;
 }

@@ -22,7 +22,7 @@ public:
 
 	virtual void Update(float fDT);
 	virtual void Render( int CameraPosX, int CameraPosY );
-	virtual bool CheckCollision(IUnitInterface* pBase);
+	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	//bool CheckCollision(IUnitInterface* pBase);
 	virtual bool CheckTileCollision(int TileID);
 	virtual void UpdateAI();

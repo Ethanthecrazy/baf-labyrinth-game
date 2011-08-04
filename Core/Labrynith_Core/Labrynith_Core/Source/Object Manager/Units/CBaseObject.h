@@ -24,7 +24,7 @@ public:
 
 	int GetType(void) { return m_nType; }
 
-	virtual bool CheckCollision(IUnitInterface* pBase);
+	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 
 	void AddRef(void);
 	void Release(void);

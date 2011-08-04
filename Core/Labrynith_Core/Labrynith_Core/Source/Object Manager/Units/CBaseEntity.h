@@ -35,7 +35,7 @@ public:
 	virtual void Update(float fDT);
 	virtual void Render( int CameraPosX, int CameraPosY );
 	//this function handles object/entity collisions
-	virtual bool CheckCollision(IUnitInterface* pBase);
+	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	//this function determines if we can walk thro certain tiles
 	virtual bool CheckTileCollision(int TileID);
 	//loads the animations for basic movement

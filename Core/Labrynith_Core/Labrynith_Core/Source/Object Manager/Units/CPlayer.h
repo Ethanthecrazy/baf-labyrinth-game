@@ -20,7 +20,7 @@ public:
 	virtual void Update(float fDT);
 	virtual void Render( int CameraPosX, int CameraPosY );
 	void Input();
-	virtual bool CheckCollision(IUnitInterface* pBase);
+	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	virtual bool CheckTileCollision(int TileID);
 	//accessors
 	int GetLives() const;
