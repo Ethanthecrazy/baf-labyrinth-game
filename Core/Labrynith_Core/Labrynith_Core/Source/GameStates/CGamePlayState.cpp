@@ -62,7 +62,7 @@ bool CGamePlayState::Input(void)
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
 
 	//BUG - temp code added for AI testing
-	/*if( pDI->MouseButtonPressed( 0 ) )
+	if( pDI->MouseButtonPressed( 0 ) )
 	{
 		IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120001);
 		int cameraX = 0 , cameraY = 0 ;
@@ -70,7 +70,7 @@ bool CGamePlayState::Input(void)
 		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
 		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
 		((CBaseGolem*)(golem))->SetTargetPos(tileXPos, tileYPos);
-	}*/
+	}
 
 	return true;
 }

@@ -55,6 +55,9 @@ CAI_Handler* CAI_Handler::GetInstance()
 bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX, 
 		const int nY, bool nCanHandleCollision)
 {
+	if(!pEntity)
+		return true;
+
 	MObjectManager* OM = MObjectManager::GetInstance();
 	
 	//Dont allow the Entitys to move out of range
@@ -112,6 +115,11 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	//Check to see if we are colliding with an entity
 	int EntityID = OM->FindFlake(pEntity->m_nIdentificationNumber)
 		.GetInfoAtIndex(nX, nY);
+
+	//we cannot collide with ourselves
+	if(OM->GetUnit(EntityID) == pEntity)
+		return false;
+
 	if( EntityID > 0 )
 	{
 		cout << "AI:Collided With Entity " << EntityID << "\n";

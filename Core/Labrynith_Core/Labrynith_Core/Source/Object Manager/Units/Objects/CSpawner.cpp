@@ -29,7 +29,6 @@ CSpawner::CSpawner(int nSpawnerType) : m_nSpawnerType(nSpawnerType)
 {
 	m_nSpawnedID = 0;
 	MEventSystem::GetInstance()->RegisterClient("spawner.spawn", this);
-	MEventSystem::GetInstance()->SendEvent("spawner.spawn");
 }
 
 CSpawner::~CSpawner(void)

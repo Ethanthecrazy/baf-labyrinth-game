@@ -18,6 +18,7 @@ using std::string;
 #include "../Object Manager/Units/Objects/CAttractor.h"
 #include "../Object Manager/Units/Tiles/CButton.h"
 #include "../Object Manager/Units/Tiles/CDoor.h"
+#include "../Object Manager/Units/Tiles/CExit.h"
 
 #include "../TinyXML/tinyxml.h"
 
@@ -37,10 +38,19 @@ CLoadLevelState* CLoadLevelState::GetInstance()
 
 void CLoadLevelState::Enter(void)
 {
+	cout << "Deleting current level...\n";	
+	MMessageSystem::GetInstance()->ClearMessages();
+	MEventSystem::GetInstance()->ClearEvents();
+	MObjectManager::GetInstance()->RemoveAllUnits();
+	CGamePlayState::GetInstance()->testVaribale = -1;
+	cout << "...current level deleted\n";	
+
+	//BUG - some objects from prev level still exist;
+	MObjectManager* mobject = MObjectManager::GetInstance();
+	CGamePlayState* ptempthing = CGamePlayState::GetInstance();
+
 	cout << "Loading Level...\n";
-
-	LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel());
-
+	LoadLevel(ptempthing->GetCurrentLevel());
 	cout << "...Level Loaded\n";
 
 	CGame::GetInstance()->PopState();
@@ -106,7 +116,6 @@ void CLoadLevelState::EnterCommand(void)
 
 bool CLoadLevelState::LoadLevel(int _level)
 {		
-
 	char filename[255] = {0};
 
 	sprintf(filename, "resource/Levels/%d.xml", _level);
@@ -221,6 +230,12 @@ bool CLoadLevelState::LoadLevel(int _level)
 							}
 						case 3: // exit tile
 							{
+							IUnitInterface* temp = new CExit();
+							((CExit*)temp)->SetPosX((float)(x * 32));
+							((CExit*)temp)->SetPosY((float)(y * 32));
+							((CExit*)temp)->SetIndexPosX(x);
+							((CExit*)temp)->SetIndexPosY(y);
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 							theType = 1;
 							}
 							break;
@@ -429,6 +444,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 			pObject = pObject->NextSiblingElement("TileObject");
 		}
 	}
-
+	
+	MEventSystem::GetInstance()->SendEvent("spawner.spawn");
 	return true;
 }
