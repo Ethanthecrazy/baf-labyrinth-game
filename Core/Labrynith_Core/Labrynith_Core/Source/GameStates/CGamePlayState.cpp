@@ -131,14 +131,14 @@ void CGamePlayState::Render(void)
 	}
 	//Draw the HUD
 	CHUD::GetInstance()->Render();
-	pD3D->DrawTextA( "Gameplay State", 100, 100 );
+	//pD3D->DrawTextA( "Gameplay State", 100, 100 );
 
 	int mouseX = CSGD_DirectInput::GetInstance()->MouseGetPosX() ;
 	int mouseY = CSGD_DirectInput::GetInstance()->MouseGetPosY() ;
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
 
-	char temp[64];
+	/*char temp[64];
 
 	sprintf( temp, "%f", timestep ); 
 
@@ -146,7 +146,7 @@ void CGamePlayState::Render(void)
 
 	sprintf( temp, "%f", 1.0f / timestep ); 
 
-	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
+	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );*/
 }
 
 

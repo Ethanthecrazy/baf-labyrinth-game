@@ -18,6 +18,13 @@ void CSpawner::Render(int CameraPosX, int CameraPosY)
 }
 
 
+bool CSpawner::CheckCollision(IUnitInterface* pBase)
+{
+	return false;
+}
+
+
+
 CSpawner::CSpawner(int nSpawnerType) : m_nSpawnerType(nSpawnerType)
 {
 	m_nSpawnedID = 0;
@@ -36,6 +43,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 	{
 		if(!MObjectManager::GetInstance()->GetUnit(m_nSpawnedID))
 	{
+		printf("Spawning...\n");
 		switch(m_nSpawnerType)
 		{
 		case SPAWNER_EARTH:

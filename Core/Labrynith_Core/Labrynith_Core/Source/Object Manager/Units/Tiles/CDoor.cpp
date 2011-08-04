@@ -41,6 +41,6 @@ bool CDoor::CheckCollision(IUnitInterface* pBase)
 void CDoor::Render( int CameraPosX, int CameraPosY )
 {
 	if(!m_bIsOpen)
-		CBaseEntity::Render(CameraPosX, CameraPosY);
+		CBaseObject::Render(CameraPosX, CameraPosY);
 	
 }

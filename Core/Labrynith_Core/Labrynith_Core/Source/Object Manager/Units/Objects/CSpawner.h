@@ -33,6 +33,7 @@ public:
 	int GetSpawnerType(void) {return m_nSpawnerType;}
 
 	void HandleEvent( Event* _toHandle );
+	bool CheckCollision(IUnitInterface* pBase);
 };
 
 

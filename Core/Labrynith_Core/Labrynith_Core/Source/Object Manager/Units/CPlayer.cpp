@@ -127,7 +127,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase)
 	}
 
 
-	return false;
+	return pBase->CheckCollision(this);
 }
 //accessors
 int CPlayer::GetLives() const

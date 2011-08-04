@@ -6,6 +6,7 @@ CButton::CButton(string nLink)
 {
 	m_bIsPressed = false;
 	m_nLink = nLink;
+	//m_nType = OBJECT_OBJECT;
 }
 CButton::~CButton(void)
 {

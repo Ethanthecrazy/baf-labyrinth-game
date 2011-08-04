@@ -2,12 +2,12 @@
 #define CDOOR_H_
 
 #include "../../../Messaging/IListener.h"
-#include "../CBaseEntity.h"
+#include "../CBaseObject.h"
 
 #include <string>
 using std::string;
 
-class CDoor : public CBaseEntity, public IListener
+class CDoor : public CBaseObject, public IListener
 {
 private:
 	bool m_bIsOpen;
