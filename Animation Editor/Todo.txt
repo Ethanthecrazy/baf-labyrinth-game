@@ -1,0 +1,1 @@
+-Shift Image - up and down(animations or frame-based);
