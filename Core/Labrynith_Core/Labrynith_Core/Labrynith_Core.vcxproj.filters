@@ -168,6 +168,9 @@
     <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CExit.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CExit.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

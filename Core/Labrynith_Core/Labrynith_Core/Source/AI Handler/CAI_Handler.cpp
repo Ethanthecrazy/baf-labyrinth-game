@@ -83,7 +83,7 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		return true;
 	}
 
-	//Its possible for an object/entity and tile to occupy the same position!
+	//Its possible for an object and entity and tile to occupy the same position!
 	//Check to see if we are colliding with a Tile
 	int TileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
 		 .GetFlake(OBJECT_TILE).GetInfoAtIndex(nX, nY);
@@ -101,8 +101,12 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	if( objectID > 0 )
 	{
 		cout << "AI:Collided With Object " << objectID << "\n";
+		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(objectID), nCanHandleCollision);
 		//Let the Entity handle its object collision
-		return ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(objectID), nCanHandleCollision);
+		if(Collided)
+		{
+			return Collided;
+		}
 	}
 
 	//Check to see if we are colliding with an entity

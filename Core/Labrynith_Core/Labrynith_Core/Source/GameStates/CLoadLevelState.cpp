@@ -219,6 +219,11 @@ bool CLoadLevelState::LoadLevel(int _level)
 							theType = 1;
 							break;
 							}
+						case 3: // exit tile
+							{
+							theType = 1;
+							}
+							break;
 						}
 
 						// 0 = pit
