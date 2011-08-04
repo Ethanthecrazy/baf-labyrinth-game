@@ -206,7 +206,8 @@ bool CBaseGolem::CheckEntCollision(CBaseEntity* pEntity)
 		CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
 		MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
 
-		return false;
+		return true;
 	}
+
 	return true;
 }

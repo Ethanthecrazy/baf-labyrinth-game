@@ -113,6 +113,9 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 
 bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if( pBase == this )
+		return false;
+
 	return true;
 }
 

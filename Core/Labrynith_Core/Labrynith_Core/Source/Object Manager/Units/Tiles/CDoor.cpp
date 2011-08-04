@@ -33,6 +33,9 @@ void CDoor::HandleEvent( Event* _toHandle )
 
 bool CDoor::CheckCollision(IUnitInterface* pBase)
 {
+	if( pBase == this )
+		return false;
+
 	if(m_bIsOpen)
 	{
 		printf("Door is open!\n");

@@ -14,8 +14,11 @@ CButton::~CButton(void)
 
 bool CButton::CheckCollision(IUnitInterface* pBase)
 {
+	if( pBase == this )
+		return false;
+
 	MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)m_nLink.c_str());
-	printf("Steped on button\n");
+	//printf("Steped on button\n");
 	return false;
 }
 
