@@ -1,12 +1,12 @@
 #ifndef CBUTTON_H_
 #define CBUTTON_H_
 
-#include "../CBaseEntity.h"
+#include "../CBaseObject.h"
 
 #include <string>
 using std::string;
 
-class CButton : public CBaseEntity
+class CButton : public CBaseObject
 {
 private:
 	bool m_bIsPressed;

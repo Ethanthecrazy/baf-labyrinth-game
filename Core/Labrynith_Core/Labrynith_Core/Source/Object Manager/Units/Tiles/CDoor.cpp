@@ -1,10 +1,11 @@
 #include "CDoor.h"
-
+#include "../../../Messaging/MEventSystem.h"
 
 CDoor::CDoor(string nLink)
 {
 	m_bIsOpen = false;
 	m_nLink = nLink;
+	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);
 }
 
 CDoor::~CDoor(void)

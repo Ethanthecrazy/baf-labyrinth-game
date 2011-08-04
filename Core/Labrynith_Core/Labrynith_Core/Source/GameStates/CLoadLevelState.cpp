@@ -15,6 +15,7 @@
 using std::string;
 
 #include "../Object Manager/Units/Objects/CSpawner.h"
+#include "../Object Manager/Units/Objects/CAttractor.h"
 #include "../Object Manager/Units/Tiles/CButton.h"
 #include "../Object Manager/Units/Tiles/CDoor.h"
 
@@ -38,13 +39,6 @@ void CLoadLevelState::Enter(void)
 {
 	cout << "Loading Level...\n";
 
-	/*for( int x = 0; x < MObjectManager::GetInstance()->GetLayer( 1 ).GetLayerWidth(); ++x )
-	{
-		for( int y = 0; y < MObjectManager::GetInstance()->GetLayer( 1 ).GetLayerHeight(); ++y )
-		{
-			MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, rand() % 3 );
-		}
-	}*/
 	LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel());
 
 	cout << "...Level Loaded\n";
@@ -205,7 +199,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							((CButton*)temp)->SetPosY((float)(y * 32));
 							((CButton*)temp)->SetIndexPosX(x);
 							((CButton*)temp)->SetIndexPosY(y);
-							((CButton*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
+							((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
 							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 
 							theType = 1;
@@ -219,7 +213,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							((CDoor*)temp)->SetPosY((float)(y * 32));
 							((CDoor*)temp)->SetIndexPosX(x);
 							((CDoor*)temp)->SetIndexPosY(y);
-							((CButton*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" ));
+							((CDoor*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" ));
 							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 
 							theType = 1;
@@ -378,40 +372,40 @@ bool CLoadLevelState::LoadLevel(int _level)
 						
 						IUnitInterface* temp;
 						if(typeofgolem == "earth")
+						{
 							temp = new CSpawner(SPAWNER_EARTH);
-							((CBaseGolem*)(temp))->SetGolemType(EARTH_GOLEM);
 						}
 						else if(typeofgolem == "air")
+						{
 							temp = new CSpawner(SPAWNER_AIR);
-							((CBaseGolem*)(temp))->SetGolemType(AIR_GOLEM);
 						}
 						else if(typeofgolem == "fire")
+						{
 							temp = new CSpawner(SPAWNER_FIRE);
-							((CBaseGolem*)(temp))->SetGolemType(FIRE_GOLEM);
 						}
 						else if(typeofgolem == "water")
+						{
 							temp = new CSpawner(SPAWNER_WATER);
-							((CBaseGolem*)(temp))->SetGolemType(WATER_GOLEM);
 						}
 						else if(typeofgolem == "ice")
+						{
 							temp = new CSpawner(SPAWNER_ICE);
-							((CBaseGolem*)(temp))->SetGolemType(ICE_GOLEM);
 						}
 						else if(typeofgolem == "shadow")
+						{
 							temp = new CSpawner(SPAWNER_SHADOW);
-							((CBaseGolem*)(temp))->SetGolemType(SHADOW_GOLEM);
 						}
 						else if(typeofgolem == "light")
+						{
 							temp = new CSpawner(SPAWNER_LIGHT);
-							((CBaseGolem*)(temp))->SetGolemType(LIGHT_GOLEM);
 						}
 						else if(typeofgolem == "iron")
+						{
 							temp = new CSpawner(SPAWNER_IRON);
-							((CBaseGolem*)(temp))->SetGolemType(IRON_GOLEM);
 						}
 						else if(typeofgolem == "lava")
+						{
 							temp = new CSpawner(SPAWNER_LAVA);
-							((CBaseGolem*)(temp))->SetGolemType(LAVA_GOLEM);
 						}
 
 						

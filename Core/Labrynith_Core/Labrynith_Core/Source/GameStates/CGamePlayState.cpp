@@ -10,7 +10,6 @@
 
 #include "../CGame.h"
 #include "../Object Manager/Units/CBaseEntity.h"
-//#include "../Object Manager/Units/CBaseObject.h"
 #include "../Object Manager/Units/Objects/CAttractor.h"
 #include "../Object Manager/Units/CPlayer.h"
 #include "../Object Manager/Units/CBaseGolem.h"
@@ -139,15 +138,15 @@ void CGamePlayState::Render(void)
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
 
-	//char temp[64];
+	char temp[64];
 
-	//sprintf( temp, "%f", timestep ); 
+	sprintf( temp, "%f", timestep ); 
 
-	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
+	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
 
-	//sprintf( temp, "%f", 1.0f / timestep ); 
+	sprintf( temp, "%f", 1.0f / timestep ); 
 
-	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
+	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
 }
 
 

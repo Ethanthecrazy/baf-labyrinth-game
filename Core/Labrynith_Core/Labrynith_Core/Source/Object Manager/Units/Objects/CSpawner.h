@@ -2,7 +2,8 @@
 #define CSPAWNER_H_
 
 #include "../CBaseObject.h"
-#include "../CBaseEntity.h"
+//#include "../CBaseEntity.h"
+#include "../../../Messaging/IListener.h"
 
 enum SPAWNERTYPE{ 
 				  SPAWNER_EARTH, SPAWNER_FIRE, SPAWNER_WATER, SPAWNER_ICE, SPAWNER_AIR,
@@ -14,7 +15,7 @@ enum SPAWNERTYPE{
 				  SPAWNER_PLAYER 
 				};
 
-class CSpawner : public CBaseEntity
+class CSpawner : public CBaseObject, public IListener
 {
 private:
 	int m_nSpawnerType;
@@ -30,6 +31,8 @@ public:
 	virtual void Render(int CameraPosX, int CameraPosY);
 
 	int GetSpawnerType(void) {return m_nSpawnerType;}
+
+	void HandleEvent( Event* _toHandle );
 };
 
 

@@ -583,7 +583,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>5</Property>
@@ -1131,7 +1131,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>5</Property>
@@ -1144,7 +1144,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
+            <X>1</X>
             <Y>0</Y>
           </Type>
         </Tile>
@@ -1156,7 +1156,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
+            <X>2</X>
             <Y>0</Y>
           </Type>
         </Tile>
@@ -5502,7 +5502,7 @@
         <X>0</X>
         <Y>0</Y>
       </Type>
-      <Property>golem.ice</Property>
+      <Property>golem.air</Property>
       <Position>
         <X>10</X>
         <Y>2</Y>
@@ -5514,7 +5514,7 @@
         <X>0</X>
         <Y>0</Y>
       </Type>
-      <Property>golem.air</Property>
+      <Property>golem.earth</Property>
       <Position>
         <X>5</X>
         <Y>15</Y>
@@ -5530,6 +5530,102 @@
       <Position>
         <X>0</X>
         <Y>8</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>attractor.earth</Property>
+      <Position>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>attractor.air</Property>
+      <Position>
+        <X>2</X>
+        <Y>1</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>attractor.fire</Property>
+      <Position>
+        <X>3</X>
+        <Y>1</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>attractor.water</Property>
+      <Position>
+        <X>4</X>
+        <Y>1</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>golem.water</Property>
+      <Position>
+        <X>7</X>
+        <Y>8</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>golem.earth</Property>
+      <Position>
+        <X>7</X>
+        <Y>11</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>golem.earth</Property>
+      <Position>
+        <X>8</X>
+        <Y>14</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>golem.fire</Property>
+      <Position>
+        <X>12</X>
+        <Y>2</Y>
         <Z>0</Z>
       </Position>
     </TileObject>

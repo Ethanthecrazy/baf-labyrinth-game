@@ -2,13 +2,39 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../MObjectManager.h"
 #include "../../../Messaging/MMessageSystem.h"
+#include "../../../Messaging/MEventSystem.h"
 #include "../CBaseGolem.h"
 #include "../../MObjectManager.h"
 #include "../../../GameStates/CGamePlayState.h"
+#include "CAttractor.h"
 
 void CSpawner::Update(float fDT)
 {
-	if(!MObjectManager::GetInstance()->GetUnit(m_nSpawnedID))
+}
+
+void CSpawner::Render(int CameraPosX, int CameraPosY)
+{
+
+}
+
+
+CSpawner::CSpawner(int nSpawnerType) : m_nSpawnerType(nSpawnerType)
+{
+	m_nSpawnedID = 0;
+	MEventSystem::GetInstance()->RegisterClient("spawner.spawn", this);
+	MEventSystem::GetInstance()->SendEvent("spawner.spawn");
+}
+
+CSpawner::~CSpawner(void)
+{
+
+}
+
+void CSpawner::HandleEvent( Event* _toHandle )
+{
+	if(_toHandle->GetEventID() == "spawner.spawn")
+	{
+		if(!MObjectManager::GetInstance()->GetUnit(m_nSpawnedID))
 	{
 		switch(m_nSpawnerType)
 		{
@@ -147,28 +173,140 @@ void CSpawner::Update(float fDT)
 			break;
 			}
 
+
+
+		case SPAWNER_ATTRACTOR_EARTH:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(EARTH_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
+			break;
+			}
+			
+		case SPAWNER_ATTRACTOR_FIRE:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(FIRE_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
+			break;
+			}
+
+		case SPAWNER_ATTRACTOR_WATER:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(WATER_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			break;			
+			}
+
+		case SPAWNER_ATTRACTOR_ICE:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(ICE_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			break;
+			}
+
+		case SPAWNER_ATTRACTOR_AIR:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(AIR_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			break;
+			}
+
+		case SPAWNER_ATTRACTOR_LAVA:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(LAVA_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			break;
+			}
+
+		case SPAWNER_ATTRACTOR_IRON:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(IRON_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			break;
+			}
+
+		case SPAWNER_ATTRACTOR_LIGHT:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(LIGHT_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			break;
+			}
+
+		case SPAWNER_ATTRACTOR_SHADOW:
+			{
+			CAttractor* temp = new CAttractor();			
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CAttractor*)(temp))->SetPosX( GetPosX() );
+			((CAttractor*)(temp))->SetPosY( GetPosY() );
+			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
+			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
+			((CAttractor*)(temp))->SetElemType(SHADOW_GOLEM);
+
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			break;
+			}
+
+
 		case SPAWNER_PLAYER:
 			MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( GetIndexPosX(), GetIndexPosY() ) );
 			m_nSpawnedID = CGamePlayState::GetInstance()->testVaribale;
 			break;
 		}
 	}
-
-
-}
-
-void CSpawner::Render(int CameraPosX, int CameraPosY)
-{
-
-}
-
-
-CSpawner::CSpawner(int nSpawnerType) : m_nSpawnerType(nSpawnerType)
-{
-	m_nSpawnedID = 0;
-}
-
-CSpawner::~CSpawner(void)
-{
-
+	}
 }

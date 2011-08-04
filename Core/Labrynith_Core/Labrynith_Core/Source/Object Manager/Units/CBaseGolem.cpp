@@ -154,7 +154,7 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase)
 		}
 		CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
 		CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
-		
+		MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
 
 		return false;
 	}

@@ -1,5 +1,5 @@
 #ifndef CBASEOBJECT_H
-#define CBASEOBJECT_H_
+#define CBASEOBJECT_H
 
 #include "../IUnitInterface.h"
 
