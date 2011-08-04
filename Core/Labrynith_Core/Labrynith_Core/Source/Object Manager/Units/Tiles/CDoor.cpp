@@ -6,6 +6,7 @@ CDoor::CDoor(string nLink)
 	m_bIsOpen = false;
 	m_nLink = nLink;
 	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);
+	MEventSystem::GetInstance()->RegisterClient("Button.Unpress", this);
 }
 
 CDoor::~CDoor(void)
@@ -20,6 +21,13 @@ void CDoor::HandleEvent( Event* _toHandle )
 		string tmp = (const char*)_toHandle->GetParam();
 		if( tmp ==  m_nLink)
 			m_bIsOpen = true;
+	}
+
+	if( _toHandle->GetEventID() == "Button.Unpress" )
+	{
+		string tmp = (const char*)_toHandle->GetParam();
+		if( tmp ==  m_nLink)
+			m_bIsOpen = false;
 	}
 }
 

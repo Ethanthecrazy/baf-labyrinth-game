@@ -128,12 +128,12 @@ bool MObjectManager::MoveEntUp( int _Ident )
 	int otherEntity;
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) )
-		return false;
+		return true;
 
 	if( toCheck->GetIndexPosY() - 1 < 0 )
 	{
 		cout << "Movement Denied in MoveEntUp\n";
-		return false;
+		return true;
 	}
 
 	//if we collide with an object...	
@@ -188,12 +188,12 @@ bool MObjectManager::MoveEntDown( int _Ident )
 	int otherEntity;
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) )
-		return false;
+		return true;
 	
 	if( toCheck->GetIndexPosY() + 1 > FindLayer( _Ident).GetLayerHeight() - 1 )
 	{
 		cout << "Movement Denied in MoveEntDown\n";
-		return false;
+		return true;
 	}
 
 	//if we collide with an object...
@@ -250,12 +250,12 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX() - 1, toCheck->GetIndexPosY()  ) )
-		return false;
+		return true;
 
 	if( toCheck->GetIndexPosX() - 1 < 0 )
 	{
 		cout << "Movement Denied in MoveEntRight\n";
-		return false;
+		return true;
 	}
 	
 
@@ -304,7 +304,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 {
 	IUnitInterface* toCheck = GetUnit( _Ident );
 	if(!toCheck)
-		return false;
+		return true;
 	//allow direction to change, 
 	//even if we are out of range 
 	//or if we collide with an entity
@@ -313,13 +313,13 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	if( toCheck->GetIndexPosX() + 1 > FindLayer( _Ident).GetLayerWidth() - 1 )
 	{
 		cout << "Movement Denied in MoveEntRight\n";
-		return false;
+		return true;
 	}
 
 	int otherEntity;
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX() + 1, toCheck->GetIndexPosY() ) )
-		return false;
+		return true;
 
 	
 	//if we collide with an object...
@@ -360,6 +360,42 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
 	toCheck->SetDistanceLeft( 32.0f );
+	return false;
+}
+
+bool MObjectManager::CheckStandingOn( int _Ident )
+{
+	IUnitInterface* toCheck = GetUnit( _Ident );
+	if(!toCheck)
+		return true;
+
+	int otherEntity;
+
+	// if need be change to Tile->CheckCollision
+	//if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() ) )
+		//return true;
+
+	
+	//if we collide with an object...
+	int objectID = FindLayer( _Ident ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( toCheck->GetIndexPosX() , toCheck->GetIndexPosY() ) ;
+	if( objectID > 0 )
+	{
+		if( toCheck->CheckCollision( GetUnit( objectID ) ) )
+		{
+			return true;
+		}
+	}
+
+	//if we collide with an entity...
+	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() );
+	if( otherEntity > 0 )
+	{
+		if( toCheck->CheckCollision( GetUnit( otherEntity ) ) )
+		{
+			return true;
+		}
+	}
+
 	return false;
 }
 

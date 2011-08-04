@@ -22,6 +22,7 @@ public:
 	bool CheckCollision(IUnitInterface* pBase);
 	
 	void Render( int CameraPosX, int CameraPosY );
+	void Update(float fDT) {}
 };
 
 

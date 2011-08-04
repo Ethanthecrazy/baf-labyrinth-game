@@ -40,6 +40,13 @@ void CBaseEntity::Update(float fDT)
 
 	CAnimationManager::GetInstance()->UpdateAnimation(fDT, GetCurrentAnimID());
 
+	static float temptimer = 0.0f;
+	temptimer += fDT;
+	if(temptimer > 5.0f)
+	{
+		temptimer = 0.0f;
+	}
+
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
 
@@ -112,6 +119,7 @@ void CBaseEntity::Update(float fDT)
 			//first frame(which is idle) 
 			CAnimationManager::GetInstance()->StopAnimationAtFrame(GetCurrentAnimID(), 0);
 		}
+		
 	}
 
 	

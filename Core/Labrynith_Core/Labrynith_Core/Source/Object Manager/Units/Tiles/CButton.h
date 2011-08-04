@@ -17,6 +17,7 @@ public:
 	~CButton(void);
 	
 	bool CheckCollision(IUnitInterface* pBase);
+	void Update(float fDT);
 };
 
 

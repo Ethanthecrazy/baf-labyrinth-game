@@ -55,6 +55,7 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 void CPlayer::Input()
 {
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
+	MObjectManager::GetInstance()->CheckStandingOn( m_nIdentificationNumber );
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 		{
@@ -103,7 +104,7 @@ void CPlayer::Input()
 }
 bool CPlayer::CheckCollision(IUnitInterface* pBase)
 {
-	if(!pBase)
+	if(!pBase || pBase == this)
 		return false;
 
 	//if we collide with an object

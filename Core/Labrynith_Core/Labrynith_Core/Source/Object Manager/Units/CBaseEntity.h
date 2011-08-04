@@ -28,6 +28,7 @@ public:
 	//loads the animations for basic movement
 	void LoadEntMoveAnimIDs();
 
+
 	int GetType(void) { return m_nType; }
 	int GetCurrentAnimID(void) const { return m_nCurrAnimID; }
 

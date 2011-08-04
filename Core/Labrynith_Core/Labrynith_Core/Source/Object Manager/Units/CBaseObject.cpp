@@ -96,8 +96,18 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 	{
 		int DrawPositionX = (int)GetPosX() - CameraPosX;
 		int DrawPositionY = (int)GetPosY() - CameraPosY;
+		
+		CSGD_TextureManager::GetInstance()->Draw( m_nImageID,
+		DrawPositionX,
+		DrawPositionY,
+		1.0f,
+		1.0f,
+		0,
+		0.0f,
+		0.0f,
+		0.0f,
+		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
 
-		CSGD_TextureManager::GetInstance()->Draw( m_nImageID, DrawPositionX, DrawPositionY );
 	}
 }
 

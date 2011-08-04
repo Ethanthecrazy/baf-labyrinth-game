@@ -50,6 +50,7 @@ public:
 	bool MoveEntDown( int _Ident );
 	bool MoveEntLeft( int _Ident );
 	bool MoveEntRight( int _Ident );
+	bool CheckStandingOn( int _Ident );
 
 	MLayer& FindLayer( int _Ident );
 	MLayer& GetLayer( int _index ) { return m_vLayers[ _index ]; }
