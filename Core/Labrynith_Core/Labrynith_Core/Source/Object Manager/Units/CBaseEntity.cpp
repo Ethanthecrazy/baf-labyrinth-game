@@ -24,7 +24,6 @@ CBaseEntity::CBaseEntity()
 	 m_uiRefCount = 1;
 	 SetPlayAnimWhileStill(false);
 }
-
 CBaseEntity::~CBaseEntity(void)
 {
 
@@ -107,7 +106,6 @@ void CBaseEntity::Update(float fDT)
 		
 	}
 }
-
 void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 {
 	if( m_nImageID > -1 )
@@ -143,23 +141,13 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 
 	}
 }
-
 bool CBaseEntity::CheckCollision(IUnitInterface* pBase)
 {
 	return true;
 }
-
-void CBaseEntity::AddRef(void)
+bool CBaseEntity::CheckTileCollision(int TileID)
 {
-	++m_uiRefCount;
-}
-
-void CBaseEntity::Release(void)
-{
-	--m_uiRefCount;
-
-	if (m_uiRefCount == 0)
-		delete this;
+	return false;
 }
 
 void CBaseEntity::LoadEntMoveAnimIDs()
@@ -171,7 +159,60 @@ void CBaseEntity::LoadEntMoveAnimIDs()
 	//down animation by default
 	SetAnimID(m_vMovementAnimIDs[0]);
 }
+void CBaseEntity::ClearTarget()
+{
+	SetTargetPos(-1, -1);
+}
+bool CBaseEntity::HasTarget()
+{
+	if(GetTargetPosX() < 0 ||
+		GetTargetPosY() < 0)
+		return false;
 
+	return true;
+}
+void CBaseEntity::ClearNewTarget()
+{
+	SetNewTargetPos(-1, -1);
+}
+bool CBaseEntity::HasNewTarget()
+{
+	if(m_nNewTargetX < 0 ||
+	   m_nNewTargetY < 0)
+		return false;
+
+	return true;
+}
+void CBaseEntity::AddRef(void)
+{
+	++m_uiRefCount;
+}
+void CBaseEntity::Release(void)
+{
+	--m_uiRefCount;
+
+	if (m_uiRefCount == 0)
+		delete this;
+}
+
+//accessors
+int CBaseEntity::GetTargetPosX() const
+{
+	return m_nTargetX;
+}
+int CBaseEntity::GetTargetPosY() const
+{
+	return m_nTargetY;
+}
+int CBaseEntity::GetNewTargetPosX() const
+{
+	return m_nNewTargetX;
+}
+int CBaseEntity::GetNewTargetPosY() const
+{
+	return m_nNewTargetY;
+}
+//mutators
 void CBaseEntity::SetAnimID(const int nAnimID)
 {
 	m_nCurrAnimID = nAnimID;
@@ -184,7 +225,44 @@ void CBaseEntity::SetImageID(const int nImageID)
 	//update animations texture to render with
 	CAnimationManager::GetInstance()->SetAnimTexture(GetCurrentAnimID(), m_nImageID);
 }
+void CBaseEntity::SetTargetPosX(const int nTargetX)
+{
+	if(nTargetX < -1)
+		return;
 
+	m_nTargetX = nTargetX;
+}
+void CBaseEntity::SetTargetPosY(const int nTargetY)
+{
+	if(nTargetY < -1)
+		return;
+
+	m_nTargetY = nTargetY;
+}
+void CBaseEntity::SetTargetPos(const int nTargetX, const int nTargetY)
+{
+	SetTargetPosX(nTargetX);
+	SetTargetPosY(nTargetY);
+}
+void CBaseEntity::SetNewTargetPosX(const int nTargetX)
+{
+	if(nTargetX < -1)
+		return;
+
+	m_nNewTargetX = nTargetX;
+}
+void CBaseEntity::SetNewTargetPosY(const int nTargetY)
+{
+	if(nTargetY < -1)
+		return;
+
+	m_nNewTargetY = nTargetY;
+}
+void CBaseEntity::SetNewTargetPos(const int nTargetX, const int nTargetY)
+{
+	SetNewTargetPosX(nTargetX);
+	SetNewTargetPosY(nTargetY);
+}
 void CBaseEntity::SetFlag_DirectionToMove( int newFlag )
 {  
 	//if it is the same direction no use doing work

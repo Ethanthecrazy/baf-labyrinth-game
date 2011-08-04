@@ -1,7 +1,7 @@
 #ifndef CAI_HANDLER
 #define CAI_HANDLER
 
-class CBaseGolem;
+class CBaseEntity;
 
 class CAI_Handler
 {
@@ -11,19 +11,19 @@ class CAI_Handler
 	CAI_Handler(const CAI_Handler&) { }
 	~CAI_Handler();
 	//helpers
-	bool HorizontalMove(const CBaseGolem* pGolem, const int nTargetX);
-	bool VerticalMove(const CBaseGolem* pGolem, const int nTargetY);
+	bool HorizontalMove(const CBaseEntity* pEntity, const int nTargetX);
+	bool VerticalMove(const CBaseEntity* pEntity, const int nTargetY);
+    bool CheckCollisions(const CBaseEntity* pEntity, const int nX, 
+		const int nY, bool nCanHandleCollision);
+    void GetNewTarget(const CBaseEntity* pEntity, const int nDirection);
 public:
 
 	static CAI_Handler* GetInstance();
 	//Checks to see if an object is in that position
-	//bool- determines weather to allow the Golem to handle
+	//bool- determines weather to allow the Entity to handle
 	// its own collisions
-	bool CheckCollisions(const CBaseGolem* pGolem, const int nX, 
-		const int nY, bool nCanHandleCollision);
-	bool CardinalMove(const CBaseGolem* pGolem, const int nDirection);
-	void MoveToPos(const CBaseGolem* pGolem);
-	void RandomMove(const CBaseGolem* pGolem);
-	void GetNewTarget(const CBaseGolem* pGolem, const int nDirection);
+	bool CardinalMove(const CBaseEntity* pEntity, const int nDirection);
+	void MoveToPos(const CBaseEntity* pEntity);
+	void RandomMove(const CBaseEntity* pEntity);
 };
 #endif

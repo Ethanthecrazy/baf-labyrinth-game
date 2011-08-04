@@ -1,5 +1,6 @@
 #include "CPlayer.h"	
 #include "../MObjectManager.h"
+#include "../../AI Handler/CAI_Handler.h"
 #include "../../Wrappers/CSGD_DirectInput.h"
 #include "../../GameStates/CGamePlayState.h"
 #include "CBaseObject.h"
@@ -55,6 +56,7 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 void CPlayer::Input()
 {
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
+	CAI_Handler* AI = CAI_Handler::GetInstance();
 	MObjectManager::GetInstance()->CheckStandingOn( m_nIdentificationNumber );
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
@@ -62,25 +64,29 @@ void CPlayer::Input()
 
 			if( pDI->KeyDown( DIK_UP ) )
 			{
-				MObjectManager::GetInstance()->MoveEntUp( m_nIdentificationNumber );
+				//MObjectManager::GetInstance()->MoveEntUp( m_nIdentificationNumber );
+				AI->CardinalMove(this, FLAG_MOVE_UP);
 				return;
 			}
 
 			if( pDI->KeyDown( DIK_DOWN ) )
 			{
-				MObjectManager::GetInstance()->MoveEntDown( m_nIdentificationNumber );
+				//MObjectManager::GetInstance()->MoveEntDown( m_nIdentificationNumber );
+				AI->CardinalMove(this, FLAG_MOVE_DOWN);
 				return;
 			}
 
 			if( pDI->KeyDown( DIK_LEFT ) )
 			{
-				MObjectManager::GetInstance()->MoveEntLeft( m_nIdentificationNumber );
+				//MObjectManager::GetInstance()->MoveEntLeft( m_nIdentificationNumber );
+				AI->CardinalMove(this, FLAG_MOVE_LEFT);
 				return;
 			}
 
 			if( pDI->KeyDown( DIK_RIGHT ) )
 			{
-				MObjectManager::GetInstance()->MoveEntRight( m_nIdentificationNumber );
+				//MObjectManager::GetInstance()->MoveEntRight( m_nIdentificationNumber );
+				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
 				return;
 			}
 
@@ -108,27 +114,54 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase)
 		return false;
 
 	//if we collide with an object
-
-	if(pBase->GetType() == OBJECT_OBJECT)
+	switch(pBase->m_nUnitType)
 	{
-		CBaseObject* temp = (CBaseObject*)pBase;
-		if( temp->GetType() == ENT_ATTRACTOR )
+	case OBJECT_OBJECT:
 		{
-			//if we can hold the object we collided with...		
-			//allow the player to hold it unless 
-			//the player is already holding onto something
-			if( GetHeldItem() != NULL )
-				return true ;
-			else
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == ENT_ATTRACTOR )
 			{
-				MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
+				//if we can hold the object we collided with...		
+				//allow the player to hold it unless 
+				//the player is already holding onto something
+				if( GetHeldItem() != NULL )
+					return true ;
+				else
+				{
+					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
+				}
+				return true;
 			}
 			return true;
 		}
-	}
+		break;
 
+	case OBJECT_ENTITY:
+		{
+			return true;
+		}
+		break;
+	};
 
-	return pBase->CheckCollision(this);
+	return false;
+	//return pBase->CheckCollision(this);
+}
+bool CPlayer::CheckTileCollision(int TileID)
+{
+	switch(TileID)
+	{
+	//nothing is there
+	case -1:
+		{
+			return true;
+		}
+		break;
+	case 0:
+		{
+			return true;
+		}
+	};
+	return false;
 }
 //accessors
 int CPlayer::GetLives() const
