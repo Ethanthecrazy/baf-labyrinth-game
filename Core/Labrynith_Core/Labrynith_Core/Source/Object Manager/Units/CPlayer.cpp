@@ -3,6 +3,8 @@
 #include "../../AI Handler/CAI_Handler.h"
 #include "../../Wrappers/CSGD_DirectInput.h"
 #include "../../GameStates/CGamePlayState.h"
+#include "Tiles\CDoor.h"
+#include "Tiles\CButton.h"
 #include "../../GameStates/CLoadLevelState.h"
 #include "../../CGame.h"
 #include "CBaseObject.h"
@@ -59,7 +61,6 @@ void CPlayer::Input()
 {
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
 	CAI_Handler* AI = CAI_Handler::GetInstance();
-	MObjectManager::GetInstance()->CheckStandingOn( m_nIdentificationNumber );
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 		{
@@ -67,7 +68,7 @@ void CPlayer::Input()
 			if( pDI->KeyDown( DIK_UP ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntUp( m_nIdentificationNumber );
-				AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
+				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_UP);
 				return;
 			}
@@ -75,7 +76,7 @@ void CPlayer::Input()
 			if( pDI->KeyDown( DIK_DOWN ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntDown( m_nIdentificationNumber );
-				AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
+				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_DOWN);
 				return;
 			}
@@ -83,7 +84,7 @@ void CPlayer::Input()
 			if( pDI->KeyDown( DIK_LEFT ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntLeft( m_nIdentificationNumber );
-				AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
+				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_LEFT);
 				return;
 			}
@@ -91,7 +92,7 @@ void CPlayer::Input()
 			if( pDI->KeyDown( DIK_RIGHT ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntRight( m_nIdentificationNumber );
-				AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
+				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
 				return;
 			}
@@ -137,6 +138,26 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
 				}
 				return true;
+			}
+
+			if( temp->GetType() == OBJ_DOOR )
+			{
+				//if we can hold the object we collided with...		
+				//allow the player to hold it unless 
+				//the player is already holding onto something
+				if( ((CDoor*)temp)->GetIsOpen() )
+					return false;
+				else
+					return true;
+			}
+
+			if( temp->GetType() == OBJ_SPAWNER )
+				return false;
+
+			if( temp->GetType() == OBJ_BUTTON )
+			{
+				((CButton*)temp)->CheckCollision(this);
+				return false;
 			}
 			if(temp->GetType() == OBJ_EXIT)
 			{

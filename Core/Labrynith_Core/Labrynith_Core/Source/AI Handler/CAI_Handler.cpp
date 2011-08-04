@@ -133,6 +133,10 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 {
 	MObjectManager* OM = MObjectManager::GetInstance();
+
+	// POSSIBLE BUG
+	CheckCollisions(pEntity, ((CBaseEntity*)pEntity)->GetIndexPosX(), ((CBaseEntity*)pEntity)->GetIndexPosY(), true);
+
 	//determine which direction we are looking at
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();

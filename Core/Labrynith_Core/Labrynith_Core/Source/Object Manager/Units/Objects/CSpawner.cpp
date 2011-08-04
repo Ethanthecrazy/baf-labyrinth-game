@@ -7,6 +7,7 @@
 #include "../../MObjectManager.h"
 #include "../../../GameStates/CGamePlayState.h"
 #include "CAttractor.h"
+#include "../CPlayer.h"
 
 void CSpawner::Update(float fDT)
 {
@@ -14,7 +15,7 @@ void CSpawner::Update(float fDT)
 
 void CSpawner::Render(int CameraPosX, int CameraPosY)
 {
-
+	//CBaseObject::Render(CameraPosX, CameraPosY);
 }
 
 
@@ -26,9 +27,12 @@ bool CSpawner::CheckCollision(IUnitInterface* pBase)
 
 
 CSpawner::CSpawner(int nSpawnerType) : m_nSpawnerType(nSpawnerType)
-{
+{	
+	m_nUnitType = OBJECT_OBJECT;
+	m_nType = OBJ_SPAWNER;
 	m_nSpawnedID = 0;
 	MEventSystem::GetInstance()->RegisterClient("spawner.spawn", this);
+	m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
 }
 
 CSpawner::~CSpawner(void)

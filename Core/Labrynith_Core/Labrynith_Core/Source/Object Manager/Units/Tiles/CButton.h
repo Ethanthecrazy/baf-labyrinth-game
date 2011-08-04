@@ -18,6 +18,7 @@ public:
 	
 	bool CheckCollision(IUnitInterface* pBase);
 	void Update(float fDT);
+
 };
 
 

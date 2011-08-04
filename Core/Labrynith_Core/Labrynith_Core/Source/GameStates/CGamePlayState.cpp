@@ -64,12 +64,12 @@ bool CGamePlayState::Input(void)
 	//BUG - temp code added for AI testing
 	if( pDI->MouseButtonPressed( 0 ) )
 	{
-		IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120001);
+		/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120001);
 		int cameraX = 0 , cameraY = 0 ;
 				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
 		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
 		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
-		((CBaseGolem*)(golem))->SetTargetPos(tileXPos, tileYPos);
+		((CBaseGolem*)(golem))->SetTargetPos(tileXPos, tileYPos);*/
 	}
 
 	return true;

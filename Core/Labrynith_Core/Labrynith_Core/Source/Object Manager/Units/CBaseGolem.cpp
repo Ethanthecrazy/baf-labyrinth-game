@@ -5,6 +5,8 @@
 #include "../../GameStates/CGamePlayState.h"
 #include "../../Animation Manager/CAnimationManager.h"
 #include "../../Wrappers/CSGD_FModManager.h"
+#include "Tiles\CButton.h"
+#include "Tiles\CDoor.h"
 CBaseGolem::CBaseGolem(void)
 {
 	CBaseEntity::CBaseEntity();
@@ -86,6 +88,27 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				}
 				return false;
 			}
+			
+			if( pBase->GetType() == OBJ_SPAWNER )
+				return false;
+
+			if( pBase->GetType() == OBJ_DOOR )
+			{
+				//if we can hold the object we collided with...		
+				//allow the player to hold it unless 
+				//the player is already holding onto something
+				if( ((CDoor*)pBase)->GetIsOpen() )
+					return false;
+				else
+					return true;
+			}
+
+			if( pBase->GetType() == OBJ_BUTTON )
+			{
+				((CButton*)pBase)->CheckCollision(this);
+				return false;
+			}
+
 			return true;
 		}
 		break;

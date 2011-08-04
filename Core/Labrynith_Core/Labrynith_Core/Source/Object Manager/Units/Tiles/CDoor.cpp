@@ -3,6 +3,7 @@
 
 CDoor::CDoor(string nLink)
 {
+	m_nType = OBJ_DOOR;
 	m_bIsOpen = false;
 	m_nLink = nLink;
 	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);
