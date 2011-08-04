@@ -31,7 +31,7 @@ CBaseEntity::~CBaseEntity(void)
 }
 
 void CBaseEntity::Update(float fDT)
-{
+{	
 	//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX(), GetIndexPosY(),  rand() % 15 + 240 );
 	
 	//If the animation isnt playing, play it
@@ -49,38 +49,29 @@ void CBaseEntity::Update(float fDT)
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
-
 		SetDistanceLeft( GetDistanceLeft() - 125 * fDT );
-
 		if( GetDistanceLeft() > 0 )
 		{
-
 			switch ( GetFlag_DirectionToMove() )
 			{
 			case FLAG_MOVE_RIGHT:
 				SetPosX( GetPosX() + 125 * fDT );
-				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_LEFT:
 				SetPosX( GetPosX() - 125 * fDT );
-				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_UP:
 				SetPosY( GetPosY() - 125 * fDT );				
-				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() + 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			case FLAG_MOVE_DOWN:
 				SetPosY( GetPosY() + 125 * fDT );
-				//MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).SetInfoAtIndex( GetIndexPosX() - 1, GetIndexPosY(), rand() % 15 + 240 );
 				break;
 			}
 		}
 		else
 		{
-
 			switch ( GetFlag_DirectionToMove() )
 			{
-
 			case FLAG_MOVE_RIGHT:
 				SetPosX( GetLastPosX() + 32 );
 				break;
@@ -98,13 +89,7 @@ void CBaseEntity::Update(float fDT)
 			SetLastPosX( GetPosX() );
 			SetLastPosY( GetPosY() );
 
-			//int itemCollision = MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetValueInFlakeAtIndex( OBJECT_OBJECT, GetIndexPosX(), GetIndexPosY() );
-			
-			//if( itemCollision > 0 )
-				//MObjectManager::GetInstance()->RemoveUnit( itemCollision );
-
 			MObjectManager::GetInstance()->FindFlake( this->m_nIdentificationNumber ).FinishMovingEnt( this );
-
 			SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 		}
 	}
@@ -121,9 +106,6 @@ void CBaseEntity::Update(float fDT)
 		}
 		
 	}
-
-	
-
 }
 
 void CBaseEntity::Render( int CameraPosX, int CameraPosY )
@@ -205,8 +187,10 @@ void CBaseEntity::SetImageID(const int nImageID)
 
 void CBaseEntity::SetFlag_DirectionToMove( int newFlag )
 {  
+	//if it is the same direction no use doing work
 	if( IUnitInterface::GetFlag_DirectionToMove() == newFlag )
-		return ;
+		return;
+
 	IUnitInterface::SetFlag_DirectionToMove(newFlag);
 	
 	//Change animation when direction changes

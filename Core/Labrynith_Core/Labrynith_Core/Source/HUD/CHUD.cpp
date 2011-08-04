@@ -25,7 +25,7 @@ void CHUD::Render()
 
 	//Player HeldItem
 	if(pPlayer->GetHeldItem())
-		pPlayer->GetHeldItem()->Render(368 , 568);
+		pPlayer->GetHeldItem()->Render(568, 368);
 }
 CHUD* CHUD::GetInstance()
 {

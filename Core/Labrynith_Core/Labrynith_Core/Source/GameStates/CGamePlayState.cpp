@@ -28,8 +28,6 @@ CGamePlayState::CGamePlayState()
 	m_nCurrLevel = 1;
 	testVaribale = -1;
 	m_nMouseID = -1 ;
-	m_nCurrLevel = 1;
-	//testVaribale = -1;
 }
 
 // destructor
@@ -62,6 +60,17 @@ bool CGamePlayState::Input(void)
 
 	if( pDI->KeyPressed( DIK_ESCAPE ) )
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
+
+	//BUG - temp code added for AI testing
+	/*if( pDI->MouseButtonPressed( 0 ) )
+	{
+		IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120001);
+		int cameraX = 0 , cameraY = 0 ;
+				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
+		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+		((CBaseGolem*)(golem))->SetTargetPos(tileXPos, tileYPos);
+	}*/
 
 	return true;
 }
@@ -149,16 +158,12 @@ void CGamePlayState::Render(void)
 	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );*/
 }
 
-
-
 void CGamePlayState::Exit(void)
 {
 	//MObjectManager::GetInstance()->RemoveUnit( testVaribale ); 
 	MObjectManager::GetInstance()->RemoveAllUnits();
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
 	cout << "GamePlay -> ";
-	testVaribale = -1;
-	testVaribale = -1;
 	testVaribale = -1;
 
 	//MObjectManager::GetInstance()->DeleteInstance();

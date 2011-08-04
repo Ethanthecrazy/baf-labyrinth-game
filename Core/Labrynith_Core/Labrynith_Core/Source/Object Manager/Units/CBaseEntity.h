@@ -14,7 +14,6 @@ class CBaseEntity : public IUnitInterface
 	bool PlayAnimWhileStill;
 protected:
 	int m_nType;
-	
 public:
 
 	int m_nImageID;
@@ -43,6 +42,10 @@ public:
 	void Release(void);
 	void SetFlag_DirectionToMove( int newFlag );
 
+	void MoveUp();
+	void MoveDown();
+	void MoveLeft();
+	void MoveRight();
 };
 
 #endif // CBase_h__

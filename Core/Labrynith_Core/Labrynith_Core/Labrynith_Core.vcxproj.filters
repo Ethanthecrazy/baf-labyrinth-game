@@ -162,6 +162,12 @@
     <ClCompile Include="Source\Wrappers\CSGD_FModManager.cpp">
       <Filter>Wrappers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -280,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="Source\Wrappers\CSGD_FModManager.h">
       <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

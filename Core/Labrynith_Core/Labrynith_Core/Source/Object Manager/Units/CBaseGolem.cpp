@@ -11,6 +11,9 @@ CBaseGolem::CBaseGolem(void)
 	fCollectedTime = 0.0f;
 	m_nType = ENT_GOLEM;
 	ClearTarget();
+	ClearNewTarget();
+	SetGolemType(-1);
+	SetMoveType(RAND_MOVE);
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED" , this ) ;
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED" , this ) ;
 	m_nEatSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/creature_snarl1.mp3" ) ;
@@ -36,6 +39,28 @@ void CBaseGolem::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseEntity::Render(CameraPosX, CameraPosY);
 }
+//bool CBaseGolem::CheckCollision(IUnitInterface* pBase)
+//{
+//	switch(pBase->m_nUnitType)
+//	{
+//	case OBJECT_TILE:
+//		{
+//			return false;
+//		}
+//		break;
+//	case OBJECT_OBJECT:
+//		{
+//			return true;
+//		}
+//		break;
+//	case OBJECT_ENTITY:
+//		{
+//			return true;
+//		}
+//		break;
+//	}
+//	return false;
+//}
 void CBaseGolem::UpdateAI()
 {
 	//CAI_Handler::GetInstance()->RandomMove(this);
@@ -54,10 +79,6 @@ bool CBaseGolem::HasTarget()
 	return true;
 }
 
-int CBaseGolem::GetGolemType() const
-{
-	return m_nGolemType;
-}
 int CBaseGolem::GetTargetPosX() const
 {
 	return m_nTargetX;
@@ -65,6 +86,10 @@ int CBaseGolem::GetTargetPosX() const
 int CBaseGolem::GetTargetPosY() const
 {
 	return m_nTargetY;
+}
+int CBaseGolem::GetGolemType() const
+{
+	return m_nGolemType;
 }
 void CBaseGolem::SetGolemType(const int nGolemType)
 {
@@ -92,6 +117,38 @@ void CBaseGolem::SetTargetPos(const int nTargetX, const int nTargetY)
 void CBaseGolem::SetMoveType(const int nMovementType)
 {
 	m_nMovementType = nMovementType;
+
+}
+void CBaseGolem::SetNewTargetPosX(const int nTargetX)
+{
+	if(nTargetX < -1)
+		return;
+
+	m_nNewTargetX = nTargetX;
+}
+void CBaseGolem::SetNewTargetPosY(const int nTargetY)
+{
+	if(nTargetY < -1)
+		return;
+
+	m_nNewTargetY = nTargetY;
+}
+void CBaseGolem::SetNewTargetPos(const int nTargetX, const int nTargetY)
+{
+	SetNewTargetPosX(nTargetX);
+	SetNewTargetPosY(nTargetY);
+}
+void CBaseGolem::ClearNewTarget()
+{
+	SetNewTargetPos(-1, -1);
+}
+bool CBaseGolem::HasNewTarget()
+{
+	if(m_nNewTargetX < 0 ||
+	   m_nNewTargetY < 0)
+		return false;
+
+	return true;
 }
 
 void CBaseGolem::HandleEvent( Event* _toHandle )
