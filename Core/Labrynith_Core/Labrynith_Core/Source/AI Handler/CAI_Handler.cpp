@@ -134,9 +134,6 @@ bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 {
 	MObjectManager* OM = MObjectManager::GetInstance();
 
-	// POSSIBLE BUG
-	CheckCollisions(pEntity, ((CBaseEntity*)pEntity)->GetIndexPosX(), ((CBaseEntity*)pEntity)->GetIndexPosY(), true);
-
 	//determine which direction we are looking at
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
@@ -181,6 +178,9 @@ bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 	bool isColliding = CheckCollisions(pEntity, nX, nY, true);
 	if(!isColliding)
 	{
+		// POSSIBLE BUG
+		CheckCollisions(pEntity, ((CBaseEntity*)pEntity)->GetIndexPosX(), ((CBaseEntity*)pEntity)->GetIndexPosY(), true);
+
 		//we can move if we're not colliding with something
 		cout << "AI:" << ((CBaseEntity*)(pEntity))->GetIndexPosX() 
 			<< ", " << ((CBaseEntity*)(pEntity))->GetIndexPosY() << endl;
