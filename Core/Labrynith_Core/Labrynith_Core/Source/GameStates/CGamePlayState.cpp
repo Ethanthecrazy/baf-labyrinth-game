@@ -470,10 +470,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			CBaseObject* pBase = NewMessage->GetMsgObject() ;
 			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
 
-			int cameraX = 0 , cameraY = 0 ;
-			CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-			int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
-			int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
+			
 			if( pBase->GetType() == OBJ_POWERGLOVES )
 			{
 				if( player->GetEquippedItem() == NULL )
@@ -490,9 +487,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				else
 					break;
 			}
-			int ObjectID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int ObjectID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( pBase->GetIndexPosX() , pBase->GetIndexPosY() ) ;
 			MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
-			MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
+			MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( pBase->GetIndexPosX() , pBase->GetIndexPosY() , 0 ) ;
 			
 
 			//pBase->SetIndexPosX(-1);
