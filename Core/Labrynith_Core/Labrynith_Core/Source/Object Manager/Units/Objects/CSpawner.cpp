@@ -191,7 +191,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_EARTH:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/EarthAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -205,7 +205,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_FIRE:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/FireAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -219,7 +219,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_WATER:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/WaterAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -233,7 +233,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_ICE:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/IceAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -247,7 +247,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_AIR:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/AirAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -275,7 +275,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_IRON:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/IronAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -289,7 +289,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_LIGHT:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/LightAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -303,7 +303,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_SHADOW:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			((CBaseObject*)temp)->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/ShadowAttractor.png" ));
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );

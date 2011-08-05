@@ -352,23 +352,41 @@ bool CLoadLevelState::LoadLevel(int _level)
 						
 						IUnitInterface* temp;
 						if(typeofattractor == "earth")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_EARTH);
+						}
 						else if(typeofattractor == "air")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_AIR);
+						}
 						else if(typeofattractor == "fire")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_FIRE);
+						}
 						else if(typeofattractor == "water")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_WATER);
+						}
 						else if(typeofattractor == "ice")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_ICE);
+						}
 						else if(typeofattractor == "shadow")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_SHADOW);
+						}
 						else if(typeofattractor == "light")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_LIGHT);
+						}
 						else if(typeofattractor == "iron")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_IRON);
+						}
 						else if(typeofattractor == "lava")
+						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_LAVA);
+						}
 
 						
 						((CSpawner*)temp)->SetPosX((float)(posX * 32));
