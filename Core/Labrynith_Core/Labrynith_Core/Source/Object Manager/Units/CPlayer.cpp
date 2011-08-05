@@ -228,11 +228,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 			if( temp->GetType() == OBJ_SPAWNER )
 				return false;
 
-			if( temp->GetType() == OBJ_BUTTON )
-			{
-				((CButton*)temp)->CheckCollision(this);
-				return false;
-			}
+			
 			if(temp->GetType() == OBJ_EXIT)
 			{
 				CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
@@ -252,6 +248,17 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 			return true;
 		}
 		break;
+
+	case OBJECT_BUTTON:
+		{
+			if( pBase->GetType() == OBJ_BUTTON )
+			{
+				((CButton*)pBase)->CheckCollision(this);
+				return false;
+			}
+
+			return false;
+		}
 	};
 
 	return false;
@@ -270,6 +277,10 @@ bool CPlayer::CheckTileCollision(int TileID)
 	case 0:
 		{
 			return true;
+		}
+	case 1:
+		{
+
 		}
 	};
 	return false;

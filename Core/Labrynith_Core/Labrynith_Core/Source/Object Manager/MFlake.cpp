@@ -219,9 +219,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 						case 0:
 							{
-								if( GetInfoAtIndex( x, y - 1 ) > 0 )
-								{
-									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitUpper.png" ),
+								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/wall.png" ),
 										x * 32 - CameraX,
 										y * 32 - CameraY,
 										1.0f,
@@ -232,54 +230,67 @@ void MFlake::Render( int CameraX, int CameraY )
 										0.0f,
 										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
 
-
-								}
-								/*		if( GetInfoAtIndex( x, y + 1 ) > 0 )
-								{
-									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLower.png" ),
-										x * 32 - CameraX,
-										y * 32 - CameraY,
-										1.0f,
-										1.0f,
-										0,
-										0.0f,
-										0.0f,
-										0.0f,
-										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
-
-								}*/
-
-								
-								if( GetInfoAtIndex( x - 1, y ) > 0 )
-								{
-									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLeft.png" ),
-										x * 32 - CameraX,
-										y * 32 - CameraY,
-										1.0f,
-										1.0f,
-										0,
-										0.0f,
-										0.0f,
-										0.0f,
-										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+								//if( GetInfoAtIndex( x, y - 1 ) > 0 )
+								//{
+								//	CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitUpper.png" ),
+								//		x * 32 - CameraX,
+								//		y * 32 - CameraY,
+								//		1.0f,
+								//		1.0f,
+								//		0,
+								//		0.0f,
+								//		0.0f,
+								//		0.0f,
+								//		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
 
 
-								}
-								if( GetInfoAtIndex( x + 1, y ) > 0 )
-								{
-									CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitRight.png" ),
-										x * 32 - CameraX,
-										y * 32 - CameraY,
-										1.0f,
-										1.0f,
-										0,
-										0.0f,
-										0.0f,
-										0.0f,
-										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+								//}
+								///*		if( GetInfoAtIndex( x, y + 1 ) > 0 )
+								//{
+								//	CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLower.png" ),
+								//		x * 32 - CameraX,
+								//		y * 32 - CameraY,
+								//		1.0f,
+								//		1.0f,
+								//		0,
+								//		0.0f,
+								//		0.0f,
+								//		0.0f,
+								//		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+
+								//}*/
+
+								//
+								//if( GetInfoAtIndex( x - 1, y ) > 0 )
+								//{
+								//	CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitLeft.png" ),
+								//		x * 32 - CameraX,
+								//		y * 32 - CameraY,
+								//		1.0f,
+								//		1.0f,
+								//		0,
+								//		0.0f,
+								//		0.0f,
+								//		0.0f,
+								//		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
 
 
-								}
+								//}
+								//if( GetInfoAtIndex( x + 1, y ) > 0 )
+								//{
+								//	CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitRight.png" ),
+								//		x * 32 - CameraX,
+								//		y * 32 - CameraY,
+								//		1.0f,
+								//		1.0f,
+								//		0,
+								//		0.0f,
+								//		0.0f,
+								//		0.0f,
+								//		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+
+
+								//}
 
 								break;
 							}
@@ -338,7 +349,7 @@ void MFlake::Render( int CameraX, int CameraY )
 			m_vObjects[i]->Render( CameraX, CameraY );
 		}
 
-		char temp[64];
+		/*char temp[64];
 
 		for( int y = 0; y < LayerHeight; ++y )
 		{
@@ -351,13 +362,39 @@ void MFlake::Render( int CameraX, int CameraY )
 
 				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
 			}
-		}
+		}*/
 
 		break;
 
 	case OBJECT_ENTITY:
 
 		if( m_nFlakeType == OBJECT_ENTITY )
+		{
+			CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+
+			for( unsigned int i = 0; i < m_vObjects.size(); ++i )
+			{
+				m_vObjects[i]->Render( CameraX, CameraY );
+			}
+
+			/*char temp[64];
+
+			for( int y = 0; y < LayerHeight; ++y )
+			{
+				for( int x = 0; x < LayerWidth; ++x )
+				{
+					if(InformationArray[ x + y * LayerWidth ] == 0)
+						continue;
+
+					sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
+
+					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+				}
+			}*/
+		}
+
+		case OBJECT_BUTTON:
+		if( m_nFlakeType == OBJECT_BUTTON )
 		{
 			CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 

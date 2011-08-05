@@ -112,6 +112,20 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		}
 	}
 
+	//Check to see if we are colliding with a button
+	int buttonID = OM->FindLayer(pEntity->m_nIdentificationNumber)
+		.GetFlake(OBJECT_BUTTON).GetInfoAtIndex(nX, nY);
+	if( buttonID > 0 )
+	{
+		cout << "AI:Collided With Button " << buttonID << "\n";
+		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(buttonID), nCanHandleCollision);
+		//Let the Entity handle its object collision
+		if(Collided)
+		{
+			return Collided;
+		}
+	}
+
 	//Check to see if we are colliding with an entity
 	int EntityID = OM->FindFlake(pEntity->m_nIdentificationNumber)
 		.GetInfoAtIndex(nX, nY);

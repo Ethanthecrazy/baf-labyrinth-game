@@ -106,12 +106,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					return true;
 			}
 
-			if( pBase->GetType() == OBJ_BUTTON )
-			{
-				((CButton*)pBase)->CheckCollision(this);
-				return false;
-			}
-
 			return true;
 		}
 		break;
@@ -120,6 +114,21 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 			return CheckEntCollision((CBaseEntity*)pBase);
 		}
 		break;
+
+	case OBJECT_BUTTON:
+		{
+			
+			if( pBase->GetType() == OBJ_BUTTON )
+			{
+				if(nCanHandleCollision)
+				{
+					((CButton*)pBase)->CheckCollision(this);
+				}
+				return false;
+			}
+			return true;
+		}
+
 	};
 	return false;
 }

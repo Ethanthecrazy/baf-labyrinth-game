@@ -2,6 +2,8 @@
 #define CBUTTON_H_
 
 #include "../CBaseObject.h"
+#include "../CBaseEntity.h"
+
 
 #include <string>
 using std::string;
