@@ -162,6 +162,7 @@ void CBaseEntity::LoadEntMoveAnimIDs()
 void CBaseEntity::ClearTarget()
 {
 	SetTargetPos(-1, -1);
+	ClearNewTarget();
 }
 bool CBaseEntity::HasTarget()
 {

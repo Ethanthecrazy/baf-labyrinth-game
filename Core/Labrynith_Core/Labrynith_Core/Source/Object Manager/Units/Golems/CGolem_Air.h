@@ -1,16 +1,16 @@
-#ifndef CGOLEM_EARTH
-#define CGOLEM_EARTH
+#ifndef CGOLEM_AIR
+#define CGOLEM_AIR
 
 #include "../CBaseGolem.h"
 #include "../../../Messaging/IListener.h"
 
-class CGolem_Earth : public CBaseGolem , public IListener
+class CGolem_Air : public CBaseGolem , public IListener
 {
 
 public:
-	CGolem_Earth(void);
-	CGolem_Earth(CBaseGolem* pGolem);
-	~CGolem_Earth(void);
+	CGolem_Air(void);
+	CGolem_Air(CBaseGolem* pGolem);
+	~CGolem_Air(void);
 
 	void Update(float fDT);
 	void Render( int CameraPosX, int CameraPosY );

@@ -2,12 +2,12 @@
 #define CBASEGOLEM_H_
 
 #include "CBaseEntity.h"
-#include "../../Messaging/IListener.h"
+class Event;
 
 enum MOVETYPES {NO_MOVE, RAND_MOVE, TARGET_MOVE,
 				NUM_MOVE_TYPES};
 
-class CBaseGolem : public CBaseEntity , public IListener
+class CBaseGolem : public CBaseEntity
 {
 	int m_nGolemType;
 	int m_nMovementType;

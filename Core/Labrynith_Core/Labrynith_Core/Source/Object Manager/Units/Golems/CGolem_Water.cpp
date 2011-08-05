@@ -1,23 +1,23 @@
-#include "CGolem_Earth.h"
+#include "CGolem_Water.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
 
-CGolem_Earth::CGolem_Earth(void)
+CGolem_Water::CGolem_Water(void)
 {
-	//basic earth golem setup
+	//basic Water golem setup
 	CBaseGolem::CBaseGolem();
-	SetGolemType(EARTH_GOLEM);
-	SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+	SetGolemType(WATER_GOLEM);
+	SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" ));
 	//basic golem events
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED", this);
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED", this);
 }
-CGolem_Earth::CGolem_Earth(CBaseGolem* pGolem)
+CGolem_Water::CGolem_Water(CBaseGolem* pGolem)
 {
-	//basic earth golem setup
-	CGolem_Earth::CGolem_Earth();
+	//basic Water golem setup
+	CGolem_Water::CGolem_Water();
 }
-CGolem_Earth::~CGolem_Earth(void)
+CGolem_Water::~CGolem_Water(void)
 {
 	CBaseGolem::~CBaseGolem();
 	//basic golem events
@@ -25,41 +25,41 @@ CGolem_Earth::~CGolem_Earth(void)
 	MEventSystem::GetInstance()->UnregisterClient("ATTRACTORREMOVED", this);
 }
 
-void CGolem_Earth::Update(float fDT)
+void CGolem_Water::Update(float fDT)
 {
 	CBaseGolem::Update(fDT);
 	UpdateAI();
 }
-void CGolem_Earth::Render( int CameraPosX, int CameraPosY )
+void CGolem_Water::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseGolem::Render(CameraPosX, CameraPosY);
 }
-bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
+bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	//If the base collides with an object or entity leave
 	bool Collided = CBaseGolem::CheckCollision(pBase, nCanHandleCollision);
 	if(Collided)
 		return Collided;
 
-	//Do Earth Golem specific Collisions
+	//Do Water Golem specific Collisions
 	return false;
 }
-bool CGolem_Earth::CheckTileCollision(int TileID)
+bool CGolem_Water::CheckTileCollision(int TileID)
 {
 	//If the base collides with a tile leave
 	bool Collided = CBaseGolem::CheckTileCollision(TileID);
 	if(Collided)
 		return Collided;
 
-	//Do Earth Golem specific Collisions
+	//Do Water Golem specific Collisions
 	return false;
 }
-void CGolem_Earth::UpdateAI()
+void CGolem_Water::UpdateAI()
 {
 	CBaseGolem::UpdateAI();
 }
-void CGolem_Earth::HandleEvent( Event* _toHandle )
+void CGolem_Water::HandleEvent( Event* _toHandle )
 {
 	CBaseGolem::HandleEvent(_toHandle);
-	//Events only the Earth Golem responds to
+	//Events only the Water Golem responds to
 }

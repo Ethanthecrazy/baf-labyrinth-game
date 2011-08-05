@@ -183,6 +183,30 @@
     <ClCompile Include="Source\Object Manager\Units\Objects\CPowerGloves.cpp">
       <Filter>ObjectManager\Units\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Fire.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Water.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Ice.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Air.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Lava.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Iron.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Light.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Shadow.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -319,6 +343,30 @@
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Objects\CPowerGloves.h">
       <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Fire.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Water.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Ice.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Air.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Lava.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Iron.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Light.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Shadow.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,10 @@
 #include "../../GameStates/CGamePlayState.h"
 #include "../../Animation Manager/CAnimationManager.h"
 #include "../../Wrappers/CSGD_FModManager.h"
+#include "../../Messaging/IListener.h"
 #include "Tiles\CButton.h"
 #include "Tiles\CDoor.h"
+
 CBaseGolem::CBaseGolem(void)
 {
 	CBaseEntity::CBaseEntity();
@@ -17,13 +19,13 @@ CBaseGolem::CBaseGolem(void)
 	SetGolemType(-1);
 	SetMoveType(TARGET_MOVE);
 	//SetMoveType(RAND_MOVE);
-	MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED" , this ) ;
-	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED" , this ) ;
+	/*MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED" , this ) ;
+	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED" , this ) ;*/
 	m_nEatSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/creature_snarl1.mp3" ) ;
 }
 CBaseGolem::~CBaseGolem(void)
 {
-	MEventSystem::GetInstance()->UnregisterClient("ATTRACTORPLACED" , this ) ;
+	//MEventSystem::GetInstance()->UnregisterClient("ATTRACTORPLACED" , this ) ;
 	CBaseEntity::~CBaseEntity();
 }
 
@@ -186,11 +188,14 @@ void CBaseGolem::SetMoveType(const int nMovementType)
 
 void CBaseGolem::HandleEvent( Event* _toHandle )
 {
+	//include all the events all the golems respond to
 	if( _toHandle->GetEventID() == "ATTRACTORPLACED" )
 	{
 		CAttractor* placedAttr = (CAttractor*)_toHandle->GetParam() ;
 		if( placedAttr->GetElemType() == this->GetGolemType() )
 		{
+			//start moving toward our target
+			SetMoveType(TARGET_MOVE);
 			SetTargetPos( placedAttr->GetIndexPosX() , placedAttr->GetIndexPosY() ) ;
 		}
 	}
@@ -201,7 +206,7 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 			return ;
 		if( GetTargetPosX() == attr->GetIndexPosX() && GetTargetPosY() == attr->GetIndexPosY() )
 		{
-			ClearTarget() ;
+			ClearTarget();
 		}
 	}
 }

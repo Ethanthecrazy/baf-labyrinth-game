@@ -9,6 +9,14 @@
 #include "../CPlayer.h"
 #include "../CBaseGolem.h"
 #include "../Golems/CGolem_Earth.h"
+#include "../Golems/CGolem_Fire.h"
+#include "../Golems/CGolem_Water.h"
+#include "../Golems/CGolem_Ice.h"
+#include "../Golems/CGolem_Air.h"
+#include "../Golems/CGolem_Lava.h"
+#include "../Golems/CGolem_Iron.h"
+#include "../Golems/CGolem_Light.h"
+#include "../Golems/CGolem_Shadow.h"
 
 void CSpawner::Update(float fDT)
 {
@@ -52,30 +60,25 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		{
 		case SPAWNER_EARTH:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			//CGolem_Earth* temp = new CGolem_Earth();
-		    ((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+			IUnitInterface* temp = new CGolem_Earth();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(EARTH_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( (IUnitInterface*)temp, 1 );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
 			break;
 			}
 			
 		case SPAWNER_FIRE:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/FireGolem.png" ));
+			IUnitInterface* temp = new CGolem_Fire();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(FIRE_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
 			break;
@@ -83,14 +86,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_WATER:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/WaterGolem.png" ));
+			IUnitInterface* temp = new CGolem_Water();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(WATER_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 			break;			
@@ -98,14 +99,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_ICE:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
+			IUnitInterface* temp = new CGolem_Ice();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(ICE_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 			break;
@@ -113,14 +112,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_AIR:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/AirGolem.png" ));
+			IUnitInterface* temp = new CGolem_Air();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(AIR_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 			break;
@@ -128,14 +125,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_LAVA:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LavaGolem.png" ));
+			IUnitInterface* temp = new CGolem_Lava();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(LAVA_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 			break;
@@ -143,14 +138,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_IRON:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" ));
+			IUnitInterface* temp = new CGolem_Iron();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(IRON_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 			break;
@@ -158,14 +151,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_LIGHT:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/LightGolem.png" ));
+			IUnitInterface* temp = new CGolem_Light();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(LIGHT_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 			break;
@@ -173,14 +164,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_SHADOW:
 			{
-			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/ShadowGolem.png" ));
+			IUnitInterface* temp = new CGolem_Shadow();
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
-			((CBaseGolem*)(temp))->SetGolemType(SHADOW_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 			break;
