@@ -124,58 +124,7 @@ void CPlayer::Input()
 			{
 				if( GetEquippedItem() )
 				{
-					switch( GetEquippedItem()->GetType() )
-					{
-					case OBJ_POWERGLOVES:
-						{
-							if( GetHeldItem() == NULL )
-								return ;
-
-							int xDirection = 0 ;
-							int yDirection = 0 ;
-							
-							switch( GetFlag_DirectionToMove() )
-							{
-							case FLAG_MOVE_UP:
-								{
-									GetHeldItem()->SetVelY( 3 ) ;
-									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_UP ) ;
-									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
-									yDirection--;
-								}
-								break ;
-							case FLAG_MOVE_RIGHT:
-								{
-									GetHeldItem()->SetVelX( 3 ) ;
-									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT ) ;
-									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
-									xDirection++;
-								}
-								break;
-							case FLAG_MOVE_DOWN:
-								{
-									GetHeldItem()->SetVelY( 3 ) ;
-									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_DOWN ) ;
-									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
-									yDirection++;
-								}
-								break ;
-							case FLAG_MOVE_LEFT:
-								{
-									GetHeldItem()->SetVelX( 3 ) ;
-									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_LEFT ) ;
-									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
-									xDirection--;
-								}
-								break ;
-							}
-							//GetHeldItem()->SetDistanceLeft( 32.0f ) ;
-							GetHeldItem()->SetLastPosX( this->GetPosX() ) ;
-							GetHeldItem()->SetLastPosY( this->GetPosY() ) ;
-							MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ) ;
-						}
-						break ;
-					}
+					GetEquippedItem()->UseObject( (CBaseObject*)this ) ;
 				}
 			}
 

@@ -106,14 +106,21 @@ void CBaseObject::Update(float fDT)
 						SetDistanceLeft( 0 ) ;
 					}
 				}
-
-				if( int collTile = MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) != 1 )
+				else if( int collTile = MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) != 1 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
 					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
 					SetDistanceLeft( 0 ) ;
 				}
+				else if( GetIndexPosY() - 1 < 0 || GetIndexPosY() + 1 > MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber).GetLayerHeight() - 1 || GetIndexPosX() - 1 < 0 || GetIndexPosX() + 1 > MObjectManager::GetInstance()->FindLayer(m_nIdentificationNumber).GetLayerWidth() - 1 )
+				{
+					SetVelY( 0 ) ;
+					SetVelX( 0 ) ;
+					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					SetDistanceLeft( 0 ) ;
+				}
+
 			}
 
 			if( GetVelX() != 0 )
@@ -171,6 +178,11 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
 
 	}
+}
+
+void CBaseObject::UseObject( CBaseObject* user )
+{
+	return ;
 }
 
 bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)

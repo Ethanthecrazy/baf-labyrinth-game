@@ -19,6 +19,7 @@ using std::string;
 #include "../Object Manager/Units/Tiles/CButton.h"
 #include "../Object Manager/Units/Tiles/CDoor.h"
 #include "../Object Manager/Units/Tiles/CExit.h"
+#include "../Object Manager/Units/Objects/CPowerGloves.h"
 
 #include "../TinyXML/tinyxml.h"
 
@@ -440,7 +441,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 				}
 				break;
 			case 1:
-				CBaseObject* temp = new CBaseObject();
+				CPowerGloves* temp = new CPowerGloves();
 				temp->SetObjectType(OBJ_POWERGLOVES) ;
 				temp->SetPosX((float)(posX * 32));
 				temp->SetPosY((float)(posY * 32));

@@ -101,6 +101,8 @@
     <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CAttractor.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Objects\COilCan.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Objects\CPowerGloves.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp" />
@@ -147,6 +149,8 @@
     <ClInclude Include="Source\Object Manager\Units\CBaseObject.h" />
     <ClInclude Include="Source\Object Manager\Units\CPlayer.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CAttractor.h" />
+    <ClInclude Include="Source\Object Manager\Units\Objects\COilCan.h" />
+    <ClInclude Include="Source\Object Manager\Units\Objects\CPowerGloves.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h" />

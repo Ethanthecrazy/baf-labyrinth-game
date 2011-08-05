@@ -21,6 +21,7 @@ public:
 
 	virtual void Update(float fDT);
 	virtual void Render( int CameraPosX, int CameraPosY );
+	virtual void UseObject( CBaseObject* user ) ;
 
 	int GetType(void) { return m_nType; }
 	void SetObjectType(int type) { m_nType = type ; } ;
