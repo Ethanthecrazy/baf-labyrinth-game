@@ -35,6 +35,6 @@ public:
 	void SetGolemType(const int nGolemType);
 	void SetMoveType(const int nMovementType);
 
-	void HandleEvent( Event* _toHandle ) ;
+	virtual void HandleEvent( Event* _toHandle ) ;
 };
 #endif

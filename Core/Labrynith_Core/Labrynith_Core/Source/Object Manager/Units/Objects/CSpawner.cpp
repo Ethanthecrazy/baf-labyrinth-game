@@ -3,11 +3,12 @@
 #include "../../MObjectManager.h"
 #include "../../../Messaging/MMessageSystem.h"
 #include "../../../Messaging/MEventSystem.h"
-#include "../CBaseGolem.h"
 #include "../../MObjectManager.h"
 #include "../../../GameStates/CGamePlayState.h"
 #include "CAttractor.h"
 #include "../CPlayer.h"
+#include "../CBaseGolem.h"
+#include "../Golems/CGolem_Earth.h"
 
 void CSpawner::Update(float fDT)
 {
@@ -52,7 +53,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_EARTH:
 			{
 			IUnitInterface* temp = new CBaseGolem();
-			((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
+			//CGolem_Earth* temp = new CGolem_Earth();
+		    ((CBaseGolem*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/StoneGolem.png" ));
 			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
@@ -60,7 +62,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CBaseGolem*)(temp))->SetGolemType(EARTH_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( (IUnitInterface*)temp, 1 );			
 			break;
 			}
 			

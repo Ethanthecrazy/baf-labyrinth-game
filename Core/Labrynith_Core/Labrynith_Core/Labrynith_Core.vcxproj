@@ -100,6 +100,7 @@
     <ClCompile Include="Source\Object Manager\Units\CBaseGolem.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp" />
     <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Earth.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CAttractor.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\COilCan.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CPowerGloves.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Source\Object Manager\Units\CBaseGolem.h" />
     <ClInclude Include="Source\Object Manager\Units\CBaseObject.h" />
     <ClInclude Include="Source\Object Manager\Units\CPlayer.h" />
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Earth.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CAttractor.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\COilCan.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CPowerGloves.h" />

@@ -511,5 +511,5 @@ void MFlake::FinishMovingEnt( IUnitInterface* toFinish )
 		break;
 	}
 
-	cout << toFinish->GetIndexPosX() << " ," << toFinish->GetIndexPosY() << "\n";
+	//cout << toFinish->GetIndexPosX() << " ," << toFinish->GetIndexPosY() << "\n";
 }

@@ -66,7 +66,7 @@ bool CGamePlayState::Input(void)
 	//BUG - temp code added for AI testing
 	if( pDI->MouseButtonPressed( 0 ) )
 	{
-		/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120001);
+		/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120003);
 		int cameraX = 0 , cameraY = 0 ;
 				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
 		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
@@ -80,10 +80,9 @@ bool CGamePlayState::Input(void)
 void CGamePlayState::Update(float fDT)
 {
 	timestep = fDT;
-
+	MObjectManager::GetInstance()->Update( fDT );
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
-	MObjectManager::GetInstance()->Update( fDT );
 
 	int cameraX = 0 , cameraY = 0 ;
 	CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
@@ -489,7 +488,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				if( player->GetHeldItem() == NULL )
 					player->SetHeldItem(pBase);
 				else
-					break; ;
+					break;
 			}
 			int ObjectID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;

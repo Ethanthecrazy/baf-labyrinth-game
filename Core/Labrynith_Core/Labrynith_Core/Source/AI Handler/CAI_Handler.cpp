@@ -146,6 +146,10 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 }
 bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 {
+	//let the Entity finish its current movement, if it has one
+	if(((CBaseEntity*)(pEntity))->GetFlag_MovementState() == FLAG_MOVESTATE_MOVING)
+		return false;
+
 	MObjectManager* OM = MObjectManager::GetInstance();
 
 	//determine which direction we are looking at

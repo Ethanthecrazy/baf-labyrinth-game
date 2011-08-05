@@ -55,6 +55,9 @@
     <Filter Include="ObjectManager\Units\Tiles\Source">
       <UniqueIdentifier>{3e408184-0755-48fa-9ca0-d669d8a0d8bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ObjectManager\Units\Golems">
+      <UniqueIdentifier>{dae51c15-ea31-44d2-96a7-0cac0fee0e51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\winmain.cpp">
@@ -171,6 +174,9 @@
     <ClCompile Include="Source\Object Manager\Units\Tiles\CExit.cpp">
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Earth.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\Objects\COilCan.cpp">
       <Filter>ObjectManager\Units\Objects</Filter>
     </ClCompile>
@@ -214,9 +220,6 @@
     </ClInclude>
     <ClInclude Include="Source\BST.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h">
-      <Filter>ObjectManager\Units</Filter>
     </ClInclude>
     <ClInclude Include="Source\UTimer.h">
       <Filter>Source Files</Filter>
@@ -304,6 +307,12 @@
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Tiles\CExit.h">
       <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Earth.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h">
+      <Filter>ObjectManager\Units</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Objects\COilCan.h">
       <Filter>ObjectManager\Units\Objects</Filter>
