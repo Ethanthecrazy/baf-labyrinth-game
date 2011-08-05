@@ -9,6 +9,9 @@ CButton::CButton(string nLink)
 	m_nType = OBJ_BUTTON;
 	m_bIsPressed = false;
 	m_nLink = nLink;
+
+	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);
+	MEventSystem::GetInstance()->RegisterClient("Button.Unpress", this);
 }
 CButton::~CButton(void)
 {
@@ -40,4 +43,22 @@ bool CButton::CheckCollision(IUnitInterface* pBase)
 void CButton::Update(float fDT)
 {	
 	//MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)m_nLink.c_str());
+}
+
+
+void CButton::HandleEvent( Event* _toHandle )
+{	
+	if( _toHandle->GetEventID() == "Button.Pressed" )
+	{
+		string tmp = (const char*)_toHandle->GetParam();
+		if( tmp ==  m_nLink)
+			m_bIsPressed = true;
+	}
+
+	if( _toHandle->GetEventID() == "Button.Unpress" )
+	{
+		string tmp = (const char*)_toHandle->GetParam();
+		if( tmp ==  m_nLink)
+			m_bIsPressed = false;
+	}
 }

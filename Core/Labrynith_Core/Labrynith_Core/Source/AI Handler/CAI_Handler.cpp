@@ -112,6 +112,19 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		}
 	}
 
+	//Check to see if we are colliding with an entity
+	int EntityID = OM->FindFlake(pEntity->m_nIdentificationNumber)
+		.GetInfoAtIndex(nX, nY);
+
+	//we cannot collide with ourselves
+
+	if( EntityID > 0 && OM->GetUnit(EntityID) != pEntity )
+	{
+		cout << "AI:Collided With Entity " << EntityID << "\n";
+		//Let the Entity handle its collision
+		return ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(EntityID), nCanHandleCollision);
+	}
+
 	//Check to see if we are colliding with a button
 	int buttonID = OM->FindLayer(pEntity->m_nIdentificationNumber)
 		.GetFlake(OBJECT_BUTTON).GetInfoAtIndex(nX, nY);
@@ -124,21 +137,6 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		{
 			return Collided;
 		}
-	}
-
-	//Check to see if we are colliding with an entity
-	int EntityID = OM->FindFlake(pEntity->m_nIdentificationNumber)
-		.GetInfoAtIndex(nX, nY);
-
-	//we cannot collide with ourselves
-	if(OM->GetUnit(EntityID) == pEntity)
-		return false;
-
-	if( EntityID > 0 )
-	{
-		cout << "AI:Collided With Entity " << EntityID << "\n";
-		//Let the Entity handle its collision
-		return ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(EntityID), nCanHandleCollision);
 	}
 
 	//we are not colliding with anything

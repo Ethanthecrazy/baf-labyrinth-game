@@ -2,13 +2,12 @@
 #define CBUTTON_H_
 
 #include "../CBaseObject.h"
-#include "../CBaseEntity.h"
-
+#include "../../../Messaging/IListener.h"
 
 #include <string>
 using std::string;
 
-class CButton : public CBaseObject
+class CButton : public CBaseObject, public IListener
 {
 private:
 	bool m_bIsPressed;
@@ -21,6 +20,7 @@ public:
 	bool CheckCollision(IUnitInterface* pBase);
 	void Update(float fDT);
 
+	void HandleEvent( Event* _toHandle );
 };
 
 

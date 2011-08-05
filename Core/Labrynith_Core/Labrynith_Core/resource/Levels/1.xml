@@ -2120,6 +2120,19 @@
         </Tile>
         <Tile>
           <Type>
+            <X>1</X>
+            <Y>0</Y>
+          </Type>
+          <Property>4</Property>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
             <X>-1</X>
             <Y>-1</Y>
           </Type>
@@ -5518,9 +5531,11 @@
         <X>0</X>
         <Y>0</Y>
       </Type>
-      <Property>attractor.earth</Property>
+      <Property>golem.fire</Property>
       <Position>
         <X>3</X>
+        <Y>3</Y>
+        <X>25</X>
         <Y>3</Y>
         <Z>0</Z>
       </Position>
