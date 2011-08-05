@@ -178,6 +178,7 @@ void CGamePlayState::Exit(void)
 	//MObjectManager::GetInstance()->RemoveUnit( testVaribale ); 
 	MObjectManager::GetInstance()->RemoveAllUnits();
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
+	MEventSystem::GetInstance()->ShutdownEventSystem();
 	cout << "GamePlay -> ";
 	testVaribale = -1;
 

@@ -179,6 +179,8 @@ bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 	if(!isColliding)
 	{
 		// POSSIBLE BUG
+		//Check the object we are standing on
+		//only if we are able to move
 		CheckCollisions(pEntity, ((CBaseEntity*)pEntity)->GetIndexPosX(), ((CBaseEntity*)pEntity)->GetIndexPosY(), true);
 
 		//we can move if we're not colliding with something

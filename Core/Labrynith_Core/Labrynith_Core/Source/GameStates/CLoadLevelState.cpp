@@ -39,19 +39,19 @@ CLoadLevelState* CLoadLevelState::GetInstance()
 void CLoadLevelState::Enter(void)
 {
 	cout << "Deleting current level...\n";	
-	MMessageSystem::GetInstance()->ClearMessages();
-	MEventSystem::GetInstance()->ClearEvents();
+
 	MObjectManager::GetInstance()->RemoveAllUnits();
+	MMessageSystem::GetInstance()->ShutdownMessageSystem();
+	MEventSystem::GetInstance()->ShutdownEventSystem();
 	CGamePlayState::GetInstance()->testVaribale = -1;
+
 	cout << "...current level deleted\n";	
 
-	//BUG - some objects from prev level still exist;
-	MObjectManager* mobject = MObjectManager::GetInstance();
-	CGamePlayState* ptempthing = CGamePlayState::GetInstance();
-
 	cout << "Loading Level...\n";
-	LoadLevel(ptempthing->GetCurrentLevel());
+	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
+	LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel());
 	cout << "...Level Loaded\n";
+
 
 	CGame::GetInstance()->PopState();
 }

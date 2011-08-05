@@ -241,7 +241,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				//pGamePlay->SetCurrentLevel(1);
 				//Load the next level
 				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
-				return false;
+				return true;
 			}
 			return true;
 		}
