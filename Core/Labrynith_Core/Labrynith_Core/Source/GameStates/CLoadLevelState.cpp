@@ -172,15 +172,17 @@ bool CLoadLevelState::LoadLevel(int _level)
 				{								
 					string prop = "";
 
-					TiXmlElement* pProp = pTile->FirstChildElement("Property");
-					if(pProp)
-					{			
-						//prop = pProp->GetText();
-					}
+					
 
 					TiXmlElement* pType = pTile->FirstChildElement("Type");
 					if(pType)
 					{
+						TiXmlElement* pProp = pTile->FirstChildElement("Property");
+						if(pProp)
+						{			
+							prop = pProp->GetText();
+						}
+
 						string sTypeX, sTypeY;
 
 						sTypeX = pType->FirstChildElement("X")->GetText();
