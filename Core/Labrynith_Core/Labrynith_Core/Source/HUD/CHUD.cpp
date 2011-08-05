@@ -2,6 +2,7 @@
 #include "../Wrappers/CSGD_TextureManager.h"
 #include "../Object Manager/MObjectManager.h"
 #include "../Object Manager/Units/CPlayer.h"
+#include "../Object Manager/Units/CBaseObject.h"
 
 CHUD::CHUD()
 {

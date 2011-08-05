@@ -338,7 +338,7 @@ void MFlake::Render( int CameraX, int CameraY )
 			m_vObjects[i]->Render( CameraX, CameraY );
 		}
 
-		/*char temp[64];
+		char temp[64];
 
 		for( int y = 0; y < LayerHeight; ++y )
 		{
@@ -351,7 +351,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
 			}
-		}*/
+		}
 
 		break;
 

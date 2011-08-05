@@ -23,6 +23,7 @@ public:
 	virtual void Render( int CameraPosX, int CameraPosY );
 
 	int GetType(void) { return m_nType; }
+	void SetObjectType(int type) { m_nType = type ; } ;
 
 	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 

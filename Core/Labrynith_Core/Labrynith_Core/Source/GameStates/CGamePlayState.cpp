@@ -15,6 +15,7 @@
 #include "../Object Manager/Units/CBaseGolem.h"
 #include "../Messaging/MEventSystem.h"
 #include "../HUD/CHUD.h"
+#include "../Wrappers/CSGD_FModManager.h"
 
 
 #include <iostream>
@@ -45,6 +46,7 @@ CGamePlayState* CGamePlayState::GetInstance()
 void CGamePlayState::Enter(void)
 {
 	m_nMouseID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource\\mouse.png" ) ;
+	
 
 	cout << "GamePlay\n";
 
@@ -82,6 +84,19 @@ void CGamePlayState::Update(float fDT)
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
 	MObjectManager::GetInstance()->Update( fDT );
+
+	int cameraX = 0 , cameraY = 0 ;
+	CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+
+	if( CSGD_DirectInput::GetInstance()->MouseGetPosX() < 0 )
+		CSGD_DirectInput::GetInstance()->MouseSetPosX( 0 ) ;
+	else if( CSGD_DirectInput::GetInstance()->MouseGetPosX() > CGame::GetInstance()->GetScreenWidth() - 20 )
+		CSGD_DirectInput::GetInstance()->MouseSetPosX( CGame::GetInstance()->GetScreenWidth() - 20 ) ;
+	if( CSGD_DirectInput::GetInstance()->MouseGetPosY() < 0 )
+		CSGD_DirectInput::GetInstance()->MouseSetPosY( 0 ) ;
+	else if( CSGD_DirectInput::GetInstance()->MouseGetPosY() > CGame::GetInstance()->GetScreenHeight() - 20 )
+		CSGD_DirectInput::GetInstance()->MouseSetPosY( CGame::GetInstance()->GetScreenHeight() - 20 ) ;
+
 }
 
 void CGamePlayState::GetCamera( int& X , int& Y )
@@ -440,10 +455,11 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				player->GetHeldItem()->SetPosY( tileYPos * 32 ) ;
 				player->SetHeldItem(NULL);
 
-				if( object->GetType() == ENT_ATTRACTOR )
+				if( object->GetType() == OBJ_ATTRACTOR )
 				{
 					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , object ) ;
 				}
+				CSGD_FModManager::GetInstance()->PlaySoundA(player->GetPutDownSoundID()) ;
 			}
 		}
 		break;
@@ -458,14 +474,34 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
 			int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
 			int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
-
+			if( pBase->GetType() == OBJ_POWERGLOVES )
+			{
+				if( player->GetEquippedItem() == NULL )
+					player->SetEquippedItem(pBase) ;
+				else if( player->GetHeldItem() == NULL )
+					player->SetHeldItem(pBase) ;
+				else
+					break;
+			}
+			else
+			{
+				if( player->GetHeldItem() == NULL )
+					player->SetHeldItem(pBase);
+				else
+					break; ;
+			}
 			int ObjectID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
 			MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
-			player->SetHeldItem(pBase);
+			
+
 			//pBase->SetIndexPosX(-1);
 			//pBase->SetIndexPosY(-1);
-			MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , pBase ) ;
+			if( pBase->GetType() == OBJ_ATTRACTOR )
+			{
+				MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , pBase ) ;
+			}
+			CSGD_FModManager::GetInstance()->PlaySoundA(player->GetPickUpSoundID()) ;
 		}
 		break;
 	}

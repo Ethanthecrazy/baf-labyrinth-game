@@ -51,40 +51,43 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	{
 	case OBJECT_OBJECT:
 		{
-			if(pBase->GetType() == ENT_ATTRACTOR )
+			if(pBase->GetType() == OBJ_ATTRACTOR )
 			{
 				if(nCanHandleCollision)
 				{
-				int cameraX = 0 , cameraY = 0 ;
-				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-				int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
-				int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
+					if( ((CAttractor*)pBase)->GetElemType() != this->GetGolemType() )
+						return true ;
+					
+					int cameraX = 0 , cameraY = 0 ;
+					CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+					int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
+					int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
 
-				int ObjectID = pBase->m_nIdentificationNumber ;
-				//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-				MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
-				MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
-				MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
+					int ObjectID = pBase->m_nIdentificationNumber ;
+					//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+					MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
+					MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
+					MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
 
 
-				switch( GetFlag_DirectionToMove() )
-				{
-				case FLAG_MOVE_LEFT:
-					SetAnimID( CAnimationManager::GetInstance()->GetID("EatLeft") ) ;
-					break;
-				case FLAG_MOVE_UP:
-					SetAnimID( CAnimationManager::GetInstance()->GetID("EatUp") ) ;
-					break;
-				case FLAG_MOVE_RIGHT:
-					SetAnimID( CAnimationManager::GetInstance()->GetID("EatRight") ) ;
-					break;
-				case FLAG_MOVE_DOWN:
-					SetAnimID( CAnimationManager::GetInstance()->GetID("EatDown") ) ;
-					break;
-				}
-				CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
-				CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
-				MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
+					switch( GetFlag_DirectionToMove() )
+					{
+					case FLAG_MOVE_LEFT:
+						SetAnimID( CAnimationManager::GetInstance()->GetID("EatLeft") ) ;
+						break;
+					case FLAG_MOVE_UP:
+						SetAnimID( CAnimationManager::GetInstance()->GetID("EatUp") ) ;
+						break;
+					case FLAG_MOVE_RIGHT:
+						SetAnimID( CAnimationManager::GetInstance()->GetID("EatRight") ) ;
+						break;
+					case FLAG_MOVE_DOWN:
+						SetAnimID( CAnimationManager::GetInstance()->GetID("EatDown") ) ;
+						break;
+					}
+					CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
+					CSGD_FModManager::GetInstance()->PlaySoundA( m_nEatSoundID ) ;
+					MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
 				}
 				return false;
 			}
@@ -196,7 +199,7 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 
 bool CBaseGolem::CheckEntCollision(CBaseEntity* pEntity)
 {
-	if(pEntity->GetType() == ENT_ATTRACTOR )
+	if(pEntity->GetType() == OBJ_ATTRACTOR )
 	{
 		int cameraX = 0 , cameraY = 0 ;
 		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);

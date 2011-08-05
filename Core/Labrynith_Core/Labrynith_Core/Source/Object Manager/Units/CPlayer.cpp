@@ -10,13 +10,17 @@
 #include "CBaseObject.h"
 #include <iostream>
 #include "../../Wrappers/CSGD_Direct3D.h"
+#include "../../Wrappers/CSGD_FModManager.h"
 
 CPlayer::CPlayer(void)
 {
 	CBaseEntity::CBaseEntity();
 	m_pHeldItem = NULL;
+	m_pEquippedItem = NULL ;
 	SetLives(4);
 	m_nType = ENT_PLAYER;
+	m_nPickUpSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pick-up.mp3" ) ;
+	m_nPutDownSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/put-down.mp3" ) ;
 }
 CPlayer::~CPlayer(void)
 {
@@ -46,16 +50,19 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
 
 	if( MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) == 0 && MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) == 0 && MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) == 1 )
-	if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 	{
-		int xPos1 = tileXPos * 32 - cameraX ;
-		int yPos1 = tileYPos * 32 - cameraY ;
-		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 ) ;
-		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 ) ;
-		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 ) ;
-		CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 ) ;
+		
+					
+		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
+		{
+			int xPos1 = tileXPos * 32 - cameraX ;
+			int yPos1 = tileYPos * 32 - cameraY ;
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 ) ;
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 ) ;
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 ) ;
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 ) ;
+		}
 	}
-
 }
 void CPlayer::Input()
 {
@@ -65,38 +72,39 @@ void CPlayer::Input()
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 		{
 
-			if( pDI->KeyDown( DIK_UP ) )
+			if( pDI->KeyDown( DIK_W ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntUp( m_nIdentificationNumber );
 				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_UP);
 				return;
 			}
-
-			if( pDI->KeyDown( DIK_DOWN ) )
+			else if( pDI->KeyDown( DIK_S ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntDown( m_nIdentificationNumber );
 				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_DOWN);
 				return;
 			}
-
-			if( pDI->KeyDown( DIK_LEFT ) )
+			else if( pDI->KeyDown( DIK_A ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntLeft( m_nIdentificationNumber );
 				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_LEFT);
 				return;
 			}
-
-			if( pDI->KeyDown( DIK_RIGHT ) )
+			else if( pDI->KeyDown( DIK_D ) )
 			{
 				//MObjectManager::GetInstance()->MoveEntRight( m_nIdentificationNumber );
 				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
 				return;
 			}
-
+			else if( pDI->KeyPressed( DIK_E ) )
+			{
+				SwitchItems() ;
+				return ;
+			}
 			if( pDI->MouseButtonPressed( 0 ) )
 			{
 				int cameraX = 0 , cameraY = 0 ;
@@ -112,6 +120,64 @@ void CPlayer::Input()
 					MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
 
 			}
+			if( pDI->MouseButtonPressed( 1 ) )
+			{
+				if( GetEquippedItem() )
+				{
+					switch( GetEquippedItem()->GetType() )
+					{
+					case OBJ_POWERGLOVES:
+						{
+							if( GetHeldItem() == NULL )
+								return ;
+
+							int xDirection = 0 ;
+							int yDirection = 0 ;
+							
+							switch( GetFlag_DirectionToMove() )
+							{
+							case FLAG_MOVE_UP:
+								{
+									GetHeldItem()->SetVelY( 3 ) ;
+									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_UP ) ;
+									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
+									yDirection--;
+								}
+								break ;
+							case FLAG_MOVE_RIGHT:
+								{
+									GetHeldItem()->SetVelX( 3 ) ;
+									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT ) ;
+									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
+									xDirection++;
+								}
+								break;
+							case FLAG_MOVE_DOWN:
+								{
+									GetHeldItem()->SetVelY( 3 ) ;
+									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_DOWN ) ;
+									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
+									yDirection++;
+								}
+								break ;
+							case FLAG_MOVE_LEFT:
+								{
+									GetHeldItem()->SetVelX( 3 ) ;
+									GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_LEFT ) ;
+									GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_MOVING ) ;
+									xDirection--;
+								}
+								break ;
+							}
+							//GetHeldItem()->SetDistanceLeft( 32.0f ) ;
+							GetHeldItem()->SetLastPosX( this->GetPosX() ) ;
+							GetHeldItem()->SetLastPosY( this->GetPosY() ) ;
+							MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ) ;
+						}
+						break ;
+					}
+				}
+			}
 
 		}
 }
@@ -126,13 +192,21 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
-			if( temp->GetType() == ENT_ATTRACTOR )
+			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES )
 			{
 				//if we can hold the object we collided with...		
 				//allow the player to hold it unless 
 				//the player is already holding onto something
-				if( GetHeldItem() != NULL )
+
+
+				if( temp->GetType() == OBJ_ATTRACTOR && GetHeldItem() != NULL )
+				{
 					return true ;
+				}
+				else if( temp->GetType() == OBJ_POWERGLOVES && GetEquippedItem() != NULL )
+				{
+					return true;
+				}
 				else
 				{
 					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
@@ -205,7 +279,7 @@ int CPlayer::GetLives() const
 {
 	return m_nLives;
 }
-IUnitInterface* CPlayer::GetHeldItem() const
+CBaseObject* CPlayer::GetHeldItem() const
 {
 	return m_pHeldItem;
 }
@@ -215,7 +289,19 @@ void CPlayer::SetLives(const int nLives)
 	if(nLives >= 0)
 		m_nLives = nLives;
 }
-void CPlayer::SetHeldItem(IUnitInterface* const pHeldItem)
+void CPlayer::SetHeldItem(CBaseObject* const pHeldItem)
 {
 	m_pHeldItem = pHeldItem;
+}
+
+void CPlayer::SwitchItems(void)
+{
+	if( GetHeldItem() != NULL )
+		if( GetHeldItem()->GetType() == OBJ_ATTRACTOR )
+		{
+			return ;
+		}
+	CBaseObject* temp = GetHeldItem() ;
+	SetHeldItem(GetEquippedItem()) ;
+	SetEquippedItem(temp) ;
 }

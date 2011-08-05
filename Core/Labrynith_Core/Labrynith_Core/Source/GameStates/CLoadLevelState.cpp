@@ -439,6 +439,16 @@ bool CLoadLevelState::LoadLevel(int _level)
 					}
 				}
 				break;
+			case 1:
+				CBaseObject* temp = new CBaseObject();
+				temp->SetObjectType(OBJ_POWERGLOVES) ;
+				temp->SetPosX((float)(posX * 32));
+				temp->SetPosY((float)(posY * 32));
+				temp->SetIndexPosX(posX);
+				temp->SetIndexPosY(posY);
+				temp->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/PowerGlove.png" ));
+
+				MObjectManager::GetInstance()->AddUnitIndexed( temp , 1 ) ;
 			}
 			
 			pObject = pObject->NextSiblingElement("TileObject");

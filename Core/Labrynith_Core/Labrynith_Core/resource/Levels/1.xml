@@ -5629,10 +5629,21 @@
         <Z>0</Z>
       </Position>
     </TileObject>
+    <TileObject>
+      <Type>
+        <X>1</X>
+        <Y>0</Y>
+      </Type>
+      <Position>
+        <X>0</X>
+        <Y>3</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
   </Objects>
-  <FileName>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrynith_Core\Labrynith_Core\resource\Levels\1.xml</FileName>
-  <Tilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\bin\Debug\..\..\Tiles.png</Tilesetpath>
-  <ObjectTilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\bin\Debug\..\..\Objects.png</ObjectTilesetpath>
+  <FileName>C:\Users\Nathan\Desktop\BattleFinch Labrynth\Core\Labrynith_Core\Labrynith_Core\resource\Levels\1.xml</FileName>
+  <Tilesetpath>C:\Users\Nathan\Desktop\BattleFinch Labrynth\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
+  <ObjectTilesetpath>C:\Users\Nathan\Desktop\BattleFinch Labrynth\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>
     <Width>5</Width>
     <Height>4</Height>

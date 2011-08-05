@@ -57,30 +57,92 @@ void CBaseObject::Update(float fDT)
 		}
 		else
 		{
+			int xDirection = 0 ;
+			int yDirection = 0 ;
 
 			switch ( GetFlag_DirectionToMove() )
 			{
 
 			case FLAG_MOVE_RIGHT:
 				SetPosX( GetLastPosX() + 32 );
+				xDirection = 1 ;
 				break;
 			case FLAG_MOVE_LEFT:
 				SetPosX( GetLastPosX() - 32 );
+				xDirection = -1 ;
 				break;
 			case FLAG_MOVE_UP:
 				SetPosY( GetLastPosY() - 32 );
+				yDirection = -1 ;
 				break;
 			case FLAG_MOVE_DOWN:
 				SetPosY( GetLastPosY() + 32 );
+				yDirection = 1 ;
 				break;
 			}
+
+			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , 0 ) ;
+			SetIndexPosX( GetPosX() / 32 ) ;
+			SetIndexPosY( GetPosY() / 32 ) ;
+			if( (GetVelX() > 0 || GetVelY() > 0) && this->GetType() == OBJ_ATTRACTOR )
+				MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
+			
+			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , m_nIdentificationNumber ) ;
 
 			SetLastPosX( GetPosX() );
 			SetLastPosY( GetPosY() );
 
 			MObjectManager::GetInstance()->FindFlake( this->m_nIdentificationNumber ).FinishMovingEnt( this );
 
-			SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
+			if( GetVelX() != 0 || GetVelY() != 0 )
+			{
+				if( int collUnit = MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) )
+				{
+					if( CheckCollision( MObjectManager::GetInstance()->GetUnit( collUnit ) , true ) )
+					{
+						SetVelY( 0 ) ;
+						SetVelX( 0 ) ;
+						SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+						SetDistanceLeft( 0 ) ;
+					}
+				}
+
+				if( int collTile = MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) != 1 )
+				{
+					SetVelY( 0 ) ;
+					SetVelX( 0 ) ;
+					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					SetDistanceLeft( 0 ) ;
+				}
+			}
+
+			if( GetVelX() != 0 )
+			{
+
+				SetVelX( GetVelX() - 1 ) ;
+				if( GetVelX() == 0 )
+				{
+					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					SetDistanceLeft( 0 ) ;
+				}
+				else
+					SetDistanceLeft( 32.0f ) ;
+			}
+			if( GetVelY() != 0 )
+			{
+
+				SetVelY( GetVelY() - 1 ) ;
+				if( GetVelY() == 0 )
+				{
+					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					SetDistanceLeft( 0 ) ;
+				}
+				else
+					SetDistanceLeft( 32.0f ) ;
+			}
+
+			
+			//SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 		}
 	}
 	else
