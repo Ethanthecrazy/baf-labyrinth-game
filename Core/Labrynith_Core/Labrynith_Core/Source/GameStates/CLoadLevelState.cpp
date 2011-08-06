@@ -20,6 +20,7 @@ using std::string;
 #include "../Object Manager/Units/Tiles/CDoor.h"
 #include "../Object Manager/Units/Tiles/CExit.h"
 #include "../Object Manager/Units/Objects/CPowerGloves.h"
+#include "../Object Manager/Units/Objects/COilCan.h"
 
 #include "../TinyXML/tinyxml.h"
 
@@ -461,15 +462,29 @@ bool CLoadLevelState::LoadLevel(int _level)
 				}
 				break;
 			case 1:
-				CPowerGloves* temp = new CPowerGloves();
-				temp->SetObjectType(OBJ_POWERGLOVES) ;
-				temp->SetPosX((float)(posX * 32));
-				temp->SetPosY((float)(posY * 32));
-				temp->SetIndexPosX(posX);
-				temp->SetIndexPosY(posY);
-				temp->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/PowerGlove.png" ));
+				{
+					CPowerGloves* temp = new CPowerGloves();
+					temp->SetObjectType(OBJ_POWERGLOVES) ;
+					temp->SetPosX((float)(posX * 32));
+					temp->SetPosY((float)(posY * 32));
+					temp->SetIndexPosX(posX);
+					temp->SetIndexPosY(posY);
+					temp->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/PowerGlove.png" ));
 
-				MObjectManager::GetInstance()->AddUnitIndexed( temp , 1 ) ;
+					MObjectManager::GetInstance()->AddUnitIndexed( temp , 1 ) ;
+				}
+				break ;
+			case 2:
+				{
+					COilCan* temp = new COilCan();
+					temp->SetObjectType(OBJ_OILCAN) ;
+					temp->SetPosX((float)(posX * 32));
+					temp->SetPosY((float)(posY * 32));
+					temp->SetIndexPosX(posX);
+					temp->SetIndexPosY(posY);
+
+					MObjectManager::GetInstance()->AddUnitIndexed( temp , 1 ) ;
+				}
 			}
 			
 			pObject = pObject->NextSiblingElement("TileObject");

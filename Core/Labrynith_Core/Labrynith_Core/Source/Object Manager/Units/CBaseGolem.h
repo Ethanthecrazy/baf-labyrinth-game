@@ -12,6 +12,7 @@ class CBaseGolem : public CBaseEntity
 	int m_nGolemType;
 	int m_nMovementType;
 	int m_nEatSoundID;
+	int m_nStepSoundID;
 	float fCollectedTime;
 	bool CheckEntCollision(CBaseEntity* pEntity);
 protected:
@@ -31,9 +32,11 @@ public:
 	int GetGolemType() const;
 	int GetMoveType() const;
 	int GetEatSoundID() { return m_nEatSoundID ; }
+	int GetStepSoundID() { return m_nStepSoundID ; }
 	//mutators
 	void SetGolemType(const int nGolemType);
 	void SetMoveType(const int nMovementType);
+	void SetStepSoundID( int ID ) { m_nStepSoundID = ID ; }
 
 	virtual void HandleEvent( Event* _toHandle ) ;
 };

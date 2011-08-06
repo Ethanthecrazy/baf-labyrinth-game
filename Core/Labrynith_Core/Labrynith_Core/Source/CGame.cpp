@@ -42,6 +42,7 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 		CSGD_Direct3D::GetInstance()->GetSprite());
 
 	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/entity-movement.xml", true);
+	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/fire.xml", true );	
 	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/entity-Eating.xml", true );	
 
 	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
@@ -105,6 +106,8 @@ void CGame::Render()
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->DeviceEnd();
 	CSGD_Direct3D::GetInstance()->Present();
+
+	CSGD_FModManager::GetInstance()->Update() ;
 }
 
 void CGame::ClearAllStates( void )
@@ -141,6 +144,7 @@ void CGame::Shutdown()
 
 	CAnimationManager::GetInstance()->DeleteInstance();
 
+	CSGD_FModManager::GetInstance()->ShutdownFModManager() ;
 }
 
 void CGame::PopState(void)

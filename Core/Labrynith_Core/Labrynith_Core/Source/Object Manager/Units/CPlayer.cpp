@@ -141,7 +141,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
-			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES )
+			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN )
 			{
 				//if we can hold the object we collided with...		
 				//allow the player to hold it unless 
@@ -152,7 +152,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				{
 					return true ;
 				}
-				else if( temp->GetType() == OBJ_POWERGLOVES && GetEquippedItem() != NULL )
+				else if( ( temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN ) && GetEquippedItem() != NULL )
 				{
 					return true;
 				}

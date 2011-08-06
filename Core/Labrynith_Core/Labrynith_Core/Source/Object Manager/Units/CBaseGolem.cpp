@@ -22,6 +22,7 @@ CBaseGolem::CBaseGolem(void)
 	/*MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED" , this ) ;
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED" , this ) ;*/
 	m_nEatSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/creature_snarl1.mp3" ) ;
+	m_nStepSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/footstepsGolem.mp3" ) ;
 }
 CBaseGolem::~CBaseGolem(void)
 {
@@ -32,6 +33,10 @@ CBaseGolem::~CBaseGolem(void)
 void CBaseGolem::Update(float fDT)
 {
 	CBaseEntity::Update(fDT);
+
+	if(( GetDistanceLeft() <= 32 && GetDistanceLeft() >= 30 ) || (GetDistanceLeft() <= 16 && GetDistanceLeft() >= 14 ) )
+		CSGD_FModManager::GetInstance()->PlaySoundA( GetStepSoundID() ) ;
+
 	fCollectedTime += fDT;
 	if(fCollectedTime > 1.0f)
 	{
@@ -59,6 +64,8 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				{
 					if( ((CAttractor*)pBase)->GetElemType() != this->GetGolemType() )
 						return true ;
+
+					
 					
 					int cameraX = 0 , cameraY = 0 ;
 					CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);

@@ -1,6 +1,9 @@
 #include "CGolem_Fire.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../../MObjectManager.h"
+#include "../Objects/COil.h"
+#include "../CPlayer.h"
 
 CGolem_Fire::CGolem_Fire(void)
 {
@@ -29,6 +32,31 @@ void CGolem_Fire::Update(float fDT)
 {
 	CBaseGolem::Update(fDT);
 	UpdateAI();
+	// check surrounding objects to see if they can catch on fire
+	for( int i = -1 ; i <= 1 ; ++i )
+	{
+		for( int u = -1 ; u <= 1 ; ++u )
+		{
+			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( this->GetIndexPosX() + i , this->GetIndexPosY() + u ) ;
+			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+			if( object )
+			{
+				if( object->GetType() == OBJ_OIL )
+				{
+					((COil*)object)->SetOnFire(true) ;
+				}
+			}
+			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( this->GetIndexPosX() + i , this->GetIndexPosY() + u ) ;
+			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+			if( !entity )
+				continue;
+			if( entity->GetType() == ENT_PLAYER )
+			{
+				((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
+			}
+		}
+	}
+
 }
 void CGolem_Fire::Render( int CameraPosX, int CameraPosY )
 {

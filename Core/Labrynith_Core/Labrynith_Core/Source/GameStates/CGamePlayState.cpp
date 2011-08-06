@@ -471,7 +471,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
 
 			
-			if( pBase->GetType() == OBJ_POWERGLOVES )
+			if( pBase->GetType() == OBJ_POWERGLOVES || pBase->GetType() == OBJ_OILCAN )
 			{
 				if( player->GetEquippedItem() == NULL )
 					player->SetEquippedItem(pBase) ;
