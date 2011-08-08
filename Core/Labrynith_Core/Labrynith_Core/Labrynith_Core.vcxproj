@@ -117,7 +117,10 @@
     <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CElectricButton.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CElectricGenerator.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CExit.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CMetal.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CPit.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CRamp.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CWaterTile.cpp" />
@@ -179,7 +182,10 @@
     <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h" />
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CElectricButton.h" />
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CElectricGenerator.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CExit.h" />
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CMetal.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CPit.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CRamp.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CWaterTile.h" />

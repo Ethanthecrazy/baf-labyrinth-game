@@ -6,7 +6,9 @@
 
 class CGolem_Iron : public CBaseGolem , public IListener
 {
-
+private:
+	bool m_bPowered ;
+	float m_nElectricUpdateTimer ;
 public:
 	CGolem_Iron(void);
 	CGolem_Iron(CBaseGolem* pGolem);
@@ -18,5 +20,11 @@ public:
 	bool CheckTileCollision(int TileID);
 	void UpdateAI();
 	void HandleEvent( Event* _toHandle );
+
+	bool GetIsElectrified( void ) { return m_bPowered ; } ;
+	int GetElectricUpdateTimer( void ) { return m_nElectricUpdateTimer ; } ;
+
+	void SetElectricUpdateTimer( float time ) { m_nElectricUpdateTimer = time ; } ;
+	void SetPowered( bool powered ) { m_bPowered = powered ; } ;
 };
 #endif
