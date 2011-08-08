@@ -16,13 +16,16 @@ using std::string;
 
 #include "../Object Manager/Units/Objects/CSpawner.h"
 #include "../Object Manager/Units/Objects/CAttractor.h"
+#include "../Object Manager/Units/Objects/CPowerGloves.h"
+#include "../Object Manager/Units/Objects/COilCan.h"
+#include "../Object Manager/Units/Objects/COil.h"
+
 #include "../Object Manager/Units/Tiles/CButton.h"
 #include "../Object Manager/Units/Tiles/CDoor.h"
 #include "../Object Manager/Units/Tiles/CExit.h"
 #include "../Object Manager/Units/Tiles/CWaterTile.h"
-#include "../Object Manager/Units/Objects/CPowerGloves.h"
-#include "../Object Manager/Units/Objects/COilCan.h"
-#include "../Object Manager/Units/Objects/COil.h"
+#include "../Object Manager/Units/Tiles/CPit.h"
+#include "../Object Manager/Units/Tiles/CRamp.h"
 
 #include "../TinyXML/tinyxml.h"
 #include "../AI Handler/CAI_Handler.h"
@@ -288,7 +291,31 @@ bool CLoadLevelState::LoadLevel(int _level)
 							theType = 3;
 							}
 							break;
-						}
+
+						case 7: // pit tile
+							{
+							IUnitInterface* temp = new CWaterTile(true);
+							((CWaterTile*)temp)->SetPosX((float)(x * 32));
+							((CWaterTile*)temp)->SetPosY((float)(y * 32));
+							((CWaterTile*)temp)->SetIndexPosX(x);
+							((CWaterTile*)temp)->SetIndexPosY(y);
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+							theType = 3;
+							}
+							break;
+						
+						case 8: // ramp tile
+							{
+							IUnitInterface* temp = new CWaterTile(true);
+							((CWaterTile*)temp)->SetPosX((float)(x * 32));
+							((CWaterTile*)temp)->SetPosY((float)(y * 32));
+							((CWaterTile*)temp)->SetIndexPosX(x);
+							((CWaterTile*)temp)->SetIndexPosY(y);
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+							theType = 3;
+							}
+							break;
+						}						
 
 						// 0 = pit
 						// 1 & 2 = ground

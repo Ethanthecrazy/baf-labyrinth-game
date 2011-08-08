@@ -210,6 +210,12 @@
     <ClCompile Include="Source\Object Manager\Units\Tiles\CWaterTile.cpp">
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CRamp.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CPit.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -378,6 +384,12 @@
       <Filter>ObjectManager\Units\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Tiles\CWaterTile.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CRamp.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CPit.h">
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
