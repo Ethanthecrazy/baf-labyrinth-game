@@ -148,6 +148,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 		return false;
 	}
 	
+	int width, height, depth;
 	TiXmlElement* pMapSize = pRoot->FirstChildElement("MapSize");	
 	if(pMapSize)
 	{
@@ -158,12 +159,10 @@ bool CLoadLevelState::LoadLevel(int _level)
 		sheight = pMapSize->FirstChildElement("Height")->GetText();
 		sdepth = pMapSize->FirstChildElement("Depth")->GetText();
 
-		int width, height, depth;
 		width = atoi(swidth.c_str());
 		height = atoi(sheight.c_str());
 		depth = atoi(sdepth.c_str());
 		
-		MObjectManager::GetInstance()->ResizeLayer( 1, width, height );
 	}
 
 	TiXmlElement* pTiles = pRoot->FirstChildElement("Tiles");	
@@ -173,6 +172,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 		int z = 1;
 		while(pArrayofArray)
 		{
+			MObjectManager::GetInstance()->ResizeLayer( z, width, height );
 			TiXmlElement* pArray = pArrayofArray->FirstChildElement("ArrayOfTile");
 			int x = 0;
 			while(pArray)

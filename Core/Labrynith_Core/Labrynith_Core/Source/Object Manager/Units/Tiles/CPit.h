@@ -9,6 +9,8 @@ class CPit : public CBaseObject
 public:
 	CPit(void);
 
+	void Render( int CameraPosX, int CameraPosY );
+
 	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 };
 #endif

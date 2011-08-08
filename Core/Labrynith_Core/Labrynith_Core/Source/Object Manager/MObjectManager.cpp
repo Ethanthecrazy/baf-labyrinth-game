@@ -48,6 +48,14 @@ int MObjectManager::AddUnitIndexed( IUnitInterface* _toAdd, int _layer )
 	return tempnumber;
 }
 
+int MObjectManager::MoveUnit( IUnitInterface* _toMove, int _layer )
+{
+	IUnitInterface* tmp = _toMove;
+	int tempnum = AddUnitIndexed( tmp, _layer );
+	RemoveUnit( _toMove->m_nIdentificationNumber );
+	return tempnum;
+}
+
 bool MObjectManager::RemoveUnit( int _Ident )
 {
 	if( LayerIndex.ConvertTrueValue( _Ident ) < 0 )

@@ -57,6 +57,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		// if it cant find it in the object manager and its not held by the player
 		if(!MObjectManager::GetInstance()->GetUnit(m_nSpawnedID))
 	{
+		// put this in to prevent copy of attractors
 		IUnitInterface* player = MObjectManager::GetInstance()->GetUnit(CGamePlayState::GetInstance()->testVaribale);
 
 		if( player )

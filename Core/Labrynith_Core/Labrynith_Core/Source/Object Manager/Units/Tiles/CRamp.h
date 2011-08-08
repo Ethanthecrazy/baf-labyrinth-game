@@ -4,15 +4,18 @@
 #include "../CBaseObject.h"
 #include "../../../Messaging/IListener.h"
 
+#include <string>
+using std::string;
+
 class CRamp : public CBaseObject, public IListener
 {
-	int m_nLink;
+	string m_nLink;
 public:
-	CRamp(int nLink = -1);
+	CRamp(string nLink = "");
 
 	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	void HandleEvent( Event* _toHandle );
 
-	int GetLink(void) { return m_nLink; }
+	string GetLink(void) { return m_nLink; }
 };
 #endif
