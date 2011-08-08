@@ -17,6 +17,7 @@
 #include "../Golems/CGolem_Iron.h"
 #include "../Golems/CGolem_Light.h"
 #include "../Golems/CGolem_Shadow.h"
+#include "CLightOrb.h"
 
 void CSpawner::Update(float fDT)
 {
@@ -24,7 +25,7 @@ void CSpawner::Update(float fDT)
 
 void CSpawner::Render(int CameraPosX, int CameraPosY)
 {
-	//CBaseObject::Render(CameraPosX, CameraPosY);
+	CBaseObject::Render(CameraPosX, CameraPosY);
 }
 
 
@@ -37,11 +38,11 @@ bool CSpawner::CheckCollision(IUnitInterface* pBase)
 
 CSpawner::CSpawner(int nSpawnerType) : m_nSpawnerType(nSpawnerType)
 {	
-	m_nUnitType = OBJECT_OBJECT;
+	m_nUnitType = OBJECT_TILE;
 	m_nType = OBJ_SPAWNER;
 	m_nSpawnedID = 0;
 	MEventSystem::GetInstance()->RegisterClient("spawner.spawn", this);
-	m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
+	m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ));
 }
 
 CSpawner::~CSpawner(void)
@@ -53,11 +54,34 @@ void CSpawner::HandleEvent( Event* _toHandle )
 {
 	if(_toHandle->GetEventID() == "spawner.spawn")
 	{
+		// if it cant find it in the object manager and its not held by the player
 		if(!MObjectManager::GetInstance()->GetUnit(m_nSpawnedID))
 	{
-		printf("Spawning...\n");
+		IUnitInterface* player = MObjectManager::GetInstance()->GetUnit(CGamePlayState::GetInstance()->testVaribale);
+
+		if( player )
+		{
+			if( ((CPlayer*)player)->GetHeldItem() )
+			{
+				if(((CPlayer*)player)->GetHeldItem()->m_nIdentificationNumber == m_nSpawnedID)
+					return;
+			}
+		}
+
 		switch(m_nSpawnerType)
 		{
+		case SPAWNER_LIGHTORB:
+			{				
+				IUnitInterface* temp = new CLightOrb();
+				((CLightOrb*)(temp))->SetPosX( GetPosX() );
+				((CLightOrb*)(temp))->SetPosY( GetPosY() );
+				((CLightOrb*)(temp))->SetIndexPosX( GetIndexPosX() );
+				((CLightOrb*)(temp))->SetIndexPosY( GetIndexPosY() );
+
+				m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );			
+				break;
+			}
+
 		case SPAWNER_EARTH:
 			{
 			IUnitInterface* temp = new CGolem_Earth();
@@ -66,7 +90,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );			
 			break;
 			}
 			
@@ -78,7 +102,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );			
 			break;
 			}
 
@@ -90,7 +114,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;			
 			}
 
@@ -102,7 +126,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -114,7 +138,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -126,7 +150,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -138,7 +162,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -150,7 +174,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -162,7 +186,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -178,7 +202,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(EARTH_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );			
 			break;
 			}
 			
@@ -192,7 +216,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(FIRE_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );			
 			break;
 			}
 
@@ -206,7 +230,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(WATER_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;			
 			}
 
@@ -220,7 +244,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(ICE_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -234,7 +258,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(AIR_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -248,7 +272,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(LAVA_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -262,7 +286,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(IRON_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -276,7 +300,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(LIGHT_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
@@ -290,13 +314,13 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(SHADOW_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() );
 			break;
 			}
 
 
 		case SPAWNER_PLAYER:
-			MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( GetIndexPosX(), GetIndexPosY() ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( GetIndexPosX(), GetIndexPosY(), MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() ) );
 			m_nSpawnedID = CGamePlayState::GetInstance()->testVaribale;
 			break;
 		}

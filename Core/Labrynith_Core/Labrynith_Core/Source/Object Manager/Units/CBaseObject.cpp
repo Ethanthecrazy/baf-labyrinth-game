@@ -99,7 +99,7 @@ void CBaseObject::Update(float fDT)
 
 			if( GetVelX() != 0 || GetVelY() != 0 )
 			{
-				if( int collUnit = MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) )
+				if( int collUnit = MObjectManager::GetInstance()->GetLayer( MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) )
 				{
 					if( CheckCollision( MObjectManager::GetInstance()->GetUnit( collUnit ) , true ) )
 					{
@@ -109,7 +109,7 @@ void CBaseObject::Update(float fDT)
 						SetDistanceLeft( 0 ) ;
 					}
 				}
-				else if( int collTile = MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) != 1 )
+				else if( int collTile = MObjectManager::GetInstance()->GetLayer( MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) != 1 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
@@ -178,7 +178,7 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 		0.0f,
 		0.0f,
 		0.0f,
-		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
+		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
 
 	}
 }

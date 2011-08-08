@@ -35,9 +35,10 @@ int CGamePlayState::testVaribale = -1;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 3;
+	m_nCurrLevel = 1;
 	testVaribale = -1;
 	m_nMouseID = -1 ;
+	currFloor = 1;
 }
 
 // destructor
@@ -73,15 +74,15 @@ bool CGamePlayState::Input(void)
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
 
 	//BUG - temp code added for AI testing
-	if( pDI->MouseButtonPressed( 0 ) )
-	{
-		/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(130001);
-		int cameraX = 0 , cameraY = 0 ;
-				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
-		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
-		((CBaseGolem*)(golem))->SetTargetPos(tileXPos, tileYPos);*/
-	}
+	//if( pDI->MouseButtonPressed( 0 ) )
+	//{
+	//	/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120003);
+	//	int cameraX = 0 , cameraY = 0 ;
+	//			CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+	//	int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
+	//	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+	//	((CBaseGolem*)(golem))->SetTargetPos(tileXPos, tileYPos);*/
+	//}
 
 	return true;
 }
@@ -89,7 +90,10 @@ bool CGamePlayState::Input(void)
 void CGamePlayState::Update(float fDT)
 {
 	timestep = fDT;
-	MObjectManager::GetInstance()->Update( fDT );
+	if(MObjectManager::GetInstance()->GetUnit( testVaribale ))
+		currFloor = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerID();
+		
+	MObjectManager::GetInstance()->Update( fDT, currFloor );
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
 
@@ -155,11 +159,11 @@ void CGamePlayState::Render(void)
 		if( cameraY < 0 )
 			cameraY = 0;
 
-		MObjectManager::GetInstance()->Render( cameraX, cameraY );
+		MObjectManager::GetInstance()->Render( cameraX, cameraY, MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerID() );
 	}
 	else
 	{
-		MObjectManager::GetInstance()->Render( 0, 0 );
+		MObjectManager::GetInstance()->Render( 0, 0, MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerID() );
 	}
 	//Draw the HUD
 	CHUD::GetInstance()->Render();
@@ -415,7 +419,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			((CPlayer*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
 			//set-up the HUD so it renders player info
 			CHUD::GetInstance()->SetPlayer(((CPlayer*)(temp)));
-			testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+			testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, NewMessage->GetZ() );
 		}
 		break;
 
@@ -449,13 +453,21 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 			// place object in that tile
 			int checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			if( checkObject == 0 ) //	if tile is empty
+			if( checkObject == 0 ) //	if there is NOT an object there
 			{
+			   checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			   if( checkObject != 0 ) // if there IS an entity there
+				   break;
+			   
+			   checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			   if( checkObject == 0 ) // if the tile is NOT empty
+				   break;
+
 				IUnitInterface* object = player->GetHeldItem() ;
 				object->SetIndexPosX( tileXPos ) ;
 				object->SetIndexPosY( tileYPos ) ;
-				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem() , 1 ) ;
-				MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
+				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem() , MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetLayerID() ) ;
+				//MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
 				player->GetHeldItem()->SetPosX( tileXPos * 32 ) ;
 				player->GetHeldItem()->SetPosY( tileYPos * 32 ) ;
 				player->SetHeldItem(NULL);
@@ -494,7 +506,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			}
 			int ObjectID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( pBase->GetIndexPosX() , pBase->GetIndexPosY() ) ;
 			MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
-			MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( pBase->GetIndexPosX() , pBase->GetIndexPosY() , 0 ) ;
+			//MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( pBase->GetIndexPosX() , pBase->GetIndexPosY() , 0 ) ;
 			
 
 			//pBase->SetIndexPosX(-1);

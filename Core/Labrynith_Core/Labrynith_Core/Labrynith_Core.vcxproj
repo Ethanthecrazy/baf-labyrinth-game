@@ -110,6 +110,7 @@
     <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Shadow.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Water.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CAttractor.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Objects\CLightOrb.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\COil.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\COilCan.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CPowerGloves.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Shadow.h" />
     <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Water.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CAttractor.h" />
+    <ClInclude Include="Source\Object Manager\Units\Objects\CLightOrb.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\COil.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\COilCan.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CPowerGloves.h" />

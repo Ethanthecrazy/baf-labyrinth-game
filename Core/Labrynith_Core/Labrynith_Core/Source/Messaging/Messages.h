@@ -40,13 +40,14 @@ class msgCreatePlayer : public CBaseMessage
 {
 	int m_nPosX;
 	int m_nPosY;
+	int m_nPosZ;
 
 public:
 
-	msgCreatePlayer( int _PosX, int _PosY );
+	msgCreatePlayer( int _PosX, int _PosY, int _PosZ );
 	int GetX( void ) { return m_nPosX; }
 	int GetY( void ) { return m_nPosY; }
-
+	int GetZ( void ) { return m_nPosZ; }
 };
 
 class msgRemoveUnit : public CBaseMessage

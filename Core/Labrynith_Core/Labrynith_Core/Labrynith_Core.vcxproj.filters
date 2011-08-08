@@ -49,12 +49,6 @@
     <Filter Include="ObjectManager\Units\Tiles">
       <UniqueIdentifier>{4c81865b-1839-4bad-876e-e1496756107c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ObjectManager\Units\Tiles\Headers">
-      <UniqueIdentifier>{f7f19de1-97c0-4296-a001-1280bedd260a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ObjectManager\Units\Tiles\Source">
-      <UniqueIdentifier>{3e408184-0755-48fa-9ca0-d669d8a0d8bd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ObjectManager\Units\Golems">
       <UniqueIdentifier>{dae51c15-ea31-44d2-96a7-0cac0fee0e51}</UniqueIdentifier>
     </Filter>
@@ -165,12 +159,6 @@
     <ClCompile Include="Source\Wrappers\CSGD_FModManager.cpp">
       <Filter>Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\Tiles\CExit.cpp">
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClCompile>
@@ -208,6 +196,15 @@
       <Filter>ObjectManager\Units\Golems</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\Objects\COil.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CLightOrb.cpp">
       <Filter>ObjectManager\Units\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\Tiles\CWaterTile.cpp">
@@ -329,12 +326,6 @@
     <ClInclude Include="Source\Wrappers\CSGD_FModManager.h">
       <Filter>Wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Tiles\CExit.h">
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClInclude>
@@ -375,6 +366,15 @@
       <Filter>ObjectManager\Units\Golems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Objects\COil.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CLightOrb.h">
       <Filter>ObjectManager\Units\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Tiles\CWaterTile.h">

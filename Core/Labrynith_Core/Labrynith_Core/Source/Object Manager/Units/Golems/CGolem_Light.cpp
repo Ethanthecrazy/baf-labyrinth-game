@@ -1,6 +1,7 @@
 #include "CGolem_Light.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../../MObjectManager.h"
 
 CGolem_Light::CGolem_Light(void)
 {
@@ -27,6 +28,9 @@ CGolem_Light::~CGolem_Light(void)
 
 void CGolem_Light::Update(float fDT)
 {
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+
 	CBaseGolem::Update(fDT);
 	UpdateAI();
 }

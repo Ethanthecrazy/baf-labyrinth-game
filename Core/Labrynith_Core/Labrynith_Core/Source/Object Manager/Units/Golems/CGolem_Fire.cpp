@@ -31,6 +31,8 @@ CGolem_Fire::~CGolem_Fire(void)
 
 void CGolem_Fire::Update(float fDT)
 {
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 	CBaseGolem::Update(fDT);
 	UpdateAI();
 	// check surrounding objects to see if they can catch on fire

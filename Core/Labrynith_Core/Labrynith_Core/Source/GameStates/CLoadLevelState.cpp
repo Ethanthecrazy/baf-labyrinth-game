@@ -22,6 +22,7 @@ using std::string;
 #include "../Object Manager/Units/Tiles/CWaterTile.h"
 #include "../Object Manager/Units/Objects/CPowerGloves.h"
 #include "../Object Manager/Units/Objects/COilCan.h"
+#include "../Object Manager/Units/Objects/COil.h"
 
 #include "../TinyXML/tinyxml.h"
 #include "../AI Handler/CAI_Handler.h"
@@ -56,7 +57,8 @@ void CLoadLevelState::Enter(void)
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
 	LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel());
 	cout << "...Level Loaded\n";
-
+	
+	printf("Spawning objects...\n");
 
 	CGame::GetInstance()->PopState();
 }
@@ -147,6 +149,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 	if(pMapSize)
 	{
 		string swidth, sheight, sdepth;
+		const int thingy = 5;
 
 		swidth = pMapSize->FirstChildElement("Width")->GetText();
 		sheight = pMapSize->FirstChildElement("Height")->GetText();
@@ -164,7 +167,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 	if(pTiles)
 	{
 		TiXmlElement* pArrayofArray = pTiles->FirstChildElement("ArrayOfArrayOfTile");
-		if(pArrayofArray)
+		int z = 1;
+		while(pArrayofArray)
 		{
 			TiXmlElement* pArray = pArrayofArray->FirstChildElement("ArrayOfTile");
 			int x = 0;
@@ -216,7 +220,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							((CButton*)temp)->SetIndexPosX(x);
 							((CButton*)temp)->SetIndexPosY(y);
 							((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
-							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 
 							theType = 1;
 							break;
@@ -230,22 +234,38 @@ bool CLoadLevelState::LoadLevel(int _level)
 							((CDoor*)temp)->SetIndexPosX(x);
 							((CDoor*)temp)->SetIndexPosY(y);
 							((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" ));
-							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 
 							theType = 1;
 							break;
 							}
-						case 3: // exit tile
+
+						case 3: // 0, 3 exit tile
 							{
 							IUnitInterface* temp = new CExit();
 							((CExit*)temp)->SetPosX((float)(x * 32));
 							((CExit*)temp)->SetPosY((float)(y * 32));
 							((CExit*)temp)->SetIndexPosX(x);
 							((CExit*)temp)->SetIndexPosY(y);
-							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							theType = 1;
 							}
 							break;
+							
+						case 4: // 0, 4 Wood tile
+							{
+							IUnitInterface* temp = new COil();
+							((COil*)temp)->SetPosX((float)(x * 32));
+							((COil*)temp)->SetPosY((float)(y * 32));
+							((COil*)temp)->SetIndexPosX(x);
+							((COil*)temp)->SetIndexPosY(y);
+							((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/wood.png" ));
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+
+							theType = 1;
+							break;
+							}
+							
 						case 5: // water tile
 							{
 							IUnitInterface* temp = new CWaterTile(false);
@@ -253,7 +273,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							((CWaterTile*)temp)->SetPosY((float)(y * 32));
 							((CWaterTile*)temp)->SetIndexPosX(x);
 							((CWaterTile*)temp)->SetIndexPosY(y);
-							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							theType = 3;
 							}
 							break;
@@ -264,7 +284,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							((CWaterTile*)temp)->SetPosY((float)(y * 32));
 							((CWaterTile*)temp)->SetIndexPosX(x);
 							((CWaterTile*)temp)->SetIndexPosY(y);
-							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							theType = 3;
 							}
 							break;
@@ -272,8 +292,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 						// 0 = pit
 						// 1 & 2 = ground
-						// 3 = water
-						MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, theType );
+						MObjectManager::GetInstance()->GetLayer( z ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, theType );
 					}
 
 						
@@ -285,6 +304,9 @@ bool CLoadLevelState::LoadLevel(int _level)
 				++x;
 				pArray = pArray->NextSiblingElement("ArrayOfTile");
 			}
+
+			++z;
+			pArrayofArray = pTiles->NextSiblingElement("ArrayOfArrayOfTile");
 		}
 	}
 
@@ -296,7 +318,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 		while(pObject)
 		{			
 			int TypeX, TypeY, theType;
-			int posX, posY;
+			int posX, posY, posZ;
 			string prop = "";
 
 			TiXmlElement* pType = pObject->FirstChildElement("Type");
@@ -310,27 +332,21 @@ bool CLoadLevelState::LoadLevel(int _level)
 				TypeX = atoi(sTypeX.c_str());
 				TypeY = atoi(sTypeY.c_str());
 
-				//if(TypeX == -1 && TypeY == -1)
-				//	theType = -1;
-				//else if(TypeX == 0 && TypeY == 0) // 0 == Golem
-				//	theType = 0;
-				//else if(TypeX == 1 && TypeY == 0) // 1 == Button
-				//	theType = 1;
-
 				theType = TypeX + (TypeY * 5); //Type.X + (Type.Y * tileSetSize.Width)
 			}
 			
 			TiXmlElement* pPos = pObject->FirstChildElement("Position");
 			if(pPos)
 			{			
-				string sposX, sposY;
+				string sposX, sposY, sposZ;
 
 				sposX = pPos->FirstChildElement("X")->GetText();
 				sposY = pPos->FirstChildElement("Y")->GetText();
+				sposZ = pPos->FirstChildElement("Z")->GetText();
 
 				posX = atoi(sposX.c_str());
 				posY = atoi(sposY.c_str());
-		
+				posZ = atoi(sposZ.c_str()) + 1;
 			}
 
 			TiXmlElement* pProp = pObject->FirstChildElement("Property");
@@ -361,8 +377,18 @@ bool CLoadLevelState::LoadLevel(int _level)
 						((CSpawner*)temp)->SetIndexPosX(posX);
 						((CSpawner*)temp)->SetIndexPosY(posY);
 
-						MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+						MObjectManager::GetInstance()->AddUnitIndexed( temp, posZ );
 						break;
+					}
+					else if(typeofspawner == "lightorb")
+					{						
+						IUnitInterface* temp = new CSpawner(SPAWNER_LIGHTORB);
+						((CSpawner*)temp)->SetPosX((float)(posX * 32));
+						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetIndexPosX(posX);
+						((CSpawner*)temp)->SetIndexPosY(posY);
+
+						MObjectManager::GetInstance()->AddUnitIndexed( temp, posZ );
 					}
 					else if(typeofspawner == "attractor")
 					{
@@ -421,7 +447,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 						((CSpawner*)temp)->SetIndexPosX(posX);
 						((CSpawner*)temp)->SetIndexPosY(posY);
 
-						MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+						MObjectManager::GetInstance()->AddUnitIndexed( temp, posZ );
 
 						break;
 					}
@@ -482,11 +508,13 @@ bool CLoadLevelState::LoadLevel(int _level)
 						((CSpawner*)temp)->SetIndexPosX(posX);
 						((CSpawner*)temp)->SetIndexPosY(posY);
 
-						MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+						MObjectManager::GetInstance()->AddUnitIndexed( temp, posZ );
 						break;
 					}
 				}
 				break;
+
+				 // Power Glove
 			case 1:
 				{
 					CPowerGloves* temp = new CPowerGloves();
@@ -497,9 +525,11 @@ bool CLoadLevelState::LoadLevel(int _level)
 					temp->SetIndexPosY(posY);
 					temp->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/PowerGlove.png" ));
 
-					MObjectManager::GetInstance()->AddUnitIndexed( temp , 1 ) ;
+					MObjectManager::GetInstance()->AddUnitIndexed( temp , posZ ) ;
 				}
 				break ;
+
+				// Oil Can
 			case 2:
 				{
 					COilCan* temp = new COilCan();
@@ -509,13 +539,14 @@ bool CLoadLevelState::LoadLevel(int _level)
 					temp->SetIndexPosX(posX);
 					temp->SetIndexPosY(posY);
 
-					MObjectManager::GetInstance()->AddUnitIndexed( temp , 1 ) ;
+					MObjectManager::GetInstance()->AddUnitIndexed( temp , posZ ) ;
 				}
 			}
 			
 			pObject = pObject->NextSiblingElement("TileObject");
 		}
 	}
+	
 	
 	MEventSystem::GetInstance()->SendEvent("spawner.spawn");
 	return true;

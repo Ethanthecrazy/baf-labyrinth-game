@@ -46,6 +46,12 @@ void CButton::Update(float fDT)
 }
 
 
+void CButton::Render( int CameraPosX, int CameraPosY )
+{
+	CBaseObject::Render(CameraPosX, CameraPosY);	
+}
+
+
 void CButton::HandleEvent( Event* _toHandle )
 {	
 	if( _toHandle->GetEventID() == "Button.Pressed" )

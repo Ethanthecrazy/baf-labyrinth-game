@@ -311,23 +311,6 @@ void MFlake::Render( int CameraX, int CameraY )
 								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
 								break;
 							}
-
-						case 2:
-							{	
-								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" ),
-									x * 32 - CameraX,
-									y * 32 - CameraY,
-									1.0f,
-									1.0f,
-									0,
-									0.0f,
-									0.0f,
-									0.0f,
-									D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
-
-								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
-								break;
-							}
 						}
 					}	
 				}
@@ -353,7 +336,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 		for( int y = 0; y < LayerHeight; ++y )
 		{
-			for( int x = 0; x < LayerWidth; ++x )
+			for( int x = 0; x < LayerWidt6h; ++x )
 			{
 				if(InformationArray[ x + y * LayerWidth ] == 0)
 					continue;

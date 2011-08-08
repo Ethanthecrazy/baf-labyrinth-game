@@ -100,12 +100,22 @@ void MObjectManager::Update( float fDT )
 	}
 }
 
+void MObjectManager::Update( float fDT, int nFloor )
+{
+	m_vLayers[nFloor].Update( fDT );
+}
+
 void MObjectManager::Render( int CameraX, int CameraY )
 {
 	for( unsigned int i = 0; i < m_vLayers.size(); ++i )
 	{
 		m_vLayers[i].Render( CameraX, CameraY );
 	}
+}
+
+void MObjectManager::Render( int CameraX, int CameraY, int nFloor )
+{
+	m_vLayers[nFloor].Render( CameraX, CameraY );
 }
 
 void MObjectManager::CheckCollisions( void )
@@ -367,42 +377,6 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
 	toCheck->SetDistanceLeft( 32.0f );
-	return false;
-}
-
-bool MObjectManager::CheckStandingOn( int _Ident )
-{
-	IUnitInterface* toCheck = GetUnit( _Ident );
-	if(!toCheck)
-		return true;
-
-	int otherEntity;
-
-	// if need be change to Tile->CheckCollision
-	//if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() ) )
-		//return true;
-
-	
-	//if we collide with an object...
-	int objectID = FindLayer( _Ident ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( toCheck->GetIndexPosX() , toCheck->GetIndexPosY() ) ;
-	if( objectID > 0 )
-	{
-		if( toCheck->CheckCollision( GetUnit( objectID ), false  ) )
-		{
-			return true;
-		}
-	}
-
-	//if we collide with an entity...
-	otherEntity = FindFlake( _Ident ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() );
-	if( otherEntity > 0 )
-	{
-		if( toCheck->CheckCollision( GetUnit( otherEntity ), false ) )
-		{
-			return true;
-		}
-	}
-
 	return false;
 }
 

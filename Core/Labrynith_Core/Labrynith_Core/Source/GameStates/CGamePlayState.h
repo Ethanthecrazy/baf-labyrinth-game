@@ -20,7 +20,7 @@ class CGamePlayState : public IGameState
 
 	float timestep;
 	int m_nCurrLevel;
-
+	int currFloor;
 public:
 
 	static int testVaribale;
