@@ -7,6 +7,7 @@
 class CGolem_Ice : public CBaseGolem , public IListener
 {
 
+	void IceGolemSetup();
 public:
 	CGolem_Ice(void);
 	CGolem_Ice(CBaseGolem* pGolem);

@@ -27,6 +27,7 @@ public:
 	void SetObjectType(int type) { m_nType = type ; } ;
 
 	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
+	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 
 	void AddRef(void);
 	void Release(void);

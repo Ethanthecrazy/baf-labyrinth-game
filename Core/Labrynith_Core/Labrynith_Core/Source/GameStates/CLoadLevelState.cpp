@@ -19,10 +19,12 @@ using std::string;
 #include "../Object Manager/Units/Tiles/CButton.h"
 #include "../Object Manager/Units/Tiles/CDoor.h"
 #include "../Object Manager/Units/Tiles/CExit.h"
+#include "../Object Manager/Units/Tiles/CWaterTile.h"
 #include "../Object Manager/Units/Objects/CPowerGloves.h"
 #include "../Object Manager/Units/Objects/COilCan.h"
 
 #include "../TinyXML/tinyxml.h"
+#include "../AI Handler/CAI_Handler.h"
 
 // default constructor
 CLoadLevelState::CLoadLevelState() 
@@ -45,6 +47,7 @@ void CLoadLevelState::Enter(void)
 	MObjectManager::GetInstance()->RemoveAllUnits();
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
 	MEventSystem::GetInstance()->ShutdownEventSystem();
+	CAI_Handler::GetInstance()->ClearEntityList();
 	CGamePlayState::GetInstance()->testVaribale = -1;
 
 	cout << "...current level deleted\n";	
@@ -243,10 +246,33 @@ bool CLoadLevelState::LoadLevel(int _level)
 							theType = 1;
 							}
 							break;
+						case 5: // water tile
+							{
+							IUnitInterface* temp = new CWaterTile(false);
+							((CWaterTile*)temp)->SetPosX((float)(x * 32));
+							((CWaterTile*)temp)->SetPosY((float)(y * 32));
+							((CWaterTile*)temp)->SetIndexPosX(x);
+							((CWaterTile*)temp)->SetIndexPosY(y);
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+							theType = 3;
+							}
+							break;
+						case 6: // ice tile
+							{
+							IUnitInterface* temp = new CWaterTile(true);
+							((CWaterTile*)temp)->SetPosX((float)(x * 32));
+							((CWaterTile*)temp)->SetPosY((float)(y * 32));
+							((CWaterTile*)temp)->SetIndexPosX(x);
+							((CWaterTile*)temp)->SetIndexPosY(y);
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
+							theType = 3;
+							}
+							break;
 						}
 
 						// 0 = pit
 						// 1 & 2 = ground
+						// 3 = water
 						MObjectManager::GetInstance()->GetLayer( 1 ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, theType );
 					}
 

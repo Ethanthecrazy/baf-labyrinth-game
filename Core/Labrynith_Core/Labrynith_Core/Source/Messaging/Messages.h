@@ -2,7 +2,8 @@
 #define MESSAGES_H
 
 enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
-	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_PLACE_OBJECT , MSG_PICKUP_OBJECT , MSG_MAX };
+	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_PLACE_OBJECT,
+				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MAX };
 
 class CBaseMessage
 {
@@ -100,5 +101,16 @@ public:
 	msgPickUpObject( CBaseObject* object ) ;
 	CBaseObject* GetMsgObject(void) { return m_pObject ; } ;
 } ;
+
+class CBaseGolem;
+class msgChangeGolemType : public CBaseMessage
+{
+	CBaseGolem* m_pGolem;
+	int m_nGolemType;
+public:
+	msgChangeGolemType(CBaseGolem* pGolem, int nGolemType);
+	CBaseGolem* GetGolem() { return m_pGolem; };
+	int GetGolemType() { return m_nGolemType; };
+};
 
 #endif

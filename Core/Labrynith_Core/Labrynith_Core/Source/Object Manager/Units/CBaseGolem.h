@@ -24,7 +24,7 @@ public:
 	virtual void Update(float fDT);
 	virtual void Render( int CameraPosX, int CameraPosY );
 	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
-	//bool CheckCollision(IUnitInterface* pBase);
+	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	virtual bool CheckTileCollision(int TileID);
 	virtual void UpdateAI();
 

@@ -17,6 +17,15 @@
 #include "../HUD/CHUD.h"
 #include "../Wrappers/CSGD_FModManager.h"
 
+#include "../Object Manager/Units/Golems/CGolem_Earth.h"
+#include "../Object Manager/Units/Golems/CGolem_Fire.h"
+#include "../Object Manager/Units/Golems/CGolem_Water.h"
+#include "../Object Manager/Units/Golems/CGolem_Ice.h"
+#include "../Object Manager/Units/Golems/CGolem_Air.h"
+#include "../Object Manager/Units/Golems/CGolem_Lava.h"
+#include "../Object Manager/Units/Golems/CGolem_Iron.h"
+#include "../Object Manager/Units/Golems/CGolem_Light.h"
+#include "../Object Manager/Units/Golems/CGolem_Shadow.h"
 
 #include <iostream>
 
@@ -26,7 +35,7 @@ int CGamePlayState::testVaribale = -1;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 4;
+	m_nCurrLevel = 3;
 	testVaribale = -1;
 	m_nMouseID = -1 ;
 }
@@ -66,7 +75,7 @@ bool CGamePlayState::Input(void)
 	//BUG - temp code added for AI testing
 	if( pDI->MouseButtonPressed( 0 ) )
 	{
-		/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120003);
+		/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(130001);
 		int cameraX = 0 , cameraY = 0 ;
 				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
 		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
@@ -380,8 +389,6 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 			IUnitInterface* temp = new CBaseEntity();
 			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" );
-			//Load basic movement animations
-			((CBaseEntity*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseEntity*)(temp))->SetPlayAnimWhileStill(true);
 			((CBaseEntity*)(temp))->SetIndexPosX( NewMessage->GetX() );
 			((CBaseEntity*)(temp))->SetIndexPosY( NewMessage->GetY() );
@@ -401,8 +408,6 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 			IUnitInterface* temp = new CPlayer();
 			((CPlayer*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/MainCharacter.png" ));
-			//Load basic movement animations
-			((CPlayer*)(temp))->LoadEntMoveAnimIDs();
 			((CPlayer*)(temp))->SetPlayAnimWhileStill(false);
 			((CPlayer*)(temp))->SetIndexPosX( NewMessage->GetX() );
 			((CPlayer*)(temp))->SetIndexPosY( NewMessage->GetY() );
@@ -499,6 +504,77 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , pBase ) ;
 			}
 			CSGD_FModManager::GetInstance()->PlaySoundA(player->GetPickUpSoundID()) ;
+		}
+		break;
+
+	case MSG_CHANGE_GOLEM_TYPE:
+		{
+			MObjectManager* OM = MObjectManager::GetInstance();
+			msgChangeGolemType* msg = (msgChangeGolemType*)_message;
+			CBaseGolem* pGolem = msg->GetGolem();
+			int nType = msg->GetGolemType();
+			//Make a new golem based on type
+			CBaseGolem* pNewGolem;
+			switch(nType)
+			{
+			case EARTH_GOLEM:
+				{
+					pNewGolem = new CGolem_Earth(pGolem);
+				}
+				break;
+
+			case FIRE_GOLEM:
+				{
+					pNewGolem = new CGolem_Fire(pGolem);
+				}
+				break;
+
+			case WATER_GOLEM:
+				{
+					pNewGolem = new CGolem_Water(pGolem);
+				}
+				break;
+
+			case ICE_GOLEM:
+				{
+					pNewGolem = new CGolem_Ice(pGolem);
+				}
+				break;
+
+			case AIR_GOLEM:
+				{
+					pNewGolem = new CGolem_Air(pGolem);
+				}
+				break;
+
+			case LAVA_GOLEM:
+				{
+					pNewGolem = new CGolem_Lava(pGolem);
+				}
+				break;
+
+			case IRON_GOLEM:
+				{
+					pNewGolem = new CGolem_Iron(pGolem);
+				}
+				break;
+
+			case SHADOW_GOLEM:
+				{
+					pNewGolem = new CGolem_Shadow(pGolem);
+				}
+				break;
+
+			case LIGHT_GOLEM:
+				{
+					pNewGolem = new CGolem_Light(pGolem);
+				}
+				break;
+			};
+			//remove the current golem and add the new one
+			//in its place
+			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
+			OM->AddUnitIndexed(pNewGolem, 1);
 		}
 		break;
 	}

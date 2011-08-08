@@ -1,21 +1,38 @@
 #include "CGolem_Ice.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../Tiles/CWaterTile.h"
 
-CGolem_Ice::CGolem_Ice(void)
+void CGolem_Ice::IceGolemSetup()
 {
 	//basic Ice golem setup
-	CBaseGolem::CBaseGolem();
 	SetGolemType(ICE_GOLEM);
 	SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" ));
 	//basic golem events
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED", this);
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED", this);
 }
+CGolem_Ice::CGolem_Ice(void)
+{
+	CBaseGolem::CBaseGolem();
+	//basic Ice golem setup
+	IceGolemSetup();
+}
 CGolem_Ice::CGolem_Ice(CBaseGolem* pGolem)
 {
+	CBaseGolem::CBaseGolem();
 	//basic Ice golem setup
-	CGolem_Ice::CGolem_Ice();
+	IceGolemSetup();
+	//copy its positions
+	this->SetIndexPosX(pGolem->GetIndexPosX());
+	this->SetIndexPosY(pGolem->GetIndexPosY());
+	this->SetPosX(pGolem->GetPosX());
+	this->SetPosY(pGolem->GetPosY());
+	this->SetLastPosX(pGolem->GetLastPosX());
+	this->SetLastPosY(pGolem->GetLastPosY());
+	//copy its states
+	this->SetFlag_DirectionToMove(pGolem->GetFlag_DirectionToMove());
+	this->SetFlag_MovementState(pGolem->GetFlag_MovementState());
 }
 CGolem_Ice::~CGolem_Ice(void)
 {
@@ -42,7 +59,27 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		return Collided;
 
 	//Do Ice Golem specific Collisions
-	return false;
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(!((CWaterTile*)temp)->IsFrozen())
+				{
+					if(nCanHandleCollision)
+					{
+					//if its water, freeze it
+					((CWaterTile*)temp)->SetIsFrozen(true);
+					}
+				}
+				return false;
+			}
+		}
+		break;
+	};
+	return true;
 }
 bool CGolem_Ice::CheckTileCollision(int TileID)
 {

@@ -39,3 +39,10 @@ msgPickUpObject::msgPickUpObject( CBaseObject* object ) : CBaseMessage( MSG_PICK
 {
 	m_pObject = object ;
 }
+
+msgChangeGolemType::msgChangeGolemType(CBaseGolem* pGolem, int nGolemType)
+	: CBaseMessage( MSG_CHANGE_GOLEM_TYPE )
+{
+	m_pGolem = pGolem;
+	m_nGolemType = nGolemType;
+}

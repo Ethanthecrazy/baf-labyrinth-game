@@ -61,7 +61,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_EARTH:
 			{
 			IUnitInterface* temp = new CGolem_Earth();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -74,7 +73,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_FIRE:
 			{
 			IUnitInterface* temp = new CGolem_Fire();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -87,7 +85,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_WATER:
 			{
 			IUnitInterface* temp = new CGolem_Water();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -100,7 +97,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ICE:
 			{
 			IUnitInterface* temp = new CGolem_Ice();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -113,7 +109,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_AIR:
 			{
 			IUnitInterface* temp = new CGolem_Air();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -126,7 +121,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_LAVA:
 			{
 			IUnitInterface* temp = new CGolem_Lava();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -139,7 +133,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_IRON:
 			{
 			IUnitInterface* temp = new CGolem_Iron();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -152,7 +145,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_LIGHT:
 			{
 			IUnitInterface* temp = new CGolem_Light();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
@@ -165,7 +157,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_SHADOW:
 			{
 			IUnitInterface* temp = new CGolem_Shadow();
-			((CBaseGolem*)(temp))->LoadEntMoveAnimIDs();
 			((CBaseGolem*)(temp))->SetPosX( GetPosX() );
 			((CBaseGolem*)(temp))->SetPosY( GetPosY() );
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );

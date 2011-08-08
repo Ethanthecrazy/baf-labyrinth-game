@@ -15,7 +15,6 @@ CBaseGolem::CBaseGolem(void)
 	fCollectedTime = 0.0f;
 	m_nType = ENT_GOLEM;
 	ClearTarget();
-	ClearNewTarget();
 	SetGolemType(-1);
 	SetMoveType(TARGET_MOVE);
 	//SetMoveType(RAND_MOVE);
@@ -52,7 +51,7 @@ void CBaseGolem::Render( int CameraPosX, int CameraPosY )
 bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	if(!pBase)
-		return false;
+		return true;
 
 	switch(pBase->m_nUnitType)
 	{
@@ -115,7 +114,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					return true;
 			}
 
-			return true;
 		}
 		break;
 	case OBJECT_ENTITY:
@@ -140,6 +138,23 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	};
 	return false;
+}
+void CBaseGolem::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
+{
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_BUTTON:
+		{
+			if( pBase->GetType() == OBJ_BUTTON )
+			{
+				if(nCanHandleCollision)
+				{
+					((CButton*)pBase)->CheckCollision(this);
+				}
+			}
+		}
+		break;
+	};
 }
 bool CBaseGolem::CheckTileCollision(int TileID)
 {
@@ -202,8 +217,8 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 		if( placedAttr->GetElemType() == this->GetGolemType() )
 		{
 			//start moving toward our target
-			SetMoveType(TARGET_MOVE);
 			SetTargetPos( placedAttr->GetIndexPosX() , placedAttr->GetIndexPosY() ) ;
+			SetMoveType(TARGET_MOVE);
 		}
 	}
 	else if( _toHandle->GetEventID() == "ATTRACTORREMOVED" )

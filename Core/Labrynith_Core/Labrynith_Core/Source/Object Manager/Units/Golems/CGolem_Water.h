@@ -7,6 +7,7 @@
 class CGolem_Water : public CBaseGolem , public IListener
 {
 
+	void WaterGolemSetup();
 public:
 	CGolem_Water(void);
 	CGolem_Water(CBaseGolem* pGolem);

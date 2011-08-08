@@ -6,7 +6,10 @@ enum UNIT_TYPES { OBJECT_TILE, OBJECT_BUTTON, OBJECT_OBJECT, OBJECT_ENTITY, OBJE
 enum { FLAG_MOVE_NONE, FLAG_MOVE_UP, FLAG_MOVE_DOWN, FLAG_MOVE_LEFT, FLAG_MOVE_RIGHT };
 enum { FLAG_MOVESTATE_MOVING, FLAG_MOVESTATE_ATDESTINATION };
 //huge list of types
-enum OBJECT_TYPES {ENT_PLAYER, ENT_GOLEM, OBJ_EXIT , OBJ_SPAWNER , OBJ_DOOR , OBJ_BUTTON , OBJ_ATTRACTOR , OBJ_POWERGLOVES , OBJ_OILCAN , OBJ_OIL };
+enum OBJECT_TYPES {ENT_PLAYER, ENT_GOLEM, OBJ_EXIT , OBJ_SPAWNER,
+	               OBJ_DOOR , OBJ_BUTTON , OBJ_ATTRACTOR,
+				   OBJ_POWERGLOVES , OBJ_OILCAN , OBJ_OIL,
+				   OBJ_WATER};
 //all of our golems
 enum GOLEM_TYPES { EARTH_GOLEM, FIRE_GOLEM, WATER_GOLEM, 
 	 ICE_GOLEM, AIR_GOLEM, LAVA_GOLEM, IRON_GOLEM, 
@@ -58,6 +61,7 @@ public:
 	virtual int GetType(void) = 0;
 
 	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision) = 0;
+	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision) = 0;
 
 		// accessors
 	float GetPosX(void) { return m_fPosX; }

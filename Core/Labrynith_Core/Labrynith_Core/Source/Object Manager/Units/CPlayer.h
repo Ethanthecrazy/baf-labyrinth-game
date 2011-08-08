@@ -20,11 +20,12 @@ public:
 	CPlayer(float fPosX, float fPosY, int nLives, CBaseObject* pHeldItem);
 	virtual ~CPlayer(void);
 
-	virtual void Update(float fDT);
-	virtual void Render( int CameraPosX, int CameraPosY );
+	void Update(float fDT);
+	void Render( int CameraPosX, int CameraPosY );
 	void Input();
-	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
-	virtual bool CheckTileCollision(int TileID);
+	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
+	void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
+	bool CheckTileCollision(int TileID);
 	void SwitchItems(void); // switches held and equipped items if it is possible
 	void ActivateEquipped(void);	//	activates the equipped item
 	//accessors

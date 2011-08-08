@@ -2,6 +2,7 @@
 #include "../../Wrappers/CSGD_TextureManager.h"
 #include "../MObjectManager.h"
 #include "../../Animation Manager/CAnimationManager.h"
+#include "../../AI Handler/CAI_Handler.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -21,8 +22,10 @@ CBaseEntity::CBaseEntity()
 
 	 m_nImageID = -1;
 	 SetAnimID(-1);
+	 SetAI_ID(-1);
 	 m_uiRefCount = 1;
 	 SetPlayAnimWhileStill(false);
+	 LoadEntMoveAnimIDs();
 }
 CBaseEntity::~CBaseEntity(void)
 {
@@ -145,6 +148,10 @@ bool CBaseEntity::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 {
 	return true;
 }
+void CBaseEntity::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
+{
+
+}
 bool CBaseEntity::CheckTileCollision(int TileID)
 {
 	return false;
@@ -161,25 +168,13 @@ void CBaseEntity::LoadEntMoveAnimIDs()
 }
 void CBaseEntity::ClearTarget()
 {
+	CAI_Handler::GetInstance()->ClearTargets(GetAI_ID());
 	SetTargetPos(-1, -1);
-	ClearNewTarget();
 }
 bool CBaseEntity::HasTarget()
 {
 	if(GetTargetPosX() < 0 ||
 		GetTargetPosY() < 0)
-		return false;
-
-	return true;
-}
-void CBaseEntity::ClearNewTarget()
-{
-	SetNewTargetPos(-1, -1);
-}
-bool CBaseEntity::HasNewTarget()
-{
-	if(m_nNewTargetX < 0 ||
-	   m_nNewTargetY < 0)
 		return false;
 
 	return true;
@@ -205,13 +200,9 @@ int CBaseEntity::GetTargetPosY() const
 {
 	return m_nTargetY;
 }
-int CBaseEntity::GetNewTargetPosX() const
+int CBaseEntity::GetAI_ID() const
 {
-	return m_nNewTargetX;
-}
-int CBaseEntity::GetNewTargetPosY() const
-{
-	return m_nNewTargetY;
+	return m_nAI_ID;
 }
 //mutators
 void CBaseEntity::SetAnimID(const int nAnimID)
@@ -225,6 +216,10 @@ void CBaseEntity::SetImageID(const int nImageID)
 	m_nImageID = nImageID;
 	//update animations texture to render with
 	CAnimationManager::GetInstance()->SetAnimTexture(GetCurrentAnimID(), m_nImageID);
+}
+void CBaseEntity::SetAI_ID(const int nAI_ID)
+{
+	m_nAI_ID = nAI_ID;
 }
 void CBaseEntity::SetTargetPosX(const int nTargetX)
 {
@@ -244,25 +239,7 @@ void CBaseEntity::SetTargetPos(const int nTargetX, const int nTargetY)
 {
 	SetTargetPosX(nTargetX);
 	SetTargetPosY(nTargetY);
-}
-void CBaseEntity::SetNewTargetPosX(const int nTargetX)
-{
-	if(nTargetX < -1)
-		return;
-
-	m_nNewTargetX = nTargetX;
-}
-void CBaseEntity::SetNewTargetPosY(const int nTargetY)
-{
-	if(nTargetY < -1)
-		return;
-
-	m_nNewTargetY = nTargetY;
-}
-void CBaseEntity::SetNewTargetPos(const int nTargetX, const int nTargetY)
-{
-	SetNewTargetPosX(nTargetX);
-	SetNewTargetPosY(nTargetY);
+	CAI_Handler::GetInstance()->SetPrimaryTarget(this, GetTargetPosX(), GetTargetPosY());
 }
 void CBaseEntity::SetFlag_DirectionToMove( int newFlag )
 {  

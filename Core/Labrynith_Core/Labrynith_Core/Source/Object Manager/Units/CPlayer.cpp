@@ -5,6 +5,7 @@
 #include "../../GameStates/CGamePlayState.h"
 #include "Tiles\CDoor.h"
 #include "Tiles\CButton.h"
+#include "Tiles\CWaterTile.h"
 #include "../../GameStates/CLoadLevelState.h"
 #include "../../CGame.h"
 #include "CBaseObject.h"
@@ -188,6 +189,13 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
 				return true;
 			}
+
+			if(temp->GetType() == OBJ_WATER)
+			{
+				//if the tile is frozen we can walk past it
+				return !((CWaterTile*)temp)->IsFrozen();
+			}
+
 			return true;
 		}
 		break;
@@ -211,7 +219,19 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	};
 
 	return false;
-	//return pBase->CheckCollision(this);
+}
+void CPlayer::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
+{
+	switch(pBase->m_nUnitType)
+	{
+		case OBJECT_BUTTON:
+		{
+			if( pBase->GetType() == OBJ_BUTTON )
+			{
+				((CButton*)pBase)->CheckCollision(this);
+			}
+		}
+	};
 }
 bool CPlayer::CheckTileCollision(int TileID)
 {

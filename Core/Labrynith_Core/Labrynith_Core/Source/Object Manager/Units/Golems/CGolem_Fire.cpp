@@ -4,6 +4,7 @@
 #include "../../MObjectManager.h"
 #include "../Objects/COil.h"
 #include "../CPlayer.h"
+#include "../Tiles/CWaterTile.h"
 
 CGolem_Fire::CGolem_Fire(void)
 {
@@ -70,8 +71,47 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 		return Collided;
 
 	//Do Fire Golem specific Collisions
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					return false;
+				}
+				return true;
+			}
+		}
+		break;
+	};
 	return false;
 }
+void CGolem_Fire::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
+{
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					if(nCanHandleCollision)
+					{
+						//if its ice, melt it
+						((CWaterTile*)temp)->SetIsFrozen(false);
+					}
+				}
+			}
+		}
+		break;
+	};
+}
+
 bool CGolem_Fire::CheckTileCollision(int TileID)
 {
 	//If the base collides with a tile leave
