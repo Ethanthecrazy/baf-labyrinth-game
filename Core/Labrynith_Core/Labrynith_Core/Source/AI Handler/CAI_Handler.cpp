@@ -147,25 +147,25 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	//Right
 	if( nX > OM->FindLayer(pEntity->m_nIdentificationNumber).GetLayerWidth() - 1 )
 	{
-		cout << "AI:Right Movement Denied" << endl;
+		//cout << "AI:Right Movement Denied" << endl;
 		return true;
 	}
 	//Left
 	if(nX < 0)
 	{
-		cout << "AI:Left Movement Denied" << endl;
+		//cout << "AI:Left Movement Denied" << endl;
 		return true;
 	}
 	//Up
 	if(nY < 0)
 	{
-		cout << "AI:Up Movement Denied" << endl;
+		//cout << "AI:Up Movement Denied" << endl;
 		return true;
 	}
 	//Down
 	if( nY > OM->FindLayer(pEntity->m_nIdentificationNumber).GetLayerHeight() - 1 )
 	{
-		cout << "AI:Down Movement Denied" << endl;
+		//cout << "AI:Down Movement Denied" << endl;
 		return true;
 	}
 
@@ -186,7 +186,7 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		.GetFlake(OBJECT_OBJECT).GetInfoAtIndex(nX, nY);
 	if( objectID > 0 )
 	{
-		cout << "AI:Collided With Object " << objectID << "\n";
+		//cout << "AI:Collided With Object " << objectID << "\n";
 		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(objectID), nCanHandleCollision);
 		//Let the Entity handle its object collision
 		if(Collided)
@@ -202,7 +202,7 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	//we cannot collide with ourselves
 	if( EntityID > 0 && OM->GetUnit(EntityID) != pEntity )
 	{
-		cout << "AI:Collided With Entity " << EntityID << "\n";
+		//cout << "AI:Collided With Entity " << EntityID << "\n";
 		//Let the Entity handle its collision
 		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(EntityID), nCanHandleCollision);
 		if(Collided)
@@ -216,7 +216,7 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		.GetFlake(OBJECT_BUTTON).GetInfoAtIndex(nX, nY);
 	if( buttonID > 0 )
 	{
-		cout << "AI:Collided With Button " << buttonID << "\n";
+		//cout << "AI:Collided With Button " << buttonID << "\n";
 		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(buttonID), nCanHandleCollision);
 		//Let the Entity handle its object collision
 		if(Collided)
@@ -408,26 +408,28 @@ int CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 	tTarget& target)
 {
 	int StartDirection = nDirection;
+	//this is for the wall
 	bool isHorizontal;
 	int index = ((CBaseEntity*)(pEntity))->GetAI_ID();
 	int offsetX = 0, offsetY = 0;
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
-	int nDistance;
+	int nDistanceRight, nDistanceLeft;
+	int nDistanceUp, nDistanceDown;
 
 	switch(nDirection)
 	{
 	case DIRUP:
 		{
 			offsetY -= 1;
-			isHorizontal = 0;
+			isHorizontal = false;
 		}
 		break;
 
 	case DIRDOWN:
 		{
 			offsetY += 1;
-			isHorizontal = 0;
+			isHorizontal = false;
 		}
 		break;
 
@@ -452,6 +454,14 @@ int CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 			return false;
 		}
 		break;
+
+		//Get the wall distance
+		if(isHorizontal)
+		{
+		 nDistanceLeft = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRLEFT);
+		 nDistanceRight = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRLEFT);
+		}
+
 	};
 }
 bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
