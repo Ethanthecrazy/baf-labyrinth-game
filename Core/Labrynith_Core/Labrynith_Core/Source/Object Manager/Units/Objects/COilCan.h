@@ -7,7 +7,7 @@ class COilCan : public CBaseObject
 {
 private:
 	int m_nCharges ;
-	
+	int m_nOilSoundID ;
 public:
 	COilCan( void ) ;
 	

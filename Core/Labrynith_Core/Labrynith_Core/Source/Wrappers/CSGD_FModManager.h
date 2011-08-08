@@ -19,6 +19,8 @@ using std::list;
 #include "fmod.hpp"
 #include "fmod_errors.h"
 
+#define FMOD_LOOP_UNIQUEID			   0xf0000000
+
 #pragma comment( lib, "fmodex_vc.lib" )
 
 //	Flag for Loading a Sound and Having it loop.

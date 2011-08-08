@@ -124,7 +124,7 @@ bool MObjectManager::MoveEntUp( int _Ident )
 	//allow direction to change, 
 	//even if we are out of range 
 	//or if we collide with an entity
-	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
+	//toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
 	int otherEntity;
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() - 1 ) )
@@ -165,6 +165,7 @@ bool MObjectManager::MoveEntUp( int _Ident )
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
 		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetVelY(1) ;
 		return false;
 	}
 	
@@ -173,6 +174,7 @@ bool MObjectManager::MoveEntUp( int _Ident )
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
 	toCheck->SetDistanceLeft( 32.0f );
+	toCheck->SetVelY(1) ;
 	return false;
 }
 
@@ -184,7 +186,7 @@ bool MObjectManager::MoveEntDown( int _Ident )
 	//allow direction to change, 
 	//even if we are out of range 
 	//or if we collide with an entity
-	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_DOWN );
+//	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_DOWN );
 	int otherEntity;
 
 	if( !FindLayer( _Ident ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( toCheck->GetIndexPosX(), toCheck->GetIndexPosY() + 1 ) )
@@ -226,6 +228,7 @@ bool MObjectManager::MoveEntDown( int _Ident )
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_DOWN );
 		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetVelY(1) ;
 		return false;
 	}
 	
@@ -234,6 +237,7 @@ bool MObjectManager::MoveEntDown( int _Ident )
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_DOWN );
 	toCheck->SetDistanceLeft( 32.0f );
+	toCheck->SetVelY(1) ;
 	return false;
 }
 
@@ -245,7 +249,7 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	//allow direction to change, 
 	//even if we are out of range 
 	//or if we collide with an entity
-	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
+	//toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
 	int otherEntity;
 
 
@@ -290,6 +294,7 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
 		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetVelX(1) ;
 		return false;
 	}
 	
@@ -297,6 +302,7 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
 	toCheck->SetDistanceLeft( 32.0f );
+	toCheck->SetVelX(1) ;
 	return false;
 }
 
@@ -308,7 +314,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	//allow direction to change, 
 	//even if we are out of range 
 	//or if we collide with an entity
-	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
+	//toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
 
 	if( toCheck->GetIndexPosX() + 1 > FindLayer( _Ident).GetLayerWidth() - 1 )
 	{
@@ -352,6 +358,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
 		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetVelY(1) ;
 		return false;
 	}
 

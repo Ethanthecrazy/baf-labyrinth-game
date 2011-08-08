@@ -8,6 +8,7 @@ class COil : public CBaseObject
 private:
 	int m_nAnimID ;
 	int m_nAnimImageID ;
+	int m_nFireSoundID ;
 	float m_fLifeDuration ;
 	float m_fFireTimer ;
 	bool m_bOnFire ;

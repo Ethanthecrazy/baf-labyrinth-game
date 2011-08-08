@@ -152,7 +152,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				{
 					return true ;
 				}
-				else if( ( temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN ) && GetEquippedItem() != NULL )
+				else if( ( temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN ) && GetEquippedItem() != NULL && GetHeldItem() != NULL )
 				{
 					return true;
 				}

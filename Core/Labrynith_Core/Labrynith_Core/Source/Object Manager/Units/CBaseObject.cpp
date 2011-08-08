@@ -18,6 +18,7 @@ CBaseObject::CBaseObject()
 
 	 m_nImageID = -1;
 
+	 this->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
 	 
 
 	 m_uiRefCount = 1;

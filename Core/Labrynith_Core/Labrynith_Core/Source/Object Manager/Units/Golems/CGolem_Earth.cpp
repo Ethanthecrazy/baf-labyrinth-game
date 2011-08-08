@@ -1,6 +1,8 @@
 #include "CGolem_Earth.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../../MObjectManager.h"
+
 
 CGolem_Earth::CGolem_Earth(void)
 {
@@ -39,7 +41,40 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 	//If the base collides with an object or entity leave
 	bool Collided = CBaseGolem::CheckCollision(pBase, nCanHandleCollision);
 	if(Collided)
+	{
+		if( pBase->GetType() != OBJ_DOOR || pBase->GetType() != OBJ_BUTTON || pBase->GetType() != OBJ_SPAWNER || pBase->GetType() != OBJ_EXIT && nCanHandleCollision )
+		{
+			switch( GetFlag_DirectionToMove() )
+			{
+			case FLAG_MOVE_LEFT:
+				if( pBase->GetFlag_MovementState() != FLAG_MOVESTATE_MOVING)
+				{
+					MObjectManager::GetInstance()->MoveEntLeft( pBase->m_nIdentificationNumber ) ;
+					
+				}
+				break;
+			case FLAG_MOVE_UP:
+				if( pBase->GetFlag_MovementState() != FLAG_MOVESTATE_MOVING)
+				{
+					MObjectManager::GetInstance()->MoveEntUp( pBase->m_nIdentificationNumber ) ;
+				}
+				break;
+			case FLAG_MOVE_RIGHT:
+				if( pBase->GetFlag_MovementState() != FLAG_MOVESTATE_MOVING)
+				{
+					MObjectManager::GetInstance()->MoveEntRight( pBase->m_nIdentificationNumber ) ;
+				}
+				break;
+			case FLAG_MOVE_DOWN:
+				if( pBase->GetFlag_MovementState() != FLAG_MOVESTATE_MOVING)
+				{
+					MObjectManager::GetInstance()->MoveEntDown( pBase->m_nIdentificationNumber ) ;
+				}
+				break;
+			}
+		}
 		return Collided;
+	}
 
 	//Do Earth Golem specific Collisions
 	return false;

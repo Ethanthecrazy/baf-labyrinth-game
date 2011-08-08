@@ -3,6 +3,7 @@
 #include "../../MObjectManager.h"
 #include "../../../Animation Manager/CAnimationManager.h"
 #include "../CPlayer.h"
+#include "../../../Wrappers/CSGD_FModManager.h"
 
 COil::COil( void )
 {
@@ -14,6 +15,7 @@ COil::COil( void )
 	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/Oil.png") ;
 	m_nAnimID = CAnimationManager::GetInstance()->GetID( "fire" ) ;
 	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/fire.png") ;
+	m_nFireSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/fire.wav" , FMOD_LOOP_UNIQUEID ) ;
 	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
 }
 
@@ -62,6 +64,7 @@ void COil::Update(float fDT)
 			// delete oil, and fire on this tile
 			MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( this->GetIndexPosX() , this->GetIndexPosY() , 0 ) ;
 			MObjectManager::GetInstance()->RemoveUnit( this->m_nIdentificationNumber ) ;
+			CSGD_FModManager::GetInstance()->StopSound( m_nFireSoundID ) ;
 			delete this ;
 		}
 	}
@@ -78,6 +81,9 @@ void COil::Render( int CameraPosX , int CameraPosY )
 void COil::SetOnFire( bool onFire )
 { 
 	if( GetOnFire() == false && onFire == true )
+	{
 		CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
+		CSGD_FModManager::GetInstance()->PlaySoundA( m_nFireSoundID ) ;
+	}
 	m_bOnFire = onFire ; 
 }

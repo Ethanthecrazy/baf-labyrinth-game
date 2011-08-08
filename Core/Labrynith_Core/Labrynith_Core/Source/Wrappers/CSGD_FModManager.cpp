@@ -12,6 +12,8 @@
 #include "CSGD_FModManager.h"
 #include <assert.h>
 
+
+
 CSGD_FModManager CSGD_FModManager::m_pInstance;	//	initialization of single class instance
 
 CSGD_FModManager::CSGD_FModManager(void) : m_pSystem(NULL) , m_hWnd(0), m_dwCurrentTime(0), m_dwPreviousTime(0), m_dTimeAccumulator(0)
@@ -71,25 +73,31 @@ int CSGD_FModManager::LoadSound(const char *szFilename, FMOD_MODE unMode )
 
 	vector<tSoundInfo>::iterator vIter = m_SoundList.begin();
 
-	while( vIter != m_SoundList.end() )
-	{
-		if( _stricmp( (*vIter).filename, szFilename ) == 0 )
-		{
-			(*vIter).ref++;
-			nHandle = counter;
-			break;
-			//	only hole in this logic:
-			//	what if a sound is loaded that has a different FMOD_MODE?
-			//	has to be taken into account
-		}
-		vIter++;
-		counter++;
-	}
 
-	if( nHandle != -1)
+	if( unMode != FMOD_LOOP_UNIQUEID )
 	{
-		return nHandle;		//	We've found our handle!
+		while( vIter != m_SoundList.end() )
+		{
+			if( _stricmp( (*vIter).filename, szFilename ) == 0 )
+			{
+				(*vIter).ref++;
+				nHandle = counter;
+				break;
+				//	only hole in this logic:
+				//	what if a sound is loaded that has a different FMOD_MODE?
+				//	has to be taken into account
+			}
+			vIter++;
+			counter++;
+		}
+
+		if( nHandle != -1)
+		{
+			return nHandle;		//	We've found our handle!
+		}
 	}
+	else
+		unMode = FMOD_LOOP_NORMAL ;
 
 	//	re-initing indexer
 	counter = 0;

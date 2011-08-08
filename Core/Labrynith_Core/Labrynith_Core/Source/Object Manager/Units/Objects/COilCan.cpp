@@ -3,11 +3,13 @@
 #include "../CPlayer.h"
 #include "COil.h"
 #include "../../MObjectManager.h"
+#include "../../../Wrappers/CSGD_FModManager.h"
 
 COilCan::COilCan( void )
 {
 	CBaseObject::CBaseObject() ;
 	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/OilBarrel.png") ;
+	m_nOilSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/OilDrop.mp3" ) ;
 	SetCharges( 5 ) ;
 }
 
@@ -57,6 +59,8 @@ void COilCan::UseObject( CBaseObject* user )
 		MObjectManager::GetInstance()->AddUnit( oil , 1 ) ;
 
 		this->SetCharges( GetCharges() - 1 ) ;
+
+		CSGD_FModManager::GetInstance()->PlaySoundA( m_nOilSoundID ) ;
 	}
 }
 
