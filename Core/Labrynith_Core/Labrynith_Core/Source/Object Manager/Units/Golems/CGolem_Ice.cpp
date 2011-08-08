@@ -79,7 +79,7 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		}
 		break;
 	};
-	return true;
+	return false;
 }
 bool CGolem_Ice::CheckTileCollision(int TileID)
 {

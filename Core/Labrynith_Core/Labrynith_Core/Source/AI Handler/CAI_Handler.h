@@ -95,8 +95,9 @@ class CAI_Handler
 	void SetNewTarget(const CBaseEntity* pEntity);	
 	int CheckWallDistance(const CBaseEntity* pEntity, int nPosX, 
 		                  int nPosY, const int nDirection);
-	int CheckPath(const CBaseEntity* pEntity, const int nDirection,
-			      tTarget& target);
+	int CheckPathDistance(const CBaseEntity* pEntity, const int nDirection);
+	bool CheckPath(const CBaseEntity* pEntity, const int nDirection,
+			      const int StartDirection, tTarget& startPos, bool useStartDir);
 public:
 
 	static CAI_Handler* GetInstance();

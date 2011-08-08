@@ -309,6 +309,10 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 				if(nPosY <= 0)
 					return -1;
 
+				//if we find our target let others know
+				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
+					return -2;
+
 				++nDistance;
 			}
 			return nDistance;
@@ -323,6 +327,10 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 				//if we check out of bounds leave
 				if(nPosY >= OM->FindLayer(pEntity->m_nIdentificationNumber).GetLayerHeight())
 					return -1;
+
+				//if we find our target let others know
+				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
+					return -2;
 
 				++nDistance;
 			}
@@ -339,6 +347,10 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 				if(nPosX <= 0)
 					return -1;
 
+				//if we find our target let others know
+				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
+					return -2;
+
 				++nDistance;
 			}
 			return nDistance;
@@ -353,6 +365,10 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 				//if we check out of bounds leave
 				if(nPosX >= OM->FindLayer(pEntity->m_nIdentificationNumber).GetLayerWidth())
 					return -1;
+
+				//if we find our target let others know
+				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
+					return -2;
 
 				++nDistance;
 			}
@@ -404,18 +420,24 @@ void CAI_Handler::DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCol
 		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(buttonID), nCanHandleCollision);
 	}
 }
-int CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
-	tTarget& target)
+bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
+	const int StartDirection, tTarget& startPos, bool useStartDir)
 {
-	int StartDirection = nDirection;
 	//this is for the wall
 	bool isHorizontal;
-	int index = ((CBaseEntity*)(pEntity))->GetAI_ID();
+	//offsets for the wall check
 	int offsetX = 0, offsetY = 0;
+	int index = ((CBaseEntity*)(pEntity))->GetAI_ID();
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
+	//stores how long the wall is
 	int nDistanceRight, nDistanceLeft;
 	int nDistanceUp, nDistanceDown;
+
+	//if we re-check the direction we started checking
+	//we are stuck in one position
+	if(useStartDir && (StartDirection == nDirection))
+			return false;
 
 	switch(nDirection)
 	{
@@ -436,14 +458,14 @@ int CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 	case DIRLEFT:
 		{
 		    offsetX -= 1;
-			isHorizontal = 1;
+			isHorizontal = true;
 		}
 		break;
 
 	case DIRRIGHT:
 		{
 		    offsetX += 1;
-			isHorizontal = 1;
+			isHorizontal = true;
 		}
 		break;
 
@@ -454,15 +476,229 @@ int CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 			return false;
 		}
 		break;
-
+	};
 		//Get the wall distance
-		if(isHorizontal)
+		if(!isHorizontal)
 		{
-		 nDistanceLeft = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRLEFT);
-		 nDistanceRight = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRLEFT);
+			 bool isWallLeft = false, isWallRight = false;
+			 int nPathLeft = 0, PathRight = 0; 
+			 nDistanceLeft = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRLEFT);
+			 nDistanceRight = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRRIGHT);
+
+			 //if our target was found in the wall we cannot reach it
+			 if(nDistanceLeft == -2 || nDistanceRight == -2)
+				 return false;
+
+			 //we cannot reach our target, both ways lead out of bounds
+			 if(nDistanceLeft == -1 && nDistanceRight == -1)
+				 return false;
+
+			 //treat out of bounds in one direction as a wall
+			 if(nDistanceLeft == -1)
+				 isWallLeft = true;
+
+			 if(nDistanceRight == -1)
+				 isWallRight = true;
+
+			 //Check the number of tiles the player can walk on
+			 //Right check
+			 for(PathRight = 0; PathRight < nDistanceRight; PathRight++)
+			 {
+				 //if the player cant walk past that tile
+				 //there is another wall to the right
+				 if(CheckCollisions(pEntity, nX + PathRight, nY, false))
+				 {
+					 isWallRight = true;
+					 break;
+				 }
+			 }
+			 //Left check
+			 for(nPathLeft = 0; nPathLeft < nDistanceLeft; nPathLeft++)
+			 {
+				 //if the player cant walk past that tile
+				 //there is another wall to the left
+				 if(CheckCollisions(pEntity, nX - nPathLeft, nY, false))
+				 {
+					 isWallLeft = true;
+					 break;
+				 }
+			 }
+			 //if there is a wall in both directions
+			 if(isWallLeft && isWallRight)
+			 {
+				 //we wont get anywhere going out of bounds
+				 //go the other way
+				 if(nDistanceLeft == -1)
+				 {
+					 startPos.m_nX += nDistanceRight;
+					 startPos.m_nY += offsetY;
+					 return CheckPath(pEntity, DIRRIGHT, StartDirection, startPos, true);
+				 }
+				 else if(nDistanceRight ==  -1)
+				 {
+					 startPos.m_nX -= nDistanceLeft;
+					 startPos.m_nY += offsetY;
+					 return CheckPath(pEntity, DIRLEFT, StartDirection, startPos, true);
+				 }
+
+				 //Left Path has to be smaller
+				 //than right path to check left
+				 if(PathRight <= nPathLeft)
+				 {
+					//Check the right path wall				
+					 startPos.m_nX += nDistanceRight;
+					 //since golem favors horzontal movement offset the target
+					 startPos.m_nY += offsetY;
+					 return CheckPath(pEntity, DIRRIGHT, StartDirection, startPos, true);
+				 }
+				 else
+				 {
+					//Check the left path wall
+					 startPos.m_nX -= nDistanceLeft;
+					 //since golem favors horzontal movement offset the target
+					 startPos.m_nY += offsetY;
+					 return CheckPath(pEntity, DIRLEFT, StartDirection, startPos, true);
+				 }
+			 }
+			 //there is only a left wall, go right
+			 if(isWallLeft)
+			 {
+				startPos.m_nX += nDistanceRight;
+				//since golem favors horzontal movement offset the target
+				startPos.m_nY += offsetY;
+				return true;
+			 }
+			 //there is only a right wall, go left
+			 else if(isWallRight)
+			 {
+				startPos.m_nX -= nDistanceLeft;
+				//since golem favors horzontal movement offset the target
+				startPos.m_nY += offsetY;
+				return true;
+			 }
+
+			//There are no walls
+			//Left Path has to be smaller
+			//than right path to check left
+			if(PathRight <= nPathLeft)
+			{
+				startPos.m_nX += nDistanceRight;
+				//since golem favors horzontal movement offset the target
+				startPos.m_nY += offsetY;
+				return true;
+			}
+			else
+			{
+				startPos.m_nX -= nDistanceLeft;
+				//since golem favors horzontal movement offset the target
+				startPos.m_nY += offsetY;
+				return true;
+			}
+		}
+		else
+		{
+			 bool isWallUp = false, isWallDown = false;
+			 int nPathUp = 0, PathDown = 0; 
+			 nDistanceUp = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRUP);
+			 nDistanceDown = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRDOWN);
+
+			 //if our target was found in the wall we cannot reach it
+			 if(nDistanceUp == -2 || nDistanceDown == -2)
+				 return false;
+
+			 //we cannot reach our target, both ways lead out of bounds
+			 if(nDistanceUp == -1 && nDistanceDown == -1)
+				 return false;
+
+			 //treat out of bounds in one direction as a wall
+			 if(nDistanceUp == -1)
+				 isWallUp = true;
+
+			 if(nDistanceDown == -1)
+				 isWallDown = true;
+
+			 //Check the number of tiles the player can walk on
+			 //Down check
+			 for(PathDown = 0; PathDown < nDistanceDown; PathDown++)
+			 {
+				 //if the player cant walk past that tile
+				 //there is another wall to the Down
+				 if(CheckCollisions(pEntity, nX, nY + PathDown, false))
+				 {
+					 isWallDown = true;
+					 break;
+				 }
+			 }
+			 //Up check
+			 for(nPathUp = 0; nPathUp < nDistanceUp; nPathUp++)
+			 {
+				 //if the player cant walk past that tile
+				 //there is another wall to the Up
+				 if(CheckCollisions(pEntity, nX, nY - nPathUp, false))
+				 {
+					 isWallUp = true;
+					 break;
+				 }
+			 }
+			 //if there is a wall in both directions
+			 if(isWallUp && isWallDown)
+			 {
+				 //we wont get anywhere going out of bounds
+				 //go the other way
+				 if(nDistanceUp == -1)
+				 {
+					 startPos.m_nY += nDistanceDown;
+					 return CheckPath(pEntity, DIRDOWN, StartDirection, startPos, true);
+				 }
+				 else if(nDistanceDown ==  -1)
+				 {
+					 startPos.m_nY -= nDistanceUp;
+					 return CheckPath(pEntity, DIRUP, StartDirection, startPos, true);
+				 }
+
+				 //Up Path has to be smaller
+				 //than Down path to check Up
+				 if(PathDown <= nPathUp)
+				 {
+					//Check the Down path wall				
+					 startPos.m_nY += nDistanceDown;
+					 return CheckPath(pEntity, DIRDOWN, StartDirection, startPos, true);
+				 }
+				 else
+				 {
+					//Check the Up path wall
+					 startPos.m_nY -= nDistanceUp;
+					 return CheckPath(pEntity, DIRUP, StartDirection, startPos, true);
+				 }
+			 }
+			 //there is only a Up wall, go Down
+			 if(isWallUp)
+			 {
+				startPos.m_nY += nDistanceDown;
+				return true;
+			 }
+			 //there is only a Down wall, go Up
+			 else if(isWallDown)
+			 {
+				startPos.m_nY -= nDistanceUp;
+				return true;
+			 }
+
+			//There are no walls
+			//Up Path has to be smaller
+			//than Down path to check Up
+			if(PathDown <= nPathUp)
+			{
+				startPos.m_nY += nDistanceDown;
+				return true;
+			}
+			else if(nPathUp < PathDown)
+			{
+				startPos.m_nY -= nDistanceUp;
+				return true;
+			}
 		}
 
-	};
 }
 bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 {
@@ -632,170 +868,21 @@ void CAI_Handler::RandomMove(const CBaseEntity* pEntity)
 }
 bool CAI_Handler::GetNewTarget(const CBaseEntity* pEntity, const int nDirection)
 {
-	MObjectManager* OM = MObjectManager::GetInstance();
 	int index = ((CBaseEntity*)(pEntity))->GetAI_ID();
 	int offsetX = 0, offsetY = 0;
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
-	int nDistanceDown, nDistanceUp;
-	int nDistanceRight, nDistanceLeft;
-	int isHorizontal;
-	//get the direction
-	switch(nDirection)
+
+	tTarget target = tTarget(nX, nY, false);
+	if(CheckPath(pEntity, nDirection, nDirection, target, false))
 	{
-	case DIRUP:
-		{
-			offsetY -= 1;
-			isHorizontal = 0;
-		}
-		break;
-
-	case DIRDOWN:
-		{
-			offsetY += 1;
-			isHorizontal = 0;
-		}
-		break;
-
-	case DIRLEFT:
-		{
-		    offsetX -= 1;
-			isHorizontal = 1;
-		}
-		break;
-
-	case DIRRIGHT:
-		{
-		    offsetX += 1;
-			isHorizontal = 1;
-		}
-		break;
-
-	default:
-		{
-			//Leave if those directions arent hit
-			//direction is invalid
-			return false;
-		}
-		break;
-	};
-
-	
-	if(isHorizontal == 1)
-	{	
-		//check down wall distance first
-		nDistanceDown = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, FLAG_MOVE_DOWN);
-		//check up wall distance now
-		nDistanceUp = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, FLAG_MOVE_UP);
-		//if there is no wall our direction is off
-		if(nDistanceDown == 0 &&
-			nDistanceUp == 0)
-		{
-			return false;//GetNewTarget(pEntity, ((CBaseEntity*)(pEntity))->GetFlag_DirectionToMove());
-		}
-		//if both directions are out of bounds, leave
-		else if(nDistanceDown == -1 &&
-			nDistanceUp == -1)
-		{
-			return false;
-		}
-
-		//If the distance is -1, something happened so go the
-		//other direction instead
-		if(nDistanceUp == -1)
-		{
-			//new Down target
-			tTarget newtarget = tTarget(nX + offsetX, 
-				((CBaseEntity*)(pEntity))->GetIndexPosY() + nDistanceDown, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
-		else if(nDistanceDown == -1)
-		{
-			//new Up target
-			tTarget newtarget = tTarget(nX + offsetX, 
-				((CBaseEntity*)(pEntity))->GetIndexPosY() - nDistanceUp, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
-
-		//Entitys favor down movement so up distance has to be smaller
-		//for a Entity to move up
-		if((nDistanceDown <= nDistanceUp && nDistanceDown > -1))
-		{
-			//new Down target
-			tTarget newtarget = tTarget(nX + offsetX, 
-				((CBaseEntity*)(pEntity))->GetIndexPosY() + nDistanceDown, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
-		else if((nDistanceDown > nDistanceUp && nDistanceUp > -1))
-		{
-			//new Up target
-			tTarget newtarget = tTarget(nX + offsetX, 
-				((CBaseEntity*)(pEntity))->GetIndexPosY() - nDistanceUp, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
-		return false;
+		//add the target to our list
+		m_vEntities[index]->AddNewTarget(target);
+		return true;
 	}
 	else
 	{
-		//check right wall distance first
-		nDistanceRight = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, FLAG_MOVE_RIGHT);
-		//check left wall distance now
-		nDistanceLeft = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, FLAG_MOVE_LEFT);
-
-		//if there is no wall our direction is off
-		if(nDistanceRight == 0 &&
-			nDistanceLeft == 0)
-		{
-			return false;//GetNewTarget(pEntity, ((CBaseEntity*)(pEntity))->GetFlag_DirectionToMove());
-		}
-		//if both directions are out of bounds, leave
-		else if(nDistanceRight == -1 &&
-			nDistanceLeft == -1)
-		{
-			return false;
-		}
-
-		//If the distance is -1, something happened so go the
-		//other direction instead
-		if(nDistanceRight == -1)
-		{
-			//new Left Target
-			tTarget newtarget = tTarget(((CBaseEntity*)(pEntity))->GetIndexPosX() - nDistanceLeft, 
-				nY + offsetY, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
-		else if(nDistanceLeft == -1)
-		{
-			//new Right target
-			tTarget newtarget = tTarget(((CBaseEntity*)(pEntity))->GetIndexPosX() + nDistanceRight, 
-				nY + offsetY, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
-
-		//Entitys favor right movement so left distance has to be smaller
-		//for an Entity to move left
-		if((nDistanceRight <= nDistanceLeft))
-		{
-			//new Right target
-			tTarget newtarget = tTarget(((CBaseEntity*)(pEntity))->GetIndexPosX() + nDistanceRight, 
-				nY + offsetY, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
-		else if((nDistanceRight > nDistanceLeft))
-		{
-			//new Left Target
-			tTarget newtarget = tTarget(((CBaseEntity*)(pEntity))->GetIndexPosX() - nDistanceLeft, 
-				nY + offsetY, false);
-			m_vEntities[index]->AddNewTarget(newtarget);
-			return true;
-		}
+		//failed to get a target leave
 		return false;
 	}
 }

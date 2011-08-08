@@ -23,7 +23,7 @@ public:
 	void HandleEvent( Event* _toHandle );
 
 	bool GetIsElectrified( void ) { return m_bPowered ; } ;
-	int GetElectricUpdateTimer( void ) { return m_nElectricUpdateTimer ; } ;
+	float GetElectricUpdateTimer( void ) { return m_nElectricUpdateTimer ; } ;
 
 	void SetElectricUpdateTimer( float time ) { m_nElectricUpdateTimer = time ; } ;
 	void SetPowered( bool powered ) { m_bPowered = powered ; } ;
