@@ -36,8 +36,8 @@ void CPlayer::Update(float fDT)
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
 {
-	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
-		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+	//MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+		//.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 	CBaseEntity::Render(CameraPosX, CameraPosY);
 
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
@@ -135,6 +135,10 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	if(!pBase || pBase == this)
 		return false;
+	
+	int layerat = MObjectManager::GetInstance()->FindLayer(pBase->m_nIdentificationNumber).GetLayerID();
+	if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
+		return false;
 
 	//if we collide with an object
 	switch(pBase->m_nUnitType)
@@ -178,7 +182,12 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 			if( temp->GetType() == OBJ_SPAWNER )
 				return false;
-
+			
+			if( temp->GetType() == OBJ_PIT )
+				return temp->CheckCollision(this, nCanHandleCollision);
+			
+			if( temp->GetType() == OBJ_RAMP )
+				return temp->CheckCollision(this, nCanHandleCollision);
 			
 			if(temp->GetType() == OBJ_EXIT)
 			{
@@ -187,6 +196,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
 				//pGamePlay->SetCurrentLevel(1);
 				//Load the next level
+				CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/completeLevel.wav"));
 				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
 				return true;
 			}

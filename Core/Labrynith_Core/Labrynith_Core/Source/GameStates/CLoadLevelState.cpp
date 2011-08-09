@@ -297,25 +297,25 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 						case 7: // pit tile
 							{
-							IUnitInterface* temp = new CWaterTile(true);
-							((CWaterTile*)temp)->SetPosX((float)(x * 32));
-							((CWaterTile*)temp)->SetPosY((float)(y * 32));
-							((CWaterTile*)temp)->SetIndexPosX(x);
-							((CWaterTile*)temp)->SetIndexPosY(y);
+							IUnitInterface* temp = new CPit();
+							((CPit*)temp)->SetPosX((float)(x * 32));
+							((CPit*)temp)->SetPosY((float)(y * 32));
+							((CPit*)temp)->SetIndexPosX(x);
+							((CPit*)temp)->SetIndexPosY(y);
 							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
-							theType = 3;
+							theType = 2;
 							}
 							break;
 						
 						case 8: // ramp tile
 							{
-							IUnitInterface* temp = new CWaterTile(true);
-							((CWaterTile*)temp)->SetPosX((float)(x * 32));
-							((CWaterTile*)temp)->SetPosY((float)(y * 32));
-							((CWaterTile*)temp)->SetIndexPosX(x);
-							((CWaterTile*)temp)->SetIndexPosY(y);
+							IUnitInterface* temp = new CRamp(prop);
+							((CRamp*)temp)->SetPosX((float)(x * 32));
+							((CRamp*)temp)->SetPosY((float)(y * 32));
+							((CRamp*)temp)->SetIndexPosX(x);
+							((CRamp*)temp)->SetIndexPosY(y);
 							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
-							theType = 3;
+							theType = 1;
 							}
 							break;					
 						case 9: //	metal tile
@@ -368,8 +368,10 @@ bool CLoadLevelState::LoadLevel(int _level)
 			}
 
 			++z;
-			pArrayofArray = pTiles->NextSiblingElement("ArrayOfArrayOfTile");
+			pArrayofArray = pArrayofArray->NextSiblingElement("ArrayOfArrayOfTile");
 		}
+
+		CGamePlayState::GetInstance()->SetNumLevelFloors(z-1);
 	}
 
 

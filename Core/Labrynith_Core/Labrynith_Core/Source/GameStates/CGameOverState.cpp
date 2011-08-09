@@ -1,7 +1,8 @@
 
-#include "CMainMenuState.h"
+#include "CGameOverState.h"
 #include "CGamePlayState.h"
-#include "CSaveSlotState.h"
+#include "CMainMenuState.h"
+#include "CLoadLevelState.h"
 
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "../Wrappers/CSGD_DirectInput.h"
@@ -12,27 +13,26 @@
 
 
 // default constructor
-CMainMenuState::CMainMenuState() 
+CGameOverState::CGameOverState() 
 {
 	m_nIndex = 0;
-	m_nImageID = -1;
 }
 
 // destructor
-CMainMenuState::~CMainMenuState() 
+CGameOverState::~CGameOverState() 
 {
 
 }
 
-CMainMenuState* CMainMenuState::GetInstance()
+CGameOverState* CGameOverState::GetInstance()
 {
-	static CMainMenuState instance;
+	static CGameOverState instance;
 	return &instance;
 }
 
-void CMainMenuState::Enter(void)
+void CGameOverState::Enter(void)
 {
-	cout << "MainMenu\n";
+	cout << "GameOver\n";
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ',
@@ -41,37 +41,23 @@ void CMainMenuState::Enter(void)
 		10 );
 }
 
-bool CMainMenuState::Input(void)
+bool CGameOverState::Input(void)
 {
 	CGame* pGame = CGame::GetInstance();
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();	
-
+	
 	//Enter
 	if(pDI->KeyPressed(DIK_RETURN))
 	{
 		switch(m_nIndex)
 		{
-		case PLAY:
-			//Change to GamePlayState
-			pGame->ChangeState( CGamePlayState::GetInstance() ) ;
+		case GAMEOVER_RETRY:
+			CGame::GetInstance()->PushState( CLoadLevelState::GetInstance() );
+			pGame->PopState() ;
 			break;
 
-		case LOAD:
-			//Choose a different slot
-			pGame->ChangeState( CSaveSlotState::GetInstance() );
-			break;
-
-		case OPTIONS:
-			//Change to Options State
-			break;
-			
-		case CREDITS:
-			//Change to credits
-			break;
-
-		case EXIT:
-			pGame->ClearAllStates();
-			return false;
+		case GAMEOVER_EXIT:
+			CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
 			break;
 		};
 	}
@@ -93,32 +79,29 @@ bool CMainMenuState::Input(void)
 	return true;
 }
 
-void CMainMenuState::Update(float fDT)
+void CGameOverState::Update(float fDT)
 {
 
 }
 
-void CMainMenuState::Render(void)
+void CGameOverState::Render(void)
 {
 	
 	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
 
-	MetalText.Print( "Main Menu", 100, 100, 0.6f );
+	MetalText.Print( "GameOver", 100, 100, 0.6f );
 	MetalText.Print( "->", 0, 230 + (m_nIndex * 30), 0.5f );
-	MetalText.Print( "Play", 110, 230, 0.5f );
-	MetalText.Print( "Load", 110, 260, 0.5f );
-	MetalText.Print( "Options", 110, 290, 0.5f );
-	MetalText.Print( "Credits", 110, 320, 0.5f );
-	MetalText.Print( "Exit", 110, 350, 0.5f );
+	MetalText.Print( "Retry", 110, 230, 0.5f );
+	MetalText.Print( "Quit", 110, 260, 0.5f );
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 }
 
-void CMainMenuState::Exit(void)
+void CGameOverState::Exit(void)
 {
-	cout << "MainMenu -> ";
+	cout << "left GameOver state -> ";
 }
 
-void CMainMenuState::EnterCommand(void)
+void CGameOverState::EnterCommand(void)
 {
 	while( true )
 	{
@@ -148,17 +131,17 @@ void CMainMenuState::EnterCommand(void)
 	}
 }
 
-bool CMainMenuState::SetMenuIndex(const int nIndex)
+bool CGameOverState::SetMenuIndex(const int nIndex)
 {
 	//if index is too low
 	if(nIndex < 0 )
 	{
-		m_nIndex = (NUM_MENUITEMS - 1);
+		m_nIndex = (GAMEOVER_NUM_MENUITEMS - 1);
 		return false;
 	}
 
 	//if index is too high
-	if(nIndex >= NUM_MENUITEMS)
+	if(nIndex >= GAMEOVER_NUM_MENUITEMS)
 	{
 		m_nIndex = 0;
 		return false;

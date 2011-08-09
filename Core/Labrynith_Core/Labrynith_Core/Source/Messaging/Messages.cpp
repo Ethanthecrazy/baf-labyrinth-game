@@ -1,5 +1,6 @@
 #include "Messages.h"
 #include "../Object Manager/Units/CBaseObject.h"
+#include "../Object Manager/Units/CBaseEntity.h"
 
 msgCreateEntity::msgCreateEntity( int _PosX, int _PosY ) : CBaseMessage( MSG_CREATE_ENTITY )
 {
@@ -39,6 +40,12 @@ msgPlaceObject::msgPlaceObject( int tileXPos , int tileYPos ) : CBaseMessage( MS
 msgPickUpObject::msgPickUpObject( CBaseObject* object ) : CBaseMessage( MSG_PICKUP_OBJECT )
 {
 	m_pObject = object ;
+}
+
+msgMoveEntityFloor::msgMoveEntityFloor( CBaseEntity* pEntity, int nFloor ) : CBaseMessage( MSG_MOVE_ENTITY_FLOOR )
+{
+	m_pEntity = pEntity;
+	m_nFloor = nFloor;
 }
 
 msgChangeGolemType::msgChangeGolemType(CBaseGolem* pGolem, int nGolemType)

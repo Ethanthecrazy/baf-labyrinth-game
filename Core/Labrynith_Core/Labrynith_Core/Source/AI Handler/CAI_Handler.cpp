@@ -196,8 +196,8 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	}
 
 	//Check to see if we are colliding with an entity
-	int EntityID = OM->FindFlake(pEntity->m_nIdentificationNumber)
-		.GetInfoAtIndex(nX, nY);
+	int EntityID = OM->FindLayer(pEntity->m_nIdentificationNumber)
+		.GetFlake(OBJECT_ENTITY).GetInfoAtIndex(nX, nY);
 
 	//we cannot collide with ourselves
 	if( EntityID > 0 && OM->GetUnit(EntityID) != pEntity )

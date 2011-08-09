@@ -21,6 +21,7 @@ class CGamePlayState : public IGameState
 	float timestep;
 	int m_nCurrLevel;
 	int currFloor;
+	int numLevelFloors;
 public:
 
 	static int testVaribale;
@@ -41,6 +42,11 @@ public:
 	void SetCurrentLevel(const int _level) {m_nCurrLevel = _level;}
 
 	static void MessageProc(CBaseMessage* _message);
+
+	static void KillPlayer(void);
+
+	int GetNumLevelFloors(void) { return numLevelFloors; }
+	void SetNumLevelFloors(int nNumFloors) { numLevelFloors = nNumFloors; }
 };
 
 #endif // CGamePlayState_h__

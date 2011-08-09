@@ -3,7 +3,7 @@
 
 enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
 	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_PLACE_OBJECT,
-				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MAX };
+				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MOVE_ENTITY_FLOOR, MSG_MAX };
 
 class CBaseMessage
 {
@@ -102,6 +102,18 @@ public:
 	msgPickUpObject( CBaseObject* object ) ;
 	CBaseObject* GetMsgObject(void) { return m_pObject ; } ;
 } ;
+
+class CBaseEntity;
+class msgMoveEntityFloor : public CBaseMessage
+{
+	CBaseEntity* m_pEntity;
+	int m_nFloor;
+
+public:
+	msgMoveEntityFloor( CBaseEntity* pEntity, int nFloor );
+	CBaseEntity* GetEntity() { return m_pEntity; }
+	int GetFloor() { return m_nFloor; }
+};
 
 class CBaseGolem;
 class msgChangeGolemType : public CBaseMessage

@@ -50,8 +50,12 @@ void CBaseGolem::Render( int CameraPosX, int CameraPosY )
 }
 bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase)
+	if(!pBase || pBase == this)
 		return true;
+	
+	int layerat = MObjectManager::GetInstance()->FindLayer(pBase->m_nIdentificationNumber).GetLayerID();
+	if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
+		return false;
 
 	switch(pBase->m_nUnitType)
 	{
@@ -113,6 +117,12 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				else
 					return true;
 			}
+			
+			if( pBase->GetType() == OBJ_PIT )
+				return pBase->CheckCollision(this, nCanHandleCollision);
+			
+			if( pBase->GetType() == OBJ_RAMP )
+				return pBase->CheckCollision(this, nCanHandleCollision);
 
 		}
 		break;
@@ -215,7 +225,11 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 	{
 		CAttractor* placedAttr = (CAttractor*)_toHandle->GetParam() ;
 		if( placedAttr->GetElemType() == this->GetGolemType() )
-		{
+		{			
+			int layerat = MObjectManager::GetInstance()->FindLayer(placedAttr->m_nIdentificationNumber).GetLayerID();
+			if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
+				return;
+
 			//start moving toward our target
 			SetTargetPos( placedAttr->GetIndexPosX() , placedAttr->GetIndexPosY() ) ;
 			SetMoveType(TARGET_MOVE);
@@ -226,6 +240,7 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 		CAttractor* attr = (CAttractor*)_toHandle->GetParam() ;
 		if( !attr )
 			return ;
+		// ATTRACTOR REMOVED ON DIFFERENT LEVEL?
 		if( GetTargetPosX() == attr->GetIndexPosX() && GetTargetPosY() == attr->GetIndexPosY() )
 		{
 			ClearTarget();

@@ -16,6 +16,7 @@
 #include "../Messaging/MEventSystem.h"
 #include "../HUD/CHUD.h"
 #include "../Wrappers/CSGD_FModManager.h"
+#include "CGameOverState.h"
 
 #include "../Object Manager/Units/Golems/CGolem_Earth.h"
 #include "../Object Manager/Units/Golems/CGolem_Fire.h"
@@ -35,10 +36,11 @@ int CGamePlayState::testVaribale = -1;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 0;
+	m_nCurrLevel = 5;
 	testVaribale = -1;
 	m_nMouseID = -1 ;
 	currFloor = 1;
+	numLevelFloors = 1;
 }
 
 // destructor
@@ -93,7 +95,7 @@ void CGamePlayState::Update(float fDT)
 	if(MObjectManager::GetInstance()->GetUnit( testVaribale ))
 		currFloor = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerID();
 		
-	MObjectManager::GetInstance()->Update( fDT, currFloor );
+	MObjectManager::GetInstance()->Update( fDT );
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
 
@@ -195,6 +197,11 @@ void CGamePlayState::Exit(void)
 	testVaribale = -1;
 
 	//MObjectManager::GetInstance()->DeleteInstance();
+}
+
+void CGamePlayState::KillPlayer(void)
+{
+	CGame::GetInstance()->PushState( CGameOverState::GetInstance() );
 }
 
 void CGamePlayState::EnterCommand(void)
@@ -405,8 +412,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 	case MSG_CREATE_PLAYER:
 		{
 			//we only need one player object
-			if(testVaribale != -1)
-				return;
+			//if(testVaribale != -1)
+				//return;
 
 			msgCreatePlayer* NewMessage = (msgCreatePlayer*)_message;
 
@@ -519,6 +526,22 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		}
 		break;
 
+	case MSG_MOVE_ENTITY_FLOOR:
+		{			
+			MObjectManager* OM = MObjectManager::GetInstance();
+			msgMoveEntityFloor* msg = (msgMoveEntityFloor*)_message;
+			CBaseEntity* pEntity = msg->GetEntity();
+			
+			OM->RemoveUnit(pEntity->m_nIdentificationNumber);
+			pEntity->m_nIdentificationNumber = 0;
+
+			if(pEntity->GetType() == ENT_PLAYER)
+				testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());
+			else
+				pEntity->m_nIdentificationNumber = OM->AddUnitIndexed(pEntity, msg->GetFloor());
+		}
+		break;
+
 	case MSG_CHANGE_GOLEM_TYPE:
 		{
 			MObjectManager* OM = MObjectManager::GetInstance();
@@ -585,8 +608,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			};
 			//remove the current golem and add the new one
 			//in its place
+			int layerat = MObjectManager::GetInstance()->FindLayer( pGolem->m_nIdentificationNumber ).GetLayerID();
 			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
-			OM->AddUnitIndexed(pNewGolem, 1);
+			OM->AddUnitIndexed(pNewGolem, layerat);
 		}
 		break;
 	}

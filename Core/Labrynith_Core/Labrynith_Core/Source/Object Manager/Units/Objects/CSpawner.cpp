@@ -62,6 +62,9 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		if( player )
 		{
+			if(this->m_nSpawnerType == SPAWNER_PLAYER)
+				return;
+
 			if( ((CPlayer*)player)->GetHeldItem() )
 			{
 				if(((CPlayer*)player)->GetHeldItem()->m_nIdentificationNumber == m_nSpawnedID)

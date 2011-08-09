@@ -50,9 +50,8 @@ int MObjectManager::AddUnitIndexed( IUnitInterface* _toAdd, int _layer )
 
 int MObjectManager::MoveUnit( IUnitInterface* _toMove, int _layer )
 {
-	IUnitInterface* tmp = _toMove;
-	int tempnum = AddUnitIndexed( tmp, _layer );
-	RemoveUnit( _toMove->m_nIdentificationNumber );
+	int tempnum = AddUnitIndexed( _toMove, _layer );
+	//RemoveUnit( _toMove->m_nIdentificationNumber );
 	return tempnum;
 }
 

@@ -2,20 +2,16 @@
 #define CRAMP_H_
 
 #include "../CBaseObject.h"
-#include "../../../Messaging/IListener.h"
 
 #include <string>
 using std::string;
 
-class CRamp : public CBaseObject, public IListener
+class CRamp : public CBaseObject
 {
-	string m_nLink;
+	bool Up;
 public:
-	CRamp(string nLink = "");
+	CRamp(string direction = "");
 
 	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
-	void HandleEvent( Event* _toHandle );
-
-	string GetLink(void) { return m_nLink; }
 };
 #endif

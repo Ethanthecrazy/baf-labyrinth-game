@@ -44,6 +44,9 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 	{
 		if( pBase->GetType() != OBJ_DOOR || pBase->GetType() != OBJ_BUTTON || pBase->GetType() != OBJ_SPAWNER || pBase->GetType() != OBJ_EXIT && nCanHandleCollision )
 		{
+			if( !nCanHandleCollision )
+				return Collided;
+
 			switch( GetFlag_DirectionToMove() )
 			{
 			case FLAG_MOVE_LEFT:

@@ -24,7 +24,9 @@ void COil::Update(float fDT)
 	CBaseObject::Update(fDT) ;
 
 	if( GetOnFire() )
-	{
+	{		
+		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+			.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 185 );
 
 		CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;
 		// set other objects on fire
