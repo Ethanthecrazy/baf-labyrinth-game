@@ -26,6 +26,9 @@ using std::string;
 #include "../Object Manager/Units/Tiles/CWaterTile.h"
 #include "../Object Manager/Units/Tiles/CPit.h"
 #include "../Object Manager/Units/Tiles/CRamp.h"
+#include "../Object Manager/Units/Tiles/CMetal.h"
+#include "../Object Manager/Units/Tiles/CElectricButton.h"
+#include "../Object Manager/Units/Tiles/CElectricGenerator.h"
 
 #include "../TinyXML/tinyxml.h"
 #include "../AI Handler/CAI_Handler.h"
@@ -314,9 +317,41 @@ bool CLoadLevelState::LoadLevel(int _level)
 							MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							theType = 3;
 							}
-							break;
-						}						
-
+							break;					
+						case 9: //	metal tile
+							{
+								IUnitInterface* temp = new CMetal();
+								((CWaterTile*)temp)->SetPosX((float)(x * 32));
+								((CWaterTile*)temp)->SetPosY((float)(y * 32));
+								((CWaterTile*)temp)->SetIndexPosX(x);
+								((CWaterTile*)temp)->SetIndexPosY(y);
+								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+								theType = 1;
+							}
+							break ;
+						case 10: //	electric button
+							{
+								IUnitInterface* temp = new CElectricButton(prop.c_str());
+								((CWaterTile*)temp)->SetPosX((float)(x * 32));
+								((CWaterTile*)temp)->SetPosY((float)(y * 32));
+								((CWaterTile*)temp)->SetIndexPosX(x);
+								((CWaterTile*)temp)->SetIndexPosY(y);
+								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+								theType = 1;
+							}
+							break ;
+						case 11: //	electric dynamo
+							{
+								IUnitInterface* temp = new CElectricGenerator();
+								((CWaterTile*)temp)->SetPosX((float)(x * 32));
+								((CWaterTile*)temp)->SetPosY((float)(y * 32));
+								((CWaterTile*)temp)->SetIndexPosX(x);
+								((CWaterTile*)temp)->SetIndexPosY(y);
+								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+								theType = 0;
+							}
+							break ;
+						}
 						// 0 = pit
 						// 1 & 2 = ground
 						MObjectManager::GetInstance()->GetLayer( z ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, theType );

@@ -5,68 +5,68 @@
 #include "../Golems/CGolem_Water.h"
 #include "../Golems/CGolem_Iron.h"
 #include "CElectricButton.h"
+#include "../../../Wrappers/CSGD_TextureManager.h"
+#include "../../../Animation Manager/CAnimationManager.h"
+#include "CWaterTile.h"
 
 CMetal::CMetal() 
 {
 	CBaseObject::CBaseObject() ;
 	m_nType = OBJ_METAL ;
 	SetPowered( false ) ;
-	SetElectricUpdateTimer( 10.0f ) ;
+	SetElectricUpdateTimer( .5f ) ;
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metalTile.png" ) ;
+	m_nAnimID = CAnimationManager::GetInstance()->GetID( "Electricity" ) ;
+	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/electricity.png") ;
+	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
+	CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
+	MEventSystem::GetInstance()->RegisterClient("CIRCUTBROKEN" , this ) ;
 }
 
 CMetal::~CMetal() 
 {
 	CBaseObject::~CBaseObject() ;
+	MEventSystem::GetInstance()->UnregisterClient("CIRCUTBROKEN" , this ) ;
 }
 
 void CMetal::Update( float fDT )
 {
 	CBaseObject::Update(fDT) ;
 	
-	SetElectricUpdateTimer( GetElectricUpdateTimer() - fDT ) ;
-	if( GetElectricUpdateTimer() <= 0 )
+	if( GetIsElectrified() )
 	{
-		// check surrounding objects to see if they can catch on fire
-		for( int i = -1 ; i <= 1 ; ++i )
-		{
-			for( int u = -1 ; u <= 1 ; ++u )
-			{
-				if( ( i == -1 && u != 0 ) || ( i == 1 && u != 0 ) || ( u == -1 && i != 0 ) || ( u == 1 && i != 0 ) )
-					continue ;
-				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( this->GetIndexPosX() + i , this->GetIndexPosY() + u ) ;
-				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-				if( object )
-				{
-					if( object->GetType() == OBJ_METAL )
-					{
-						((CMetal*)object)->SetPowered(true) ;
-					}
-					else if( object->GetType() == OBJ_ELECTRICBUTTON )
-					{
-						((CElectricButton*)object)->SetPowered(true) ;
-					}
-					else if( object->GetType() == ENT_GOLEM )
-					{
-						if( ((CBaseGolem*)object)->GetGolemType() == WATER_GOLEM )
-						{
-							((CGolem_Water*)object)->SetPowered(true) ;
-						}
-						else if( ((CBaseGolem*)object)->GetGolemType() == IRON_GOLEM )
-						{
-							((CGolem_Iron*)object)->SetPowered(true) ;
-						}
-					}
-				}
-			}
-		}
-		int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( this->GetIndexPosX(), this->GetIndexPosY() ) ;
-		IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-		if( entity )
-		{
-			if( entity->GetType() == ENT_PLAYER )
-			{
-				((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
-			}
-		}
+		CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;
+		SetElectricUpdateTimer( GetElectricUpdateTimer() - fDT ) ;
+	}
+}
+
+void CMetal::Render( int CameraPosX, int CameraPosY )
+{
+	CBaseObject::Render( CameraPosX , CameraPosY ) ;
+	if( GetIsElectrified() )
+		CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+}
+
+void CMetal::SetPowered( bool powered ) 
+{
+	if( GetIsElectrified() == false && powered == true )
+	{
+		CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
+		SetElectricUpdateTimer( .5f ) ;
+	}
+	else if( GetIsElectrified() == true && powered == false )
+	{
+		CAnimationManager::GetInstance()->StopAnimation( m_nAnimID ) ;
+		SetElectricUpdateTimer( .5f ) ;
+	}
+	m_bPowered = powered ;
+}
+
+void CMetal::HandleEvent( Event* _toHandle )
+{
+	if( _toHandle->GetEventID() == "CIRCUTBROKEN" )
+	{
+		SetPowered( false ) ;
+		SetElectricUpdateTimer( .5f ) ;
 	}
 }

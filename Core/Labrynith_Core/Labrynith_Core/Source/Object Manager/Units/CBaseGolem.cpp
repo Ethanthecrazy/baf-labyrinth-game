@@ -125,7 +125,7 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	case OBJECT_BUTTON:
 		{
 			
-			if( pBase->GetType() == OBJ_BUTTON )
+			if( pBase->GetType() == OBJ_BUTTON || OBJ_ELECTRICBUTTON )
 			{
 				if(nCanHandleCollision)
 				{

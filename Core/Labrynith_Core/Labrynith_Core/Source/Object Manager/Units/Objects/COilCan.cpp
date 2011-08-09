@@ -56,7 +56,7 @@ void COilCan::UseObject( CBaseObject* user )
 		oil->SetIndexPosY( player->GetIndexPosY() + yDirection ) ;
 		oil->SetPosX( oil->GetIndexPosX() * 32 ) ;
 		oil->SetPosY( oil->GetIndexPosY() * 32 ) ;
-		MObjectManager::GetInstance()->AddUnitIndexed( oil , MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() ) ;
+		MObjectManager::GetInstance()->AddUnitIndexed( oil , 1 ) ;
 
 		this->SetCharges( GetCharges() - 1 ) ;
 

@@ -7,68 +7,138 @@
 #include "../Golems/CGolem_Iron.h"
 #include "CElectricButton.h"
 #include "../CPlayer.h"
+#include "../../../Wrappers/CSGD_TextureManager.h"
+#include "../../../Animation Manager/CAnimationManager.h"
+#include "CWaterTile.h"
 
 CElectricGenerator::CElectricGenerator() 
 {
 	CBaseObject::CBaseObject() ;
 	m_nUnitType = OBJECT_TILE ;
 	m_nType = OBJ_ELECTRICGENERATOR ; 
-	m_nElectricUpdateTimer = 10.0f ;
+	m_nElectricUpdateTimer = .5f ;
+	m_bGolemConnected = false ;
+	m_bEvaluateConnections = true ;
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/GeneratorTile.png" ) ;
+	m_nAnimID = CAnimationManager::GetInstance()->GetID( "Electricity" ) ;
+	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/electricity.png") ;
+	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
+	CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
+	MEventSystem::GetInstance()->RegisterClient("CIRCUTBROKEN" , this ) ;
 }
 
 CElectricGenerator::~CElectricGenerator() 
 {
 	CBaseObject::~CBaseObject() ;
+	MEventSystem::GetInstance()->UnregisterClient("CIRCUTBROKEN" , this ) ;
 }
 
 void CElectricGenerator::Update(float fDT )
 {
 	CBaseObject::Update(fDT) ;
 	
-	SetElectricUpdateTimer( GetElectricUpdateTimer() - fDT ) ;
-	if( GetElectricUpdateTimer() <= 0 )
+	CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;
+	if( m_bEvaluateConnections == true )
 	{
-		// check surrounding objects to see if they can catch on fire
-		for( int i = -1 ; i <= 1 ; ++i )
+		m_bEvaluateConnections = false ;
+		MakeConnections( this ) ;
+		m_EvaluatedConnections.clear() ;
+	}
+}
+
+void CElectricGenerator::Render( int CameraPosX, int CameraPosY )
+{
+	CBaseObject::Render( CameraPosX , CameraPosY ) ;
+	CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+}
+
+void CElectricGenerator::HandleEvent( Event* _toHandle )
+{
+	if( _toHandle->GetEventID() == "CIRCUTBROKEN" )
+	{
+		m_bEvaluateConnections = true ;
+	}
+}
+
+bool CElectricGenerator::MakeConnections( IUnitInterface* obj )
+{
+	for( int i = -1 ; i <= 1 ; ++i )
+	{
+		for( int u = -1 ; u <= 1 ; ++u )
 		{
-			for( int u = -1 ; u <= 1 ; ++u )
-			{
-				if( ( i == -1 && u != 0 ) || ( i == 1 && u != 0 ) || ( u == -1 && i != 0 ) || ( u == 1 && i != 0 ) )
+			if( ( i == -1 && u != 0 ) || ( i == 1 && u != 0 ) || ( u == -1 && i != 0 ) || ( u == 1 && i != 0 ) )
 					continue ;
-				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( this->GetIndexPosX() + i , this->GetIndexPosY() + u ) ;
-				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-				if( object )
+			
+			int item = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
+			int buttonID = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
+			int entityID = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
+			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+			IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
+			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+			if( object)
+			{
+				if( FindConnection(object) == false )
 				{
 					if( object->GetType() == OBJ_METAL )
 					{
 						((CMetal*)object)->SetPowered(true) ;
+						m_EvaluatedConnections.push_back( object ) ;
+						MakeConnections( object ) ;
 					}
-					else if( object->GetType() == OBJ_ELECTRICBUTTON )
+					else if( object->GetType() == OBJ_WATER )
 					{
-						((CElectricButton*)object)->SetPowered(true) ;
+						((CWaterTile*)object)->SetPowered(true) ;
+						m_EvaluatedConnections.push_back( object ) ;
+						MakeConnections( object ) ;
 					}
-					else if( object->GetType() == ENT_GOLEM )
+				}
+			}
+			if( button )
+			{
+				if( FindConnection(button) == false )
+				{
+					if( button->GetType() == OBJ_ELECTRICBUTTON )
 					{
-						if( ((CBaseGolem*)object)->GetGolemType() == WATER_GOLEM )
+						((CElectricButton*)button)->SetPowered(true) ;
+						m_EvaluatedConnections.push_back( button ) ;
+						MakeConnections( button ) ;
+					}
+				}
+			}
+			if( entity && FindConnection(entity) == false )
+			{
+				if( FindConnection(object) == false )
+				{
+					if( entity->GetType() == ENT_GOLEM )
+					{
+						if( ((CBaseGolem*)entity)->GetGolemType() == WATER_GOLEM )
 						{
-							((CGolem_Water*)object)->SetPowered(true) ;
+							((CGolem_Water*)entity)->SetPowered(true) ;
+							m_EvaluatedConnections.push_back( object ) ;
+							MakeConnections( entity ) ;
+							m_bGolemConnected = true ;
 						}
-						else if( ((CBaseGolem*)object)->GetGolemType() == IRON_GOLEM )
+						else if( ((CBaseGolem*)entity)->GetGolemType() == IRON_GOLEM )
 						{
-							((CGolem_Iron*)object)->SetPowered(true) ;
+							((CGolem_Iron*)entity)->SetPowered(true) ;
+							m_EvaluatedConnections.push_back( object ) ;
+							MakeConnections( entity ) ;
+							m_bGolemConnected = true ;
 						}
 					}
 				}
 			}
 		}
-		int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( this->GetIndexPosX(), this->GetIndexPosY() ) ;
-		IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-		if( entity )
-		{
-			if( entity->GetType() == ENT_PLAYER )
-			{
-				((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
-			}
-		}
 	}
+	return true ;
+}
+
+bool CElectricGenerator::FindConnection( IUnitInterface* obj )
+{
+	for( int i = 0 ; i < m_EvaluatedConnections.size() ; ++i )
+	{
+		if( obj == m_EvaluatedConnections[i] )
+			return true ;
+	}
+	return false ;
 }

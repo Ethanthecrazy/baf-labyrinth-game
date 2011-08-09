@@ -7,68 +7,43 @@
 #include "../Golems/CGolem_Iron.h"
 #include "CElectricButton.h"
 #include "CMetal.h"
+#include "../../../Wrappers/CSGD_TextureManager.h"
+#include "../../../Animation Manager/CAnimationManager.h"
+#include "CWaterTile.h"
 
 CElectricButton::CElectricButton(string nLink)
 {
-	CButton::CButton( nLink ) ;
+	m_nUnitType = OBJECT_BUTTON;
+	SetPressed( false ) ;
+	SetLink( nLink ) ;
+	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);
+	MEventSystem::GetInstance()->RegisterClient("Button.Unpress", this);
 	m_nType = OBJ_ELECTRICBUTTON ;
 	SetPowered( false ) ;
-	SetElectricUpdateTimer( 10.0f ) ;
+	SetElectricUpdateTimer( 0.0f ) ;
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0xffffffff ) ;
+	m_nAnimID = CAnimationManager::GetInstance()->GetID( "Electricity" ) ;
+	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/electricity.png") ;
+	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
+	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/Electricity.mp3" ) ;
+	MEventSystem::GetInstance()->RegisterClient("CIRCUTBROKEN" , this ) ;
 }
 CElectricButton::~CElectricButton(void)
 {
 	CButton::~CButton() ;
+	MEventSystem::GetInstance()->UnregisterClient("CIRCUTBROKEN" , this ) ;
 }
 
 void CElectricButton::Update( float fDT )
 {
-		CBaseObject::Update(fDT) ;
+	CBaseObject::Update(fDT) ;
 	
-	SetElectricUpdateTimer( GetElectricUpdateTimer() - fDT ) ;
-	if( GetElectricUpdateTimer() <= 0 )
+	if( GetElectricUpdateTimer() > 0 )
+			SetElectricUpdateTimer( GetElectricUpdateTimer() - fDT ) ;
+
+	if( GetIsElectrified() )
 	{
-		// check surrounding objects to see if they can catch on fire
-		for( int i = -1 ; i <= 1 ; ++i )
-		{
-			for( int u = -1 ; u <= 1 ; ++u )
-			{
-				if( ( i == -1 && u != 0 ) || ( i == 1 && u != 0 ) || ( u == -1 && i != 0 ) || ( u == 1 && i != 0 ) )
-					continue ;
-				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( this->GetIndexPosX() + i , this->GetIndexPosY() + u ) ;
-				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-				if( object )
-				{
-					if( object->GetType() == OBJ_METAL )
-					{
-						((CMetal*)object)->SetPowered(true) ;
-					}
-					else if( object->GetType() == OBJ_ELECTRICBUTTON )
-					{
-						((CElectricButton*)object)->SetPowered(true) ;
-					}
-					else if( object->GetType() == ENT_GOLEM )
-					{
-						if( ((CBaseGolem*)object)->GetGolemType() == WATER_GOLEM )
-						{
-							((CGolem_Water*)object)->SetPowered(true) ;
-						}
-						else if( ((CBaseGolem*)object)->GetGolemType() == IRON_GOLEM )
-						{
-							((CGolem_Iron*)object)->SetPowered(true) ;
-						}
-					}
-				}
-			}
-		}
-		int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( this->GetIndexPosX(), this->GetIndexPosY() ) ;
-		IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-		if( entity )
-		{
-			if( entity->GetType() == ENT_PLAYER )
-			{
-				((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
-			}
-		}
+		CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;
 	}
 }
 
@@ -77,22 +52,31 @@ bool CElectricButton::CheckCollision(IUnitInterface* pBase)
 	if( pBase == this )
 		return false;
 	
+	if( GetIsElectrified() == false )
+		return false;
+
 	SetPressed(!GetIsPressed()) ;
 
 	if(GetIsPressed())
 	{
-		MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)GetLink().c_str());
+		MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)GetLink());
 		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pressed.mp3"));
 	}
 	else
 	{
-		MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)GetLink().c_str());
+		MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)GetLink());
 		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/un-pressed.mp3"));
 	}
 
 	return false;
 }
 
+void CElectricButton::Render( int CameraPosX, int CameraPosY )
+{
+	CButton::Render( CameraPosX , CameraPosY ) ;
+	if( GetIsElectrified() )
+		CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+}
 
 void CElectricButton::HandleEvent( Event* _toHandle )
 {
@@ -102,11 +86,32 @@ void CElectricButton::HandleEvent( Event* _toHandle )
 		if( tmp ==  GetLink())
 			SetPressed( true ) ;
 	}
-
-	if( _toHandle->GetEventID() == "Button.Unpress" )
+	else if( _toHandle->GetEventID() == "Button.Unpress" )
 	{
 		string tmp = (const char*)_toHandle->GetParam();
 		if( tmp ==  GetLink())
 			SetPressed( false ) ;
 	}
+	else if( _toHandle->GetEventID() == "CIRCUTBROKEN" )
+	{
+		SetPowered( false ) ;
+	}
+}
+
+void CElectricButton::SetPowered( bool powered )
+{ 
+	if( GetIsElectrified() == false && powered == true )
+	{
+		m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0x88888888 ) ;
+		if( GetElectricUpdateTimer() <= 0.0f )
+			CSGD_FModManager::GetInstance()->PlaySoundA( m_nSoundID ) ;
+		CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
+		SetElectricUpdateTimer( 10.0f ) ;
+	}
+	else if( GetIsElectrified() == true && powered == false )
+	{
+		m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0xffffffff ) ;
+		//CSGD_FModManager::GetInstance()->StopSound( m_nSoundID ) ;
+	}
+	m_bPowered = powered ; 
 }

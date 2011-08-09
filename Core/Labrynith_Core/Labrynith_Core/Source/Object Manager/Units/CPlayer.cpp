@@ -209,7 +209,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	case OBJECT_BUTTON:
 		{
-			if( pBase->GetType() == OBJ_BUTTON )
+			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
 			{
 				((CButton*)pBase)->CheckCollision(this);
 				return false;
@@ -217,6 +217,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 			return false;
 		}
+		break ;
 	};
 
 	return false;
@@ -227,7 +228,7 @@ void CPlayer::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	{
 		case OBJECT_BUTTON:
 		{
-			if( pBase->GetType() == OBJ_BUTTON )
+			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
 			{
 				((CButton*)pBase)->CheckCollision(this);
 			}

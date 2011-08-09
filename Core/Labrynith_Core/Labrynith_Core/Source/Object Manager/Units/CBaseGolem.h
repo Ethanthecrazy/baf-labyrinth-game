@@ -35,7 +35,7 @@ public:
 	int GetStepSoundID() { return m_nStepSoundID ; }
 	//mutators
 	void SetGolemType(const int nGolemType);
-	void SetMoveType(const int nMovementType);
+	virtual void SetMoveType(const int nMovementType);
 	void SetStepSoundID( int ID ) { m_nStepSoundID = ID ; }
 
 	virtual void HandleEvent( Event* _toHandle ) ;
