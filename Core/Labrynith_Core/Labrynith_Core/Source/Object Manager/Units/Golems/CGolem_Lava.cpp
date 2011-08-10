@@ -56,7 +56,7 @@ void CGolem_Lava::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase)
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//If the base collides with an object or entity leave
@@ -90,6 +90,10 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM));
 							//Get rid of the Water golem
@@ -102,6 +106,10 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM));
 							//Get rid of the Ice golem

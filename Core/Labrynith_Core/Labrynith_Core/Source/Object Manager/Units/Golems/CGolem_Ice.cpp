@@ -4,6 +4,7 @@
 #include "../../../Messaging/MMessageSystem.h"
 #include "../Tiles/CWaterTile.h"
 #include "../../../AI Handler/CAI_Handler.h"
+#include "../../MObjectManager.h"
 
 void CGolem_Ice::IceGolemSetup()
 {
@@ -55,7 +56,7 @@ void CGolem_Ice::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase)
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//If the base collides with an object or entity leave
@@ -66,7 +67,7 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	//Do Ice Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
-	case OBJECT_OBJECT:
+	case OBJECT_TILE:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
 			if( temp->GetType() == OBJ_WATER )
@@ -100,6 +101,10 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 						//turn me into a water golem
 						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, WATER_GOLEM));
 						//Get rid of the Fire Golem
@@ -122,6 +127,10 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 						//turn the Lava golem into an Iron Golem
 						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM));
 						//Get rid of this the Ice Golem

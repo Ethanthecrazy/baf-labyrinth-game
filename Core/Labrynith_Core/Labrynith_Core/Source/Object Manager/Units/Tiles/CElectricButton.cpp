@@ -49,7 +49,7 @@ void CElectricButton::Update( float fDT )
 
 bool CElectricButton::CheckCollision(IUnitInterface* pBase)
 {
-	if( pBase == this )
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 	
 	if( GetIsElectrified() == false )

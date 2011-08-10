@@ -22,6 +22,9 @@ CRamp::CRamp(string direction)
 
 bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+		return false;
+
 	CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/moveFloor.wav"));
 
 	if(Up)

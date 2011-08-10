@@ -69,6 +69,9 @@ void CGolem_Fire::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+		return false;
+
 	//If the base collides with an object or entity leave
 	bool Collided = CBaseGolem::CheckCollision(pBase, nCanHandleCollision);
 	if(Collided)
@@ -77,7 +80,7 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	//Do Fire Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
-	case OBJECT_OBJECT:
+	case OBJECT_TILE:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
 			if( temp->GetType() == OBJ_WATER )
@@ -107,6 +110,10 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Lava Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, LAVA_GOLEM));
 							//Get rid of the Earth golem
@@ -119,6 +126,17 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+							this->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
+
+
+							tileid = 0;
+							tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//Get rid of the Water golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
 							//Get rid of this the Fire Golem
@@ -131,6 +149,10 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+							this->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//Change the Ice Golem into a Water Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, WATER_GOLEM));
 							//Get rid of this the Fire Golem
@@ -148,9 +170,12 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 }
 void CGolem_Fire::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase || pBase == this || !nCanHandleCollision || this->GetLayerLocation() != pBase->GetLayerLocation())
+		return;
+
 	switch(pBase->m_nUnitType)
 	{
-	case OBJECT_OBJECT:
+	case OBJECT_TILE:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
 			if( temp->GetType() == OBJ_WATER )

@@ -190,7 +190,7 @@ void CBaseObject::UseObject( CBaseObject* user )
 
 bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if( pBase == this )
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	return true;

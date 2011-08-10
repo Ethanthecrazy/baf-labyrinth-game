@@ -35,7 +35,7 @@ void CDoor::HandleEvent( Event* _toHandle )
 
 bool CDoor::CheckCollision(IUnitInterface* pBase)
 {
-	if( pBase == this )
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	if(m_bIsOpen)

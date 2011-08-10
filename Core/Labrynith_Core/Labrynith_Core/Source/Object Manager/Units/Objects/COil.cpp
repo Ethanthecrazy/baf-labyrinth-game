@@ -94,7 +94,7 @@ void COil::SetOnFire( bool onFire )
 
 bool COil::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this || !nCanHandleCollision)
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	if(GetIsOil())

@@ -170,32 +170,8 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		return true;
 	}
 
-	//Its possible for an object and entity and tile to occupy the same position!
-	//Check to see if we are colliding with a Tile
-	int TileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
-		 .GetFlake(OBJECT_TILE).GetInfoAtIndex(nX, nY);
-
 	bool Collided = false;
 
-	if( TileID > 0 )
-	{
-		//cout << "AI:Collided With Object " << objectID << "\n";
-		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(TileID), nCanHandleCollision);
-		//Let the Entity handle its object collision
-		if(Collided)
-		{
-			return Collided;
-		}
-	}
-	else
-	{		
-		//if we cannot pass that tile leave
-		Collided = ((CBaseEntity*)(pEntity))->CheckTileCollision(TileID);
-		if(Collided)
-		{
-			return Collided;
-		}
-	}
 
 	//Check to see if we are colliding with an object
 	int objectID = OM->FindLayer(pEntity->m_nIdentificationNumber)
@@ -214,7 +190,6 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	//Check to see if we are colliding with an entity
 	int EntityID = OM->FindLayer(pEntity->m_nIdentificationNumber)
 		.GetFlake(OBJECT_ENTITY).GetInfoAtIndex(nX, nY);
-
 	//we cannot collide with ourselves
 	if( EntityID > 0 && OM->GetUnit(EntityID) != pEntity )
 	{
@@ -226,15 +201,25 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 			return Collided;
 		}
 	}
-
-	//Check to see if we are colliding with a button
-	int buttonID = OM->FindLayer(pEntity->m_nIdentificationNumber)
-		.GetFlake(OBJECT_BUTTON).GetInfoAtIndex(nX, nY);
-	if( buttonID > 0 )
+	
+	//Its possible for an object and entity and tile to occupy the same position!
+	//Check to see if we are colliding with a Tile
+	int TileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
+		 .GetFlake(OBJECT_TILE).GetInfoAtIndex(nX, nY);
+	if( TileID > 0 )
 	{
-		//cout << "AI:Collided With Button " << buttonID << "\n";
-		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(buttonID), nCanHandleCollision);
+		//cout << "AI:Collided With Object " << objectID << "\n";
+		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(TileID), nCanHandleCollision);
 		//Let the Entity handle its object collision
+		if(Collided)
+		{
+			return Collided;
+		}
+	}
+	else
+	{		
+		//if we cannot pass that tile leave
+		Collided = ((CBaseEntity*)(pEntity))->CheckTileCollision(TileID);
 		if(Collided)
 		{
 			return Collided;
@@ -408,15 +393,6 @@ void CAI_Handler::DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCol
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
 
 	//Check to see if we are colliding with an object
-	int TileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
-		.GetFlake(OBJECT_TILE).GetInfoAtIndex(nX, nY);
-	if( TileID > 0 )
-	{
-		//Let the Entity handle its collision
-		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(TileID), nCanHandleCollision);
-	}
-
-	//Check to see if we are colliding with an object
 	int objectID = OM->FindLayer(pEntity->m_nIdentificationNumber)
 		.GetFlake(OBJECT_OBJECT).GetInfoAtIndex(nX, nY);
 	if( objectID > 0 )
@@ -428,21 +404,20 @@ void CAI_Handler::DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCol
 	//Check to see if we are colliding with an entity
 	int EntityID = OM->FindFlake(pEntity->m_nIdentificationNumber)
 		.GetInfoAtIndex(nX, nY);
-
 	//we cannot collide with ourselves
 	if( EntityID > 0 && OM->GetUnit(EntityID) != pEntity )
 	{
 		//Let the Entity handle its collision
 		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(EntityID), nCanHandleCollision);
 	}
-
-	//Check to see if we are colliding with a button
-	int buttonID = OM->FindLayer(pEntity->m_nIdentificationNumber)
-		.GetFlake(OBJECT_BUTTON).GetInfoAtIndex(nX, nY);
-	if( buttonID > 0 )
+	
+	//Check to see if we are colliding with a Tile
+	int TileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
+		.GetFlake(OBJECT_TILE).GetInfoAtIndex(nX, nY);
+	if( TileID > 0 )
 	{
-		//Let the Entity handle its object collision
-		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(buttonID), nCanHandleCollision);
+		//Let the Entity handle its collision
+		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(TileID), nCanHandleCollision);
 	}
 }
 void CAI_Handler::CheckCollisionRange(const CBaseGolem* pEntity, const unsigned int nRange)

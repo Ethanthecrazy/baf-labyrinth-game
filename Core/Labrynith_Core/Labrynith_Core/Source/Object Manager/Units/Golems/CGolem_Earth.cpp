@@ -45,7 +45,7 @@ void CGolem_Earth::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this || !nCanHandleCollision)
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//If the base collides with an object or entity leave
@@ -115,6 +115,10 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 					{
 						if(nCanHandleCollision)
 						{
+							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Lava Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, LAVA_GOLEM));
 							//Get rid of the Fire golem

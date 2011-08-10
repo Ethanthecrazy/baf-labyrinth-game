@@ -15,7 +15,7 @@ CPit::CPit()
 
 bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this || !nCanHandleCollision)
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//IUnitInterface* temp = new CBaseEntity();

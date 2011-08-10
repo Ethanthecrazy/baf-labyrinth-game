@@ -20,7 +20,7 @@ CButton::~CButton(void)
 
 bool CButton::CheckCollision(IUnitInterface* pBase)
 {
-	if( pBase == this )
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	m_bIsPressed = !m_bIsPressed;

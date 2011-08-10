@@ -81,6 +81,9 @@ void CGolem_Water::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+		return false;
+
 	//If the base collides with an object or entity leave
 	bool Collided = CBaseGolem::CheckCollision(pBase, nCanHandleCollision);
 	if(Collided)
@@ -89,7 +92,7 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 	//Do Water Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
-	case OBJECT_OBJECT:
+	case OBJECT_TILE:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
 			if( temp->GetType() == OBJ_WATER )
@@ -120,6 +123,8 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 					{
 						if(nCanHandleCollision)
 						{
+							this->ExitCollision(this, nCanHandleCollision);
+							this->ExitCollision(temp, nCanHandleCollision);
 							//get rid of the fire golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
 							//get rid of this the water golem
@@ -142,6 +147,7 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 					{
 						if(nCanHandleCollision)
 						{
+							this->ExitCollision(temp, nCanHandleCollision);
 							//turn me into an Iron Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM));
 							//Get rid of the Lava golem

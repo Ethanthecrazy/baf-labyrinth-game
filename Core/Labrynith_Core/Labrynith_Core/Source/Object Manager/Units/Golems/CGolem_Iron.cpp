@@ -81,6 +81,9 @@ void CGolem_Iron::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Iron::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+		return false;
+
 	//If the base collides with an object or entity leave
 	bool Collided = CBaseGolem::CheckCollision(pBase, nCanHandleCollision);
 	if(Collided)

@@ -133,7 +133,7 @@ void CPlayer::Input()
 }
 bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this)
+	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 	
 	if(this->GetLayerLocation() != pBase->GetLayerLocation())
