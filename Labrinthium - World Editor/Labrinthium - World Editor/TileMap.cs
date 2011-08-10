@@ -118,8 +118,8 @@ namespace Labrinthium___World_Editor
 
         public Tile()
         {
-            type.X = 0;
-            type.Y = 0;
+            type.X = 2;
+            type.Y = 2;
         }
 
         public override string ToString()

@@ -455,7 +455,7 @@ private void RenderMap()
             {
                 for (int w = (cameraPos.X * -1) / tilemap.TileSize.Width; (w <= (splitContainer1.Panel1.Width + (cameraPos.X * -1)) / tilemap.TileSize.Width) && w < tilemap.MapSize.Width; ++w)
                 {
-                    if (tilemap.Tiles[renderDepth][w][h].Type.X != -1 && tilemap.Tiles[renderDepth][w][h].Type.Y != -1 && tilemap.TilesetID != -1)
+                    if (tilemap.TilesetID != -1)
                     {
 
                         Rectangle tileRect = new Rectangle(w * tilemap.TileSize.Width,
@@ -465,7 +465,8 @@ private void RenderMap()
 
                         if (cameraRect.IntersectsWith(tileRect))
                         {
-                            if (tilemap.TilesetID != -1)
+                            if (tilemap.Tiles[renderDepth][w][h].Type.X != -1 && tilemap.Tiles[renderDepth][w][h].Type.Y != -1)
+                            {
                                 ManagedTextureManager.Instance.Draw(
                                     tilemap.TilesetID,
                                     tileRect.X + cameraPos.X,
@@ -476,6 +477,23 @@ private void RenderMap()
                                     tileRect.Width,
                                     tileRect.Height),
                                         0, 0, 0, 0);
+                            }
+                            else
+                            {
+                                ManagedTextureManager.Instance.Draw(
+                                    tilemap.TilesetID,
+                                    tileRect.X + cameraPos.X,
+                                    tileRect.Y + cameraPos.Y,
+                                    1.0f, 1.0f,
+                                    new Rectangle(2 * tilemap.TileSize.Width,
+                                    2 * tilemap.TileSize.Height,
+                                    tileRect.Width,
+                                    tileRect.Height),
+                                        0, 0, 0, 0);
+
+                                //tilemap.Tiles[renderDepth][w][h].Type = new Point(2, 2);
+
+                            }
                         }
                     }
 
@@ -1912,6 +1930,17 @@ private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
                 label2.Text = "";
         }
     }
+}
+
+private void searchToolStripMenuItem_Click(object sender, EventArgs e)
+{
+    MessageBox.Show("This is a quick guide to help you understand how the properties work.\n\n-When using normal or electricfied buttons (the blue and yellow similar tiles) and doors enter a string, the buttons that match the doors will make them open (I suggest numbers as they are easy to remember).\n\n-When using the stairs specify \"up\" or \"down\" for which way to travel between floors.\n\n-When using the spawner (first under objects):\n\t-\"player\" spawns the player\n\t-\"lightorb\" spawns a lightorb\n\t-\"golem.[type]\" spawns a golem of the specified type\n\t-\"attractor.[type]\" spawns an attractor of the specified type\n\nNOTE: Make sure when setting the property of a object or tile that you are on the correct tab", "Labrinthium - World Editor: Help");
+    layerbuttons[renderDepth].Focus();
+}
+
+private void helpToolStripButton_Click(object sender, EventArgs e)
+{
+    searchToolStripMenuItem_Click(this, e);
 }
 
 }
