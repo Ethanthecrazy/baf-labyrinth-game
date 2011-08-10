@@ -3,6 +3,7 @@
 #include "../MObjectManager.h"
 #include "../../Animation Manager/CAnimationManager.h"
 #include "../../AI Handler/CAI_Handler.h"
+#include "../../GameStates/CGamePlayState.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -113,19 +114,39 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 {
 	if( m_nImageID > -1 )
 	{
+		RECT camRect;
+		camRect.top = (long)CameraPosY;
+		camRect.left = (long)CameraPosX;
+		camRect.bottom = (long)camRect.top + 600;
+		camRect.right = (long)camRect.left + 800;
+		
+		RECT objRect;
+		objRect.top = (long)GetPosY();
+		objRect.left = (long)GetPosX();
+		objRect.bottom = (long)objRect.top + 32;
+		objRect.right = (long)objRect.left + 32;
+
+		RECT out;
+		if(!IntersectRect(&out, &camRect, &objRect) && CGamePlayState::GetInstance()->GetRenderCulling())
+			return;
+
+		int lightamount = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() );
+		if(lightamount == 0 && CGamePlayState::GetInstance()->GetRenderCulling())
+			return;
+
 		int DrawPositionX = (int)GetPosX() - CameraPosX;
 		int DrawPositionY = (int)GetPosY() - CameraPosY;
 
 		if(GetCurrentAnimID() <= -1)
 		{
-		CSGD_TextureManager::GetInstance()->Draw( m_nImageID, DrawPositionX, DrawPositionY,
-			1.0f,
-			1.0f,
-			0,
-			0.0f,
-			0.0f,
-			0.0f,
-			D3DCOLOR_ARGB( MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
+			CSGD_TextureManager::GetInstance()->Draw( m_nImageID, DrawPositionX, DrawPositionY,
+				1.0f,
+				1.0f,
+				0,
+				0.0f,
+				0.0f,
+				0.0f,
+				D3DCOLOR_ARGB( lightamount, 255, 255, 255) );	
 		}
 		else
 		{
@@ -136,10 +157,7 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 				0,
 				0.0f,
 				0.0f,
-				D3DCOLOR_ARGB( MObjectManager::GetInstance()->
-				FindLayer( m_nIdentificationNumber ).
-				GetFlake( OBJECT_LIGHT ).
-				GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );
+				D3DCOLOR_ARGB( lightamount, 255, 255, 255) );
 		}
 
 	}

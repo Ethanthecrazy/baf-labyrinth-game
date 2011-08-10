@@ -22,6 +22,7 @@ class CGamePlayState : public IGameState
 	int m_nCurrLevel;
 	int currFloor;
 	int numLevelFloors;
+	bool m_bRenderCulling;
 public:
 
 	static int testVaribale;
@@ -47,6 +48,7 @@ public:
 
 	int GetNumLevelFloors(void) { return numLevelFloors; }
 	void SetNumLevelFloors(int nNumFloors) { numLevelFloors = nNumFloors; }
+	bool GetRenderCulling(void) { return m_bRenderCulling; }
 };
 
 #endif // CGamePlayState_h__

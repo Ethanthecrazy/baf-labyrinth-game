@@ -3,6 +3,8 @@
 
 #include "../../Wrappers/CSGD_TextureManager.h"
 #include "../MObjectManager.h"
+#include "../../GameStates/CGamePlayState.h"
+#include "Tiles\CWaterTile.h"
 
 CBaseObject::CBaseObject()
 {
@@ -100,14 +102,12 @@ void CBaseObject::Update(float fDT)
 			if( GetVelX() != 0 || GetVelY() != 0 )
 			{
 				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
-				int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-				IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
 				IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-				if( CheckCollision( object , true ) || CheckCollision( button , true ) || CheckCollision( entity , true ) || CheckCollision( tile , true ) || tileID == 0 )
+				if( CheckCollision( object , true ) || CheckCollision( entity , true ) || CheckCollision( tile , true ) || tileID == 0 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
@@ -164,6 +164,26 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 {
 	if( m_nImageID > -1 )
 	{
+		RECT camRect;
+		camRect.top = (long)CameraPosY;
+		camRect.left = (long)CameraPosX;
+		camRect.bottom = (long)camRect.top + 600;
+		camRect.right = (long)camRect.left + 800;
+		
+		RECT objRect;
+		objRect.top = (long)GetPosY();
+		objRect.left = (long)GetPosX();
+		objRect.bottom = (long)objRect.top + 32;
+		objRect.right = (long)objRect.left + 32;
+
+		RECT out;
+		if(!IntersectRect(&out, &camRect, &objRect))
+			return;
+
+		int lightamount = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() );
+		if(lightamount == 0)
+			return;
+
 		int DrawPositionX = (int)GetPosX() - CameraPosX;
 		int DrawPositionY = (int)GetPosY() - CameraPosY;
 		
@@ -176,7 +196,7 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 		0.0f,
 		0.0f,
 		0.0f,
-		D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ), 255, 255, 255) );	
+		D3DCOLOR_ARGB( lightamount, 255, 255, 255) );	
 
 	}
 }
@@ -217,8 +237,12 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 		}
 		break;
 	case OBJECT_TILE:
-		{
-			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP ||pBase->GetType() == OBJ_WATER )
+		{				
+			if(pBase->GetType() == OBJ_WATER)
+				if( !((CWaterTile*)pBase)->IsFrozen() )
+					return true;
+
+			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_PIT )
 				return true ;
 		}
 		break ;

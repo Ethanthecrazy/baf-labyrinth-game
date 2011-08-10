@@ -53,14 +53,12 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 		{
 			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-			IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
 			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-			if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( button , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
+			if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
 			{
 				int xPos1 = tileXPos * 32 - cameraX ;
 				int yPos1 = tileYPos * 32 - cameraY ;
@@ -81,15 +79,13 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 		
 		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 		{
-			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;;
 			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-			IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
 			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-			if( !GetEquippedItem()->CheckCollision( object , false ) && !GetEquippedItem()->CheckCollision( button , false ) && !GetEquippedItem()->CheckCollision( entity , false ) && !GetEquippedItem()->CheckCollision( tile , false ) && tileID != 0 )
+			if( !GetEquippedItem()->CheckCollision( object , false ) && !GetEquippedItem()->CheckCollision( entity , false ) && !GetEquippedItem()->CheckCollision( tile , false ) && tileID != 0 )
 			{
 				int xPos1 = tileXPos * 32 - cameraX ;
 				int yPos1 = tileYPos * 32 - cameraY ;
@@ -156,14 +152,12 @@ void CPlayer::Input()
 				if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 				{
 					int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-					int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 					int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 					int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 					IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-					IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
 					IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 					IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-					if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( button , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
+					if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
 					{
 						MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
 					}

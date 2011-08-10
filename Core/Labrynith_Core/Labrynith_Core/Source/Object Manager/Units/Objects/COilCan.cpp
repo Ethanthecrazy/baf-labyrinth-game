@@ -31,14 +31,12 @@ void COilCan::UseObject( CBaseObject* user )
 		if( tileXPos >= player->GetIndexPosX() - 1 && tileXPos <= player->GetIndexPosX() + 1 && tileYPos >= player->GetIndexPosY() - 1 && tileYPos <= player->GetIndexPosY() + 1 )
 		{
 			int item = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			int buttonID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			int entityID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			int tileID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-			IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
 			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-			if( !this->CheckCollision( object , false ) && !this->CheckCollision( button , false ) && !this->CheckCollision( entity , false ) && !this->CheckCollision( tile , false ) && tileID != 0 )
+			if( !this->CheckCollision( object , false ) && !this->CheckCollision( entity , false ) && !this->CheckCollision( tile , false ) && tileID != 0 )
 			{
 				COil* oil = new COil() ;
 				oil->SetIndexPosX( tileXPos ) ;

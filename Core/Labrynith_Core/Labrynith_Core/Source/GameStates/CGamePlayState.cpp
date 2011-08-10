@@ -36,11 +36,12 @@ int CGamePlayState::testVaribale = -1;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 0;
+	m_nCurrLevel = 7;
 	testVaribale = -1;
 	m_nMouseID = -1 ;
 	currFloor = 1;
 	numLevelFloors = 1;
+	m_bRenderCulling = true;
 }
 
 // destructor
@@ -75,6 +76,10 @@ bool CGamePlayState::Input(void)
 	if( pDI->KeyPressed( DIK_ESCAPE ) )
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
 
+	
+	if( pDI->KeyPressed( DIK_T ) )
+		m_bRenderCulling = !m_bRenderCulling;
+
 	//BUG - temp code added for AI testing
 	//if( pDI->MouseButtonPressed( 0 ) )
 	//{
@@ -92,8 +97,6 @@ bool CGamePlayState::Input(void)
 void CGamePlayState::Update(float fDT)
 {
 	timestep = fDT;
-	if(MObjectManager::GetInstance()->GetUnit( testVaribale ))
-		currFloor = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerID();
 		
 	MObjectManager::GetInstance()->Update( fDT );
 	MEventSystem::GetInstance()->ProcessEvents();

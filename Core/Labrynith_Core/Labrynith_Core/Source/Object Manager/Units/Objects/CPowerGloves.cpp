@@ -52,14 +52,12 @@ void CPowerGloves::UseObject( CBaseObject* user )
 	//GetHeldItem()->SetDistanceLeft( 32.0f ) ;
 	
 	int item = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( player->GetIndexPosX() + xDirection , player->GetIndexPosY() + yDirection ) ;
-	int buttonID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( player->GetIndexPosX() + xDirection , player->GetIndexPosY() + yDirection ) ;
 	int entityID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( player->GetIndexPosX() + xDirection , player->GetIndexPosY() + yDirection ) ;
 	int tileID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( player->GetIndexPosX() + xDirection , player->GetIndexPosY() + yDirection ) ;
 	IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-	IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
 	IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 	IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-	if( player->GetHeldItem()->CheckCollision( object , false ) || player->GetHeldItem()->CheckCollision( button , false ) || player->GetHeldItem()->CheckCollision( entity , false ) || player->GetHeldItem()->CheckCollision( tile , false ) || tileID == 0 )
+	if( player->GetHeldItem()->CheckCollision( object , false ) || player->GetHeldItem()->CheckCollision( entity , false ) || player->GetHeldItem()->CheckCollision( tile , false ) || tileID == 0 )
 	{
 		player->GetHeldItem()->SetVelX( 0 ) ;
 		player->GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_LEFT ) ;
