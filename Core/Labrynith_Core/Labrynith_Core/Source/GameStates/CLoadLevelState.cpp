@@ -243,7 +243,6 @@ bool CLoadLevelState::LoadLevel(int _level)
 								((CDoor*)temp)->SetPosY((float)(y * 32));
 								((CDoor*)temp)->SetIndexPosX(x);
 								((CDoor*)temp)->SetIndexPosY(y);
-								((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pokeball.png" ));
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							break;
 							}
