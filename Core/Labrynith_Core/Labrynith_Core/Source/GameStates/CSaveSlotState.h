@@ -4,11 +4,14 @@
 #define MAXSLOTS 3
 
 #include "IGameState.h"
+#include "../CBitFont.h"
 
 class CPlayer;
 
+
 class CSaveSlotState : public IGameState
 {
+	CBitFont MetalText;
 	//current data loaded
 	//current player data loaded
 	CPlayer* m_pLoadedPlayer;
@@ -27,6 +30,8 @@ class CSaveSlotState : public IGameState
 	CSaveSlotState& operator=(const CSaveSlotState&) { }
 	// destructor
 	~CSaveSlotState();
+
+	void SetSaveSlot(const int nSlot);
 public:
 
 	static CSaveSlotState* GetInstance();
@@ -36,9 +41,15 @@ public:
 	void Update(float fDT);
 	void Render(void);
 	void Exit(void);
+	//accessors
+	int GetCurrLevel() const;
+	//mutators
+	void SetCurrLevel(const int nLevel);
 
 	void EnterCommand(void);
 	//Saves game data
 	void Save();
+	//Loads game data
+	void Load();
 };
 #endif

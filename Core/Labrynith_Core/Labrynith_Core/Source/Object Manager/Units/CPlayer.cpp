@@ -3,6 +3,7 @@
 #include "../../AI Handler/CAI_Handler.h"
 #include "../../Wrappers/CSGD_DirectInput.h"
 #include "../../GameStates/CGamePlayState.h"
+#include "../../GameStates/CSaveSlotState.h"
 #include "Tiles\CDoor.h"
 #include "Tiles\CButton.h"
 #include "Tiles\CWaterTile.h"
@@ -247,7 +248,8 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
 				//BUG- check if the level is valid
 				pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
-				//pGamePlay->SetCurrentLevel(1);
+				//Save the new current level we are on
+				CSaveSlotState::GetInstance()->Save();
 				//Load the next level
 				CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/completeLevel.wav"));
 				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());

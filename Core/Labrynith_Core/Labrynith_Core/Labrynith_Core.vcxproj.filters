@@ -144,9 +144,6 @@
     <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp">
       <Filter>ObjectManager\Units\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameStates\CSaveSlotState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\HUD\CHUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -226,6 +223,9 @@
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameStates\CGameOverState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CSaveSlotState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
     <ClCompile Include="Source\Object Manager\Units\Tiles\CBreakableWall.cpp">
@@ -329,9 +329,6 @@
     <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h">
       <Filter>ObjectManager\Units\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameStates\CSaveSlotState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\HUD\CHUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -417,6 +414,9 @@
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameStates\CGameOverState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CSaveSlotState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Tiles\CBreakableWall.h">

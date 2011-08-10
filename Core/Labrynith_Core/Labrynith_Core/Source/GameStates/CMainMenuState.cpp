@@ -53,7 +53,7 @@ bool CMainMenuState::Input(void)
 		{
 		case PLAY:
 			//Change to GamePlayState
-			pGame->ChangeState( CGamePlayState::GetInstance() ) ;
+			pGame->ChangeState( CSaveSlotState::GetInstance() ) ;
 			break;
 
 		case LOAD:
