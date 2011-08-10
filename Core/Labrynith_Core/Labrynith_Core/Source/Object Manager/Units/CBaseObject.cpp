@@ -211,13 +211,6 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
-	if( !pBase )
-		return false ;
-	
-	int layerat = MObjectManager::GetInstance()->GetLayer(pBase->GetLayerLocation()).GetLayerID();
-	if(MObjectManager::GetInstance()->GetLayer(this->GetLayerLocation()).GetLayerID() != layerat)
-		return false;
-
 	//if we collide with an object
 	switch(pBase->m_nUnitType)
 	{
@@ -242,7 +235,7 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 				if( !((CWaterTile*)pBase)->IsFrozen() )
 					return true;
 
-			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_PIT )
+			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_PIT || pBase->GetType() == OBJ_ELECTRICGENERATOR)
 				return true ;
 		}
 		break ;

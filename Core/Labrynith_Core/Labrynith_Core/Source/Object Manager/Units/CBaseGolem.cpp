@@ -136,6 +136,8 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				return pBase->CheckCollision(this, nCanHandleCollision);		
 			else if( pBase->GetType() == OBJ_RAMP )
 				return pBase->CheckCollision(this, nCanHandleCollision);
+			else if(pBase->GetType() == OBJ_ELECTRICGENERATOR)
+				return true;
 		}
 		break;
 	};

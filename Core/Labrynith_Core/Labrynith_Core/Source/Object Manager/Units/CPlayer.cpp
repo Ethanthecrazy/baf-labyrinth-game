@@ -262,6 +262,8 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				//if the tile is frozen we can walk past it
 				return !((CWaterTile*)pBase)->IsFrozen();
 			}
+			else if(pBase->GetType() == OBJ_ELECTRICGENERATOR)
+				return true;
 		}
 		break;
 	};
