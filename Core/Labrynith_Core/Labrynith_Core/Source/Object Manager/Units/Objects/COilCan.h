@@ -13,7 +13,7 @@ public:
 	
 	void Render( int CameraPosX, int CameraPosY );
 
-	void UseObject( CBaseObject* user ) ;
+	void UseObject( CBaseObject* user  ) ;
 	
 	void SetCharges( int charges ) { m_nCharges = charges ; } ;
 	

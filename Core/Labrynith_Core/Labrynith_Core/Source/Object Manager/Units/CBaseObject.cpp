@@ -99,17 +99,15 @@ void CBaseObject::Update(float fDT)
 
 			if( GetVelX() != 0 || GetVelY() != 0 )
 			{
-				if( int collUnit = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) )
-				{
-					if( CheckCollision( MObjectManager::GetInstance()->GetUnit( collUnit ) , true ) )
-					{
-						SetVelY( 0 ) ;
-						SetVelX( 0 ) ;
-						SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
-						SetDistanceLeft( 0 ) ;
-					}
-				}
-				else if( int collTile = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) != 1 )
+				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
+				int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
+				int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
+				int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
+				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+				IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
+				IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
+				if( CheckCollision( object , true ) || CheckCollision( button , true ) || CheckCollision( entity , true ) || CheckCollision( tile , true ) || tileID == 0 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
@@ -193,7 +191,40 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
-	return true;
+	if( !pBase )
+		return false ;
+	
+	int layerat = MObjectManager::GetInstance()->GetLayer(pBase->GetLayerLocation()).GetLayerID();
+	if(MObjectManager::GetInstance()->GetLayer(this->GetLayerLocation()).GetLayerID() != layerat)
+		return false;
+
+	//if we collide with an object
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase; // this is hilarious, who did this? - Nathan
+			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_OIL || temp->GetType() == OBJ_LIGHTORB || temp->GetType() == OBJ_DOOR || temp->GetType() == OBJ_RAMP || temp->GetType() == OBJ_ELECTRICGENERATOR || temp->GetType() == OBJ_EXIT )
+			{
+				return true;
+			}
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			return true;
+		}
+		break;
+	case OBJECT_TILE:
+		{
+			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP ||pBase->GetType() == OBJ_WATER )
+				return true ;
+		}
+		break ;
+	};
+
+	return false;
 }
 void CBaseObject::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {

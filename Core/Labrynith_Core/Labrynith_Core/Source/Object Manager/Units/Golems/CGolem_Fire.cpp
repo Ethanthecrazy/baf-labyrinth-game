@@ -39,6 +39,8 @@ void CGolem_Fire::Update(float fDT)
 	{
 		for( int u = -1 ; u <= 1 ; ++u )
 		{
+			if( ( i == -1 && u != 0 ) || ( i == 1 && u != 0 ) || ( u == -1 && i != 0 ) || ( u == 1 && i != 0 ) )
+					continue ;
 			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( this->GetIndexPosX() + i , this->GetIndexPosY() + u ) ;
 			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
 			if( object )

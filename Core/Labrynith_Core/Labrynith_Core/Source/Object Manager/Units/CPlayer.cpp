@@ -12,6 +12,7 @@
 #include <iostream>
 #include "../../Wrappers/CSGD_Direct3D.h"
 #include "../../Wrappers/CSGD_FModManager.h"
+#include "Tiles\CMetal.h"
 
 CPlayer::CPlayer(void)
 {
@@ -42,28 +43,63 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
 
-	if( GetHeldItem() == NULL )
-		return ;
-
-	int cameraX = 0 , cameraY = 0 ;
-	CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-	int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
-	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
-
-	if( MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) == 0 && 
-		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) == 0 && 
-		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) != 0 )
-	{			
+	if( GetHeldItem() != NULL )
+	{
+		int cameraX = 0 , cameraY = 0 ;
+		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
+		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+		
 		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 		{
-			int xPos1 = tileXPos * 32 - cameraX ;
-			int yPos1 = tileYPos * 32 - cameraY ;
-			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 ) ;
-			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 ) ;
-			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 ) ;
-			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 ) ;
+			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+			IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
+			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
+			if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( button , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
+			{
+				int xPos1 = tileXPos * 32 - cameraX ;
+				int yPos1 = tileYPos * 32 - cameraY ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 ) ;
+			}
 		}
 	}
+	else if( GetEquippedItem() != NULL )
+		if( GetEquippedItem()->GetType() == OBJ_OILCAN )
+		{
+			int cameraX = 0 , cameraY = 0 ;
+		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
+		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+		
+		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
+		{
+			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+			IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
+			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
+			if( !GetEquippedItem()->CheckCollision( object , false ) && !GetEquippedItem()->CheckCollision( button , false ) && !GetEquippedItem()->CheckCollision( entity , false ) && !GetEquippedItem()->CheckCollision( tile , false ) && tileID != 0 )
+			{
+				int xPos1 = tileXPos * 32 - cameraX ;
+				int yPos1 = tileYPos * 32 - cameraY ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 , 255 , 0 , 0 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 , 255 , 0 , 0 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 , 255 , 0 , 0) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 , 255 , 0 , 0 ) ;
+			}
+		}
+		}
 }
 void CPlayer::Input()
 {
@@ -118,7 +154,20 @@ void CPlayer::Input()
 					return ;
 
 				if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
-					MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
+				{
+					int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+					int buttonID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_BUTTON ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+					int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+					int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+					IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+					IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
+					IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+					IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
+					if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( button , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
+					{
+						MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
+					}
+				}
 
 			}
 			if( pDI->MouseButtonPressed( 1 ) )

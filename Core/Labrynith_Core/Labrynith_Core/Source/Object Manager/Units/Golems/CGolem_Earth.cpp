@@ -52,7 +52,7 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 	bool Collided = CBaseGolem::CheckCollision(pBase, nCanHandleCollision);
 	if(Collided)
 	{
-		if( pBase->GetType() != OBJ_DOOR || pBase->GetType() != OBJ_BUTTON || pBase->GetType() != OBJ_SPAWNER || pBase->GetType() != OBJ_EXIT && nCanHandleCollision )
+		if( pBase->GetType() != OBJ_DOOR && pBase->GetType() != OBJ_BUTTON && pBase->GetType() != OBJ_SPAWNER && pBase->GetType() != OBJ_EXIT && nCanHandleCollision )
 		{
 			if( !nCanHandleCollision )
 				return Collided;

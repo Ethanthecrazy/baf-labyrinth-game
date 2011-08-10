@@ -38,7 +38,7 @@ void CElectricButton::Update( float fDT )
 {
 	CBaseObject::Update(fDT) ;
 	
-	if( GetElectricUpdateTimer() > 0 )
+	if( GetElectricUpdateTimer() > 0 && GetIsElectrified() == false )
 			SetElectricUpdateTimer( GetElectricUpdateTimer() - fDT ) ;
 
 	if( GetIsElectrified() )

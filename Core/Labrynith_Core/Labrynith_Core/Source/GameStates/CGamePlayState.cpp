@@ -36,7 +36,7 @@ int CGamePlayState::testVaribale = -1;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 7;
+	m_nCurrLevel = 0;
 	testVaribale = -1;
 	m_nMouseID = -1 ;
 	currFloor = 1;
@@ -460,16 +460,16 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				break;
 
 			// place object in that tile
-			int checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			if( checkObject == 0 ) //	if there is NOT an object there
-			{
-			   checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			   if( checkObject != 0 ) // if there IS an entity there
-				   break;
-			   
-			   checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			   if( checkObject == 0 ) // if the tile is NOT empty
-				   break;
+			//int checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			//if( checkObject == 0 ) //	if there is NOT an object there
+			//{
+			   //checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			   //if( checkObject != 0 ) // if there IS an entity there
+				  // break;
+			   //
+			   //checkObject = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+			   //if( checkObject == 0 ) // if the tile is NOT empty
+				  // break;
 
 				IUnitInterface* object = player->GetHeldItem() ;
 				object->SetIndexPosX( tileXPos ) ;
@@ -485,7 +485,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , object ) ;
 				}
 				CSGD_FModManager::GetInstance()->PlaySoundA(player->GetPutDownSoundID()) ;
-			}
+			//}
 		}
 		break;
 
