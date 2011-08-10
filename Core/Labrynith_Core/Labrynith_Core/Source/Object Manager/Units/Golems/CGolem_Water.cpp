@@ -123,8 +123,18 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 					{
 						if(nCanHandleCollision)
 						{
-							this->ExitCollision(this, nCanHandleCollision);
-							this->ExitCollision(temp, nCanHandleCollision);
+							int tileid = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+							this->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
+
+
+							tileid = 0;
+							tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
+
 							//get rid of the fire golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
 							//get rid of this the water golem
@@ -147,7 +157,11 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 					{
 						if(nCanHandleCollision)
 						{
-							this->ExitCollision(temp, nCanHandleCollision);
+							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
+												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
+
+							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
+
 							//turn me into an Iron Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM));
 							//Get rid of the Lava golem

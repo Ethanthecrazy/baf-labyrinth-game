@@ -143,14 +143,14 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 }
 void CBaseGolem::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if( !pBase || !nCanHandleCollision || pBase->GetLayerLocation() != this->GetLayerLocation() )
+	if( !pBase || pBase == this || pBase->GetLayerLocation() != this->GetLayerLocation() )
 		return;
 
 	switch(pBase->m_nUnitType)
 	{
-	case OBJECT_BUTTON:
+	case OBJECT_TILE:
 		{
-			if( pBase->GetType() == OBJ_BUTTON )
+			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
 			{
 				if(nCanHandleCollision)
 				{

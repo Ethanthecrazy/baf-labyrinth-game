@@ -137,6 +137,7 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
+
 							//Get rid of the Water golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
 							//Get rid of this the Fire Golem
@@ -170,8 +171,10 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 }
 void CGolem_Fire::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this || !nCanHandleCollision || this->GetLayerLocation() != pBase->GetLayerLocation())
+	if(!pBase || pBase == this || this->GetLayerLocation() != pBase->GetLayerLocation())
 		return;
+
+	CBaseGolem::ExitCollision(pBase, nCanHandleCollision);
 
 	switch(pBase->m_nUnitType)
 	{
