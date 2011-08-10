@@ -13,7 +13,7 @@
 
 CElectricButton::CElectricButton(string nLink)
 {
-	m_nUnitType = OBJECT_BUTTON;
+	m_nUnitType = OBJECT_TILE;
 	SetPressed( false ) ;
 	SetLink( nLink ) ;
 	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);

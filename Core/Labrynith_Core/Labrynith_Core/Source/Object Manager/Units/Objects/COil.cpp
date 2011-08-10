@@ -5,7 +5,7 @@
 #include "../CPlayer.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
 
-COil::COil( void )
+COil::COil( bool bIsOil ) : m_bIsOil(bIsOil)
 {
 	CBaseObject::CBaseObject() ;
 	m_nType = OBJ_OIL ;
@@ -25,9 +25,6 @@ void COil::Update(float fDT)
 
 	if( GetOnFire() )
 	{		
-		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
-			.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 185 );
-
 		CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;
 		// set other objects on fire
 		SetFireTimer( GetFireTimer() - fDT ) ;
@@ -76,7 +73,12 @@ void COil::Render( int CameraPosX , int CameraPosY )
 {
 	CBaseObject::Render( CameraPosX , CameraPosY ) ;
 	if( GetOnFire() )
+	{
 		CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+
+		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+			.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 185 );
+	}
 }
 
 
@@ -88,4 +90,17 @@ void COil::SetOnFire( bool onFire )
 		CSGD_FModManager::GetInstance()->PlaySoundA( m_nFireSoundID ) ;
 	}
 	m_bOnFire = onFire ; 
+}
+
+bool COil::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
+{
+	if(!pBase || pBase == this || !nCanHandleCollision)
+		return false;
+
+	if(GetIsOil())
+		return false;
+	else
+		return true;
+
+	return false;
 }

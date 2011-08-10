@@ -3,7 +3,7 @@
 #include "../../../Messaging/MEventSystem.h"
 #include "../../../Messaging/MMessageSystem.h"
 #include "../CBaseObject.h"
-
+#include "../../MObjectManager.h"
 void CGolem_Lava::LavaGolemSetup()
 {
 	SetGolemType(LAVA_GOLEM);
@@ -50,6 +50,9 @@ void CGolem_Lava::Update(float fDT)
 void CGolem_Lava::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseGolem::Render(CameraPosX, CameraPosY);
+
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 }
 bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {

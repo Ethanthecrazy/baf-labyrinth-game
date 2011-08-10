@@ -29,15 +29,15 @@ CGolem_Light::~CGolem_Light(void)
 
 void CGolem_Light::Update(float fDT)
 {
-	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
-		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
-
 	CBaseGolem::Update(fDT);
 	UpdateAI();
 }
 void CGolem_Light::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseGolem::Render(CameraPosX, CameraPosY);
+
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 }
 bool CGolem_Light::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {

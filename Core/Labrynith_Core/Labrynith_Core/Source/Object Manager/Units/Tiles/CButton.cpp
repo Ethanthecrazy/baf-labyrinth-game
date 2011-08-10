@@ -5,7 +5,7 @@
 
 CButton::CButton(string nLink)
 {
-	m_nUnitType = OBJECT_BUTTON;
+	m_nUnitType = OBJECT_TILE;
 	m_nType = OBJ_BUTTON;
 	m_bIsPressed = false;
 	m_nLink = nLink;

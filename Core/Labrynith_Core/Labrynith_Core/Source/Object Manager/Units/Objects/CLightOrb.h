@@ -11,6 +11,7 @@ public:
 	CLightOrb(void);
 
 	void Update(float fDT);
+	void Render( int CameraPosX, int CameraPosY );
 };
 
 #endif

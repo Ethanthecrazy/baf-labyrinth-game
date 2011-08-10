@@ -29,6 +29,7 @@ int MObjectManager::AddUnit( IUnitInterface* _toAdd, int _layer )
 {
 	m_nSize += 1;
 	_toAdd->m_nIdentificationNumber = _layer * 100000;
+	_toAdd->SetLayerLocation( _layer );
 	int tempnumber = m_vLayers[_layer].AddUnit( _toAdd );
 	LayerIndex.InsertEntry( tempnumber, _layer );
 	cout << "\tObjectManager: Adding Unit - Id " << tempnumber << "\n";
@@ -42,6 +43,7 @@ int MObjectManager::AddUnitIndexed( IUnitInterface* _toAdd, int _layer )
 		m_nSize += 1;
 		//_toAdd->m_nIdentificationNumber = _layer * 100000;
 	}
+	_toAdd->SetLayerLocation( _layer );
 	int tempnumber = m_vLayers[_layer].AddUnitIndexed( _toAdd );
 	LayerIndex.InsertEntry( tempnumber, _layer );
 	cout << "\tObjectManager: Adding Unit - Id " << tempnumber << "\n";

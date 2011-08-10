@@ -418,6 +418,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgCreatePlayer* NewMessage = (msgCreatePlayer*)_message;
 
 			IUnitInterface* temp = new CPlayer();
+			temp->SetLayerLocation(NewMessage->GetZ());
 			((CPlayer*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/MainCharacter.png" ));
 			((CPlayer*)(temp))->SetPlayAnimWhileStill(false);
 			((CPlayer*)(temp))->SetIndexPosX( NewMessage->GetX() );
@@ -531,6 +532,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			MObjectManager* OM = MObjectManager::GetInstance();
 			msgMoveEntityFloor* msg = (msgMoveEntityFloor*)_message;
 			CBaseEntity* pEntity = msg->GetEntity();
+			pEntity->SetLayerLocation(msg->GetFloor());
 			
 			OM->RemoveUnit(pEntity->m_nIdentificationNumber);
 			pEntity->m_nIdentificationNumber = 0;
@@ -608,9 +610,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			};
 			//remove the current golem and add the new one
 			//in its place
-			int layerat = MObjectManager::GetInstance()->FindLayer( pGolem->m_nIdentificationNumber ).GetLayerID();
 			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
-			OM->AddUnitIndexed(pNewGolem, layerat);
+			OM->AddUnitIndexed(pNewGolem, pGolem->GetLayerLocation());
 		}
 		break;
 	}

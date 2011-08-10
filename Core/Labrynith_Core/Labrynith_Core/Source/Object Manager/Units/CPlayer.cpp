@@ -136,8 +136,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	if(!pBase || pBase == this)
 		return false;
 	
-	int layerat = MObjectManager::GetInstance()->FindLayer(pBase->m_nIdentificationNumber).GetLayerID();
-	if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
+	if(this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//if we collide with an object
@@ -168,44 +167,10 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				}
 				return true;
 			}
-
-			if( temp->GetType() == OBJ_DOOR )
-			{
-				//if we can hold the object we collided with...		
-				//allow the player to hold it unless 
-				//the player is already holding onto something
-				if( ((CDoor*)temp)->GetIsOpen() )
-					return false;
-				else
-					return true;
-			}
-
-			if( temp->GetType() == OBJ_SPAWNER )
-				return false;
-			
-			if( temp->GetType() == OBJ_PIT )
-				return temp->CheckCollision(this, nCanHandleCollision);
-			
-			if( temp->GetType() == OBJ_RAMP )
-				return temp->CheckCollision(this, nCanHandleCollision);
-			
-			if(temp->GetType() == OBJ_EXIT)
-			{
-				CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
-				//BUG- check if the level is valid
-				pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
-				//pGamePlay->SetCurrentLevel(1);
-				//Load the next level
-				CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/completeLevel.wav"));
-				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
-				return true;
-			}
-
-			if(temp->GetType() == OBJ_WATER)
-			{
-				//if the tile is frozen we can walk past it
-				return !((CWaterTile*)temp)->IsFrozen();
-			}
+			else if( temp->GetType() == OBJ_SPAWNER )
+				return false;						
+			else if( temp->GetType() == OBJ_OIL )
+				return temp->CheckCollision(this, nCanHandleCollision);			
 
 			return true;
 		}
@@ -217,29 +182,57 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		}
 		break;
 
-	case OBJECT_BUTTON:
+	case OBJECT_TILE:
 		{
 			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
 			{
 				((CButton*)pBase)->CheckCollision(this);
 				return false;
 			}
-
-			return false;
+			else if( pBase->GetType() == OBJ_DOOR )
+			{
+				//if we can hold the object we collided with...		
+				//allow the player to hold it unless 
+				//the player is already holding onto something
+				if( ((CDoor*)pBase)->GetIsOpen() )
+					return false;
+				else
+					return true;
+			}
+			else if(pBase->GetType() == OBJ_EXIT)
+			{
+				CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
+				//BUG- check if the level is valid
+				pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
+				//pGamePlay->SetCurrentLevel(1);
+				//Load the next level
+				CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/completeLevel.wav"));
+				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
+				return true;
+			}
+			else if( pBase->GetType() == OBJ_PIT )
+				return pBase->CheckCollision(this, nCanHandleCollision);		
+			else if( pBase->GetType() == OBJ_RAMP )
+				return pBase->CheckCollision(this, nCanHandleCollision);	
+			else if(pBase->GetType() == OBJ_WATER)
+			{
+				//if the tile is frozen we can walk past it
+				return !((CWaterTile*)pBase)->IsFrozen();
+			}
 		}
-		break ;
+		break;
 	};
 
 	return false;
 }
 void CPlayer::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase)
-		return; 
+	if( !pBase || !nCanHandleCollision || pBase->GetLayerLocation() != this->GetLayerLocation() )
+		return;
 
 	switch(pBase->m_nUnitType)
 	{
-		case OBJECT_BUTTON:
+		case OBJECT_TILE:
 		{
 			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
 			{

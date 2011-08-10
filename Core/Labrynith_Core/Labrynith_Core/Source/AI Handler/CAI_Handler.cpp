@@ -175,11 +175,26 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 	int TileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
 		 .GetFlake(OBJECT_TILE).GetInfoAtIndex(nX, nY);
 
-	//if we cannot pass that tile leave
-	bool Collided = ((CBaseEntity*)(pEntity))->CheckTileCollision(TileID);
-	if(Collided)
+	bool Collided = false;
+
+	if( TileID > 0 )
 	{
-		return Collided;
+		//cout << "AI:Collided With Object " << objectID << "\n";
+		Collided = ((CBaseEntity*)(pEntity))->CheckCollision(OM->GetUnit(TileID), nCanHandleCollision);
+		//Let the Entity handle its object collision
+		if(Collided)
+		{
+			return Collided;
+		}
+	}
+	else
+	{		
+		//if we cannot pass that tile leave
+		Collided = ((CBaseEntity*)(pEntity))->CheckTileCollision(TileID);
+		if(Collided)
+		{
+			return Collided;
+		}
 	}
 
 	//Check to see if we are colliding with an object
@@ -391,6 +406,15 @@ void CAI_Handler::DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCol
 	MObjectManager* OM = MObjectManager::GetInstance();
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
+
+	//Check to see if we are colliding with an object
+	int TileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
+		.GetFlake(OBJECT_TILE).GetInfoAtIndex(nX, nY);
+	if( TileID > 0 )
+	{
+		//Let the Entity handle its collision
+		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(TileID), nCanHandleCollision);
+	}
 
 	//Check to see if we are colliding with an object
 	int objectID = OM->FindLayer(pEntity->m_nIdentificationNumber)

@@ -7,6 +7,7 @@
 CRamp::CRamp(string direction)
 {	
 	this->m_nType = OBJ_RAMP;
+	m_nUnitType = OBJECT_TILE;
 	if(direction == "up")
 	{
 		Up = true;
@@ -26,12 +27,12 @@ bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	if(Up)
 	{
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-			MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() - 1) );
+			this->GetLayerLocation() - 1) );
 	}
 	else
 	{
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-			MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() + 1) );
+			this->GetLayerLocation() + 1) );
 	}
 
 	return false;

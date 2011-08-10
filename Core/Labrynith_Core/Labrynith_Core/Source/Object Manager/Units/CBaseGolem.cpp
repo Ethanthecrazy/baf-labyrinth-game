@@ -47,12 +47,8 @@ void CBaseGolem::Render( int CameraPosX, int CameraPosY )
 }
 bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this)
+	if(!pBase || pBase == this || !nCanHandleCollision || this->GetLayerLocation() != pBase->GetLayerLocation())
 		return true;
-	
-	int layerat = MObjectManager::GetInstance()->FindLayer(pBase->m_nIdentificationNumber).GetLayerID();
-	if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
-		return false;
 
 	switch(pBase->m_nUnitType)
 	{
@@ -99,12 +95,27 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
 				}
 				return false;
-			}
-			
-			if( pBase->GetType() == OBJ_SPAWNER )
+			}			
+			else if( pBase->GetType() == OBJ_SPAWNER )
 				return false;
+			else if( pBase->GetType() == OBJ_OIL )
+				return pBase->CheckCollision(this, nCanHandleCollision);	
+		}
+		break;
+	case OBJECT_ENTITY:
+		{
+			return CheckEntCollision((CBaseEntity*)pBase);
+		}
+		break;
 
-			if( pBase->GetType() == OBJ_DOOR )
+		case OBJECT_TILE:
+		{
+			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
+			{
+				((CButton*)pBase)->CheckCollision(this);
+				return false;
+			}
+			else if( pBase->GetType() == OBJ_DOOR )
 			{
 				//if we can hold the object we collided with...		
 				//allow the player to hold it unless 
@@ -114,40 +125,24 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				else
 					return true;
 			}
-			
-			if( pBase->GetType() == OBJ_PIT )
-				return pBase->CheckCollision(this, nCanHandleCollision);
-			
-			if( pBase->GetType() == OBJ_RAMP )
-				return pBase->CheckCollision(this, nCanHandleCollision);
-
-		}
-		break;
-	case OBJECT_ENTITY:
-		{
-			return CheckEntCollision((CBaseEntity*)pBase);
-		}
-		break;
-
-	case OBJECT_BUTTON:
-		{
-			
-			if( pBase->GetType() == OBJ_BUTTON || OBJ_ELECTRICBUTTON )
+			else if(pBase->GetType() == OBJ_EXIT)
 			{
-				if(nCanHandleCollision)
-				{
-					((CButton*)pBase)->CheckCollision(this);
-				}
-				return false;
+				return true;
 			}
-			return true;
+			else if( pBase->GetType() == OBJ_PIT )
+				return pBase->CheckCollision(this, nCanHandleCollision);		
+			else if( pBase->GetType() == OBJ_RAMP )
+				return pBase->CheckCollision(this, nCanHandleCollision);
 		}
-
+		break;
 	};
 	return false;
 }
 void CBaseGolem::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if( !pBase || !nCanHandleCollision || pBase->GetLayerLocation() != this->GetLayerLocation() )
+		return;
+
 	switch(pBase->m_nUnitType)
 	{
 	case OBJECT_BUTTON:
@@ -226,10 +221,9 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 	{
 		CAttractor* placedAttr = (CAttractor*)_toHandle->GetParam() ;
 		if( placedAttr->GetElemType() == this->GetGolemType() )
-		{			
-			//int layerat = MObjectManager::GetInstance()->FindLayer(placedAttr->m_nIdentificationNumber).GetLayerID();
-			//if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
-				//return;
+		{								
+			if(this->GetLayerLocation() != placedAttr->GetLayerLocation())
+				return;
 
 			//start moving toward our target
 			SetTargetPos( placedAttr->GetIndexPosX() , placedAttr->GetIndexPosY() ) ;

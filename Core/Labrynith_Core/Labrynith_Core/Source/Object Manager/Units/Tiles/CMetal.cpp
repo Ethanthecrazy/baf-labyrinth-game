@@ -12,6 +12,7 @@
 CMetal::CMetal() 
 {
 	CBaseObject::CBaseObject() ;
+	m_nUnitType = OBJECT_TILE;
 	m_nType = OBJ_METAL ;
 	SetPowered( false ) ;
 	SetElectricUpdateTimer( .5f ) ;
@@ -26,6 +27,7 @@ CMetal::CMetal()
 CMetal::~CMetal() 
 {
 	CBaseObject::~CBaseObject() ;
+	m_nUnitType = OBJECT_TILE;
 	MEventSystem::GetInstance()->UnregisterClient("CIRCUTBROKEN" , this ) ;
 }
 

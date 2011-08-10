@@ -12,8 +12,9 @@ private:
 	float m_fLifeDuration ;
 	float m_fFireTimer ;
 	bool m_bOnFire ;
+	bool m_bIsOil ;
 public:
-	COil( void ) ;
+	COil( bool bIsOil = true ) ;
 
 	void Update(float fDT) ;
 
@@ -26,6 +27,10 @@ public:
 	float GetLifeDuration( void ) { return m_fLifeDuration ; } ;
 	float GetFireTimer( void ) { return m_fFireTimer ; } ;
 	bool GetOnFire( void ) { return m_bOnFire ; } ;
+
+	bool GetIsOil( void ) { return m_bIsOil; }
+	
+	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 } ;
 
 #endif

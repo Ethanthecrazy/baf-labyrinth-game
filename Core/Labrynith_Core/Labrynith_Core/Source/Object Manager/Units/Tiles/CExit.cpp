@@ -3,7 +3,8 @@
 
 CExit::CExit()
 {
-	CBaseObject::CBaseObject();
+	CBaseObject::CBaseObject();	
+	m_nUnitType = OBJECT_TILE;
 	this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Exit.png" ));
 	this->m_nType = OBJ_EXIT;
 }

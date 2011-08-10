@@ -11,6 +11,7 @@
 CWaterTile::CWaterTile()
 {
 	CBaseObject::CBaseObject();
+	m_nUnitType = OBJECT_TILE;
 	this->m_nIceImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/iceTile.png" ));
 	this->m_nWaterImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/waterTile.png" ));
 	this->m_nType = OBJ_WATER;
@@ -25,6 +26,7 @@ CWaterTile::CWaterTile()
 CWaterTile::CWaterTile(bool bIsFrozen)
 {
 	CBaseObject::CBaseObject();
+	m_nUnitType = OBJECT_TILE;
 	this->m_nIceImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/iceTile.png" ));
 	this->m_nWaterImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/waterTile.png" ));
 	this->m_nType = OBJ_WATER;

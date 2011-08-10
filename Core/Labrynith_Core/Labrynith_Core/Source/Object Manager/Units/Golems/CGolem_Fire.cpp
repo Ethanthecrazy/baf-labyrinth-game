@@ -32,8 +32,6 @@ CGolem_Fire::~CGolem_Fire(void)
 
 void CGolem_Fire::Update(float fDT)
 {
-	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
-		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 	CBaseGolem::Update(fDT);
 	UpdateAI();
 	// check surrounding objects to see if they can catch on fire
@@ -65,6 +63,9 @@ void CGolem_Fire::Update(float fDT)
 void CGolem_Fire::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseGolem::Render(CameraPosX, CameraPosY);
+
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 }
 bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {

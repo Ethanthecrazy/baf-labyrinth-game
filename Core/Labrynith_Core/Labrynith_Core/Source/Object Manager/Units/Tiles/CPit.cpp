@@ -9,6 +9,7 @@
 
 CPit::CPit()
 {
+	m_nUnitType = OBJECT_TILE;
 	this->m_nType = OBJ_PIT;
 }
 
@@ -18,15 +19,15 @@ bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		return false;
 
 	//IUnitInterface* temp = new CBaseEntity();
-	//pBase->m_nIdentificationNumber = MObjectManager::GetInstance()->MoveUnit(pBase, MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() + 1 );
+	//pBase->m_nIdentificationNumber = MObjectManager::GetInstance()->MoveUnit(pBase, this->GetLayerLocation() + 1 );
 	//MObjectManager::GetInstance()->RemoveUnit( pBase->m_nIdentificationNumber );
 	
-	if( MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != CGamePlayState::GetInstance()->GetNumLevelFloors() )
+	if( this->GetLayerLocation() != CGamePlayState::GetInstance()->GetNumLevelFloors() )
 	{		
 		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/hurt.mp3"));
 
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-			MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() + 1) );
+			this->GetLayerLocation() + 1) );
 	}
 	else
 	{
@@ -42,7 +43,7 @@ bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 void CPit::Render( int CameraPosX, int CameraPosY )
 {	
-	if( MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != CGamePlayState::GetInstance()->GetNumLevelFloors() )		
+	if( this->GetLayerLocation() != CGamePlayState::GetInstance()->GetNumLevelFloors() )		
 		this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pitbelow.png" ));
 	else
 		this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/pit.png" ));

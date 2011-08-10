@@ -45,7 +45,7 @@ void CGolem_Earth::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase)
+	if(!pBase || pBase == this || !nCanHandleCollision)
 		return false;
 
 	//If the base collides with an object or entity leave

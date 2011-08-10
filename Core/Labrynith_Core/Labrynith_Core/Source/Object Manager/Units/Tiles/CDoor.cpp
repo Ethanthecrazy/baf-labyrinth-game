@@ -3,7 +3,7 @@
 
 CDoor::CDoor(string nLink)
 {
-	//m_nUnitType = OBJECT_OBJECT;
+	m_nUnitType = OBJECT_TILE;
 	m_nType = OBJ_DOOR;
 	m_bIsOpen = false;
 	m_nLink = nLink;
