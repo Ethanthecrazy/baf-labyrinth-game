@@ -21,7 +21,7 @@ CElectricButton::CElectricButton(string nLink)
 	m_nType = OBJ_ELECTRICBUTTON ;
 	SetPowered( false ) ;
 	SetElectricUpdateTimer( 0.0f ) ;
-	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0xffffffff ) ;
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTileElectric.png" , 0xffffffff ) ;
 	m_nAnimID = CAnimationManager::GetInstance()->GetID( "Electricity" ) ;
 	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/electricity.png") ;
 	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
