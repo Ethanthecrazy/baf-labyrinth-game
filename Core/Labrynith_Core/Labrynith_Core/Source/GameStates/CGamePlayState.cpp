@@ -179,7 +179,7 @@ void CGamePlayState::Render(void)
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
 
-	/*char temp[64];
+	char temp[64];
 
 	sprintf( temp, "%f", timestep ); 
 
@@ -187,7 +187,7 @@ void CGamePlayState::Render(void)
 
 	sprintf( temp, "%f", 1.0f / timestep ); 
 
-	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );*/
+	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
 }
 
 void CGamePlayState::Exit(void)

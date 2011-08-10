@@ -69,7 +69,7 @@ bool CElectricGenerator::MakeConnections( IUnitInterface* obj )
 			if( ( i == -1 && u != 0 ) || ( i == 1 && u != 0 ) || ( u == -1 && i != 0 ) || ( u == 1 && i != 0 ) )
 					continue ;
 			
-			int item = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
+			int item = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
 			int buttonID = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
 			int entityID = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
 			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;

@@ -15311,10 +15311,34 @@
         <Z>0</Z>
       </Position>
     </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>golem.shadow</Property>
+      <Position>
+        <X>1</X>
+        <Y>4</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>attractor.shadow</Property>
+      <Position>
+        <X>2</X>
+        <Y>6</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
   </Objects>
-  <FileName>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Levels\3.xml</FileName>
-  <Tilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Tiles.png</Tilesetpath>
-  <ObjectTilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Objects.png</ObjectTilesetpath>
+  <FileName>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrynith_Core\Labrynith_Core\resource\Levels\3.xml</FileName>
+  <Tilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
+  <ObjectTilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>
     <Width>5</Width>
     <Height>4</Height>
