@@ -1,6 +1,7 @@
 #include "CGolem_Shadow.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../CBaseObject.h"
 
 CGolem_Shadow::CGolem_Shadow(void)
 {
@@ -42,6 +43,30 @@ bool CGolem_Shadow::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisi
 		return Collided;
 
 	//Do Shadow Golem specific Collisions
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			//Entities cannot walk-thro other entities
+			if(!nCanHandleCollision)
+				return true;
+
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+			}
+			return true;
+		}
+		break;
+	};
 	return false;
 }
 bool CGolem_Shadow::CheckTileCollision(int TileID)

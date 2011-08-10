@@ -7,6 +7,7 @@
 class CGolem_Earth : public CBaseGolem , public IListener
 {
 
+	void EarthGolemSetup();
 public:
 	CGolem_Earth(void);
 	CGolem_Earth(CBaseGolem* pGolem);

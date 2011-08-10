@@ -1,6 +1,7 @@
 #include "CGolem_Fire.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../../../Messaging/MMessageSystem.h"
 #include "../../MObjectManager.h"
 #include "../Objects/COil.h"
 #include "../CPlayer.h"
@@ -86,6 +87,59 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 				}
 				return true;
 			}
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			//Entities cannot walk-thro other entities
+			if(!nCanHandleCollision)
+				return true;
+
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+				switch(temp->GetGolemType())
+				{
+				case EARTH_GOLEM:
+					{
+						if(nCanHandleCollision)
+						{
+							//turn me into an Lava Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, LAVA_GOLEM));
+							//Get rid of the Earth golem
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+						}						
+					}
+					break;
+
+				case WATER_GOLEM:
+					{
+						if(nCanHandleCollision)
+						{
+							//Get rid of the Water golem
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+							//Get rid of this the Fire Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+						}						
+					}
+					break;
+
+				case ICE_GOLEM:
+					{
+						if(nCanHandleCollision)
+						{
+							//Change the Ice Golem into a Water Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, WATER_GOLEM));
+							//Get rid of this the Fire Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+						}						
+					}
+					break;
+				};
+			}
+			return true;
 		}
 		break;
 	};

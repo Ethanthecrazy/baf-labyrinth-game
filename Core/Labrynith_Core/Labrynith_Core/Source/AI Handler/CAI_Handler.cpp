@@ -3,6 +3,7 @@
 #include "../Object Manager/MObjectManager.h"
 
 #include "../Object Manager/Units/CBaseGolem.h"
+#include "../Object Manager/Units/CBaseObject.h"
 
 //singleton
 CAI_Handler::CAI_Handler()
@@ -420,6 +421,50 @@ void CAI_Handler::DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCol
 		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(buttonID), nCanHandleCollision);
 	}
 }
+void CAI_Handler::CheckCollisionRange(const CBaseGolem* pEntity, const unsigned int nRange)
+{
+	MObjectManager* OM = MObjectManager::GetInstance();
+	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
+	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
+	for(int i = -(int)nRange; i <= (int)nRange; i++)
+	{
+		for(int j = -(int)nRange; j <= (int)nRange; j++)
+		{
+			//Check to see if we are colliding with an object
+			int objectID = OM->FindLayer(pEntity->m_nIdentificationNumber)
+				.GetFlake(OBJECT_OBJECT).GetInfoAtIndex(nX + i, nY + j);
+
+			CBaseObject* pObj = ((CBaseObject*)OM->GetUnit(objectID));
+			if( objectID > 0 )
+			{
+				//if according to the object, we can check collision
+				//with its type..
+				if(((CBaseGolem*)(pEntity))->CanInteract(pObj))
+				{
+					//Let the Golem handle its object collision
+					((CBaseGolem*)(pEntity))->CheckCollision(pObj, true);
+				}
+			}
+
+			//Check to see if we are colliding with an entity
+			int EntityID = OM->FindFlake(pEntity->m_nIdentificationNumber)
+				.GetInfoAtIndex(nX + i, nY + j);
+
+			//we cannot collide with ourselves
+			CBaseEntity* pTemp = ((CBaseEntity*)OM->GetUnit(EntityID));
+			if( EntityID > 0 && pTemp != pEntity )
+			{
+				//if according to the object, we can check collision
+				//with its type..
+				if(((CBaseGolem*)(pEntity))->CanInteract(pTemp))
+				{
+					//Let the Golem handle its collision
+					((CBaseGolem*)(pEntity))->CheckCollision(pTemp, true);
+				}
+			}
+		}
+	}
+}
 bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 	const int StartDirection, tTarget& startPos, bool useStartDir)
 {
@@ -687,6 +732,8 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 			//There are no walls
 			//Up Path has to be smaller
 			//than Down path to check Up
+			//BUG- equal to is missing, need to check the walls that arent on
+			//the same side as the player
 			if(PathDown <= nPathUp)
 			{
 				startPos.m_nY += nDistanceDown;
@@ -698,7 +745,7 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 				return true;
 			}
 		}
-
+		return false;
 }
 bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 {

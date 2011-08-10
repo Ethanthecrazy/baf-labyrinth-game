@@ -17,9 +17,6 @@ CBaseGolem::CBaseGolem(void)
 	ClearTarget();
 	SetGolemType(-1);
 	SetMoveType(TARGET_MOVE);
-	//SetMoveType(RAND_MOVE);
-	/*MEventSystem::GetInstance()->RegisterClient("ATTRACTORPLACED" , this ) ;
-	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED" , this ) ;*/
 	m_nEatSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/creature_snarl1.mp3" ) ;
 	m_nStepSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/footstepsGolem.mp3" ) ;
 }
@@ -199,6 +196,10 @@ void CBaseGolem::UpdateAI()
 		break;
 	}
 }
+bool CBaseGolem::CanInteract(IUnitInterface* pBase)
+{
+	return false;
+}
 
 int CBaseGolem::GetGolemType() const
 {
@@ -226,9 +227,9 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 		CAttractor* placedAttr = (CAttractor*)_toHandle->GetParam() ;
 		if( placedAttr->GetElemType() == this->GetGolemType() )
 		{			
-			int layerat = MObjectManager::GetInstance()->FindLayer(placedAttr->m_nIdentificationNumber).GetLayerID();
-			if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
-				return;
+			//int layerat = MObjectManager::GetInstance()->FindLayer(placedAttr->m_nIdentificationNumber).GetLayerID();
+			//if(MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetLayerID() != layerat)
+				//return;
 
 			//start moving toward our target
 			SetTargetPos( placedAttr->GetIndexPosX() , placedAttr->GetIndexPosY() ) ;
@@ -286,5 +287,5 @@ bool CBaseGolem::CheckEntCollision(CBaseEntity* pEntity)
 		return true;
 	}
 
-	return true;
+	return false;
 }

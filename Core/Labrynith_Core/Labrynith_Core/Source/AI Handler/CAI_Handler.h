@@ -2,7 +2,9 @@
 #define CAI_HANDLER
 
 #include <vector>
+class IUnitInterface;
 class CBaseEntity;
+class CBaseGolem;
 
 enum DIRECTIONS{DIRUP = 1, DIRDOWN, DIRLEFT, DIRRIGHT};
 
@@ -106,12 +108,21 @@ public:
 	// its own collisions
 	bool CheckCollisions(const CBaseEntity* pEntity, const int nX, 
 		const int nY, bool nCanHandleCollision);
+	//called when an entity is no longer colliding with an object
 	void DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCollision);
+	//checks for collisions with an entity in the specified range
+	void CheckCollisionRange(const CBaseGolem* pEntity, const unsigned int nRange);
+	//moves in the 4 cardinal dircetions
 	bool CardinalMove(const CBaseEntity* pEntity, const int nDirection);
+	//used to move toward a certain position(target)
 	void MoveToPos(const CBaseEntity* pEntity);
+	//moves randomly around the area
 	void RandomMove(const CBaseEntity* pEntity);
+	//Sets the main target that object is after
 	void SetPrimaryTarget(const CBaseEntity* pEntity, int nX, int nY);
+	//Clears all primary and temp targets that entity may have
 	void ClearTargets(int nAI_ID);
+	//clears the entire list of entities
 	void ClearEntityList();
 };
 #endif

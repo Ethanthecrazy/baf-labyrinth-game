@@ -2,16 +2,15 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
 #include "../../MObjectManager.h"
+#include "../CBaseObject.h"
 #include "../Tiles/CMetal.h"
 #include "../Tiles/CElectricButton.h"
 #include "CGolem_Water.h"
 #include "../../../Animation Manager/CAnimationManager.h"
 #include "../Tiles/CWaterTile.h"
 
-CGolem_Iron::CGolem_Iron(void)
+void CGolem_Iron::IronGolemSetup()
 {
-	//basic Iron golem setup
-	CBaseGolem::CBaseGolem();
 	SetGolemType(IRON_GOLEM);
 	SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IronGolem.png" ));
 	SetElectricUpdateTimer( .5f ) ;
@@ -24,10 +23,28 @@ CGolem_Iron::CGolem_Iron(void)
 	MEventSystem::GetInstance()->RegisterClient("ATTRACTORREMOVED", this);
 	MEventSystem::GetInstance()->RegisterClient("CIRCUTBROKEN" , this ) ;
 }
+CGolem_Iron::CGolem_Iron(void)
+{
+	CBaseGolem::CBaseGolem();
+	//basic Iron golem setup
+	IronGolemSetup();
+
+}
 CGolem_Iron::CGolem_Iron(CBaseGolem* pGolem)
 {
-	//basic Iron golem setup
 	CGolem_Iron::CGolem_Iron();
+	//basic Iron golem setup
+	IronGolemSetup();
+	//copy its positions
+	this->SetIndexPosX(pGolem->GetIndexPosX());
+	this->SetIndexPosY(pGolem->GetIndexPosY());
+	this->SetPosX(pGolem->GetPosX());
+	this->SetPosY(pGolem->GetPosY());
+	this->SetLastPosX(pGolem->GetLastPosX());
+	this->SetLastPosY(pGolem->GetLastPosY());
+	//copy its states
+	this->SetFlag_DirectionToMove(pGolem->GetFlag_DirectionToMove());
+	this->SetFlag_MovementState(pGolem->GetFlag_MovementState());
 }
 CGolem_Iron::~CGolem_Iron(void)
 {
@@ -70,6 +87,30 @@ bool CGolem_Iron::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 		return Collided;
 
 	//Do Iron Golem specific Collisions
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			//Entities cannot walk-thro other entities
+			if(!nCanHandleCollision)
+				return true;
+
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+			}
+			return true;
+		}
+		break;
+	};
 	return false;
 }
 bool CGolem_Iron::CheckTileCollision(int TileID)

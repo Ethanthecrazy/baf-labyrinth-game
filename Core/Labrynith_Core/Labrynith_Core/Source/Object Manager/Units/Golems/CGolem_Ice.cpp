@@ -1,7 +1,9 @@
 #include "CGolem_Ice.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../../../Messaging/MMessageSystem.h"
 #include "../Tiles/CWaterTile.h"
+#include "../../../AI Handler/CAI_Handler.h"
 
 void CGolem_Ice::IceGolemSetup()
 {
@@ -53,6 +55,9 @@ void CGolem_Ice::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase)
+		return false;
+
 	//If the base collides with an object or entity leave
 	bool Collided = CBaseGolem::CheckCollision(pBase, nCanHandleCollision);
 	if(Collided)
@@ -78,6 +83,57 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 			}
 		}
 		break;
+
+	case OBJECT_ENTITY:
+		{
+			//Entities cannot walk-thro other entities
+			if(!nCanHandleCollision)
+				return true;
+
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+				switch(temp->GetGolemType())
+				{
+				case FIRE_GOLEM:
+					{
+						if(nCanHandleCollision)
+						{
+						//turn me into a water golem
+						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, WATER_GOLEM));
+						//Get rid of the Fire Golem
+						MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+						}
+					}
+					break;
+
+				case WATER_GOLEM:
+					{
+						if(nCanHandleCollision)
+						{
+						//turn the Water golem into an Ice Golem
+						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, ICE_GOLEM));
+						}
+					}
+					break;
+
+				case LAVA_GOLEM:
+					{
+						if(nCanHandleCollision)
+						{
+						//turn the Lava golem into an Iron Golem
+						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM));
+						//Get rid of this the Ice Golem
+						MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+						}
+					}
+					break;
+				};
+			}
+			return true;
+		}
+		break;
 	};
 	return false;
 }
@@ -94,9 +150,44 @@ bool CGolem_Ice::CheckTileCollision(int TileID)
 void CGolem_Ice::UpdateAI()
 {
 	CBaseGolem::UpdateAI();
+	CAI_Handler::GetInstance()->CheckCollisionRange(this, 1);
 }
 void CGolem_Ice::HandleEvent( Event* _toHandle )
 {
 	CBaseGolem::HandleEvent(_toHandle);
 	//Events only the Ice Golem responds to
+}
+bool CGolem_Ice::CanInteract(IUnitInterface* pBase)
+{
+	if(!pBase)
+		return false;
+
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			return false;
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+				switch(temp->GetGolemType())
+				{
+				case FIRE_GOLEM:
+					{
+						return true;
+					}
+					break;
+				};
+			}
+		}
+		break;
+	};
+	return false;
 }

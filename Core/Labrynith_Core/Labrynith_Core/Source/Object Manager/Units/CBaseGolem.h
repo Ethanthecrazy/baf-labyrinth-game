@@ -27,6 +27,7 @@ public:
 	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	virtual bool CheckTileCollision(int TileID);
 	virtual void UpdateAI();
+	virtual bool CanInteract(IUnitInterface* pBase);
 
 	//accessors
 	int GetGolemType() const;

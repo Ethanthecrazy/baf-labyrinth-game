@@ -19,5 +19,6 @@ public:
 	bool CheckTileCollision(int TileID);
 	void UpdateAI();
 	void HandleEvent( Event* _toHandle );
+	bool CanInteract(IUnitInterface* pBase); 
 };
 #endif

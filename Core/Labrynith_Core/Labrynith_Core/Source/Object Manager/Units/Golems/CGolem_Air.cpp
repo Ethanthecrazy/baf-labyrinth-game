@@ -1,6 +1,7 @@
 #include "CGolem_Air.h"
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../CBaseObject.h"
 
 CGolem_Air::CGolem_Air(void)
 {
@@ -43,6 +44,30 @@ bool CGolem_Air::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		return Collided;
 
 	//Do Air Golem specific Collisions
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			//Entities cannot walk-thro other entities
+			if(!nCanHandleCollision)
+				return true;
+
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+			}
+			return true;
+		}
+		break;
+	};
 	return false;
 }
 bool CGolem_Air::CheckTileCollision(int TileID)

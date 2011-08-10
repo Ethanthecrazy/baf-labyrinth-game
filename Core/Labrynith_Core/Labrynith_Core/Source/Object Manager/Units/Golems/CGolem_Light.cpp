@@ -2,6 +2,7 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
 #include "../../MObjectManager.h"
+#include "../CBaseObject.h"
 
 CGolem_Light::CGolem_Light(void)
 {
@@ -46,6 +47,30 @@ bool CGolem_Light::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 		return Collided;
 
 	//Do Light Golem specific Collisions
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			//Entities cannot walk-thro other entities
+			if(!nCanHandleCollision)
+				return true;
+
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+			}
+			return true;
+		}
+		break;
+	};
 	return false;
 }
 bool CGolem_Light::CheckTileCollision(int TileID)

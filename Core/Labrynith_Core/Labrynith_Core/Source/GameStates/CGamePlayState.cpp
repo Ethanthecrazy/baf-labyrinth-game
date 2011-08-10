@@ -36,7 +36,7 @@ int CGamePlayState::testVaribale = -1;
 
 CGamePlayState::CGamePlayState()
 {
-	m_nCurrLevel = 5;
+	m_nCurrLevel = 3;
 	testVaribale = -1;
 	m_nMouseID = -1 ;
 	currFloor = 1;

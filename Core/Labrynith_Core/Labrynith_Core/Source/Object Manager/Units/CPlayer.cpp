@@ -36,8 +36,8 @@ void CPlayer::Update(float fDT)
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
 {
-	//MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
-		//.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 	CBaseEntity::Render(CameraPosX, CameraPosY);
 
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
@@ -234,6 +234,9 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 }
 void CPlayer::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase)
+		return; 
+
 	switch(pBase->m_nUnitType)
 	{
 		case OBJECT_BUTTON:

@@ -12,6 +12,7 @@ private:
 	bool m_bPowered ;
 	bool m_bGolemPowered ;
 	float m_nElectricUpdateTimer ;
+	void IronGolemSetup();
 public:
 	CGolem_Iron(void);
 	CGolem_Iron(CBaseGolem* pGolem);

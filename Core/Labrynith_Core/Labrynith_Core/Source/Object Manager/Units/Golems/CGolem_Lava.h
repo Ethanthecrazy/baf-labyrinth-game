@@ -7,6 +7,7 @@
 class CGolem_Lava : public CBaseGolem , public IListener
 {
 
+	void LavaGolemSetup();
 public:
 	CGolem_Lava(void);
 	CGolem_Lava(CBaseGolem* pGolem);
@@ -18,5 +19,6 @@ public:
 	bool CheckTileCollision(int TileID);
 	void UpdateAI();
 	void HandleEvent( Event* _toHandle );
+	bool CanInteract(IUnitInterface* pBase); 
 };
 #endif
