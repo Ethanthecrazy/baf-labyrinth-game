@@ -271,9 +271,13 @@ void CGolem_Fire::HandleEvent( Event* _toHandle )
 		{		
 			//if we are on an ice tile, turn it into water
 			MObjectManager* OM = MObjectManager::GetInstance();
-			int tile = OM->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_TILE)
-				.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
-			IUnitInterface* unit = OM->GetUnit(tile);
+
+			//int tile = OM->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+			
+			//IUnitInterface* unit = OM->GetUnit(tile);
+
+			IUnitInterface* unit = nullptr;
+
 			CBaseObject* obj;
 			//if the object isnt valid leave
 			if(!unit)

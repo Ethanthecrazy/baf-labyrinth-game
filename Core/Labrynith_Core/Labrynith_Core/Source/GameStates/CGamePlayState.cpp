@@ -153,7 +153,7 @@ void CGamePlayState::Render(void)
 
 	CBaseEntity* player = nullptr;
 	if( testVaribale > 0 )
-		CBaseEntity* player = (CBaseEntity*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+		player = (CBaseEntity*)MObjectManager::GetInstance()->GetUnit( testVaribale );
 
 	if( player )
 	{
@@ -191,11 +191,11 @@ void CGamePlayState::Render(void)
 
 	//char temp[64];
 
-	sprintf_s( temp, "%f", timestep ); 
+	//sprintf_s( temp, "%f", timestep ); 
 	//sprintf( temp, "%f", timestep ); 
 
 
-	sprintf_s( temp, "%f", 1.0f / timestep ); 
+	//sprintf_s( temp, "%f", 1.0f / timestep ); 
 	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
 
 	//sprintf( temp, "%f", 1.0f / timestep ); 
