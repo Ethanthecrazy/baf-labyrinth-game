@@ -20,6 +20,8 @@ public:
 
 	void Update(float fDT ) ;
 	void Render( int CameraPosX, int CameraPosY );
+	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
+	bool CanInteract(IUnitInterface* pBase);
 
 	void HandleEvent( Event* _toHandle );
 

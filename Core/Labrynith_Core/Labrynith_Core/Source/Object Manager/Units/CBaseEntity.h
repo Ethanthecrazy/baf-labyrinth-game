@@ -36,6 +36,7 @@ public:
 	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	//this function determines if we can walk thro certain tiles
 	virtual bool CheckTileCollision(int TileID);
+	virtual bool CanInteract(IUnitInterface* pBase);
 	//loads the animations for basic movement
 	void LoadEntMoveAnimIDs();
 	void ClearTarget();

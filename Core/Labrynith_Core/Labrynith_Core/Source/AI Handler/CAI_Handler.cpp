@@ -420,7 +420,7 @@ void CAI_Handler::DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCol
 		((CBaseEntity*)(pEntity))->ExitCollision(OM->GetUnit(TileID), nCanHandleCollision);
 	}
 }
-void CAI_Handler::CheckCollisionRange(const CBaseGolem* pEntity, const unsigned int nRange)
+void CAI_Handler::CheckCollisionRange(const IUnitInterface* pEntity, const unsigned int nRange)
 {
 	MObjectManager* OM = MObjectManager::GetInstance();
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
@@ -429,12 +429,29 @@ void CAI_Handler::CheckCollisionRange(const CBaseGolem* pEntity, const unsigned 
 	{
 		for(int j = -(int)nRange; j <= (int)nRange; j++)
 		{
+			//Check to see if we are colliding with a tile
+			int tileID = OM->FindLayer(pEntity->m_nIdentificationNumber)
+				.GetFlake(OBJECT_TILE).GetInfoAtIndex(nX + i, nY + j);
+
+			CBaseObject* pTile = ((CBaseObject*)OM->GetUnit(tileID));
+			if( tileID > 0  && pTile)
+			{
+				//if according to the object, we can check collision
+				//with its type..
+				if(((CBaseGolem*)(pEntity))->CanInteract(pTile))
+				{
+					//Let the Golem handle its object collision
+					((CBaseGolem*)(pEntity))->CheckCollision(pTile, true);
+				}
+			}
+
+
 			//Check to see if we are colliding with an object
 			int objectID = OM->FindLayer(pEntity->m_nIdentificationNumber)
 				.GetFlake(OBJECT_OBJECT).GetInfoAtIndex(nX + i, nY + j);
 
 			CBaseObject* pObj = ((CBaseObject*)OM->GetUnit(objectID));
-			if( objectID > 0 )
+			if( objectID > 0  && pObj)
 			{
 				//if according to the object, we can check collision
 				//with its type..
@@ -451,7 +468,7 @@ void CAI_Handler::CheckCollisionRange(const CBaseGolem* pEntity, const unsigned 
 
 			//we cannot collide with ourselves
 			CBaseEntity* pTemp = ((CBaseEntity*)OM->GetUnit(EntityID));
-			if( EntityID > 0 && pTemp != pEntity )
+			if( EntityID > 0 && pTemp && pTemp != pEntity )
 			{
 				//if according to the object, we can check collision
 				//with its type..

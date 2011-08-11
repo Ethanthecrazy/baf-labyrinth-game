@@ -231,6 +231,9 @@
     <ClCompile Include="Source\Object Manager\Units\Tiles\CBreakableWall.cpp">
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameStates\COptionsState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -421,6 +424,9 @@
     </ClInclude>
     <ClInclude Include="Source\Object Manager\Units\Tiles\CBreakableWall.h">
       <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\COptionsState.h">
+      <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

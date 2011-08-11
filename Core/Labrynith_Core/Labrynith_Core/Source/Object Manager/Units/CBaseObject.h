@@ -28,6 +28,7 @@ public:
 
 	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
+	virtual bool CanInteract(IUnitInterface* pBase);
 
 	void AddRef(void);
 	void Release(void);

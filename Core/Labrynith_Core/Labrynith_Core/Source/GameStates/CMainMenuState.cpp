@@ -2,6 +2,7 @@
 #include "CMainMenuState.h"
 #include "CGamePlayState.h"
 #include "CSaveSlotState.h"
+#include "COptionsState.h"
 
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "../Wrappers/CSGD_DirectInput.h"
@@ -63,6 +64,7 @@ bool CMainMenuState::Input(void)
 
 		case OPTIONS:
 			//Change to Options State
+			pGame->ChangeState( COptionsState::GetInstance() );
 			break;
 			
 		case CREDITS:

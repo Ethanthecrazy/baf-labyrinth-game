@@ -247,6 +247,10 @@ void CBaseObject::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 
 }
+bool CBaseObject::CanInteract(IUnitInterface* pBase)
+{
+	return false;
+}
 
 void CBaseObject::AddRef(void)
 {

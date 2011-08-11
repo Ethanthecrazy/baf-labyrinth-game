@@ -6,6 +6,7 @@
 #include "../Objects/COil.h"
 #include "../CPlayer.h"
 #include "../Tiles/CWaterTile.h"
+#include "../Objects/CAttractor.h"
 
 CGolem_Fire::CGolem_Fire(void)
 {
@@ -128,6 +129,7 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 					{
 						if(nCanHandleCollision)
 						{
+							//Check exit collision before removing the objects
 							int tileid = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
 
@@ -193,12 +195,19 @@ void CGolem_Fire::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 						((CWaterTile*)temp)->SetIsFrozen(false);
 					}
 				}
+				else
+				{
+					if(nCanHandleCollision)
+					{
+						//if its water, get rid of this the Fire Golem
+						MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+					}
+				}
 			}
 		}
 		break;
 	};
 }
-
 bool CGolem_Fire::CheckTileCollision(int TileID)
 {
 	//If the base collides with a tile leave
@@ -209,6 +218,40 @@ bool CGolem_Fire::CheckTileCollision(int TileID)
 	//Do Fire Golem specific Collisions
 	return false;
 }
+bool CGolem_Fire::CanInteract(IUnitInterface* pBase)
+{
+	if(!pBase)
+		return false;
+
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			return false;
+		}
+		break;
+
+	case OBJECT_ENTITY:
+		{
+			CBaseEntity* temp = (CBaseEntity*)pBase;
+			if(temp->GetType() == ENT_GOLEM)
+			{
+				CBaseGolem* temp = (CBaseGolem*)pBase;
+				switch(temp->GetGolemType())
+				{
+				case FIRE_GOLEM:
+					{
+						return true;
+					}
+					break;
+				};
+			}
+		}
+		break;
+	};
+	return false;
+}
 void CGolem_Fire::UpdateAI()
 {
 	CBaseGolem::UpdateAI();
@@ -217,4 +260,35 @@ void CGolem_Fire::HandleEvent( Event* _toHandle )
 {
 	CBaseGolem::HandleEvent(_toHandle);
 	//Events only the Fire Golem responds to
+	if( _toHandle->GetEventID() == "ATTRACTORREMOVED" )
+	{
+		CAttractor* attr = (CAttractor*)_toHandle->GetParam() ;
+		if( !attr )
+			return;
+
+		//If our target has been cleared
+		if(!HasTarget())
+		{		
+			//if we are on an ice tile, turn it into water
+			MObjectManager* OM = MObjectManager::GetInstance();
+			int tile = OM->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_TILE)
+				.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+			IUnitInterface* unit = OM->GetUnit(tile);
+			CBaseObject* obj;
+			//if the object isnt valid leave
+			if(!unit)
+				return;
+
+			if(unit->m_nUnitType == OBJECT_TILE)
+			{
+				obj = (CBaseObject*)unit;
+				if(obj->GetType() == OBJ_WATER)
+				{
+					((CWaterTile*)obj)->SetIsFrozen(false);
+					//and call exitcollision to get rid of the fire golem
+					this->ExitCollision(obj, true);
+				}
+			}
+		}
+	}
 }

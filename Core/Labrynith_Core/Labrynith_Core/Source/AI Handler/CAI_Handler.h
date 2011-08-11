@@ -111,7 +111,7 @@ public:
 	//called when an entity is no longer colliding with an object
 	void DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCollision);
 	//checks for collisions with an entity in the specified range
-	void CheckCollisionRange(const CBaseGolem* pEntity, const unsigned int nRange);
+	void CheckCollisionRange(const IUnitInterface* pEntity, const unsigned int nRange);
 	//moves in the 4 cardinal dircetions
 	bool CardinalMove(const CBaseEntity* pEntity, const int nDirection);
 	//used to move toward a certain position(target)

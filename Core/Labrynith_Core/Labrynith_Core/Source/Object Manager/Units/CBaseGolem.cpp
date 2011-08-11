@@ -115,14 +115,14 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		{
 			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
 			{
-				((CButton*)pBase)->CheckCollision(this);
-				return false;
+				if(nCanHandleCollision)
+				{
+					((CButton*)pBase)->CheckCollision(this);
+					return false;
+				}
 			}
 			else if( pBase->GetType() == OBJ_DOOR )
 			{
-				//if we can hold the object we collided with...		
-				//allow the player to hold it unless 
-				//the player is already holding onto something
 				if( ((CDoor*)pBase)->GetIsOpen() )
 					return false;
 				else
@@ -243,7 +243,7 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 		// ATTRACTOR REMOVED ON DIFFERENT LEVEL?
 		if( GetTargetPosX() == attr->GetIndexPosX() && GetTargetPosY() == attr->GetIndexPosY() )
 		{
-			ClearTarget();
+			ClearTarget();		
 		}
 	}
 }

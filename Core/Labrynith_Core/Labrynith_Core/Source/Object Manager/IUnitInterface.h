@@ -64,6 +64,7 @@ public:
 
 	virtual bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision) = 0;
 	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision) = 0;
+	virtual bool CanInteract(IUnitInterface* pBase) = 0;
 
 		// accessors
 	float GetPosX(void) { return m_fPosX; }

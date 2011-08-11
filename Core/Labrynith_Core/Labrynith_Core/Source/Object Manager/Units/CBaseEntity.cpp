@@ -177,6 +177,10 @@ bool CBaseEntity::CheckTileCollision(int TileID)
 {
 	return false;
 }
+bool CBaseEntity::CanInteract(IUnitInterface* pBase)
+{
+	return false;
+}
 
 void CBaseEntity::LoadEntMoveAnimIDs()
 {

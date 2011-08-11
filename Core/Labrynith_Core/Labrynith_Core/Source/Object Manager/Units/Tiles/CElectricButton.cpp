@@ -47,7 +47,7 @@ void CElectricButton::Update( float fDT )
 	}
 }
 
-bool CElectricButton::CheckCollision(IUnitInterface* pBase)
+bool CElectricButton::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
