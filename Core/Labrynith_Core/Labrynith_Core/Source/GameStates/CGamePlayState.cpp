@@ -486,6 +486,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			   //if( checkObject == 0 ) // if the tile is NOT empty
 				  // break;
 
+
+				
 				IUnitInterface* object = player->GetHeldItem() ;
 				object->SetIndexPosX( tileXPos ) ;
 				object->SetIndexPosY( tileYPos ) ;
@@ -493,6 +495,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				//MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
 				player->GetHeldItem()->SetPosX( (float)(tileXPos * 32) );
 				player->GetHeldItem()->SetPosY( (float)(tileYPos * 32) );
+
+				player->GetHeldItem()->Release();
+
 				player->SetHeldItem(NULL);
 
 				if( object->GetType() == OBJ_ATTRACTOR )
@@ -510,7 +515,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			CBaseObject* pBase = NewMessage->GetMsgObject() ;
 			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
 
-			
+			pBase->AddRef();
 			if( pBase->GetType() == OBJ_POWERGLOVES || pBase->GetType() == OBJ_OILCAN )
 			{
 				if( player->GetEquippedItem() == NULL )

@@ -55,7 +55,7 @@ int MFlake::AddUnitIndexed( IUnitInterface* _toAdd )
 {
 	if( m_nSize + 1 > 3499 )
 		return -2;
-
+	_toAdd->AddRef();
 	
 	if( _toAdd->m_nIdentificationNumber == 0 )
 	{
@@ -92,6 +92,7 @@ bool MFlake::RemoveUnit( int _Ident )
 		IUnitInterface* toDelete = m_vObjects[ ArrayIndex.ConvertTrueValue( _Ident ) ];
 		InformationArray[ toDelete->GetIndexPosX() + toDelete->GetIndexPosY() * LayerWidth ] = 0;
 
+		m_vObjects[ ArrayIndex.ConvertTrueValue( _Ident ) ]->Release();
 		m_vObjects.erase( m_vObjects.begin() + ArrayIndex.ConvertTrueValue( _Ident ) );
 		
 		ArrayIndex.DecrementFromNode( ArrayIndex.ConvertTrueValue( _Ident ) );

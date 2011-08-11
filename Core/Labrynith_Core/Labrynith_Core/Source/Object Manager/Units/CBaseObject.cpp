@@ -25,7 +25,7 @@ CBaseObject::CBaseObject()
 
 	 m_uiRefCount = 1;
 
-	 m_nIdentificationNumber = 0 ;
+	 m_nIdentificationNumber = 0;
 }
 
 CBaseObject::~CBaseObject(void)
