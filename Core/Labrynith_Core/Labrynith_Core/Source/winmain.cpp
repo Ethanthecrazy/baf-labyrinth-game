@@ -223,6 +223,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MSG		msg;	//	Generic message.
 	HWND	hWnd;	//	Main Window Handle.
 
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	// this function call will set a breakpoint at the location of a leaked block
+	// set the parameter to the identifier for a leaked block
+	//	_CrtSetBreakAlloc(187);
 
 	// Don't let more than one instance of the application exist
 	//

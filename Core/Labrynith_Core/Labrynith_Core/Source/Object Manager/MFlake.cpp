@@ -110,11 +110,14 @@ bool MFlake::RemoveUnit( int _Ident )
 void MFlake::RemoveAllUnits( void )
 {
 	m_nSize = 0;
-
-
+	static int ObjectsRemoved = 0;
 	for( unsigned int i = 0; i < m_vObjects.size(); ++i )
+	{
 		delete m_vObjects[i];
+		ObjectsRemoved++;
+	}
 
+	cout << ObjectsRemoved << "\n";
 	m_vObjects.clear();
 
 	ArrayIndex.clear();
