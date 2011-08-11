@@ -16,8 +16,17 @@ CAnimationManager::CAnimationManager(const CAnimationManager* c)
 }
 CAnimationManager::~CAnimationManager()
 {
-	m_vAnims.clear();
+	for(unsigned int i = 0; i < m_vAnimPool.size(); i++)
+	{
+		delete m_vAnimPool[i];
+	}
 	m_vAnimPool.clear();
+
+	for(unsigned int i = 0; i < m_vAnims.size(); i++)
+	{
+		delete m_vAnims[i];
+	}
+	m_vAnims.clear();
 }
 
 ostream& operator<<(ostream& os, const CAnimationManager& manager)
