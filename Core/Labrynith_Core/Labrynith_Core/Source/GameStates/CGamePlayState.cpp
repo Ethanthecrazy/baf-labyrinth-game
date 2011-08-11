@@ -1,6 +1,8 @@
 #include "CGamePlayState.h"
 #include "CMainMenuState.h"
 #include "CLoadLevelState.h"
+#include "CGameOverState.h"
+#include "CPauseState.h"
 
 #include <string>
 
@@ -16,7 +18,6 @@
 #include "../Messaging/MEventSystem.h"
 #include "../HUD/CHUD.h"
 #include "../Wrappers/CSGD_FModManager.h"
-#include "CGameOverState.h"
 
 #include "../Object Manager/Units/Golems/CGolem_Earth.h"
 #include "../Object Manager/Units/Golems/CGolem_Fire.h"
@@ -42,6 +43,7 @@ CGamePlayState::CGamePlayState()
 	currFloor = 1;
 	numLevelFloors = 1;
 	m_bRenderCulling = true;
+	SetPaused(false);
 }
 
 // destructor
@@ -71,11 +73,13 @@ void CGamePlayState::Enter(void)
 
 bool CGamePlayState::Input(void)
 {
+	if(IsPaused())
+		return true;
+
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();	
 
 	if( pDI->KeyPressed( DIK_ESCAPE ) )
-		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
-
+		CGame::GetInstance()->PushState( CPauseState::GetInstance() );
 	
 	if( pDI->KeyPressed( DIK_T ) )
 		m_bRenderCulling = !m_bRenderCulling;
@@ -96,8 +100,10 @@ bool CGamePlayState::Input(void)
 
 void CGamePlayState::Update(float fDT)
 {
+	if(IsPaused())
+		return;
+
 	timestep = fDT;
-		
 	MObjectManager::GetInstance()->Update( fDT );
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
@@ -181,11 +187,11 @@ void CGamePlayState::Render(void)
 
 	char temp[64];
 
-	sprintf( temp, "%f", timestep ); 
+	sprintf_s( temp, "%f", timestep ); 
 
 	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
 
-	sprintf( temp, "%f", 1.0f / timestep ); 
+	sprintf_s( temp, "%f", 1.0f / timestep ); 
 
 	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
 }
@@ -479,8 +485,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				object->SetIndexPosY( tileYPos ) ;
 				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem() , MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetLayerID() ) ;
 				//MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
-				player->GetHeldItem()->SetPosX( tileXPos * 32 ) ;
-				player->GetHeldItem()->SetPosY( tileYPos * 32 ) ;
+				player->GetHeldItem()->SetPosX( (float)(tileXPos * 32) );
+				player->GetHeldItem()->SetPosY( (float)(tileYPos * 32) );
 				player->SetHeldItem(NULL);
 
 				if( object->GetType() == OBJ_ATTRACTOR )
@@ -619,4 +625,14 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		break;
 	}
 
+}
+//accessors
+bool CGamePlayState::IsPaused() const
+{
+	return m_bIsPaused;
+}
+//mutators
+void CGamePlayState::SetPaused(const bool bIsPaused)
+{
+	m_bIsPaused = bIsPaused;
 }

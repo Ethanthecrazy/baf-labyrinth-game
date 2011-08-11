@@ -8,6 +8,7 @@
 #include "Tiles\CButton.h"
 #include "Tiles\CWaterTile.h"
 #include "../../GameStates/CLoadLevelState.h"
+#include "../../GameStates/COptionsState.h"
 #include "../../CGame.h"
 #include "CBaseObject.h"
 #include <iostream>
@@ -18,12 +19,17 @@
 CPlayer::CPlayer(void)
 {
 	CBaseEntity::CBaseEntity();
-	m_pHeldItem = NULL;
-	m_pEquippedItem = NULL ;
-	SetLives(4);
+	m_fInvincilibilityTimer = 0.0f;
 	m_nType = ENT_PLAYER;
-	m_nPickUpSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pick-up.mp3" ) ;
-	m_nPutDownSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/put-down.mp3" ) ;
+	SetHeldItem(NULL);
+	SetEquippedItem(NULL);	
+	SetLives(4);	
+	m_nPickUpSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pick-up.mp3" );
+	m_nPutDownSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/put-down.mp3" );
+	//adjust the sounds to match configurations
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(m_nPickUpSoundID, true);
+	Opt->AdjustSound(m_nPutDownSoundID, true);
 }
 CPlayer::~CPlayer(void)
 {
@@ -34,6 +40,7 @@ CPlayer::~CPlayer(void)
 void CPlayer::Update(float fDT)
 {
 	CBaseEntity::Update(fDT);
+	UpdateInvincibilityTime(fDT);
 	Input();
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
@@ -309,10 +316,26 @@ bool CPlayer::CheckTileCollision(int TileID)
 	};
 	return false;
 }
+void CPlayer::UpdateInvincibilityTime(float fDT)
+{
+	//if we're not invincible no use updating the timer
+	if(!IsInvincible())
+		return;
+
+	m_fInvincilibilityTimer += fDT;
+	if(m_fInvincilibilityTimer > INVTIME)
+	{
+		SetInvincilibity(false);
+	}
+}
 //accessors
 int CPlayer::GetLives() const
 {
 	return m_nLives;
+}
+bool CPlayer::IsInvincible() const
+{
+	return m_bIsInvincible;
 }
 CBaseObject* CPlayer::GetHeldItem() const
 {
@@ -321,14 +344,30 @@ CBaseObject* CPlayer::GetHeldItem() const
 //mutators
 void CPlayer::SetLives(const int nLives)
 {
-	if(nLives >= 0)
-		m_nLives = nLives;
+	if(nLives < 0)
+		return;
+
+	if(IsInvincible() && nLives < m_nLives)
+		return;
+
+	//if the player loses a life(s) they are
+	//temporarily invincible
+	if(nLives < m_nLives)
+		SetInvincilibity(true);
+
+	m_nLives = nLives;
+}
+void CPlayer::SetInvincilibity(const bool bIsInvincible)
+{
+	if(!bIsInvincible)
+		m_fInvincilibilityTimer = 0.0f;
+
+	m_bIsInvincible = bIsInvincible;
 }
 void CPlayer::SetHeldItem(CBaseObject* const pHeldItem)
 {
 	m_pHeldItem = pHeldItem;
 }
-
 void CPlayer::SwitchItems(void)
 {
 	if( GetHeldItem() != NULL )

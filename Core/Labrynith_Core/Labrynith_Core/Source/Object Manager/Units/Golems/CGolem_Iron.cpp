@@ -64,7 +64,7 @@ void CGolem_Iron::Update(float fDT)
 	{
 		SetPowered( false ) ;
 		// check to see if the golem is a connection
-		//MEventSystem::GetInstance()->SendEvent( "CIRCUTBROKEN" ) ;
+		MEventSystem::GetInstance()->SendEvent( "CIRCUTBROKEN" ) ;
 	}
 
 	if( GetIsElectrified() )
@@ -77,7 +77,8 @@ void CGolem_Iron::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseGolem::Render(CameraPosX, CameraPosY);
 	if( GetIsElectrified() )
-		CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+		CAnimationManager::GetInstance()->Draw(m_nAnimID, (int)(GetPosX() - CameraPosX), (int)(GetPosY() - CameraPosY),
+		0.2f, 0.2f, 0, 0, 0, 0xffffffff);
 }
 bool CGolem_Iron::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {

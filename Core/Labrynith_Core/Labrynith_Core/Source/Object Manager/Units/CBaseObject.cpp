@@ -87,8 +87,8 @@ void CBaseObject::Update(float fDT)
 			}
 
 			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , 0 ) ;
-			SetIndexPosX( (float)GetPosX() / 32 ) ;
-			SetIndexPosY( (float)GetPosY() / 32 ) ;
+			SetIndexPosX( (int)(GetPosX() / 32) ) ;
+			SetIndexPosY( (int)(GetPosY() / 32) ) ;
 			if( (GetVelX() > 0 || GetVelY() > 0) && this->GetType() == OBJ_ATTRACTOR )
 				MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
 			

@@ -234,6 +234,9 @@
     <ClCompile Include="Source\GameStates\COptionsState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameStates\CPauseState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -426,6 +429,9 @@
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameStates\COptionsState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CPauseState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>

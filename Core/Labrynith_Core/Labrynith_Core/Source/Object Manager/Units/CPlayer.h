@@ -3,17 +3,24 @@
 
 #include "CBaseEntity.h"
 
+//how long the player is invincible
+#define INVTIME 2.0f
+
 class CBaseObject;
 
 class CPlayer : public CBaseEntity
 {
 	int m_nLives;
+	bool m_bIsInvincible;
+	float m_fInvincilibilityTimer;
 	int m_nPickUpSoundID;
 	int m_nPutDownSoundID;
 	//Item the player is holding
 	//this must not be in the object manager when this happens
 	CBaseObject *m_pHeldItem;
 	CBaseObject *m_pEquippedItem;
+
+	void UpdateInvincibilityTime(float fDT);
 public:
 	CPlayer(void);
 	//BUG - this constructor will change as development continues
@@ -28,8 +35,10 @@ public:
 	bool CheckTileCollision(int TileID);
 	void SwitchItems(void); // switches held and equipped items if it is possible
 	void ActivateEquipped(void);	//	activates the equipped item
+
 	//accessors
 	int GetLives() const;
+	bool IsInvincible() const;
 	int GetPickUpSoundID() { return m_nPickUpSoundID ; } ;
 	int GetPutDownSoundID() { return m_nPutDownSoundID ; } ;
 	CBaseObject* GetHeldItem() const;
@@ -37,6 +46,7 @@ public:
 	
 	//mutators
 	void SetLives(const int nLives);
+	void SetInvincilibity(const bool bIsInvincible);
 	void SetPickUpSoundID(int ID ) { m_nPickUpSoundID = ID ; } ;
 	void SetPutDownSoundID(int ID) { m_nPutDownSoundID = ID ; } ;
 	void SetHeldItem(CBaseObject* const pHeldItem);

@@ -254,14 +254,14 @@ bool CElectricGenerator::MakeConnections( IUnitInterface* obj )
 						if( ((CBaseGolem*)entity)->GetGolemType() == WATER_GOLEM )
 						{
 							((CGolem_Water*)entity)->SetPowered(true) ;
-							m_EvaluatedConnections.push_back( object ) ;
+							m_EvaluatedConnections.push_back( entity ) ;
 							MakeConnections( entity ) ;
 							m_bGolemConnected = true ;
 						}
 						else if( ((CBaseGolem*)entity)->GetGolemType() == IRON_GOLEM )
 						{
 							((CGolem_Iron*)entity)->SetPowered(true) ;
-							m_EvaluatedConnections.push_back( object ) ;
+							m_EvaluatedConnections.push_back( entity ) ;
 							MakeConnections( entity ) ;
 							m_bGolemConnected = true ;
 						}

@@ -3,6 +3,7 @@
 #include "CBaseGolem.h"
 #include "Objects\CAttractor.h"
 #include "../../GameStates/CGamePlayState.h"
+#include "../../GameStates/COptionsState.h"
 #include "../../Animation Manager/CAnimationManager.h"
 #include "../../Wrappers/CSGD_FModManager.h"
 #include "../../Messaging/IListener.h"
@@ -19,6 +20,10 @@ CBaseGolem::CBaseGolem(void)
 	SetMoveType(TARGET_MOVE);
 	m_nEatSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/creature_snarl1.mp3" ) ;
 	m_nStepSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/footstepsGolem.mp3" ) ;
+	//adjust the sounds to match configurations
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(m_nEatSoundID, true);
+	Opt->AdjustSound(m_nStepSoundID, true);
 }
 CBaseGolem::~CBaseGolem(void)
 {

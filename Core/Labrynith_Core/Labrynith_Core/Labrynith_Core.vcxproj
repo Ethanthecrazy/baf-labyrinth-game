@@ -90,6 +90,7 @@
     <ClCompile Include="Source\GameStates\CLoadLevelState.cpp" />
     <ClCompile Include="Source\GameStates\CMainMenuState.cpp" />
     <ClCompile Include="Source\GameStates\COptionsState.cpp" />
+    <ClCompile Include="Source\GameStates\CPauseState.cpp" />
     <ClCompile Include="Source\GameStates\CSaveSlotState.cpp" />
     <ClCompile Include="Source\HUD\CHUD.cpp" />
     <ClCompile Include="Source\Messaging\Messages.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Source\GameStates\CLoadLevelState.h" />
     <ClInclude Include="Source\GameStates\CMainMenuState.h" />
     <ClInclude Include="Source\GameStates\COptionsState.h" />
+    <ClInclude Include="Source\GameStates\CPauseState.h" />
     <ClInclude Include="Source\GameStates\CSaveSlotState.h" />
     <ClInclude Include="Source\GameStates\IGameState.h" />
     <ClInclude Include="Source\HUD\CHUD.h" />

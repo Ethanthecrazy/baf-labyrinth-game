@@ -20,8 +20,8 @@ public:
 
 	void Render( int CameraPosX , int CameraPosY ) ;
 
-	void SetLifeDuration( int life ) { m_fLifeDuration = life ; } ;
-	void SetFireTimer( int timer ) { m_fFireTimer = timer ; } ;
+	void SetLifeDuration( float life ) { m_fLifeDuration = life ; } ;
+	void SetFireTimer( float timer ) { m_fFireTimer = timer ; } ;
 	void SetOnFire( bool onFire ) ;
 
 	float GetLifeDuration( void ) { return m_fLifeDuration ; } ;

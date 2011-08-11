@@ -55,7 +55,8 @@ void CWaterTile::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseObject::Render(CameraPosX, CameraPosY);
 	if( GetIsElectrified() )
-		CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+		CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) , (int)(GetPosY() - CameraPosY),
+		0.2f, 0.2f, 0, 0, 0, 0xffffffff);
 }
 bool CWaterTile::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {

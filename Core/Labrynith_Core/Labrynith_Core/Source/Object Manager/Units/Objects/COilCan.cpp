@@ -41,8 +41,8 @@ void COilCan::UseObject( CBaseObject* user )
 				COil* oil = new COil() ;
 				oil->SetIndexPosX( tileXPos ) ;
 				oil->SetIndexPosY( tileYPos ) ;
-				oil->SetPosX( oil->GetIndexPosX() * 32 ) ;
-				oil->SetPosY( oil->GetIndexPosY() * 32 ) ;
+				oil->SetPosX( (float)(oil->GetIndexPosX() * 32) );
+				oil->SetPosY( (float)(oil->GetIndexPosY() * 32) );
 				MObjectManager::GetInstance()->AddUnitIndexed( oil , 
 				MObjectManager::GetInstance()->FindLayer(CGamePlayState::GetInstance()->testVaribale).GetLayerID() ) ;
 

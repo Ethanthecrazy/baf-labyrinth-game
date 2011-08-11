@@ -2,6 +2,7 @@
 #include "../../../Messaging/MEventSystem.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../MObjectManager.h"
+#include "../../../GameStates/COptionsState.h"
 #include "../CPlayer.h"
 #include "../Golems/CGolem_Water.h"
 #include "../Golems/CGolem_Iron.h"
@@ -18,6 +19,7 @@ CElectricButton::CElectricButton(string nLink)
 	SetLink( nLink ) ;
 	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);
 	MEventSystem::GetInstance()->RegisterClient("Button.Unpress", this);
+	MEventSystem::GetInstance()->RegisterClient("CIRCUTBROKEN" , this ) ;
 	m_nType = OBJ_ELECTRICBUTTON ;
 	SetPowered( false ) ;
 	SetElectricUpdateTimer( 0.0f ) ;
@@ -25,8 +27,10 @@ CElectricButton::CElectricButton(string nLink)
 	m_nAnimID = CAnimationManager::GetInstance()->GetID( "Electricity" ) ;
 	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/electricity.png") ;
 	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
-	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/Electricity.mp3" ) ;
-	MEventSystem::GetInstance()->RegisterClient("CIRCUTBROKEN" , this ) ;
+	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/Electricity.mp3" ) ;	
+	//adjust the sounds to match configurations
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(m_nSoundID, true);
 }
 CElectricButton::~CElectricButton(void)
 {
@@ -75,7 +79,8 @@ void CElectricButton::Render( int CameraPosX, int CameraPosY )
 {
 	CButton::Render( CameraPosX , CameraPosY ) ;
 	if( GetIsElectrified() )
-		CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+		CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) , (int)(GetPosY() - CameraPosY),
+		0.2f, 0.2f, 0, 0, 0, 0xffffffff);
 }
 
 void CElectricButton::HandleEvent( Event* _toHandle )

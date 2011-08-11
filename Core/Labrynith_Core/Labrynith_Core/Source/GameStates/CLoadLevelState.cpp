@@ -131,7 +131,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 {		
 	char filename[255] = {0};
 
-	sprintf(filename, "resource/Levels/%d.xml", _level);
+	sprintf_s(filename, "resource/Levels/%d.xml", _level);
 
 	TiXmlDocument doc;
 	if( doc.LoadFile(filename) == false)
@@ -426,7 +426,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 			case 0:				
 				{
 					string typeofspawner;
-					for(int i = 0; i < prop.length(); ++i)
+					for(unsigned int i = 0; i < prop.length(); ++i)
 					{
 						if(prop[i] == '.')
 							break;
@@ -462,7 +462,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 					{
 						string typeofattractor;
 						bool beginreading = false;
-						for(int i = 0; i < prop.length(); ++i)
+						for(unsigned int i = 0; i < prop.length(); ++i)
 						{
 							if(beginreading)
 								typeofattractor += prop[i];
@@ -524,7 +524,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 					{
 						string typeofgolem;
 						bool beginreading = false;
-						for(int i = 0; i < prop.length(); ++i)
+						for(unsigned int i = 0; i < prop.length(); ++i)
 						{
 							if(beginreading)
 								typeofgolem += prop[i];

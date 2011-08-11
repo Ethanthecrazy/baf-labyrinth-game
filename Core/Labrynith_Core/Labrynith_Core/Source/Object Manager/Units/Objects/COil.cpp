@@ -27,7 +27,7 @@ void COil::Update(float fDT)
 	{		
 		CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;
 		// set other objects on fire
-		SetFireTimer( GetFireTimer() - fDT ) ;
+		SetFireTimer( GetFireTimer() - fDT );
 		if( GetFireTimer() <= 0 )
 		{
 			// check surrounding objects to see if they can catch on fire
@@ -59,7 +59,7 @@ void COil::Update(float fDT)
 		}
 
 
-		SetLifeDuration( GetLifeDuration() - fDT ) ;
+		SetLifeDuration(GetLifeDuration() - fDT) ;
 		if( GetLifeDuration() <= 0 )
 		{
 			// delete oil, and fire on this tile
@@ -76,7 +76,8 @@ void COil::Render( int CameraPosX , int CameraPosY )
 	CBaseObject::Render( CameraPosX , CameraPosY ) ;
 	if( GetOnFire() )
 	{
-		CAnimationManager::GetInstance()->Draw(m_nAnimID , GetPosX() - CameraPosX , GetPosY() - CameraPosY , .2 , .2 , 0 , 0 , 0 , 0xffffffff ) ;
+		CAnimationManager::GetInstance()->Draw(m_nAnimID, (int)(GetPosX() - CameraPosX), (int)(GetPosY() - CameraPosY),
+			0.2f, 0.2f, 0, 0, 0, 0xffffffff);
 
 		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
 			.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 185 );
