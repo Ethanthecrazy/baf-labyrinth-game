@@ -151,7 +151,9 @@ void CGamePlayState::Render(void)
 {
 	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
 
-	CBaseEntity* player = (CBaseEntity*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+	CBaseEntity* player = nullptr;
+	if( testVaribale > 0 )
+		CBaseEntity* player = (CBaseEntity*)MObjectManager::GetInstance()->GetUnit( testVaribale );
 
 	if( player )
 	{
@@ -174,8 +176,10 @@ void CGamePlayState::Render(void)
 	}
 	else
 	{
-		MObjectManager::GetInstance()->Render( 0, 0, MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerID() );
+		MObjectManager::GetInstance()->Render( 0, 0, 0 );
 	}
+
+
 	//Draw the HUD
 	CHUD::GetInstance()->Render();
 	//pD3D->DrawTextA( "Gameplay State", 100, 100 );
@@ -185,15 +189,18 @@ void CGamePlayState::Render(void)
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
 
-	char temp[64];
+	//char temp[64];
 
 	sprintf_s( temp, "%f", timestep ); 
+	//sprintf( temp, "%f", timestep ); 
 
-	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
 
 	sprintf_s( temp, "%f", 1.0f / timestep ); 
+	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
 
-	CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
+	//sprintf( temp, "%f", 1.0f / timestep ); 
+
+	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
 }
 
 void CGamePlayState::Exit(void)

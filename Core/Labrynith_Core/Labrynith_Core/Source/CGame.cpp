@@ -84,13 +84,17 @@ bool CGame::Input()
 
 	static bool Is_Fullscreen = false;
 
-	return m_pGameStates[m_pGameStates.size() - 1]->Input();
+	if( m_pGameStates.size() )
+		return m_pGameStates[m_pGameStates.size() - 1]->Input();
+	else
+		return true;
 }
 
 void CGame::Update()
 {
 	// update
-	m_pGameStates[m_pGameStates.size() - 1]->Update(m_fElapsedTime);
+	if( m_pGameStates.size() )
+		m_pGameStates[m_pGameStates.size() - 1]->Update(m_fElapsedTime);
 }
 
 void CGame::Render()

@@ -61,7 +61,13 @@ void CLoadLevelState::Enter(void)
 
 	cout << "Loading Level...\n";
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
-	LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel());
+	if( !LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel()) )
+	{
+		cout << "...level load failed.\n";
+		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
+		return;
+	}
+
 	cout << "...Level Loaded\n";
 	
 	printf("Spawning objects...\n");
