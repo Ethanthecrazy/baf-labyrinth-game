@@ -61,12 +61,11 @@ void CGolem_Water::Update(float fDT)
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 	{
-		SetPowered( false ) ;
+		//SetPowered( false ) ;
 		// check to see if the golem is a connection
-		MEventSystem::GetInstance()->SendEvent( "CIRCUTBROKEN" ) ;
+		//MEventSystem::GetInstance()->SendEvent( "CIRCUTBROKEN" ) ;
 	}
 		
-
 	if( GetIsElectrified() )
 	{
 		CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;

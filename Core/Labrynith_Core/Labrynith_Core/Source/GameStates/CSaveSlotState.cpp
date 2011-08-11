@@ -9,6 +9,7 @@
 CSaveSlotState::CSaveSlotState()
 {
 	m_nCurrSaveSlot = 0;
+	m_nIndex = 0;
 	SetCurrLevel(1);
 }
 
@@ -38,20 +39,48 @@ bool CSaveSlotState::Input(void)
 	//Enter
 	if(pDI->KeyPressed(DIK_RETURN))
 	{
-		//Change to GamePlayState
-		Load();
-		pGame->ChangeState( pGamePlay ) ;
+		switch(m_nIndex)
+		{
+		case SELECT:
+			{
+				//Change to GamePlayState
+				Load();
+				pGame->ChangeState(pGamePlay);
+				break;
+			}
+		case SLOTDELETE:
+			{
+				Delete();
+				break;
+			}
+		};
 	}
 
 	//Directional
 	//Up
 	if(pDI->KeyPressed(DIK_UP))
 	{
-		SetSaveSlot(--m_nCurrSaveSlot);
-		//Play a sound
+		if(m_nIndex != 0)
+			m_nIndex -= 1;
+		else
+			m_nIndex = NUMSLOTOPTIONS - 1;
 	}
 	//Down
 	if(pDI->KeyPressed(DIK_DOWN))
+	{
+		if(m_nIndex != (NUMSLOTOPTIONS - 1))
+			m_nIndex += 1;
+		else
+			m_nIndex = 0;
+	}
+	//Left
+	if(pDI->KeyPressed(DIK_LEFT))
+	{
+		SetSaveSlot(--m_nCurrSaveSlot);
+		//Play a sound
+	}
+	//Right
+	if(pDI->KeyPressed(DIK_RIGHT))
 	{
 		SetSaveSlot(++m_nCurrSaveSlot);
 		//Play a sound
@@ -68,10 +97,14 @@ void CSaveSlotState::Render(void)
 {
 	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
 
-	MetalText.Print( "->", 0, 200 + (m_nCurrSaveSlot * 40), 0.8f );
-	MetalText.Print( "Slot 1", 210, 200, 0.8f );
-	MetalText.Print( "Slot 2", 210, 240, 0.8f );
-	MetalText.Print( "Slot 3", 210, 280, 0.8f );
+	MetalText.Print( "---", 0 + (m_nCurrSaveSlot * 250), 80,  0.8f );
+	MetalText.Print( "Slot 1", 0, 100, 0.6f );
+	MetalText.Print( "Slot 2", 250, 100, 0.6f );
+	MetalText.Print( "Slot 3", 500, 100, 0.6f );
+
+	MetalText.Print( "->", 100, 450 + (m_nIndex * 35), 0.8f );
+	MetalText.Print( "Select", 200, 450, 0.8f );
+	MetalText.Print( "Delete", 200, 485, 0.8f );
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 }
 
@@ -129,6 +162,26 @@ void CSaveSlotState::Load()
 	}
 	in.close();
 
+}
+void CSaveSlotState::Delete()
+{
+	CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
+	
+	//delete settings - restart from the first level 
+	ofstream out;
+	char filename[255] = {0};
+	int nLevel = 1;
+	sprintf_s(filename, "resource/Game Saves/Slot%d.dat", m_nCurrSaveSlot);
+	out.open(filename, ios_base::out | ios_base::trunc | ios_base::binary);
+	if (out.is_open())
+	{
+		if (out.good())
+		{
+			out.write(((const char *)&nLevel), 4); 
+			SetCurrLevel(nLevel);
+		}
+		out.close();
+	}
 }
 
 //accessors

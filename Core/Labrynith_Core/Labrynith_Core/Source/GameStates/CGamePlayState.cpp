@@ -194,8 +194,6 @@ void CGamePlayState::Render(void)
 	//sprintf_s( temp, "%f", timestep ); 
 	//sprintf( temp, "%f", timestep ); 
 
-
-	//sprintf_s( temp, "%f", 1.0f / timestep ); 
 	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 126 );
 
 	//sprintf( temp, "%f", 1.0f / timestep ); 
@@ -449,8 +447,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 	case MSG_REMOVE_UNIT:
 		{
+			MObjectManager* OM = MObjectManager::GetInstance();
 			msgRemoveUnit* NewMessage = (msgRemoveUnit*)_message;
-			MObjectManager::GetInstance()->RemoveUnit( NewMessage->GetTarget() );
+			OM->RemoveUnit( NewMessage->GetTarget() );
 		}
 		break;
 

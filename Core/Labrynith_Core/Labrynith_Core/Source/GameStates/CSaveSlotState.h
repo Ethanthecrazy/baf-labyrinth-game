@@ -1,34 +1,30 @@
 #ifndef CSAVESLOTSTATE_H
 #define CSAVESLOTSTATE_H
 
-#define MAXSLOTS 3
-
 #include "IGameState.h"
 #include "../CBitFont.h"
 
-class CPlayer;
+#define MAXSLOTS 3
 
+class CPlayer;
 
 class CSaveSlotState : public IGameState
 {
 	CBitFont MetalText;
-	//current data loaded
 	//current player data loaded
 	CPlayer* m_pLoadedPlayer;
 	//current level loaded
 	int m_nCurrLoadedLevel;
 	//which slot the player is saving/loading to
 	int m_nCurrSaveSlot;
-	//Saving only occurs at the end of a level
-	//bool isLoading;
+	int m_nIndex;
 
-	// default constructor
+	//Enums
+	enum SLOTOPTIONS{SELECT, SLOTDELETE, NUMSLOTOPTIONS};
+
 	CSaveSlotState();
-	// copy constructor
 	CSaveSlotState(const CSaveSlotState&) { }
-	// assignment operator
 	CSaveSlotState& operator=(const CSaveSlotState&) { }
-	// destructor
 	~CSaveSlotState();
 
 	void SetSaveSlot(const int nSlot);
@@ -41,15 +37,17 @@ public:
 	void Update(float fDT);
 	void Render(void);
 	void Exit(void);
-	//accessors
-	int GetCurrLevel() const;
-	//mutators
-	void SetCurrLevel(const int nLevel);
-
 	void EnterCommand(void);
 	//Saves game data
 	void Save();
 	//Loads game data
 	void Load();
+	//deletes game data
+	void Delete();
+
+	//accessors
+	int GetCurrLevel() const;
+	//mutators
+	void SetCurrLevel(const int nLevel);
 };
 #endif
