@@ -36,6 +36,8 @@ CElectricButton::~CElectricButton(void)
 {
 	CButton::~CButton() ;
 	MEventSystem::GetInstance()->UnregisterClient("CIRCUTBROKEN" , this ) ;
+	MEventSystem::GetInstance()->UnregisterClient("Button.Pressed", this);
+	MEventSystem::GetInstance()->UnregisterClient("Button.Unpress", this);
 }
 
 void CElectricButton::Update( float fDT )
@@ -53,7 +55,7 @@ void CElectricButton::Update( float fDT )
 
 bool CElectricButton::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+	if(!pBase || pBase == this || !nCanHandleCollision || this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 	
 	if( GetIsElectrified() == false )
@@ -88,13 +90,13 @@ void CElectricButton::HandleEvent( Event* _toHandle )
 	if( _toHandle->GetEventID() == "Button.Pressed" )
 	{
 		string tmp = (const char*)_toHandle->GetParam();
-		if( tmp ==  GetLink())
+		if( tmp ==  GetLink() && this->m_bPowered)
 			SetPressed( true ) ;
 	}
 	else if( _toHandle->GetEventID() == "Button.Unpress" )
 	{
 		string tmp = (const char*)_toHandle->GetParam();
-		if( tmp ==  GetLink())
+		if( tmp ==  GetLink() || !this->m_bPowered)
 			SetPressed( false ) ;
 	}
 	else if( _toHandle->GetEventID() == "CIRCUTBROKEN" )
@@ -115,7 +117,7 @@ void CElectricButton::SetPowered( bool powered )
 	}
 	else if( GetIsElectrified() == true && powered == false )
 	{
-		m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0xffffffff ) ;
+		m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTileElectric.png" , 0xffffffff ) ;
 		//CSGD_FModManager::GetInstance()->StopSound( m_nSoundID ) ;
 	}
 	m_bPowered = powered ; 

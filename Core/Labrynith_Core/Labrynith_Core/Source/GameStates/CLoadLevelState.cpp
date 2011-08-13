@@ -63,7 +63,7 @@ void CLoadLevelState::Enter(void)
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
 	if( !LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel()) )
 	{
-		cout << "...level load failed.\n";
+		cout << "...level loading failed.\n";
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
 		return;
 	}
@@ -230,7 +230,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 						case 1: // 0, 1 button
 							{
-								IUnitInterface* temp = new CButton(prop.c_str());
+								CButton* temp = new CButton(prop.c_str());
 								temp->SetLayerLocation(z);
 								((CButton*)temp)->SetPosX((float)(x * 32));
 								((CButton*)temp)->SetPosY((float)(y * 32));
@@ -243,7 +243,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							
 						case 2: // 0, 2 door
 							{
-								IUnitInterface* temp = new CDoor(prop.c_str());
+								CDoor* temp = new CDoor(prop.c_str());
 								temp->SetLayerLocation(z);
 								((CDoor*)temp)->SetPosX((float)(x * 32));
 								((CDoor*)temp)->SetPosY((float)(y * 32));
@@ -255,7 +255,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 						case 3: // 0, 3 exit tile
 							{
-								IUnitInterface* temp = new CExit();
+								CExit* temp = new CExit();
 								temp->SetLayerLocation(z);
 								((CExit*)temp)->SetPosX((float)(x * 32));
 								((CExit*)temp)->SetPosY((float)(y * 32));
@@ -267,7 +267,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							
 						case 4: // 0, 4 Wood tile
 							{
-								IUnitInterface* temp = new COil(false);
+								COil* temp = new COil(false);
 								temp->SetLayerLocation(z);
 								((COil*)temp)->SetPosX((float)(x * 32));
 								((COil*)temp)->SetPosY((float)(y * 32));
@@ -282,7 +282,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							
 						case 5: // water tile
 							{
-								IUnitInterface* temp = new CWaterTile(false);
+								CWaterTile* temp = new CWaterTile(false);
 								temp->SetLayerLocation(z);
 								((CWaterTile*)temp)->SetPosX((float)(x * 32));
 								((CWaterTile*)temp)->SetPosY((float)(y * 32));
@@ -293,7 +293,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 							break;
 						case 6: // ice tile
 							{
-								IUnitInterface* temp = new CWaterTile(true);
+								CWaterTile* temp = new CWaterTile(true);
 								temp->SetLayerLocation(z);
 								((CWaterTile*)temp)->SetPosX((float)(x * 32));
 								((CWaterTile*)temp)->SetPosY((float)(y * 32));
@@ -305,7 +305,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 						case 7: // pit tile
 							{
-								IUnitInterface* temp = new CPit();
+								CPit* temp = new CPit();
 								temp->SetLayerLocation(z);
 								((CPit*)temp)->SetPosX((float)(x * 32));
 								((CPit*)temp)->SetPosY((float)(y * 32));
@@ -317,7 +317,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 						
 						case 8: // ramp tile
 							{
-								IUnitInterface* temp = new CRamp(prop);
+								CRamp* temp = new CRamp(prop);
 								temp->SetLayerLocation(z);
 								((CRamp*)temp)->SetPosX((float)(x * 32));
 								((CRamp*)temp)->SetPosY((float)(y * 32));
@@ -328,34 +328,34 @@ bool CLoadLevelState::LoadLevel(int _level)
 							break;					
 						case 9: //	metal tile
 							{
-								IUnitInterface* temp = new CMetal();
+								CMetal* temp = new CMetal();
 								temp->SetLayerLocation(z);
-								((CWaterTile*)temp)->SetPosX((float)(x * 32));
-								((CWaterTile*)temp)->SetPosY((float)(y * 32));
-								((CWaterTile*)temp)->SetIndexPosX(x);
-								((CWaterTile*)temp)->SetIndexPosY(y);
+								((CMetal*)temp)->SetPosX((float)(x * 32));
+								((CMetal*)temp)->SetPosY((float)(y * 32));
+								((CMetal*)temp)->SetIndexPosX(x);
+								((CMetal*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							}
 							break ;
 						case 10: //	electric button
 							{
-								IUnitInterface* temp = new CElectricButton(prop.c_str());
+								CElectricButton* temp = new CElectricButton(prop.c_str());
 								temp->SetLayerLocation(z);
-								((CWaterTile*)temp)->SetPosX((float)(x * 32));
-								((CWaterTile*)temp)->SetPosY((float)(y * 32));
-								((CWaterTile*)temp)->SetIndexPosX(x);
-								((CWaterTile*)temp)->SetIndexPosY(y);
+								((CElectricButton*)temp)->SetPosX((float)(x * 32));
+								((CElectricButton*)temp)->SetPosY((float)(y * 32));
+								((CElectricButton*)temp)->SetIndexPosX(x);
+								((CElectricButton*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							}
 							break ;
 						case 11: //	electric dynamo
 							{
-								IUnitInterface* temp = new CElectricGenerator();
+								CElectricGenerator* temp = new CElectricGenerator();
 								temp->SetLayerLocation(z);
-								((CWaterTile*)temp)->SetPosX((float)(x * 32));
-								((CWaterTile*)temp)->SetPosY((float)(y * 32));
-								((CWaterTile*)temp)->SetIndexPosX(x);
-								((CWaterTile*)temp)->SetIndexPosY(y);
+								((CElectricGenerator*)temp)->SetPosX((float)(x * 32));
+								((CElectricGenerator*)temp)->SetPosY((float)(y * 32));
+								((CElectricGenerator*)temp)->SetIndexPosX(x);
+								((CElectricGenerator*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							}
 							break ;
@@ -443,7 +443,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 					if(typeofspawner == "player")
 					{
 						// change this code to a spawner of Player type
-						IUnitInterface* temp = new CSpawner(SPAWNER_PLAYER);
+						CSpawner* temp = new CSpawner(SPAWNER_PLAYER);
 						temp->SetLayerLocation(posZ);
 						((CSpawner*)temp)->SetPosX((float)(posX * 32));
 						((CSpawner*)temp)->SetPosY((float)(posY * 32));
@@ -455,7 +455,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 					}
 					else if(typeofspawner == "lightorb")
 					{						
-						IUnitInterface* temp = new CSpawner(SPAWNER_LIGHTORB);
+						CSpawner* temp = new CSpawner(SPAWNER_LIGHTORB);
 						temp->SetLayerLocation(posZ);
 						((CSpawner*)temp)->SetPosX((float)(posX * 32));
 						((CSpawner*)temp)->SetPosY((float)(posY * 32));
@@ -477,7 +477,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 								beginreading = true;
 						}
 						
-						IUnitInterface* temp;
+						CSpawner* temp;
 						if(typeofattractor == "earth")
 						{
 							temp = new CSpawner(SPAWNER_ATTRACTOR_EARTH);
@@ -539,7 +539,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 								beginreading = true;
 						}
 						
-						IUnitInterface* temp;
+						CSpawner* temp;
 						if(typeofgolem == "earth")
 						{
 							temp = new CSpawner(SPAWNER_EARTH);

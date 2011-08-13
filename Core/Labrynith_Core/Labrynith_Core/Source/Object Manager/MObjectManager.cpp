@@ -11,7 +11,7 @@ MObjectManager::MObjectManager() : m_nSize( 0 )
 
 MObjectManager::~MObjectManager()
 {
-
+	m_vLayers.clear();
 }
 
 MObjectManager* MObjectManager::GetInstance( void )
@@ -48,13 +48,6 @@ int MObjectManager::AddUnitIndexed( IUnitInterface* _toAdd, int _layer )
 	LayerIndex.InsertEntry( tempnumber, _layer );
 	cout << "\tObjectManager: Adding Unit - Id " << tempnumber << "\n";
 	return tempnumber;
-}
-
-int MObjectManager::MoveUnit( IUnitInterface* _toMove, int _layer )
-{
-	int tempnum = AddUnitIndexed( _toMove, _layer );
-	//RemoveUnit( _toMove->m_nIdentificationNumber );
-	return tempnum;
 }
 
 bool MObjectManager::RemoveUnit( int _Ident )

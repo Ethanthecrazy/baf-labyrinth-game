@@ -14,8 +14,9 @@ CButton::CButton(string nLink)
 	MEventSystem::GetInstance()->RegisterClient("Button.Unpress", this);
 }
 CButton::~CButton(void)
-{
-
+{	
+	MEventSystem::GetInstance()->UnregisterClient("Button.Pressed", this);
+	MEventSystem::GetInstance()->UnregisterClient("Button.Unpress", this);
 }
 
 bool CButton::CheckCollision(IUnitInterface* pBase)

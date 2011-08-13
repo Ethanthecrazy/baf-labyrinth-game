@@ -9,8 +9,8 @@ COil::COil( bool bIsOil ) : m_bIsOil(bIsOil)
 {
 	CBaseObject::CBaseObject() ;
 	m_nType = OBJ_OIL ;
-	SetLifeDuration( 120.0f ) ;
-	SetFireTimer( 30.0f ) ;
+	SetLifeDuration( 3.0f ) ;
+	SetFireTimer( 1.0f ) ;
 	SetOnFire( false ) ;
 	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/Oil.png") ;
 	m_nAnimID = CAnimationManager::GetInstance()->GetID( "fire" ) ;
@@ -45,14 +45,6 @@ void COil::Update(float fDT)
 						{
 							((COil*)object)->SetOnFire(true) ;
 						}
-					}
-					int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( this->GetIndexPosX() + i , this->GetIndexPosY() + u ) ;
-					IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-					if( !entity )
-						continue;
-					if( entity->GetType() == ENT_PLAYER )
-					{
-						((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
 					}
 				}
 			}

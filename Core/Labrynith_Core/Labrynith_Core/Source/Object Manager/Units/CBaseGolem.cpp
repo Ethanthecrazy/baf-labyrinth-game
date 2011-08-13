@@ -9,6 +9,7 @@
 #include "../../Messaging/IListener.h"
 #include "Tiles\CButton.h"
 #include "Tiles\CDoor.h"
+#include "Tiles\CElectricButton.h"
 
 CBaseGolem::CBaseGolem(void)
 {
@@ -118,13 +119,15 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 		case OBJECT_TILE:
 		{
-			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
+			if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
 			{
-				if(nCanHandleCollision)
-				{
-					((CButton*)pBase)->CheckCollision(this);
-					return false;
-				}
+				((CButton*)pBase)->CheckCollision(this);
+				return false;
+			}
+			else if(pBase->GetType() == OBJ_ELECTRICBUTTON)
+			{				
+				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
+				return false;
 			}
 			else if( pBase->GetType() == OBJ_DOOR )
 			{
@@ -156,13 +159,14 @@ void CBaseGolem::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	switch(pBase->m_nUnitType)
 	{
 	case OBJECT_TILE:
-		{
-			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
+		{			
+			if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
 			{
-				if(nCanHandleCollision)
-				{
-					((CButton*)pBase)->CheckCollision(this);
-				}
+				((CButton*)pBase)->CheckCollision(this);
+			}
+			else if(pBase->GetType() == OBJ_ELECTRICBUTTON)
+			{				
+				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
 			}
 		}
 		break;

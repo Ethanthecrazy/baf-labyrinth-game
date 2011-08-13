@@ -40,6 +40,10 @@ CAnimation::CAnimation(int nImageID, float fSpeed, bool bIsLooping,
 }
 CAnimation::~CAnimation()
 {
+	for(unsigned int i = 0; i < m_vframes.size(); i++)
+	{
+		delete m_vframes[i];
+	}
 	m_vframes.clear();
 }
 

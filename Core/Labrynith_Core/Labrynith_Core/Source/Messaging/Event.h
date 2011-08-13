@@ -17,7 +17,9 @@ public:
 		m_pParameter = _param;
 	}
 
-	~Event() {}
+	~Event() 
+	{
+	}
 
 	string GetEventID( void ) { return m_sEventID; }
 	void* GetParam( void ) { return m_pParameter; }

@@ -232,7 +232,7 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	case OBJECT_TILE:
 		{				
 			if(pBase->GetType() == OBJ_WATER)
-				if( !((CWaterTile*)pBase)->IsFrozen() )
+				if( !((CWaterTile*)pBase)->IsFrozen() && this->GetType() != OBJ_OILCAN )
 					return true;
 
 			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_PIT || pBase->GetType() == OBJ_ELECTRICGENERATOR)

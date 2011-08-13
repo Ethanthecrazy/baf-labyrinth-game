@@ -18,7 +18,10 @@ MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _
 
 	ArrayIndex.clear();
 
-	InformationArray = new int[ _LayerWidth * _LayerHeight ];
+	if(_LayerWidth*_LayerHeight)
+		InformationArray = new int[ _LayerWidth * _LayerHeight ];
+	else
+		InformationArray = NULL;
 
 	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
 	{
@@ -33,9 +36,17 @@ MFlake::~MFlake()
 {
 	if( ( LayerWidth + LayerHeight ) )
 	{
-		delete [] InformationArray;
+		//delete[] InformationArray;
 	}
+	
+	for( unsigned int i = 0; i < m_vObjects.size(); ++i )
+	{
+		delete m_vObjects[i];
+	}
+	m_nSize = 0;
+	m_vObjects.clear();
 
+	ArrayIndex.clear();
 }
 
 int MFlake::AddUnit( IUnitInterface* _toAdd )
@@ -209,19 +220,19 @@ void MFlake::LightingProcess( int x, int y )
 	{
 		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x + 1, y ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, GetInfoAtIndex( x, y ) / 1.05f, this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
 		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x - 1, y ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, GetInfoAtIndex( x, y ) / 1.05f, this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
 		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y + 1 ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, GetInfoAtIndex( x, y ) / 1.05f, this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
 		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y - 1 ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, GetInfoAtIndex( x, y ) / 1.05f, this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
 	}
 
@@ -451,9 +462,13 @@ void MFlake::Resize( int newWidth, int newHeight )
 	LayerWidth = newWidth; 
 	LayerHeight = newHeight; 
 
-	//delete[] InformationArray;
+	delete[] InformationArray;
+	
+	if(LayerWidth*LayerHeight)
+		InformationArray = new int[ LayerWidth * LayerHeight ];
+	else
+		InformationArray = NULL;
 
-	InformationArray = new int[ LayerWidth * LayerHeight ];
 
 	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
 	{

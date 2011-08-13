@@ -30,7 +30,7 @@ CBaseEntity::CBaseEntity()
 }
 CBaseEntity::~CBaseEntity(void)
 {
-
+	int tempthing = 0;
 }
 
 void CBaseEntity::Update(float fDT)

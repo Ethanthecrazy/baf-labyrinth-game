@@ -25,6 +25,7 @@ private:
 public:
 
 	MLayer( int _layerID );
+	~MLayer();
 
 	int AddUnit( IUnitInterface* _toAdd );
 	int AddUnitIndexed( IUnitInterface* _toAdd );

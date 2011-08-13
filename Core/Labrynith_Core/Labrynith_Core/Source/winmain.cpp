@@ -27,6 +27,7 @@
 */
 
 #include <windows.h>	//	Needed for Windows Applications.
+#include <vld.h>
 #include <iostream>
 
 #include <ctime>
@@ -40,7 +41,13 @@ const char* g_szWINDOW_CLASS_NAME	= "LabyrinthCore";			//	Window Class Name.
 const char* g_szWINDOW_TITLE		= "Core Build 1.0";			//	Window Title.
 const int	g_nWINDOW_WIDTH			= 800;						//	Window Width.
 const int	g_nWINDOW_HEIGHT		= 600;						//	Window Height.
-const BOOL	g_bIS_WINDOWED			= true;						
+const BOOL	g_bIS_WINDOWED			= true;		
+
+
+
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
 
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -223,7 +230,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MSG		msg;	//	Generic message.
 	HWND	hWnd;	//	Main Window Handle.
 
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	// this function call will set a breakpoint at the location of a leaked block
 	// set the parameter to the identifier for a leaked block
 	//	_CrtSetBreakAlloc(187);

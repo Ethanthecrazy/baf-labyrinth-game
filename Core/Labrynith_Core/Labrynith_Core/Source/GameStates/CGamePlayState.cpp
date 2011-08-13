@@ -210,7 +210,7 @@ void CGamePlayState::Exit(void)
 	cout << "GamePlay -> ";
 	testVaribale = -1;
 
-	//MObjectManager::GetInstance()->DeleteInstance();
+	MObjectManager::GetInstance()->DeleteInstance();
 }
 
 void CGamePlayState::KillPlayer(void)
@@ -412,7 +412,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		{
 			msgCreateEntity* NewMessage = (msgCreateEntity*)_message;
 
-			IUnitInterface* temp = new CBaseEntity();
+			CBaseEntity* temp = new CBaseEntity();
 			((CBaseEntity*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/Golems/IceGolem.png" );
 			((CBaseEntity*)(temp))->SetPlayAnimWhileStill(true);
 			((CBaseEntity*)(temp))->SetIndexPosX( NewMessage->GetX() );
@@ -431,7 +431,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 			msgCreatePlayer* NewMessage = (msgCreatePlayer*)_message;
 
-			IUnitInterface* temp = new CPlayer();
+			CPlayer* temp = new CPlayer();
 			temp->SetLayerLocation(NewMessage->GetZ());
 			((CPlayer*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/MainCharacter.png" ));
 			((CPlayer*)(temp))->SetPlayAnimWhileStill(false);
@@ -496,7 +496,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				player->GetHeldItem()->SetPosX( (float)(tileXPos * 32) );
 				player->GetHeldItem()->SetPosY( (float)(tileYPos * 32) );
 
-				player->GetHeldItem()->Release();
+				//player->GetHeldItem()->Release();
 
 				player->SetHeldItem(NULL);
 
@@ -515,7 +515,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			CBaseObject* pBase = NewMessage->GetMsgObject() ;
 			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
 
-			pBase->AddRef();
+			//pBase->AddRef();
 			if( pBase->GetType() == OBJ_POWERGLOVES || pBase->GetType() == OBJ_OILCAN )
 			{
 				if( player->GetEquippedItem() == NULL )

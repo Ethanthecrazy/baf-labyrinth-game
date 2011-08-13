@@ -51,7 +51,7 @@ public:
 	// The identification number used to reference the object in the Manager.
 	int m_nIdentificationNumber; 
 
-	//virtual ~IUnitInterface(void) = 0 { }
+	virtual ~IUnitInterface(void) { }
 	IUnitInterface() : FLAG_DirectionToMove( 0 ), FLAG_MovementState( 0 ), FLAG_prev_DirectionToMove( 0 ), FLAG_prev_MovementState( 0 ) {}
 
 	virtual void Update(float fDT) = 0;

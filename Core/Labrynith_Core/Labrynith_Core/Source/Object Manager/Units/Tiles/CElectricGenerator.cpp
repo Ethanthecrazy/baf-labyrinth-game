@@ -32,6 +32,13 @@ CElectricGenerator::~CElectricGenerator()
 {
 	CBaseObject::~CBaseObject() ;
 	MEventSystem::GetInstance()->UnregisterClient("CIRCUTBROKEN" , this ) ;
+	
+	for( unsigned int i = 0; i < m_EvaluatedConnections.size(); ++i)
+	{
+		delete m_EvaluatedConnections[i];
+	}
+
+	m_EvaluatedConnections.clear();
 }
 
 void CElectricGenerator::Update(float fDT )
@@ -210,10 +217,10 @@ bool CElectricGenerator::MakeConnections( IUnitInterface* obj )
 					continue ;
 			
 			int item = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
-			int buttonID = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
+			//int buttonID = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
 			int entityID = MObjectManager::GetInstance()->FindLayer( obj->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( obj->GetIndexPosX() + i , obj->GetIndexPosY() + u ) ;
 			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-			IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
+			//IUnitInterface* button = (MObjectManager::GetInstance()->GetUnit(buttonID)) ;
 			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 			if( object)
 			{
@@ -231,21 +238,15 @@ bool CElectricGenerator::MakeConnections( IUnitInterface* obj )
 						m_EvaluatedConnections.push_back( object ) ;
 						MakeConnections( object ) ;
 					}
-				}
-			}
-			if( button )
-			{
-				if( FindConnection(button) == false )
-				{
-					if( button->GetType() == OBJ_ELECTRICBUTTON )
+					else if( object->GetType() == OBJ_ELECTRICBUTTON )
 					{
-						((CElectricButton*)button)->SetPowered(true) ;
-						m_EvaluatedConnections.push_back( button ) ;
-						MakeConnections( button ) ;
+						((CElectricButton*)object)->SetPowered(true) ;
+						m_EvaluatedConnections.push_back( object ) ;
+						MakeConnections( object ) ;
 					}
 				}
 			}
-			if( entity)
+			if( entity )
 			{
 				if( FindConnection(entity) == false )
 				{

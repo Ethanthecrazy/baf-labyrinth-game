@@ -12,7 +12,10 @@ CAI_Handler::CAI_Handler()
 }
 CAI_Handler::~CAI_Handler()
 {
-	m_vEntities.clear();
+	for( unsigned int i = 0; i < m_vEntities.size(); ++i)
+	{
+		delete m_vEntities[i];
+	}
 }
 //helpers
 bool CAI_Handler::HorizontalMove(const CBaseEntity* pEntity, const int nTargetX)

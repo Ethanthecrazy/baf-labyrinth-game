@@ -15,6 +15,7 @@
 #include "../../Wrappers/CSGD_Direct3D.h"
 #include "../../Wrappers/CSGD_FModManager.h"
 #include "Tiles\CMetal.h"
+#include "Tiles\CElectricButton.h"
 
 CPlayer::CPlayer(void)
 {
@@ -36,6 +37,9 @@ CPlayer::~CPlayer(void)
 	CBaseEntity::~CBaseEntity();
 	if(m_pHeldItem)
 		delete m_pHeldItem;
+
+	if(m_pEquippedItem)
+		delete m_pEquippedItem;
 }
 void CPlayer::Update(float fDT)
 {
@@ -201,8 +205,6 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				//if we can hold the object we collided with...		
 				//allow the player to hold it unless 
 				//the player is already holding onto something
-
-
 				if( temp->GetType() == OBJ_ATTRACTOR && GetHeldItem() != NULL )
 				{
 					return true ;
@@ -235,9 +237,14 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	case OBJECT_TILE:
 		{
-			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
+			if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
 			{
 				((CButton*)pBase)->CheckCollision(this);
+				return false;
+			}
+			else if(pBase->GetType() == OBJ_ELECTRICBUTTON)
+			{				
+				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
 				return false;
 			}
 			else if( pBase->GetType() == OBJ_DOOR )
@@ -288,9 +295,13 @@ void CPlayer::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	{
 		case OBJECT_TILE:
 		{
-			if( pBase->GetType() == OBJ_BUTTON || pBase->GetType() == OBJ_ELECTRICBUTTON )
+			if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
 			{
 				((CButton*)pBase)->CheckCollision(this);
+			}
+			else if(pBase->GetType() == OBJ_ELECTRICBUTTON)
+			{				
+				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
 			}
 		}
 	};

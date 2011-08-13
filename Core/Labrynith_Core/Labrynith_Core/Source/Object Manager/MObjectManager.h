@@ -34,7 +34,6 @@ public:
 
 	// Adds a unit to the game and updates the flake's data array.
 	int AddUnitIndexed( IUnitInterface* _toAdd, int _layer );
-	int MoveUnit( IUnitInterface* _toMove, int _layer );
 
 	bool RemoveUnit( int _Ident );
 	void RemoveAllUnits( void );

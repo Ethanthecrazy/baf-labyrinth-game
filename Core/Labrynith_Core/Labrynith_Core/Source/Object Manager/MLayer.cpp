@@ -26,6 +26,11 @@ MLayer::MLayer( int _layerID ) : LayerID( _layerID )
 	}
 }
 
+MLayer::~MLayer()
+{
+	m_vFlakes.clear();
+}
+
 int MLayer::AddUnit( IUnitInterface* _toAdd )
 {
 	m_nSize += 1;
