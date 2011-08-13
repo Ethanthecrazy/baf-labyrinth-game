@@ -27,7 +27,7 @@
 */
 
 #include <windows.h>	//	Needed for Windows Applications.
-#include <vld.h>
+//#include <vld.h>
 #include <iostream>
 
 #include <ctime>
