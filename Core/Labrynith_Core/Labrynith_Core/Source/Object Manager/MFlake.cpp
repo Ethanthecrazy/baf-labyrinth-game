@@ -458,7 +458,10 @@ void MFlake::Resize( int newWidth, int newHeight )
 	if(LayerWidth*LayerHeight)
 		InformationArray = new int[ LayerWidth * LayerHeight ];
 	else
+	{
 		InformationArray = NULL;
+		return;
+	}
 
 	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
 	{

@@ -64,6 +64,9 @@ bool MObjectManager::RemoveUnit( int _Ident )
 void MObjectManager::RemoveAllUnits( void )
 {
 	m_nSize = 0;
+	//we have nothing to delete leave
+	if(m_vLayers.size() == 0)
+		return;
 
 	for( unsigned int i = 0; i < m_vLayers.size(); ++i )
 	{

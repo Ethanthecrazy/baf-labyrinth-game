@@ -8,6 +8,7 @@ using std::string;
 #include "GameStates\CMainMenuState.h"
 #include "Animation Manager\CAnimationManager.h"
 #include "Wrappers\CSGD_FModManager.h"
+#include "Object Manager\MObjectManager.h"
 
 // default constructor
 CGame::CGame()
@@ -140,6 +141,8 @@ void CGame::ChangeState(IGameState* pNextState)
 void CGame::Shutdown()
 {
 	ChangeState(NULL);
+
+	MObjectManager::GetInstance()->DeleteInstance();
 
 	CSGD_DirectInput::GetInstance()->ShutdownDirectInput();
 

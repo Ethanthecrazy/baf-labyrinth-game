@@ -203,14 +203,11 @@ void CGamePlayState::Render(void)
 
 void CGamePlayState::Exit(void)
 {
-	//MObjectManager::GetInstance()->RemoveUnit( testVaribale ); 
-	MObjectManager::GetInstance()->RemoveAllUnits();
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
 	MEventSystem::GetInstance()->ShutdownEventSystem();
 	cout << "GamePlay -> ";
 	testVaribale = -1;
 
-	MObjectManager::GetInstance()->DeleteInstance();
 }
 
 void CGamePlayState::KillPlayer(void)
