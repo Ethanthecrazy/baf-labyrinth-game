@@ -165,3 +165,19 @@ void CGame::PushState(IGameState* pNextState)
 	m_pGameStates[m_pGameStates.size() - 1]->Enter();
 
 }
+
+bool CGame::IsFullScreen() const
+{
+	return bFullscreen;
+}
+void CGame::SetFullScreen(const bool bFullScreen)
+{
+	//if they are the same leave, no
+	//use in doing work
+	if(bFullscreen == bFullScreen)
+		return;
+
+	CSGD_Direct3D::GetInstance()->ChangeDisplayParam(CSGD_Direct3D::GetInstance()->GetPresentParams()->BackBufferWidth,
+			CSGD_Direct3D::GetInstance()->GetPresentParams()->BackBufferHeight, (bFullScreen) ? false : true);
+	bFullscreen = bFullScreen;
+}

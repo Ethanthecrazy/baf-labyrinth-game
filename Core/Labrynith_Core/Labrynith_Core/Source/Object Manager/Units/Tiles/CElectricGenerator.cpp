@@ -30,7 +30,7 @@ CElectricGenerator::CElectricGenerator()
 
 CElectricGenerator::~CElectricGenerator() 
 {
-	CBaseObject::~CBaseObject() ;
+	CBaseObject::~CBaseObject();
 	MEventSystem::GetInstance()->UnregisterClient("CIRCUTBROKEN" , this ) ;
 	
 	for( unsigned int i = 0; i < m_EvaluatedConnections.size(); ++i)

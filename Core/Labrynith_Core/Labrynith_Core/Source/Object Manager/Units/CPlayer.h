@@ -15,6 +15,7 @@ class CPlayer : public CBaseEntity
 	float m_fInvincilibilityTimer;
 	int m_nPickUpSoundID;
 	int m_nPutDownSoundID;
+	int m_nLvCompSoundID;
 	//Item the player is holding
 	//this must not be in the object manager when this happens
 	CBaseObject *m_pHeldItem;

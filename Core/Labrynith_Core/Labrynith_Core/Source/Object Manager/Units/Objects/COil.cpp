@@ -4,6 +4,7 @@
 #include "../../../Animation Manager/CAnimationManager.h"
 #include "../CPlayer.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
+#include "../../../GameStates/COptionsState.h"
 
 COil::COil( bool bIsOil ) : m_bIsOil(bIsOil)
 {
@@ -16,6 +17,9 @@ COil::COil( bool bIsOil ) : m_bIsOil(bIsOil)
 	m_nAnimID = CAnimationManager::GetInstance()->GetID( "fire" ) ;
 	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/fire.png") ;
 	m_nFireSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/fire.wav" , FMOD_LOOP_UNIQUEID ) ;
+	//adjust the sounds to match configurations
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(m_nFireSoundID, true);
 	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
 }
 

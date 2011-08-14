@@ -9,6 +9,7 @@ using std::string;
 class CRamp : public CBaseObject
 {
 	bool Up;
+	int m_nMoveFloorSoundID;
 public:
 	CRamp(string direction = "");
 

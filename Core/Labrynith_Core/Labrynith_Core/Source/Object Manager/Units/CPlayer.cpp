@@ -25,12 +25,15 @@ CPlayer::CPlayer(void)
 	SetHeldItem(NULL);
 	SetEquippedItem(NULL);	
 	SetLives(4);	
-	m_nPickUpSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pick-up.mp3" );
-	m_nPutDownSoundID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/put-down.mp3" );
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
+	m_nPickUpSoundID = FM->LoadSound("resource/Sounds/pick-up.mp3" );
+	m_nPutDownSoundID = FM->LoadSound("resource/Sounds/put-down.mp3" );
+	m_nLvCompSoundID = FM->LoadSound("resource/Sounds/completeLevel.wav");
 	//adjust the sounds to match configurations
 	COptionsState* Opt = COptionsState::GetInstance();
 	Opt->AdjustSound(m_nPickUpSoundID, true);
 	Opt->AdjustSound(m_nPutDownSoundID, true);
+	Opt->AdjustSound(m_nLvCompSoundID, true);
 }
 CPlayer::~CPlayer(void)
 {
@@ -265,7 +268,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				//Save the new current level we are on
 				CSaveSlotState::GetInstance()->Save();
 				//Load the next level
-				CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/completeLevel.wav"));
+				CSGD_FModManager::GetInstance()->PlaySoundA(m_nLvCompSoundID);
 				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
 				return true;
 			}

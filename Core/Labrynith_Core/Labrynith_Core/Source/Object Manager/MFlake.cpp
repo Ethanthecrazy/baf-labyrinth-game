@@ -33,20 +33,9 @@ MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _
 
 
 MFlake::~MFlake()
-{
-	if( ( LayerWidth + LayerHeight ) )
-	{
-		//delete[] InformationArray;
-	}
-	
-	for( unsigned int i = 0; i < m_vObjects.size(); ++i )
-	{
-		delete m_vObjects[i];
-	}
-	m_nSize = 0;
-	m_vObjects.clear();
-
-	ArrayIndex.clear();
+{	
+	RemoveAllUnits();
+	Resize( 0, 0 );
 }
 
 int MFlake::AddUnit( IUnitInterface* _toAdd )
@@ -462,13 +451,14 @@ void MFlake::Resize( int newWidth, int newHeight )
 	LayerWidth = newWidth; 
 	LayerHeight = newHeight; 
 
-	delete[] InformationArray;
+	//if InformationArray is valid delete it
+	if(InformationArray)
+		delete[] InformationArray;
 	
 	if(LayerWidth*LayerHeight)
 		InformationArray = new int[ LayerWidth * LayerHeight ];
 	else
 		InformationArray = NULL;
-
 
 	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
 	{

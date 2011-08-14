@@ -10,6 +10,7 @@ using std::string;
 class CDoor : public CBaseObject, public IListener
 {
 private:
+	int OpenSoundID;
 	bool m_bIsOpen;
 	string m_nLink;
 

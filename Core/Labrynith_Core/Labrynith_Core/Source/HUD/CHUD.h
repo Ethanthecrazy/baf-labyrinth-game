@@ -10,6 +10,7 @@ class CHUD
 	CPlayer* pPlayer;
 	//id to render heart image
 	int HeartImageID;
+	int InvSlotImageID;
 	//singleton
 	CHUD();
 	CHUD(CHUD& hud);

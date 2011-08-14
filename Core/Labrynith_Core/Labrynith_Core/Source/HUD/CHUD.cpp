@@ -7,7 +7,9 @@
 CHUD::CHUD()
 {
 	pPlayer = NULL;
-	HeartImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+	CSGD_TextureManager* TM = CSGD_TextureManager::GetInstance();
+	HeartImageID = TM->LoadTexture( "resource/heart.png" );
+	InvSlotImageID = TM->LoadTexture( "resource/InvSlot.png" );
 }
 CHUD::~CHUD()
 {
@@ -28,15 +30,17 @@ void CHUD::Render()
 
 	//Player HeldItem
 	CBaseObject* pHeldItem = pPlayer->GetHeldItem();
+	TM->Draw(InvSlotImageID, 670, 536);
 	if(pHeldItem)
 	{
-		TM->Draw(pHeldItem->m_nImageID, 700, 564);
+		TM->Draw(pHeldItem->m_nImageID, 686, 552);
 	}
 	//Player EquippedItem
 	CBaseObject* pEquipItem = pPlayer->GetEquippedItem();
+	TM->Draw(InvSlotImageID, 734, 536);
 	if(pEquipItem)
 	{
-		TM->Draw(pEquipItem->m_nImageID, 750, 564);
+		TM->Draw(pEquipItem->m_nImageID, 750, 552);
 	}
 
 }

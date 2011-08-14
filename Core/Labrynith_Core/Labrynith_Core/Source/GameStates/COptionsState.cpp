@@ -31,7 +31,7 @@ void COptionsState::Enter(void)
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 	CSGD_FModManager* pFM = CSGD_FModManager::GetInstance();
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ', 64, 64, 10 );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
 	LoadOptions();
 }
 bool COptionsState::Input(void)
@@ -270,6 +270,7 @@ void COptionsState::LoadOptions()
 		in.read((char *)&nPanL, sizeof(int)); 
 		in.read((char *)&nPanR, sizeof(int)); 
 		in.read((char *)&bIsFullScreen, sizeof(bool));
+		SetFullScreen(bIsFullScreen);
 	}
 	in.close();
 }
@@ -331,5 +332,7 @@ void COptionsState::SetPanRight(const int nPanR)
 }
 void COptionsState::SetFullScreen(const bool bIsFullScreen)
 {
+	CGame* pGame = CGame::GetInstance();
 	m_bIsFullscreen = bIsFullScreen;
+	pGame->SetFullScreen(GetFullScreen());
 }

@@ -6,11 +6,17 @@
 #include "../../../GameStates/CGamePlayState.h"
 #include "../CBaseEntity.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
+#include "../../../GameStates/COptionsState.h"
 
 CPit::CPit()
 {
 	m_nUnitType = OBJECT_TILE;
 	this->m_nType = OBJ_PIT;
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
+	HurtSoundID = FM->LoadSound("resource/Sounds/hurt.mp3");
+	//adjust the sounds to match configurations
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(HurtSoundID, true);
 }
 
 bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
@@ -24,7 +30,7 @@ bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	
 	if( this->GetLayerLocation() != CGamePlayState::GetInstance()->GetNumLevelFloors() )
 	{		
-		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/hurt.mp3"));
+		CSGD_FModManager::GetInstance()->PlaySoundA(HurtSoundID);
 
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
 			this->GetLayerLocation() + 1) );

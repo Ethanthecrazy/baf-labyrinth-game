@@ -1,6 +1,6 @@
 #include "CButton.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
-
+#include "../../../GameStates/COptionsState.h"
 #include "../../../Messaging/MEventSystem.h"
 
 CButton::CButton(string nLink)
@@ -12,6 +12,14 @@ CButton::CButton(string nLink)
 
 	MEventSystem::GetInstance()->RegisterClient("Button.Pressed", this);
 	MEventSystem::GetInstance()->RegisterClient("Button.Unpress", this);
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
+	OpenSoundID = FM->LoadSound("resource/Sounds/pressed.mp3");
+	CloseSoundID = FM->LoadSound("resource/Sounds/un-pressed.mp3");
+	//adjust the sounds to match configurations
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(OpenSoundID, true);
+	Opt->AdjustSound(CloseSoundID, true);
+	
 }
 CButton::~CButton(void)
 {	
@@ -29,12 +37,12 @@ bool CButton::CheckCollision(IUnitInterface* pBase)
 	if(m_bIsPressed)
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)m_nLink.c_str());
-		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pressed.mp3"));
+		CSGD_FModManager::GetInstance()->PlaySoundA(OpenSoundID);
 	}
 	else
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)m_nLink.c_str());
-		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/un-pressed.mp3"));
+		CSGD_FModManager::GetInstance()->PlaySoundA(CloseSoundID);
 	}
 
 	//printf("Steped on button\n");

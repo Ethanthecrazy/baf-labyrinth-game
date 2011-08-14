@@ -56,9 +56,11 @@ public:
 
 	float GetElapsedTime() {return m_fElapsedTime; }
 	void SetElapsedTime(float t) { m_fElapsedTime = t; }
+	void SetFullScreen(const bool bFullScreen);
 	
 	int GetScreenWidth() {return m_nScreenWidth;  }
 	int GetScreenHeight() {return m_nScreenHeight; }
+	bool IsFullScreen() const;
 	
 	void ClearAllStates( void );
 	void PopState(void);

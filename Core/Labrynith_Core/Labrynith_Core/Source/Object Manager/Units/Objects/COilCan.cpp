@@ -6,12 +6,16 @@
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../../GameStates/CGamePlayState.h"
 #include "../../../Wrappers/CSGD_DirectInput.h"
+#include "../../../GameStates/COptionsState.h"
 
 COilCan::COilCan( void )
 {
 	CBaseObject::CBaseObject() ;
 	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/OilBarrel.png") ;
 	m_nOilSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/OilDrop.mp3" ) ;
+	//adjust the sounds to match configurations
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(m_nOilSoundID, true);
 	SetCharges( 5 ) ;
 }
 

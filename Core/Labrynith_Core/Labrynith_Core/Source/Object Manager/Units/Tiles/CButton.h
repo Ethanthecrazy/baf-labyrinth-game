@@ -12,7 +12,7 @@ class CButton : public CBaseObject, public IListener
 private:
 	bool m_bIsPressed;
 	string m_nLink;
-
+	int OpenSoundID, CloseSoundID;
 public:
 	CButton(string nLink = "-5234");
 	~CButton(void);

@@ -36,10 +36,7 @@ void CMainMenuState::Enter(void)
 	cout << "MainMenu\n";
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ',
-		64,
-		64,
-		10 );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
 }
 
 bool CMainMenuState::Input(void)

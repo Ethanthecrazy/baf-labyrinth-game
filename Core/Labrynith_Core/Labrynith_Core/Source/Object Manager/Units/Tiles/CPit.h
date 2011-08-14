@@ -5,7 +5,7 @@
 
 class CPit : public CBaseObject
 {
-
+	int HurtSoundID;
 public:
 	CPit(void);
 
