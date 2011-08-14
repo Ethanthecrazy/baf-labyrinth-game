@@ -12,10 +12,7 @@ CAI_Handler::CAI_Handler()
 }
 CAI_Handler::~CAI_Handler()
 {
-	for( unsigned int i = 0; i < m_vEntities.size(); ++i)
-	{
-		delete m_vEntities[i];
-	}
+	ClearEntityList();
 }
 //helpers
 bool CAI_Handler::HorizontalMove(const CBaseEntity* pEntity, const int nTargetX)
@@ -137,6 +134,13 @@ void CAI_Handler::ClearTargets(int nAI_ID)
 }
 void CAI_Handler::ClearEntityList()
 {
+	if(m_vEntities.size() == 0)
+		return;
+
+	for( unsigned int i = 0; i < m_vEntities.size(); ++i)
+	{
+		delete m_vEntities[i];
+	}
 	m_vEntities.clear();
 }
 bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX, 
