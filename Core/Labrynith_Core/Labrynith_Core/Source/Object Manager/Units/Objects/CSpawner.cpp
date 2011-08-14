@@ -82,7 +82,9 @@ void CSpawner::HandleEvent( Event* _toHandle )
 				((CLightOrb*)(temp))->SetIndexPosX( GetIndexPosX() );
 				((CLightOrb*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-				m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );			
+				m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );	
+				//object falls out of scope
+				temp->Release();
 				break;
 			}
 
@@ -94,7 +96,9 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );	
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 			
@@ -106,7 +110,9 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosX( GetIndexPosX() );
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );	
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -119,6 +125,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;			
 			}
 
@@ -131,6 +139,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -143,6 +153,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -155,6 +167,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -167,6 +181,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -179,6 +195,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -191,6 +209,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CBaseGolem*)(temp))->SetIndexPosY( GetIndexPosY() );
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -206,7 +226,9 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(EARTH_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );	
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 			
@@ -220,7 +242,9 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetIndexPosY( GetIndexPosY() );
 			((CAttractor*)(temp))->SetElemType(FIRE_GOLEM);
 
-			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );			
+			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );	
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -235,6 +259,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetElemType(WATER_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;			
 			}
 
@@ -249,6 +275,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetElemType(ICE_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -263,6 +291,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetElemType(AIR_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -277,6 +307,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetElemType(LAVA_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -291,6 +323,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetElemType(IRON_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -305,6 +339,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetElemType(LIGHT_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 
@@ -319,6 +355,8 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			((CAttractor*)(temp))->SetElemType(SHADOW_GOLEM);
 
 			m_nSpawnedID = MObjectManager::GetInstance()->AddUnitIndexed( temp, this->GetLayerLocation() );
+			//object falls out of scope
+			temp->Release();
 			break;
 			}
 

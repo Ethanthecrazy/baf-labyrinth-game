@@ -496,8 +496,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				player->GetHeldItem()->SetPosX( (float)(tileXPos * 32) );
 				player->GetHeldItem()->SetPosY( (float)(tileYPos * 32) );
 
-				//player->GetHeldItem()->Release();
-
+				player->GetHeldItem()->Release();
 				player->SetHeldItem(NULL);
 
 				if( object->GetType() == OBJ_ATTRACTOR )
@@ -515,20 +514,28 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			CBaseObject* pBase = NewMessage->GetMsgObject() ;
 			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
 
-			//pBase->AddRef();
 			if( pBase->GetType() == OBJ_POWERGLOVES || pBase->GetType() == OBJ_OILCAN )
 			{
 				if( player->GetEquippedItem() == NULL )
+				{
 					player->SetEquippedItem(pBase) ;
+					pBase->AddRef();
+				}
 				else if( player->GetHeldItem() == NULL )
+				{
 					player->SetHeldItem(pBase) ;
+					pBase->AddRef();
+				}
 				else
 					break;
 			}
 			else
 			{
 				if( player->GetHeldItem() == NULL )
+				{
 					player->SetHeldItem(pBase);
+					pBase->AddRef();
+				}
 				else
 					break;
 			}
@@ -632,6 +639,15 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			//in its place
 			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
 			OM->AddUnitIndexed(pNewGolem, pGolem->GetLayerLocation());
+		}
+		break;
+
+	case MSG_DELETEME:
+		{
+			msgDeleteMe* msg = (msgDeleteMe*)_message;
+			IUnitInterface* unit = msg->GetPointer();
+			delete unit;
+			unit = NULL;
 		}
 		break;
 	}

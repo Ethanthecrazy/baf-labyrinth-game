@@ -3,7 +3,8 @@
 
 enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
 	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_PLACE_OBJECT,
-				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MOVE_ENTITY_FLOOR, MSG_MAX };
+				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MOVE_ENTITY_FLOOR,
+				 MSG_DELETEME, MSG_MAX };
 
 class CBaseMessage
 {
@@ -82,7 +83,6 @@ public:
 
 };
 
-
 class CBaseObject;
 class msgPlaceObject : public CBaseMessage
 {
@@ -124,6 +124,15 @@ public:
 	msgChangeGolemType(CBaseGolem* pGolem, int nGolemType);
 	CBaseGolem* GetGolem() { return m_pGolem; };
 	int GetGolemType() { return m_nGolemType; };
+};
+
+class IUnitInterface;
+class msgDeleteMe : public CBaseMessage
+{
+	IUnitInterface* m_ptoDelete;
+public:
+	msgDeleteMe(IUnitInterface* ptoDelete);
+	IUnitInterface* GetPointer() { return m_ptoDelete; };
 };
 
 #endif

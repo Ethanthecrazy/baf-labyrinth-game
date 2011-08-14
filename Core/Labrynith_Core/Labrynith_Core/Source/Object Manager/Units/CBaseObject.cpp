@@ -262,5 +262,5 @@ void CBaseObject::Release(void)
 	--m_uiRefCount;
 
 	if (m_uiRefCount == 0)
-		delete this;
+		MMessageSystem::GetInstance()->SendMsg(new msgDeleteMe(this));
 }

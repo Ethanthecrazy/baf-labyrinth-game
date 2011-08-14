@@ -54,3 +54,9 @@ msgChangeGolemType::msgChangeGolemType(CBaseGolem* pGolem, int nGolemType)
 	m_pGolem = pGolem;
 	m_nGolemType = nGolemType;
 }
+
+msgDeleteMe::msgDeleteMe(IUnitInterface* ptoDelete)
+	: CBaseMessage( MSG_DELETEME )
+{
+	m_ptoDelete = ptoDelete;
+}

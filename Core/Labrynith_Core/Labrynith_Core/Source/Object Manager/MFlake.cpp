@@ -92,7 +92,7 @@ bool MFlake::RemoveUnit( int _Ident )
 		IUnitInterface* toDelete = m_vObjects[ ArrayIndex.ConvertTrueValue( _Ident ) ];
 		InformationArray[ toDelete->GetIndexPosX() + toDelete->GetIndexPosY() * LayerWidth ] = 0;
 
-		m_vObjects[ ArrayIndex.ConvertTrueValue( _Ident ) ]->Release();
+		toDelete->Release();
 		m_vObjects.erase( m_vObjects.begin() + ArrayIndex.ConvertTrueValue( _Ident ) );
 		
 		ArrayIndex.DecrementFromNode( ArrayIndex.ConvertTrueValue( _Ident ) );
