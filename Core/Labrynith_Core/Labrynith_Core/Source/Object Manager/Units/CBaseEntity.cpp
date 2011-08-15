@@ -146,7 +146,7 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 				0.0f,
 				0.0f,
 				0.0f,
-				D3DCOLOR_ARGB( lightamount, 255, 255, 255) );	
+				D3DCOLOR_ARGB( 255, lightamount, lightamount, lightamount) );	
 		}
 		else
 		{
@@ -157,7 +157,7 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 				0,
 				0.0f,
 				0.0f,
-				D3DCOLOR_ARGB( lightamount, 255, 255, 255) );
+				D3DCOLOR_ARGB( 255, lightamount, lightamount, lightamount) );
 		}
 
 	}

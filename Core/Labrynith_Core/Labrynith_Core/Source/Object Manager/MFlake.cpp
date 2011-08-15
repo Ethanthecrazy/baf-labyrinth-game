@@ -201,25 +201,22 @@ void MFlake::LightingProcess( int x, int y )
 	if( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( x, y ) == 0 )
 	{
 	}
-	else if(  MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( x, y ) )
-	{
-
-	}
+	//else if(  MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( x, y ) )
 	else
 	{
-		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x + 1, y ) )
+		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x + 1, y ) )
 		{
 			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
-		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x - 1, y ) )
+		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x - 1, y ) )
 		{
 			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
-		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y + 1 ) )
+		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y + 1 ) )
 		{
 			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
-		if( GetInfoAtIndex( x, y ) > GetInfoAtIndex( x, y - 1 ) )
+		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y - 1 ) )
 		{
 			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
 		}
@@ -245,6 +242,8 @@ void MFlake::Render( int CameraX, int CameraY )
 
 					if( InformationArray[ x + y * LayerWidth] >= 0 )
 					{
+
+						int nBrightness = MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y );
 						switch( InformationArray[ x + y * LayerWidth] )
 						{
 
@@ -280,7 +279,7 @@ void MFlake::Render( int CameraX, int CameraY )
 										0.0f,
 										0.0f,
 										0.0f,
-										D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+										D3DCOLOR_ARGB( 255, nBrightness, nBrightness, nBrightness) );	
 
 								break;
 							}
@@ -317,7 +316,7 @@ void MFlake::Render( int CameraX, int CameraY )
 									0.0f,
 									0.0f,
 									0.0f,
-									D3DCOLOR_ARGB( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ), 255, 255, 255) );	
+									D3DCOLOR_ARGB( 255, nBrightness, nBrightness, nBrightness) );	
 
 								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
 								break;
@@ -451,6 +450,7 @@ void MFlake::Resize( int newWidth, int newHeight )
 	LayerWidth = newWidth; 
 	LayerHeight = newHeight; 
 
+	//delete[] InformationArray;
 	//if InformationArray is valid delete it
 	if(InformationArray)
 		delete[] InformationArray;

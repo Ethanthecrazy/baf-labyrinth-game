@@ -18,5 +18,5 @@ void CLightOrb::Render( int CameraPosX, int CameraPosY )
 	CBaseObject::Render( CameraPosX, CameraPosY );
 	
 	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
-		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 150 );
+		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 200 );
 }
