@@ -80,7 +80,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					int ObjectID = pBase->m_nIdentificationNumber ;
 					//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 					MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
-					pBase->AddRef();
 					MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
 					MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
 
@@ -255,7 +254,6 @@ void CBaseGolem::HandleEvent( Event* _toHandle )
 		if( GetTargetPosX() == attr->GetIndexPosX() && GetTargetPosY() == attr->GetIndexPosY() )
 		{
 			ClearTarget();
-			attr->Release();
 		}
 	}
 }

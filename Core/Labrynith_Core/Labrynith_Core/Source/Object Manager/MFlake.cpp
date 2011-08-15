@@ -35,7 +35,7 @@ MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _
 MFlake::~MFlake()
 {	
 	RemoveAllUnits();
-	Resize( 0, 0 );
+	//Resize( 0, 0 );
 }
 
 int MFlake::AddUnit( IUnitInterface* _toAdd )
@@ -55,8 +55,8 @@ int MFlake::AddUnitIndexed( IUnitInterface* _toAdd )
 {
 	if( m_nSize + 1 > 3499 )
 		return -2;
-	_toAdd->AddRef();
-	
+
+	_toAdd->AddRef();	
 	if( _toAdd->m_nIdentificationNumber == 0 )
 	{
 		// generate a new number
@@ -68,8 +68,6 @@ int MFlake::AddUnitIndexed( IUnitInterface* _toAdd )
 		while( GetUnit( _toAdd->m_nIdentificationNumber ) )
 			_toAdd->m_nIdentificationNumber++ ;
 	}
-
-
 
 	//_toAdd->m_nIdentificationNumber += m_nSize;
 	ArrayIndex.InsertEntry( _toAdd->m_nIdentificationNumber, m_vObjects.size() );

@@ -35,6 +35,7 @@ void CGolem_Fire::Update(float fDT)
 {
 	CBaseGolem::Update(fDT);
 	UpdateAI();
+	//CheckIceTile();
 	// check surrounding objects to see if they can catch on fire
 	for( int i = -1 ; i <= 1 ; ++i )
 	{
@@ -252,6 +253,33 @@ bool CGolem_Fire::CanInteract(IUnitInterface* pBase)
 	};
 	return false;
 }
+void CGolem_Fire::CheckIceTile()
+{
+	//If our target has been cleared
+	if(!HasTarget())
+	{		
+		//if we are on an ice tile, turn it into water
+		MObjectManager* OM = MObjectManager::GetInstance();
+		int tile = OM->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_TILE)
+			.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+		IUnitInterface* unit = OM->GetUnit(tile);
+		CBaseObject* obj;
+		//if the object isnt valid leave
+		if(!unit)
+			return;
+
+		if(unit->m_nUnitType == OBJECT_TILE)
+		{
+			obj = (CBaseObject*)unit;
+			if(obj->GetType() == OBJ_WATER)
+			{
+				((CWaterTile*)obj)->SetIsFrozen(false);
+				//and call exitcollision to get rid of the fire golem
+				this->ExitCollision(obj, true);
+			}
+		}
+	}
+}
 void CGolem_Fire::UpdateAI()
 {
 	CBaseGolem::UpdateAI();
@@ -260,35 +288,4 @@ void CGolem_Fire::HandleEvent( Event* _toHandle )
 {
 	CBaseGolem::HandleEvent(_toHandle);
 	//Events only the Fire Golem responds to
-	if( _toHandle->GetEventID() == "ATTRACTORREMOVED" )
-	{
-		CAttractor* attr = (CAttractor*)_toHandle->GetParam() ;
-		if( !attr )
-			return;
-
-		//If our target has been cleared
-		if(!HasTarget())
-		{		
-			//if we are on an ice tile, turn it into water
-			MObjectManager* OM = MObjectManager::GetInstance();
-			int tile = OM->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_TILE)
-				.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
-			IUnitInterface* unit = OM->GetUnit(tile);
-			CBaseObject* obj;
-			//if the object isnt valid leave
-			if(!unit)
-				return;
-
-			if(unit->m_nUnitType == OBJECT_TILE)
-			{
-				obj = (CBaseObject*)unit;
-				if(obj->GetType() == OBJ_WATER)
-				{
-					((CWaterTile*)obj)->SetIsFrozen(false);
-					//and call exitcollision to get rid of the fire golem
-					this->ExitCollision(obj, true);
-				}
-			}
-		}
-	}
 }

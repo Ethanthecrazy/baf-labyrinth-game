@@ -370,6 +370,9 @@ void CPlayer::SetLives(const int nLives)
 		SetInvincilibity(true);
 
 	m_nLives = nLives;
+
+	if(GetLives() <= 0)
+		CGamePlayState::GetInstance()->KillPlayer();
 }
 void CPlayer::SetInvincilibity(const bool bIsInvincible)
 {

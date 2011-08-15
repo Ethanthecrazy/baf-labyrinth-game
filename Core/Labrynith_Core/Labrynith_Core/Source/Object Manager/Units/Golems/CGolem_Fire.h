@@ -15,6 +15,7 @@ public:
 	void Update(float fDT);
 	void Render( int CameraPosX, int CameraPosY );
 	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
+	void CheckIceTile();
 	void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	bool CheckTileCollision(int TileID);
 	void UpdateAI();
