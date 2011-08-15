@@ -31,6 +31,14 @@ msgTransferLight::msgTransferLight( int _OneX, int _OneY, int _TwoX, int _TwoY, 
 	Flake = _Flake;
 }
 
+msgDrainLight::msgDrainLight( int _OneX, int _OneY, int _DrainValue, void* _Flake ) : CBaseMessage( MSG_DRAIN_LIGHT )
+{
+	OneX = _OneX;
+	OneY = _OneY;
+	TransferValue = _DrainValue;
+	Flake = _Flake;
+}
+
 msgPlaceObject::msgPlaceObject( int tileXPos , int tileYPos ) : CBaseMessage( MSG_PLACE_OBJECT )
 {
 	m_nTileXPos = tileXPos ;

@@ -49,11 +49,14 @@ void CPlayer::Update(float fDT)
 	CBaseEntity::Update(fDT);
 	UpdateInvincibilityTime(fDT);
 	Input();
+
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
 {
-	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+
+		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
 		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+
 	CBaseEntity::Render(CameraPosX, CameraPosY);
 
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();

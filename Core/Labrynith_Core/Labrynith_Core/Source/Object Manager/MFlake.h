@@ -53,6 +53,6 @@ public:
 
 	void FinishMovingEnt( IUnitInterface* toFinish );
 
-	void Resize( int newWidth, int newHeight );
+	void Resize( int newWidth, int newHeight ); 
 
 };

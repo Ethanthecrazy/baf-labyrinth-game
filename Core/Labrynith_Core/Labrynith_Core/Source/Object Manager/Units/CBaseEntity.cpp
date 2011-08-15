@@ -4,6 +4,7 @@
 #include "../../Animation Manager/CAnimationManager.h"
 #include "../../AI Handler/CAI_Handler.h"
 #include "../../GameStates/CGamePlayState.h"
+#include "CBaseGolem.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -131,11 +132,24 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 			return;
 
 		int lightamount = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() );
-		if(lightamount == 0 && CGamePlayState::GetInstance()->GetRenderCulling())
-			return;
+		
 
 		int DrawPositionX = (int)GetPosX() - CameraPosX;
 		int DrawPositionY = (int)GetPosY() - CameraPosY;
+
+		if( m_nUnitType == OBJECT_ENTITY )
+		{
+			if( (((CBaseEntity*)(this)))->GetType() == ENT_GOLEM )
+			{
+				if( (((CBaseGolem*)(this)))->GetGolemType() == SHADOW_GOLEM )
+				{
+					lightamount = 255;
+				}
+			}
+		}
+
+		if(lightamount == 0 && CGamePlayState::GetInstance()->GetRenderCulling())
+			return;
 
 		if(GetCurrentAnimID() <= -1)
 		{

@@ -137,6 +137,7 @@ IUnitInterface* MFlake::GetUnit( int _Ident )
 
 void MFlake::Update( float fDT )
 {
+
 	if( m_nFlakeType == OBJECT_LIGHT )
 	{
 		int decision = rand() % 4;
@@ -194,7 +195,7 @@ void MFlake::LightingProcess( int x, int y )
 	if( GetInfoAtIndex( x, y ) > 254 )
 		bCanTransfer = true;
 
-		SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 5 );
+		SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 6 );
 
 	if( GetInfoAtIndex( x, y ) < 5 )
 	{
@@ -474,10 +475,21 @@ void MFlake::Resize( int newWidth, int newHeight )
 	//}
 	InformationArray.clear();
 	InformationArray.resize(LayerHeight * LayerWidth);
-	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
-	{
-		InformationArray[i] = 0;
-	}
+	//if(InformationArray)
+		//delete[] InformationArray;
+	
+	//if(LayerWidth*LayerHeight)
+	//	InformationArray = new int[ LayerWidth * LayerHeight ];
+	//else
+	//{
+	//	InformationArray = NULL;
+	//	return;
+	//}
+
+	//for( int i = 0; i < LayerHeight * LayerWidth; ++i )
+	//{
+	//	InformationArray[i] = 0;
+	//}
 }
 
 void MFlake::FinishMovingEnt( IUnitInterface* toFinish )

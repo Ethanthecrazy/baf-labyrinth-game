@@ -18,5 +18,6 @@ public:
 	bool CheckTileCollision(int TileID);
 	void UpdateAI();
 	void HandleEvent( Event* _toHandle );
+	void DrainLight( int _range );
 };
 #endif

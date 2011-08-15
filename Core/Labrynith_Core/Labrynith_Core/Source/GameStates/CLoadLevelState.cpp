@@ -122,7 +122,7 @@ void CLoadLevelState::Render(void)
 
 	MetalText.Print((char*)test.c_str(), 100, 100, .5f);
 	CSGD_Direct3D::GetInstance()->DrawRect(rect2, 255, 255, 255);
-	CSGD_Direct3D::GetInstance()->DrawRect(rect, 100-percentComplete, 100-percentComplete, 100-percentComplete);
+	CSGD_Direct3D::GetInstance()->DrawRect(rect, 255-percentComplete, percentComplete-100, 0 );
 
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->Present();

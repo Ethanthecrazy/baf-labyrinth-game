@@ -2,7 +2,7 @@
 #define MESSAGES_H
 
 enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
-	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_PLACE_OBJECT,
+	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_DRAIN_LIGHT, MSG_PLACE_OBJECT,
 				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MOVE_ENTITY_FLOOR,
 				 MSG_DELETEME, MSG_MAX };
 
@@ -81,6 +81,22 @@ public:
 	int GetTransferValue(void) { return TransferValue; }
 	void* GetFlake( void ) { return Flake; } 
 
+};
+
+class msgDrainLight : public CBaseMessage
+{
+	int OneX;
+	int	OneY;
+	int TransferValue;
+	void* Flake;
+
+public:
+
+	msgDrainLight( int _OneX, int _OneY, int _DrainValue, void* _Flake );
+	int GetOneX( void ) { return OneX; }
+	int GetOneY( void ) { return OneY; }
+	int GetTransferValue(void) { return TransferValue; }
+	void* GetFlake( void ) { return Flake; } 
 };
 
 class CBaseObject;

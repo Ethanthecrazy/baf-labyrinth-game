@@ -460,6 +460,20 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 		}
 		break;
+
+	case MSG_DRAIN_LIGHT:
+		{
+			msgDrainLight* NewMessage = (msgDrainLight*)_message;
+			MFlake* FlakeScope = (MFlake*)NewMessage->GetFlake(); 
+
+			//FlakeScope->SetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY(), FlakeScope->GetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY() ) - NewMessage->GetTransferValue() );
+			FlakeScope->SetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY(), 
+				FlakeScope->GetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY() ) - NewMessage->GetTransferValue() );
+
+			if( FlakeScope->GetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY() ) < 0 )
+				FlakeScope->SetInfoAtIndex( NewMessage->GetOneX(), NewMessage->GetOneY(), 0 );
+		}
+		break;
 	
 	case MSG_PLACE_OBJECT:
 		{
