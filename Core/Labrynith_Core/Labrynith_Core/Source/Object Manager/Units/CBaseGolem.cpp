@@ -74,8 +74,8 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					
 					int cameraX = 0 , cameraY = 0 ;
 					CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-					int tileXPos = (int)((pBase->GetPosX() + cameraX) / 32.0f) ;
-					int tileYPos = (int)((pBase->GetPosY() + cameraY) / 32.0f) ;
+					int tileXPos = (int)((pBase->GetPosX() + cameraX) / TILE_WIDTH) ;
+					int tileYPos = (int)((pBase->GetPosY() + cameraY) / TILE_HEIGHT) ;
 
 					int ObjectID = pBase->m_nIdentificationNumber ;
 					//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
@@ -264,8 +264,8 @@ bool CBaseGolem::CheckEntCollision(CBaseEntity* pEntity)
 	{
 		int cameraX = 0 , cameraY = 0 ;
 		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-		int tileXPos = (int)((pEntity->GetPosX() + cameraX) / 32.0f) ;
-		int tileYPos = (int)((pEntity->GetPosY() + cameraY) / 32.0f) ;
+		int tileXPos = (int)((pEntity->GetPosX() + cameraX) / TILE_WIDTH) ;
+		int tileYPos = (int)((pEntity->GetPosY() + cameraY) / TILE_HEIGHT) ;
 
 		int ObjectID = pEntity->m_nIdentificationNumber ;
 		//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;

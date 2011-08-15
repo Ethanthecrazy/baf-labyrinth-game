@@ -62,8 +62,8 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 	{
 		int cameraX = 0 , cameraY = 0 ;
 		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
-		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
+		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
 		
 		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 		{
@@ -75,12 +75,12 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
 			if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
 			{
-				int xPos1 = tileXPos * 32 - cameraX ;
-				int yPos1 = tileYPos * 32 - cameraY ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 ) ;
+				int xPos1 = tileXPos * TILE_WIDTH - cameraX ;
+				int yPos1 = tileYPos * TILE_HEIGHT - cameraY ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + TILE_HEIGHT , yPos1 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 , xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT , xPos1 , yPos1 + TILE_HEIGHT ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + TILE_HEIGHT , xPos1 , yPos1 ) ;
 			}
 		}
 	}
@@ -89,8 +89,8 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 		{
 			int cameraX = 0 , cameraY = 0 ;
 		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
-		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
+		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
 		
 		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 		{
@@ -102,12 +102,12 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
 			if( !GetEquippedItem()->CheckCollision( object , false ) && !GetEquippedItem()->CheckCollision( entity , false ) && !GetEquippedItem()->CheckCollision( tile , false ) && tileID != 0 )
 			{
-				int xPos1 = tileXPos * 32 - cameraX ;
-				int yPos1 = tileYPos * 32 - cameraY ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + 32 , yPos1 , 255 , 0 , 0 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 , xPos1 + 32 , yPos1 + 32 , 255 , 0 , 0 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + 32 , yPos1 + 32 , xPos1 , yPos1 + 32 , 255 , 0 , 0) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + 32 , xPos1 , yPos1 , 255 , 0 , 0 ) ;
+				int xPos1 = tileXPos * TILE_WIDTH - cameraX ;
+				int yPos1 = tileYPos * TILE_HEIGHT - cameraY ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + TILE_WIDTH , yPos1 , 255 , 0 , 0 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 , xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT , 255 , 0 , 0 ) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT , xPos1 , yPos1 + TILE_HEIGHT , 255 , 0 , 0) ;
+				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + TILE_HEIGHT , xPos1 , yPos1 , 255 , 0 , 0 ) ;
 			}
 		}
 		}
@@ -157,8 +157,8 @@ void CPlayer::Input()
 			{
 				int cameraX = 0 , cameraY = 0 ;
 				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-				int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
-				int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+				int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
+				int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
 				cout << " mouse clicked at ( " << tileXPos << " , " << tileYPos << " )\n" ;
 
 				if( GetHeldItem() == NULL )

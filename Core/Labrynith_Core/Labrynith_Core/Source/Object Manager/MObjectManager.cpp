@@ -179,7 +179,7 @@ bool MObjectManager::MoveEntUp( int _Ident )
 		toCheck->SetIndexPosY( toCheck->GetIndexPosY() - 1 );
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
-		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetDistanceLeft( TILE_WIDTH );
 		toCheck->SetVelY(1) ;
 		return false;
 	}
@@ -188,7 +188,7 @@ bool MObjectManager::MoveEntUp( int _Ident )
 	toCheck->SetIndexPosY( toCheck->GetIndexPosY() - 1 );
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_UP );
-	toCheck->SetDistanceLeft( 32.0f );
+	toCheck->SetDistanceLeft( TILE_WIDTH );
 	toCheck->SetVelY(1) ;
 	return false;
 }
@@ -242,7 +242,7 @@ bool MObjectManager::MoveEntDown( int _Ident )
 		toCheck->SetIndexPosY( toCheck->GetIndexPosY() + 1 );
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_DOWN );
-		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetDistanceLeft( TILE_WIDTH );
 		toCheck->SetVelY(1) ;
 		return false;
 	}
@@ -251,7 +251,7 @@ bool MObjectManager::MoveEntDown( int _Ident )
 	toCheck->SetIndexPosY( toCheck->GetIndexPosY() + 1 );
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_DOWN );
-	toCheck->SetDistanceLeft( 32.0f );
+	toCheck->SetDistanceLeft( TILE_WIDTH );
 	toCheck->SetVelY(1) ;
 	return false;
 }
@@ -308,7 +308,7 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 		toCheck->SetIndexPosX( toCheck->GetIndexPosX() - 1 );
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
-		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetDistanceLeft( TILE_WIDTH );
 		toCheck->SetVelX(1) ;
 		return false;
 	}
@@ -316,7 +316,7 @@ bool MObjectManager::MoveEntLeft( int _Ident )
 	toCheck->SetIndexPosX( toCheck->GetIndexPosX() - 1 );
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
-	toCheck->SetDistanceLeft( 32.0f );
+	toCheck->SetDistanceLeft( TILE_WIDTH );
 	toCheck->SetVelX(1) ;
 	return false;
 }
@@ -372,7 +372,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 		toCheck->SetIndexPosX( toCheck->GetIndexPosX() + 1 );
 		toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 		toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
-		toCheck->SetDistanceLeft( 32.0f );
+		toCheck->SetDistanceLeft( TILE_WIDTH );
 		toCheck->SetVelY(1) ;
 		return false;
 	}
@@ -381,7 +381,7 @@ bool MObjectManager::MoveEntRight( int _Ident )
 	toCheck->SetIndexPosX( toCheck->GetIndexPosX() + 1 );
 	toCheck->SetFlag_MovementState( FLAG_MOVESTATE_MOVING );
 	toCheck->SetFlag_DirectionToMove( FLAG_MOVE_RIGHT );
-	toCheck->SetDistanceLeft( 32.0f );
+	toCheck->SetDistanceLeft( TILE_WIDTH );
 	return false;
 }
 

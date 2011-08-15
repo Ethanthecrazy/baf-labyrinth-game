@@ -69,26 +69,26 @@ void CBaseObject::Update(float fDT)
 			{
 
 			case FLAG_MOVE_RIGHT:
-				SetPosX( GetLastPosX() + 32 );
+				SetPosX( GetLastPosX() + TILE_WIDTH );
 				xDirection = 1 ;
 				break;
 			case FLAG_MOVE_LEFT:
-				SetPosX( GetLastPosX() - 32 );
+				SetPosX( GetLastPosX() - TILE_WIDTH );
 				xDirection = -1 ;
 				break;
 			case FLAG_MOVE_UP:
-				SetPosY( GetLastPosY() - 32 );
+				SetPosY( GetLastPosY() - TILE_HEIGHT );
 				yDirection = -1 ;
 				break;
 			case FLAG_MOVE_DOWN:
-				SetPosY( GetLastPosY() + 32 );
+				SetPosY( GetLastPosY() + TILE_HEIGHT );
 				yDirection = 1 ;
 				break;
 			}
 
 			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , 0 ) ;
-			SetIndexPosX( (int)(GetPosX() / 32) ) ;
-			SetIndexPosY( (int)(GetPosY() / 32) ) ;
+			SetIndexPosX( (int)(GetPosX() / TILE_WIDTH) ) ;
+			SetIndexPosY( (int)(GetPosY() / TILE_HEIGHT) ) ;
 			if( (GetVelX() > 0 || GetVelY() > 0) && this->GetType() == OBJ_ATTRACTOR )
 				MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
 			
@@ -134,7 +134,7 @@ void CBaseObject::Update(float fDT)
 					SetDistanceLeft( 0 ) ;
 				}
 				else
-					SetDistanceLeft( 32.0f ) ;
+					SetDistanceLeft( TILE_WIDTH ) ;
 			}
 			if( GetVelY() != 0 )
 			{
@@ -146,7 +146,7 @@ void CBaseObject::Update(float fDT)
 					SetDistanceLeft( 0 ) ;
 				}
 				else
-					SetDistanceLeft( 32.0f ) ;
+					SetDistanceLeft( TILE_WIDTH ) ;
 			}
 
 			
@@ -173,8 +173,8 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 		RECT objRect;
 		objRect.top = (long)GetPosY();
 		objRect.left = (long)GetPosX();
-		objRect.bottom = (long)objRect.top + 32;
-		objRect.right = (long)objRect.left + 32;
+		objRect.bottom = (long)objRect.top + TILE_HEIGHT;
+		objRect.right = (long)objRect.left + TILE_WIDTH;
 
 		RECT out;
 		if(!IntersectRect(&out, &camRect, &objRect))

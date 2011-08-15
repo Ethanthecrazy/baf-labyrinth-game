@@ -99,9 +99,6 @@ void CMainMenuState::Update(float fDT)
 
 void CMainMenuState::Render(void)
 {
-	
-	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
-
 	MetalText.Print( "Main Menu", 100, 100, 0.6f );
 	MetalText.Print( "->", 0, 230 + (m_nIndex * 30), 0.5f );
 	MetalText.Print( "Play", 110, 230, 0.5f );
@@ -109,7 +106,6 @@ void CMainMenuState::Render(void)
 	MetalText.Print( "Options", 110, 290, 0.5f );
 	MetalText.Print( "Credits", 110, 320, 0.5f );
 	MetalText.Print( "Exit", 110, 350, 0.5f );
-	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 }
 
 void CMainMenuState::Exit(void)

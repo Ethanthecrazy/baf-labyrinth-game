@@ -90,8 +90,8 @@ bool CGamePlayState::Input(void)
 	//	/*IUnitInterface* golem = MObjectManager::GetInstance()->GetUnit(120003);
 	//	int cameraX = 0 , cameraY = 0 ;
 	//			CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-	//	int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
-	//	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+	//	int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH.0f) ;
+	//	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
 	//	((CBaseGolem*)(golem))->SetTargetPos(tileXPos, tileYPos);*/
 	//}
 
@@ -131,11 +131,11 @@ void CGamePlayState::GetCamera( int& X , int& Y )
 		X = (int)player->GetPosX() - 800/2 + 16;
 		Y = (int)player->GetPosY() - 600/2 + 16;
 
-		if( X + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * 32 )
-			X = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * 32 - 800;
+		if( X + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
+			X = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 800;
 		
-		if( Y + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * 32 )
-			Y = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * 32 - 600;
+		if( Y + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
+			Y = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 600;
 
 		if( X < 0 )
 			X = 0;
@@ -160,11 +160,11 @@ void CGamePlayState::Render(void)
 		int cameraX = (int)player->GetPosX() - 800/2 + 16;
 		int cameraY = (int)player->GetPosY() - 600/2 + 16;
 
-		if( cameraX + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * 32 )
-			cameraX = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * 32 - 800;
+		if( cameraX + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
+			cameraX = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 800;
 
-		if( cameraY + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * 32 )
-			cameraY = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * 32 - 600;
+		if( cameraY + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
+			cameraY = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 600;
 
 		if( cameraX < 0 )
 			cameraX = 0;
@@ -304,8 +304,8 @@ void CGamePlayState::EnterCommand(void)
 			((CBaseObject*)(temp))->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
 			((CBaseObject*)(temp))->SetIndexPosX( PosX );
 			((CBaseObject*)(temp))->SetIndexPosY( PosY );
-			((CBaseObject*)(temp))->SetPosX( (float)PosX * 32.0f );
-			((CBaseObject*)(temp))->SetPosY( (float)PosY * 32.0f );
+			((CBaseObject*)(temp))->SetPosX( (float)PosX * TILE_WIDTH );
+			((CBaseObject*)(temp))->SetPosY( (float)PosY * TILE_HEIGHT );
 
 			//MEventSystem::GetInstance()->SendEvent( "Add.Object", temp );
 
@@ -326,8 +326,8 @@ void CGamePlayState::EnterCommand(void)
 			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
 			temp->SetIndexPosX( PosX ) ;
 			temp->SetIndexPosY( PosY ) ;
-			temp->SetPosX( (float)PosX * 32.0f ) ;
-			temp->SetPosY( (float)PosY * 32.0f ) ;
+			temp->SetPosX( (float)PosX * TILE_WIDTH ) ;
+			temp->SetPosY( (float)PosY * TILE_HEIGHT ) ;
 
 			MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 		}
@@ -414,8 +414,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			((CBaseEntity*)(temp))->SetPlayAnimWhileStill(true);
 			((CBaseEntity*)(temp))->SetIndexPosX( NewMessage->GetX() );
 			((CBaseEntity*)(temp))->SetIndexPosY( NewMessage->GetY() );
-			((CBaseEntity*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );
-			((CBaseEntity*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
+			((CBaseEntity*)(temp))->SetPosX( (float)NewMessage->GetX() * TILE_WIDTH );
+			((CBaseEntity*)(temp))->SetPosY( (float)NewMessage->GetY() * TILE_HEIGHT );
 			MObjectManager::GetInstance()->AddUnitIndexed( temp, 1 );
 		}
 		break;
@@ -434,8 +434,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			((CPlayer*)(temp))->SetPlayAnimWhileStill(false);
 			((CPlayer*)(temp))->SetIndexPosX( NewMessage->GetX() );
 			((CPlayer*)(temp))->SetIndexPosY( NewMessage->GetY() );
-			((CPlayer*)(temp))->SetPosX( (float)NewMessage->GetX() * 32.0f );
-			((CPlayer*)(temp))->SetPosY( (float)NewMessage->GetY() * 32.0f );
+			((CPlayer*)(temp))->SetPosX( (float)NewMessage->GetX() * TILE_WIDTH );
+			((CPlayer*)(temp))->SetPosY( (float)NewMessage->GetY() * TILE_HEIGHT );
 			//set-up the HUD so it renders player info
 			CHUD::GetInstance()->SetPlayer(((CPlayer*)(temp)));
 			testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, NewMessage->GetZ() );
@@ -490,8 +490,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				object->SetIndexPosY( tileYPos ) ;
 				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem() , MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetLayerID() ) ;
 				//MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
-				player->GetHeldItem()->SetPosX( (float)(tileXPos * 32) );
-				player->GetHeldItem()->SetPosY( (float)(tileYPos * 32) );
+				player->GetHeldItem()->SetPosX( (float)(tileXPos * TILE_WIDTH) );
+				player->GetHeldItem()->SetPosY( (float)(tileYPos * TILE_HEIGHT) );
 
 				player->GetHeldItem()->Release();
 				player->SetHeldItem(NULL);

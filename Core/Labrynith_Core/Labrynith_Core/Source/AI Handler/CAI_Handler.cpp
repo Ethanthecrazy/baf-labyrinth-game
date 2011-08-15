@@ -836,7 +836,7 @@ bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 		//Change Entity index as we are now moving
 		((CBaseEntity*)(pEntity))->SetIndexPosX(nX);
 		((CBaseEntity*)(pEntity))->SetIndexPosY(nY);
-		((CBaseEntity*)(pEntity))->SetDistanceLeft( 32.0f );
+		((CBaseEntity*)(pEntity))->SetDistanceLeft( TILE_WIDTH );
 	}
 	return !isColliding;
 }

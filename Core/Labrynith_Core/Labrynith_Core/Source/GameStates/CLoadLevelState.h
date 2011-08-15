@@ -2,6 +2,7 @@
 #define CLOADLEVELSTATE_H_
 
 #include "IGameState.h"
+#include "../CBitFont.h"
 
 class CLoadLevelState : public IGameState
 {
@@ -13,7 +14,11 @@ class CLoadLevelState : public IGameState
 	CLoadLevelState& operator=(const CLoadLevelState&) { }
 	// destructor
 	~CLoadLevelState();
+	
+	CBitFont MetalText;
 
+	float totalobjects, loadingat;
+	int percentComplete, lastPercent;
 public:
 
 	static CLoadLevelState* GetInstance();

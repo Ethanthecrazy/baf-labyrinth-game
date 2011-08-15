@@ -29,8 +29,8 @@ void COilCan::UseObject( CBaseObject* user )
 		
 		int cameraX = 0 , cameraY = 0 ;
 		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / 32.0f) ;
-		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / 32.0f) ;
+		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH );
+		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
 
 		if( tileXPos >= player->GetIndexPosX() - 1 && tileXPos <= player->GetIndexPosX() + 1 && tileYPos >= player->GetIndexPosY() - 1 && tileYPos <= player->GetIndexPosY() + 1 )
 		{
@@ -45,8 +45,8 @@ void COilCan::UseObject( CBaseObject* user )
 				COil* oil = new COil() ;
 				oil->SetIndexPosX( tileXPos ) ;
 				oil->SetIndexPosY( tileYPos ) ;
-				oil->SetPosX( (float)(oil->GetIndexPosX() * 32) );
-				oil->SetPosY( (float)(oil->GetIndexPosY() * 32) );
+				oil->SetPosX( (float)(oil->GetIndexPosX() * TILE_WIDTH) );
+				oil->SetPosY( (float)(oil->GetIndexPosY() * TILE_HEIGHT) );
 				MObjectManager::GetInstance()->AddUnitIndexed( oil , 
 				MObjectManager::GetInstance()->FindLayer(CGamePlayState::GetInstance()->testVaribale).GetLayerID() ) ;
 

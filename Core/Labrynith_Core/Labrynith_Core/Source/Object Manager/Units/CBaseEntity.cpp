@@ -76,16 +76,16 @@ void CBaseEntity::Update(float fDT)
 			switch ( GetFlag_DirectionToMove() )
 			{
 			case FLAG_MOVE_RIGHT:
-				SetPosX( GetLastPosX() + 32 );
+				SetPosX( GetLastPosX() + TILE_WIDTH );
 				break;
 			case FLAG_MOVE_LEFT:
-				SetPosX( GetLastPosX() - 32 );
+				SetPosX( GetLastPosX() - TILE_WIDTH );
 				break;
 			case FLAG_MOVE_UP:
-				SetPosY( GetLastPosY() - 32 );
+				SetPosY( GetLastPosY() - TILE_HEIGHT );
 				break;
 			case FLAG_MOVE_DOWN:
-				SetPosY( GetLastPosY() + 32 );
+				SetPosY( GetLastPosY() + TILE_HEIGHT );
 				break;
 			}
 
@@ -123,8 +123,8 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 		RECT objRect;
 		objRect.top = (long)GetPosY();
 		objRect.left = (long)GetPosX();
-		objRect.bottom = (long)objRect.top + 32;
-		objRect.right = (long)objRect.left + 32;
+		objRect.bottom = (long)objRect.top + TILE_HEIGHT;
+		objRect.right = (long)objRect.left + TILE_WIDTH;
 
 		RECT out;
 		if(!IntersectRect(&out, &camRect, &objRect) && CGamePlayState::GetInstance()->GetRenderCulling())

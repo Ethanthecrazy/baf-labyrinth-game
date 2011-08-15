@@ -25,7 +25,7 @@ void CHUD::Render()
 	//Player Lives
 	for(int i = 0; i < pPlayer->GetLives(); i++)
 	{
-		TM->Draw(HeartImageID,(i * 32), 0);
+		TM->Draw(HeartImageID,(i * TILE_WIDTH), 0);
 	}
 
 	//Player HeldItem

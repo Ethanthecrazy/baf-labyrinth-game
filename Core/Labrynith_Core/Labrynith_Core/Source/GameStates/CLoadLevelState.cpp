@@ -48,7 +48,16 @@ CLoadLevelState* CLoadLevelState::GetInstance()
 }
 
 void CLoadLevelState::Enter(void)
-{
+{	
+	totalobjects = 0;
+	loadingat = 0;
+	percentComplete = 0;
+	lastPercent = 0;
+
+	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
+
+
 	cout << "Deleting current level...\n";	
 
 	MObjectManager::GetInstance()->RemoveAllUnits();
@@ -77,14 +86,6 @@ void CLoadLevelState::Enter(void)
 
 bool CLoadLevelState::Input(void)
 {
-	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();	
-	
-	if( pDI->KeyPressed( DIK_ESCAPE ) )
-		return false;
-
-	if( pDI->KeyPressed( DIK_RETURN ) )
-		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
-
 	return true;
 }
 
@@ -95,7 +96,37 @@ void CLoadLevelState::Update(float fDT)
 
 void CLoadLevelState::Render(void)
 {
+	RECT rect;
+	rect.left = 125;
+	rect.top = 450;
+	rect.right = (long)(rect.left + 6.25 * percentComplete);
+	rect.bottom = rect.top + 75;
+
+	RECT rect2;
+	rect2.left = 125;
+	rect2.top = 450;
+	rect2.right = rect2.left + 625;
+	rect2.bottom = rect2.top + 75;
+
+	char percent[64] = { };
+
 	
+	CSGD_Direct3D::GetInstance()->Clear(0, 0, 0);
+
+	
+	CSGD_Direct3D::GetInstance()->SpriteBegin();
+
+	sprintf_s(percent, "Loading the level...%d", percentComplete);
+	string test = percent;
+	test += "%";
+
+	MetalText.Print((char*)test.c_str(), 100, 100, .5f);
+	CSGD_Direct3D::GetInstance()->DrawRect(rect2, 255, 255, 255);
+	CSGD_Direct3D::GetInstance()->DrawRect(rect, 100-percentComplete, 100-percentComplete, 100-percentComplete);
+
+	CSGD_Direct3D::GetInstance()->SpriteEnd();
+	CSGD_Direct3D::GetInstance()->Present();
+	;
 }
 
 void CLoadLevelState::Exit(void)
@@ -135,6 +166,8 @@ void CLoadLevelState::EnterCommand(void)
 
 bool CLoadLevelState::LoadLevel(int _level)
 {		
+	Render();
+
 	char filename[255] = {0};
 
 	sprintf_s(filename, "resource/Levels/%d.xml", _level);
@@ -162,7 +195,6 @@ bool CLoadLevelState::LoadLevel(int _level)
 	if(pMapSize)
 	{
 		string swidth, sheight, sdepth;
-		const int thingy = 5;
 
 		swidth = pMapSize->FirstChildElement("Width")->GetText();
 		sheight = pMapSize->FirstChildElement("Height")->GetText();
@@ -173,6 +205,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 		depth = atoi(sdepth.c_str());
 		
 	}
+	totalobjects = (float)width*height*depth;
 
 	TiXmlElement* pTiles = pRoot->FirstChildElement("Tiles");	
 	if(pTiles)
@@ -232,8 +265,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CButton* temp = new CButton(prop.c_str());
 								temp->SetLayerLocation(z);
-								((CButton*)temp)->SetPosX((float)(x * 32));
-								((CButton*)temp)->SetPosY((float)(y * 32));
+								((CButton*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CButton*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CButton*)temp)->SetIndexPosX(x);
 								((CButton*)temp)->SetIndexPosY(y);
 								((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
@@ -245,8 +278,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CDoor* temp = new CDoor(prop.c_str());
 								temp->SetLayerLocation(z);
-								((CDoor*)temp)->SetPosX((float)(x * 32));
-								((CDoor*)temp)->SetPosY((float)(y * 32));
+								((CDoor*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CDoor*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CDoor*)temp)->SetIndexPosX(x);
 								((CDoor*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -257,8 +290,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CExit* temp = new CExit();
 								temp->SetLayerLocation(z);
-								((CExit*)temp)->SetPosX((float)(x * 32));
-								((CExit*)temp)->SetPosY((float)(y * 32));
+								((CExit*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CExit*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CExit*)temp)->SetIndexPosX(x);
 								((CExit*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -269,8 +302,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								COil* temp = new COil(false);
 								temp->SetLayerLocation(z);
-								((COil*)temp)->SetPosX((float)(x * 32));
-								((COil*)temp)->SetPosY((float)(y * 32));
+								((COil*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((COil*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((COil*)temp)->SetIndexPosX(x);
 								((COil*)temp)->SetIndexPosY(y);
 								((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/wood.png" ));
@@ -284,8 +317,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CWaterTile* temp = new CWaterTile(false);
 								temp->SetLayerLocation(z);
-								((CWaterTile*)temp)->SetPosX((float)(x * 32));
-								((CWaterTile*)temp)->SetPosY((float)(y * 32));
+								((CWaterTile*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CWaterTile*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CWaterTile*)temp)->SetIndexPosX(x);
 								((CWaterTile*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -295,8 +328,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CWaterTile* temp = new CWaterTile(true);
 								temp->SetLayerLocation(z);
-								((CWaterTile*)temp)->SetPosX((float)(x * 32));
-								((CWaterTile*)temp)->SetPosY((float)(y * 32));
+								((CWaterTile*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CWaterTile*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CWaterTile*)temp)->SetIndexPosX(x);
 								((CWaterTile*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -307,8 +340,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CPit* temp = new CPit();
 								temp->SetLayerLocation(z);
-								((CPit*)temp)->SetPosX((float)(x * 32));
-								((CPit*)temp)->SetPosY((float)(y * 32));
+								((CPit*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CPit*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CPit*)temp)->SetIndexPosX(x);
 								((CPit*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -319,8 +352,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CRamp* temp = new CRamp(prop);
 								temp->SetLayerLocation(z);
-								((CRamp*)temp)->SetPosX((float)(x * 32));
-								((CRamp*)temp)->SetPosY((float)(y * 32));
+								((CRamp*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CRamp*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CRamp*)temp)->SetIndexPosX(x);
 								((CRamp*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -330,8 +363,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CMetal* temp = new CMetal();
 								temp->SetLayerLocation(z);
-								((CMetal*)temp)->SetPosX((float)(x * 32));
-								((CMetal*)temp)->SetPosY((float)(y * 32));
+								((CMetal*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CMetal*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CMetal*)temp)->SetIndexPosX(x);
 								((CMetal*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -341,8 +374,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CElectricButton* temp = new CElectricButton(prop.c_str());
 								temp->SetLayerLocation(z);
-								((CElectricButton*)temp)->SetPosX((float)(x * 32));
-								((CElectricButton*)temp)->SetPosY((float)(y * 32));
+								((CElectricButton*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CElectricButton*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CElectricButton*)temp)->SetIndexPosX(x);
 								((CElectricButton*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
@@ -352,14 +385,22 @@ bool CLoadLevelState::LoadLevel(int _level)
 							{
 								CElectricGenerator* temp = new CElectricGenerator();
 								temp->SetLayerLocation(z);
-								((CElectricGenerator*)temp)->SetPosX((float)(x * 32));
-								((CElectricGenerator*)temp)->SetPosY((float)(y * 32));
+								((CElectricGenerator*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CElectricGenerator*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CElectricGenerator*)temp)->SetIndexPosX(x);
 								((CElectricGenerator*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							}
 							break ;
 						}
+						
+						++loadingat;
+
+						lastPercent = percentComplete;
+						percentComplete = (int)((loadingat / totalobjects)*100);
+
+						if(lastPercent != percentComplete)
+							Render();
 						// 0 = pit
 						// 1 & 2 = ground
 						//MObjectManager::GetInstance()->GetLayer( z ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, theType );
@@ -445,8 +486,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 						// change this code to a spawner of Player type
 						CSpawner* temp = new CSpawner(SPAWNER_PLAYER);
 						temp->SetLayerLocation(posZ);
-						((CSpawner*)temp)->SetPosX((float)(posX * 32));
-						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetPosX((float)(posX * TILE_WIDTH));
+						((CSpawner*)temp)->SetPosY((float)(posY * TILE_HEIGHT));
 						((CSpawner*)temp)->SetIndexPosX(posX);
 						((CSpawner*)temp)->SetIndexPosY(posY);
 
@@ -457,8 +498,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 					{						
 						CSpawner* temp = new CSpawner(SPAWNER_LIGHTORB);
 						temp->SetLayerLocation(posZ);
-						((CSpawner*)temp)->SetPosX((float)(posX * 32));
-						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetPosX((float)(posX * TILE_WIDTH));
+						((CSpawner*)temp)->SetPosY((float)(posY * TILE_HEIGHT));
 						((CSpawner*)temp)->SetIndexPosX(posX);
 						((CSpawner*)temp)->SetIndexPosY(posY);
 
@@ -517,8 +558,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 						
 						temp->SetLayerLocation(posZ);
-						((CSpawner*)temp)->SetPosX((float)(posX * 32));
-						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetPosX((float)(posX * TILE_WIDTH));
+						((CSpawner*)temp)->SetPosY((float)(posY * TILE_HEIGHT));
 						((CSpawner*)temp)->SetIndexPosX(posX);
 						((CSpawner*)temp)->SetIndexPosY(posY);
 
@@ -579,8 +620,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 						
 						temp->SetLayerLocation(posZ);
-						((CSpawner*)temp)->SetPosX((float)(posX * 32));
-						((CSpawner*)temp)->SetPosY((float)(posY * 32));
+						((CSpawner*)temp)->SetPosX((float)(posX * TILE_WIDTH));
+						((CSpawner*)temp)->SetPosY((float)(posY * TILE_HEIGHT));
 						((CSpawner*)temp)->SetIndexPosX(posX);
 						((CSpawner*)temp)->SetIndexPosY(posY);
 
@@ -596,8 +637,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 					CPowerGloves* temp = new CPowerGloves();
 					temp->SetLayerLocation(posZ);
 					temp->SetObjectType(OBJ_POWERGLOVES) ;
-					temp->SetPosX((float)(posX * 32));
-					temp->SetPosY((float)(posY * 32));
+					temp->SetPosX((float)(posX * TILE_WIDTH));
+					temp->SetPosY((float)(posY * TILE_HEIGHT));
 					temp->SetIndexPosX(posX);
 					temp->SetIndexPosY(posY);
 					temp->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/PowerGlove.png" ));
@@ -612,8 +653,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 					COilCan* temp = new COilCan();
 					temp->SetLayerLocation(posZ);
 					temp->SetObjectType(OBJ_OILCAN) ;
-					temp->SetPosX((float)(posX * 32));
-					temp->SetPosY((float)(posY * 32));
+					temp->SetPosX((float)(posX * TILE_WIDTH));
+					temp->SetPosY((float)(posY * TILE_HEIGHT));
 					temp->SetIndexPosX(posX);
 					temp->SetIndexPosY(posY);
 

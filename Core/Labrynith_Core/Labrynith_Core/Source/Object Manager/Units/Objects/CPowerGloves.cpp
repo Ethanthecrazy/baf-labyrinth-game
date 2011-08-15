@@ -49,7 +49,7 @@ void CPowerGloves::UseObject( CBaseObject* user )
 		}
 		break ;
 	}
-	//GetHeldItem()->SetDistanceLeft( 32.0f ) ;
+	//GetHeldItem()->SetDistanceLeft( TILE_WIDTH ) ;
 	
 	int item = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( player->GetIndexPosX() + xDirection , player->GetIndexPosY() + yDirection ) ;
 	int entityID = MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( player->GetIndexPosX() + xDirection , player->GetIndexPosY() + yDirection ) ;
