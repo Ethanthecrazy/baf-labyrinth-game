@@ -15,26 +15,9 @@ MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _
 	OffSetFromCenterY( OffSetFromCenterY ),
 	parentLayer( _parentLayer )
 {
-
 	ArrayIndex.clear();	
 	m_nSize = 0;
-	//InformationArray = NULL;
-	Resize(_LayerWidth, _LayerHeight);
-
-	/*if(_LayerWidth*_LayerHeight)
-		InformationArray = new int[ _LayerWidth * _LayerHeight ];
-	else
-	{
-		InformationArray = NULL;
-		return;
-	}
-
-	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
-	{
-		InformationArray[i] = 0;
-	}*/
-
-	
+	Resize(_LayerWidth, _LayerHeight);	
 }
 
 
@@ -115,14 +98,10 @@ bool MFlake::RemoveUnit( int _Ident )
 void MFlake::RemoveAllUnits( void )
 {
 	m_nSize = 0;
-	static int ObjectsRemoved = 0;
 	for( unsigned int i = 0; i < m_vObjects.size(); ++i )
 	{
 		delete m_vObjects[i];
-		ObjectsRemoved++;
 	}
-
-	cout << ObjectsRemoved << "\n";
 	m_vObjects.clear();
 
 	ArrayIndex.clear();
@@ -261,10 +240,10 @@ void MFlake::Render( int CameraX, int CameraY )
 								camRect.right = (long)camRect.left + 800;
 		
 								RECT objRect;
-								objRect.top = (long)y * 32;
-								objRect.left = (long)x * 32;
-								objRect.bottom = (long)objRect.top + 32;
-								objRect.right = (long)objRect.left + 32;
+								objRect.top = (long)y * TILE_HEIGHT;
+								objRect.left = (long)x * TILE_WIDTH;
+								objRect.bottom = (long)objRect.top + TILE_HEIGHT;
+								objRect.right = (long)objRect.left + TILE_WIDTH;
 
 								RECT out;
 								if(!IntersectRect(&out, &camRect, &objRect) && CGamePlayState::GetInstance()->GetRenderCulling())
@@ -276,8 +255,8 @@ void MFlake::Render( int CameraX, int CameraY )
 
 
 								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/wall.png" ),
-										x * 32 - CameraX,
-										y * 32 - CameraY,
+										x * TILE_WIDTH - CameraX,
+										y * TILE_HEIGHT - CameraY,
 										1.0f,
 										1.0f,
 										0,
@@ -298,10 +277,10 @@ void MFlake::Render( int CameraX, int CameraY )
 								camRect.right = (long)camRect.left + 800;
 		
 								RECT objRect;
-								objRect.top = (long)y * 32;
-								objRect.left = (long)x * 32;
-								objRect.bottom = (long)objRect.top + 32;
-								objRect.right = (long)objRect.left + 32;
+								objRect.top = (long)y * TILE_HEIGHT;
+								objRect.left = (long)x * TILE_WIDTH;
+								objRect.bottom = (long)objRect.top + TILE_HEIGHT;
+								objRect.right = (long)objRect.left + TILE_WIDTH;
 
 								RECT out;
 								if(!IntersectRect(&out, &camRect, &objRect) && CGamePlayState::GetInstance()->GetRenderCulling())
@@ -313,8 +292,8 @@ void MFlake::Render( int CameraX, int CameraY )
 
 
 								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ),
-									x * 32 - CameraX,
-									y * 32 - CameraY,
+									x * TILE_WIDTH - CameraX,
+									y * TILE_HEIGHT - CameraY,
 									1.0f,
 									1.0f,
 									0,
@@ -358,7 +337,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 				sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
 
-				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
 			}
 		}*/
 
@@ -386,7 +365,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 					sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
 
-					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
 				}
 			}*/
 		}
@@ -405,7 +384,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 					sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] / 100 ); 
 
-					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * 32  - CameraX, y * 32 - CameraY );
+					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
 				}
 			}*/
 		}
@@ -461,35 +440,13 @@ void MFlake::Resize( int newWidth, int newHeight )
 	LayerWidth = newWidth; 
 	LayerHeight = newHeight; 
 
-	//delete[] InformationArray;
-	//if InformationArray is valid delete it
-	//if(InformationArray)
-	//	delete[] InformationArray;
-	//
-	//if(LayerWidth*LayerHeight)
-	//	InformationArray = new int[ (LayerWidth * LayerHeight) ];
-	//else
-	//{
-	//	InformationArray = NULL;
-	//	return;
-	//}
 	InformationArray.clear();
 	InformationArray.resize(LayerHeight * LayerWidth);
-	//if(InformationArray)
-		//delete[] InformationArray;
-	
-	//if(LayerWidth*LayerHeight)
-	//	InformationArray = new int[ LayerWidth * LayerHeight ];
-	//else
-	//{
-	//	InformationArray = NULL;
-	//	return;
-	//}
 
-	//for( int i = 0; i < LayerHeight * LayerWidth; ++i )
-	//{
-	//	InformationArray[i] = 0;
-	//}
+	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
+	{
+		InformationArray[i] = 0;
+	}
 }
 
 void MFlake::FinishMovingEnt( IUnitInterface* toFinish )
