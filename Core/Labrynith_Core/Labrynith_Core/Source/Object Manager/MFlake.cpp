@@ -16,26 +16,32 @@ MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _
 	parentLayer( _parentLayer )
 {
 
-	ArrayIndex.clear();
+	ArrayIndex.clear();	
+	m_nSize = 0;
+	//InformationArray = NULL;
+	Resize(_LayerWidth, _LayerHeight);
 
-	if(_LayerWidth*_LayerHeight)
+	/*if(_LayerWidth*_LayerHeight)
 		InformationArray = new int[ _LayerWidth * _LayerHeight ];
 	else
+	{
 		InformationArray = NULL;
+		return;
+	}
 
 	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
 	{
 		InformationArray[i] = 0;
-	}
+	}*/
 
-	m_nSize = 0 ;
+	
 }
 
 
 MFlake::~MFlake()
 {	
 	RemoveAllUnits();
-	//Resize( 0, 0 );
+	Resize( 0, 0 );
 }
 
 int MFlake::AddUnit( IUnitInterface* _toAdd )
@@ -415,6 +421,9 @@ int MFlake::GetInfoAtIndex( int _x, int _y )
 {
 	int trueIndex = _x +_y * LayerWidth;
 
+	if(_x < 0 )
+		return -1;
+
 	if( _y < 0 )
 	{
 		return -1;
@@ -434,11 +443,14 @@ void MFlake::SetInfoAtIndex( int _x, int _y, int _value )
 {
 	if( _x < LayerWidth && _x >= 0 )
 	{
+		if(_y >= 0)
+		{
 		int trueIndex = _x + _y * LayerHeight;
 
 		if( trueIndex < LayerHeight * LayerWidth )
 		{
 			InformationArray[trueIndex] = _value;
+		}
 		}
 	}
 }
@@ -450,17 +462,18 @@ void MFlake::Resize( int newWidth, int newHeight )
 
 	//delete[] InformationArray;
 	//if InformationArray is valid delete it
-	if(InformationArray)
-		delete[] InformationArray;
-	
-	if(LayerWidth*LayerHeight)
-		InformationArray = new int[ LayerWidth * LayerHeight ];
-	else
-	{
-		InformationArray = NULL;
-		return;
-	}
-
+	//if(InformationArray)
+	//	delete[] InformationArray;
+	//
+	//if(LayerWidth*LayerHeight)
+	//	InformationArray = new int[ (LayerWidth * LayerHeight) ];
+	//else
+	//{
+	//	InformationArray = NULL;
+	//	return;
+	//}
+	InformationArray.clear();
+	InformationArray.resize(LayerHeight * LayerWidth);
 	for( int i = 0; i < LayerHeight * LayerWidth; ++i )
 	{
 		InformationArray[i] = 0;

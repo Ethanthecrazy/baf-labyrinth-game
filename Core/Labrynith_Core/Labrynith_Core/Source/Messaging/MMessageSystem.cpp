@@ -28,8 +28,8 @@ void MMessageSystem::ProcessMessages( void )
 		return;
 
 	while( !m_MsgQueue.empty() )
-	{
-		m_pfnMsgProc( m_MsgQueue.front() );
+	{		
+		m_pfnMsgProc( m_MsgQueue.front() );		
 		delete m_MsgQueue.front();
 		m_MsgQueue.pop();
 	}

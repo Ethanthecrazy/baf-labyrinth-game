@@ -15,7 +15,8 @@ private:
 	int parentLayer;
 
 	BST<int> ArrayIndex;
-	int* InformationArray;
+	//int* InformationArray;
+	vector<int> InformationArray;
 	vector<IUnitInterface*> m_vObjects;
 
 	int m_nFlakeType;

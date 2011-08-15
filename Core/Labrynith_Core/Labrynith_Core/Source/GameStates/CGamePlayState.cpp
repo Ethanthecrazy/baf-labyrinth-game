@@ -557,14 +557,20 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgMoveEntityFloor* msg = (msgMoveEntityFloor*)_message;
 			CBaseEntity* pEntity = msg->GetEntity();
 			pEntity->SetLayerLocation(msg->GetFloor());
-			
+			pEntity->AddRef();
 			OM->RemoveUnit(pEntity->m_nIdentificationNumber);
 			pEntity->m_nIdentificationNumber = 0;
 
 			if(pEntity->GetType() == ENT_PLAYER)
+			{
 				testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());
+				pEntity->Release();
+			}
 			else
+			{
 				pEntity->m_nIdentificationNumber = OM->AddUnitIndexed(pEntity, msg->GetFloor());
+				pEntity->Release();
+			}
 		}
 		break;
 

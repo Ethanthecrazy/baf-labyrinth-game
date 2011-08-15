@@ -35,7 +35,7 @@ void CGolem_Fire::Update(float fDT)
 {
 	CBaseGolem::Update(fDT);
 	UpdateAI();
-	//CheckIceTile();
+	CheckIceTile();
 	// check surrounding objects to see if they can catch on fire
 	for( int i = -1 ; i <= 1 ; ++i )
 	{
