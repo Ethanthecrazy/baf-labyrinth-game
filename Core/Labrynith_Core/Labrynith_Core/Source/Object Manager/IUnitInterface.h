@@ -99,7 +99,7 @@ public:
 	int GetFlag_prev_MovementState( void ){ return FLAG_MovementState; }
 
 	virtual void SetFlag_DirectionToMove( int newFlag ){ FLAG_prev_DirectionToMove = FLAG_DirectionToMove; FLAG_DirectionToMove = newFlag; }
-	virtual void SetFlag_MovementState( int newFlag ){ FLAG_prev_MovementState = FLAG_MovementState; FLAG_MovementState = newFlag; }
+	virtual void SetFlag_MovementState( int newFlag ){ FLAG_prev_MovementState = FLAG_MovementState; FLAG_MovementState = newFlag: }
 };
 
 #endif
