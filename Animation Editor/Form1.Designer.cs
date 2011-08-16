@@ -606,7 +606,7 @@
             // 
             this.numericUpDownColHeight.Location = new System.Drawing.Point(56, 100);
             this.numericUpDownColHeight.Maximum = new decimal(new int[] {
-            150,
+            500,
             0,
             0,
             0});
@@ -629,7 +629,7 @@
             // 
             this.numericUpDownColWidth.Location = new System.Drawing.Point(56, 72);
             this.numericUpDownColWidth.Maximum = new decimal(new int[] {
-            150,
+            500,
             0,
             0,
             0});
@@ -810,7 +810,7 @@
             // 
             this.numericUpDownHeight.Location = new System.Drawing.Point(56, 100);
             this.numericUpDownHeight.Maximum = new decimal(new int[] {
-            150,
+            500,
             0,
             0,
             0});
@@ -833,7 +833,7 @@
             // 
             this.numericUpDownWidth.Location = new System.Drawing.Point(56, 72);
             this.numericUpDownWidth.Maximum = new decimal(new int[] {
-            150,
+            500,
             0,
             0,
             0});
