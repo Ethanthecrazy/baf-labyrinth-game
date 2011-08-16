@@ -55,7 +55,7 @@ void CLoadLevelState::Enter(void)
 	lastPercent = 0;
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 
 
 	cout << "Deleting current level...\n";	

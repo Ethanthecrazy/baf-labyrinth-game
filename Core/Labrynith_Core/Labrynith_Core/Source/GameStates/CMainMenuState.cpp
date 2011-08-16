@@ -7,6 +7,8 @@
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "../Wrappers/CSGD_DirectInput.h"
 #include "../Wrappers/CSGD_TextureManager.h"
+#include "../Wrappers/CSGD_FModManager.h"
+#include "COptionsState.h"
 #include "../CGame.h"
 
 #include <iostream>
@@ -15,8 +17,13 @@
 // default constructor
 CMainMenuState::CMainMenuState() 
 {
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
+	COptionsState* Opt = COptionsState::GetInstance();
+
 	m_nIndex = 0;
 	m_nImageID = -1;
+	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");	
+	Opt->AdjustSound(m_nSoundID, true);
 }
 
 // destructor
@@ -36,13 +43,14 @@ void CMainMenuState::Enter(void)
 	cout << "MainMenu\n";
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 }
 
 bool CMainMenuState::Input(void)
 {
 	CGame* pGame = CGame::GetInstance();
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();	
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 
 	//Enter
 	if(pDI->KeyPressed(DIK_RETURN))
@@ -80,13 +88,13 @@ bool CMainMenuState::Input(void)
 	if(pDI->KeyPressed(DIK_UP))
 	{
 		SetMenuIndex(--m_nIndex);
-		//Play a sound
+		FM->PlaySoundA(m_nSoundID);
 	}
 	//Down
 	if(pDI->KeyPressed(DIK_DOWN))
 	{
 		SetMenuIndex(++m_nIndex);
-		//Play a sound
+		FM->PlaySoundA(m_nSoundID);
 	}
 
 	return true;

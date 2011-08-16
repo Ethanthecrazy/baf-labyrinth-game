@@ -2,6 +2,7 @@
 #include <fstream>
 using namespace std;
 #include "CBitFont.h"
+#include "TinyXML\tinyxml.h"
 #include "Wrappers\CSGD_TextureManager.h"
 
 
@@ -19,45 +20,35 @@ void CBitFont::Initialize( int _Image, char _StartChar, int _CharWidth, int _Cha
 }
 void CBitFont::LoadCharInfo(std::string filename)
 {
-	//Text - 1st line
-	const int size = 50;
-	char text[size];
-	int nOffset, nWidth;
-	//Name
-	char letter[1];
-
-	ifstream in; 
-	in.open(filename); 
-	if (!in.is_open())
+	TiXmlDocument doc;
+	if( doc.LoadFile(filename.c_str()) == false)
 	{
-		return; 
+		cout << "Failed to load CharInfo" << endl;
+		return;
 	}
-	
-	//Get the Text - 1st line
-	in.getline(text, size, '\n');
 
-	//Continue reading until there's no more to read
-	while (!in.eof())
+	TiXmlElement* pRoot = doc.RootElement();
+	if(!pRoot)
+		return;
+
+	TiXmlElement* pChar = pRoot->FirstChildElement("Char");
+	TiXmlElement* pData;
+	char szStartChar = m_cStart;
+	while(pChar)
 	{
-		if (in.good())
-		{		
-			//If we reach the end of file leave
-			if (in.eof())
-				break;
+		int nOffset, nWidth;
+		//Width
+		pData = pChar->FirstChildElement("Width");
+		pData->Attribute("width", &nWidth);
+		//Offset
+		pData = pChar->FirstChildElement("Offset");
+		pData->Attribute("offset", &nOffset);
 
-			//Get the Char
-			in.getline(letter, 1, '\t');
-
-			//Get the height & offset
-			in >> nWidth >> nOffset; 
-			in.ignore(INT_MAX, '\n');
-
-			CharInfo.push_back(tCharInfo(letter[0], nWidth, nOffset));
-		}
-		else
-			break;
+		CharInfo.push_back(tCharInfo(szStartChar, nWidth, nOffset));
+		//BUG this can cause problems
+		szStartChar += 1;
+		pChar = pChar->NextSiblingElement("Char");	
 	}
-	in.close();
 }
 void CBitFont::Print( char* _ToPrint, int _PosX, int _PosY, float _scale )
 {
@@ -66,10 +57,15 @@ void CBitFont::Print( char* _ToPrint, int _PosX, int _PosY, float _scale )
 	for( unsigned int i  = 0; i < strlen( _ToPrint ); ++i )
 	{
 		char proc = _ToPrint[i];
+		int index = proc - m_cStart;
+		//Dont try to print any invalid characters
+		if(index >= CharInfo.size() || index < 0)
+			continue;
 
 			if( proc == ' ' )
 			{
-				_PosX += (int)(( dimensions.x - 8 )* _scale);
+				//_PosX += (int)(( dimensions.x - 8 )* _scale);
+				_PosX += (int)(( dimensions.x / 2 )* _scale);
 				continue;
 			}
 			else if( proc == '\n' )
@@ -77,14 +73,14 @@ void CBitFont::Print( char* _ToPrint, int _PosX, int _PosY, float _scale )
 				_PosX = OrgX;
 				_PosY += (int)(dimensions.y * _scale);
 			}
-
-		int id = proc - m_cStart;
-
-		RECT rlock = CellAlgorythm( id );
-
+		//Update drawrect based on CharInfo
+		RECT rlock = CellAlgorythm(index);
+		rlock.left += CharInfo[index].m_nOffset;
+		rlock.right = (rlock.left + CharInfo[index].m_nWidth);
+		//Draw that section to the screen
 		CSGD_TextureManager::GetInstance()->Draw( m_nImageID, _PosX, _PosY, _scale, _scale, &rlock );
-
-		_PosX += (int)( ( dimensions.x - 8 ) * _scale );
+		//Update drawposition based on CharInfo
+		_PosX += (int)( CharInfo[index].m_nWidth * _scale );
 	}
 }
 

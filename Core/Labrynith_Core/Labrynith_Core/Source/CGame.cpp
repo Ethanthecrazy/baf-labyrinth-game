@@ -6,6 +6,7 @@
 using std::string;
 
 #include "GameStates\CMainMenuState.h"
+#include "GameStates\COptionsState.h"
 #include "Animation Manager\CAnimationManager.h"
 #include "Wrappers\CSGD_FModManager.h"
 #include "Object Manager\MObjectManager.h"
@@ -51,7 +52,7 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 
 	CSGD_FModManager::GetInstance()->InitFModManager( hWnd ) ;
 
-	
+	COptionsState::GetInstance()->LoadOptions();
 	ChangeState( CMainMenuState::GetInstance() );
 
 	TheTimer.Reset();

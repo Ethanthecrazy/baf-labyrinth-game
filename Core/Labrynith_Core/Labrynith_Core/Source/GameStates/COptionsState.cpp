@@ -10,6 +10,9 @@
 
 COptionsState::COptionsState(void)
 {
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
+	CGame* pGame = CGame::GetInstance();
+
 	m_nMusicVolume = 100;
 	m_nSFXVolume = 100;
 	m_bIsFullscreen = false;
@@ -17,8 +20,8 @@ COptionsState::COptionsState(void)
 	m_nPANR = 50;
 	m_nIndex = 0;
 	m_nImageID = -1;
-	m_nSoundID= -1;
-	CGame* pGame = CGame::GetInstance();
+	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");	
+	AdjustSound(m_nSoundID, true);
 }
 
 COptionsState::~COptionsState(void)
@@ -31,7 +34,7 @@ void COptionsState::Enter(void)
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 	CSGD_FModManager* pFM = CSGD_FModManager::GetInstance();
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 	LoadOptions();
 }
 bool COptionsState::Input(void)
@@ -39,12 +42,15 @@ bool COptionsState::Input(void)
 	//Get access to singletons
 	CSGD_FModManager* pFM = CSGD_FModManager::GetInstance();
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	CGame* pGame = CGame::GetInstance();
 
 	//Directional
 	//Up
 	if(pDI->KeyPressed(DIK_UP))
 	{
+		FM->PlaySoundA(m_nSoundID);
+		AdjustSound(m_nSoundID, true);
 		if(m_nIndex != 0)
 			m_nIndex -= 1;
 		else
@@ -53,6 +59,8 @@ bool COptionsState::Input(void)
 	//Down
 	if(pDI->KeyPressed(DIK_DOWN))
 	{
+		FM->PlaySoundA(m_nSoundID);
+		AdjustSound(m_nSoundID, true);
 		if(m_nIndex != (NUMOPTIONS - 1))
 			m_nIndex += 1;
 		else
@@ -68,6 +76,8 @@ bool COptionsState::Input(void)
 		{
 		case FULLSCREEN:
 			{
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				SetFullScreen(!GetFullScreen());
 			}
 			break;
@@ -84,9 +94,8 @@ bool COptionsState::Input(void)
 			if( m_nSFXVolume < 100 )
 			{
 				m_nSFXVolume += 5;
-				/*pFM->SetVolume(m_nSoundIDHonk,
-					m_fSFXVolume); 
-				pFM->PlaySoundA(m_nSoundIDHonk) ;*/
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				fCollectedTime = 0.0f;
 			}
 			break ;
@@ -94,8 +103,8 @@ bool COptionsState::Input(void)
 			if( m_nMusicVolume < 100 )
 			{
 				m_nMusicVolume += 5;
-				/*pFM->SetVolume( m_nSoundIDBackground, 
-					m_fMusicVolume );*/
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				fCollectedTime = 0.0f;
 			}
 			break ;
@@ -104,10 +113,8 @@ bool COptionsState::Input(void)
 			{
 				m_nPANL += 5;
 				m_nPANR -= 5;
-				/*pFM->SetPan(m_nSoundIDBackground, (float)(m_nPANR
-					- m_nPANL)/100);
-				pFM->SetPan(m_nSoundIDHonk, (float)(m_nPANR
-					- m_nPANL)/100);*/
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				fCollectedTime = 0.0f;
 			}
 			break ;
@@ -121,6 +128,8 @@ bool COptionsState::Input(void)
 		{
 		case FULLSCREEN:
 			{
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				SetFullScreen(!GetFullScreen());
 			}
 			break;
@@ -137,9 +146,8 @@ bool COptionsState::Input(void)
 			if( m_nSFXVolume > 0 )
 			{
 				m_nSFXVolume -= 5;
-				/*pFM->SetVolume( m_nSoundIDHonk,
-					m_fSFXVolume);
-				pFM->PlaySoundA(m_nSoundIDHonk);*/
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				fCollectedTime = 0.0f;
 			}
 			break ;
@@ -147,8 +155,8 @@ bool COptionsState::Input(void)
 			if( m_nMusicVolume > 0 )
 			{
 				m_nMusicVolume -= 5;
-				/*pFM->SetVolume( m_nSoundIDBackground, 
-					m_fMusicVolume );*/
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				fCollectedTime = 0.0f;
 			}
 			break ;
@@ -157,10 +165,8 @@ bool COptionsState::Input(void)
 			{
 				m_nPANR += 5;
 				m_nPANL -= 5;
-				/*pFM->SetPan(m_nSoundIDBackground, (float)(m_nPANR 
-					- m_nPANL)/100);
-				pFM->SetPan(m_nSoundIDHonk, (float)(m_nPANR
-					- m_nPANL)/100);*/
+				FM->PlaySoundA(m_nSoundID);
+				AdjustSound(m_nSoundID, true);
 				fCollectedTime = 0.0f;
 			}
 			break ;

@@ -15,12 +15,15 @@ class CSaveSlotState : public IGameState
 	CPlayer* m_pLoadedPlayer;
 	//current level loaded
 	int m_nCurrLoadedLevel;
+	int m_nLoadedLevels[MAXSLOTS];
 	//which slot the player is saving/loading to
 	int m_nCurrSaveSlot;
 	int m_nIndex;
 
+	int m_nSoundID;
+
 	//Enums
-	enum SLOTOPTIONS{SELECT, SLOTDELETE, NUMSLOTOPTIONS};
+	enum SLOTOPTIONS{SELECT, SLOTDELETE, BACK, NUMSLOTOPTIONS};
 
 	CSaveSlotState();
 	CSaveSlotState(const CSaveSlotState&) { }
@@ -28,6 +31,10 @@ class CSaveSlotState : public IGameState
 	~CSaveSlotState();
 
 	void SetSaveSlot(const int nSlot);
+	//deletes game data
+	void Delete();
+	//Loads game data
+	void Load(int nSaveSlot);
 public:
 
 	static CSaveSlotState* GetInstance();
@@ -40,10 +47,6 @@ public:
 	void EnterCommand(void);
 	//Saves game data
 	void Save();
-	//Loads game data
-	void Load();
-	//deletes game data
-	void Delete();
 
 	//accessors
 	int GetCurrLevel() const;

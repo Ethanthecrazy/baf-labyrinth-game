@@ -1,16 +1,24 @@
 #include "CSaveSlotState.h"
 #include <fstream>
 #include "CGamePlayState.h"
+#include "CMainMenuState.h"
+#include "COptionsState.h"
 #include "../CGame.h"
 #include "../Wrappers/CSGD_DirectInput.h"
 #include "../Wrappers/CSGD_TextureManager.h"
 #include "../Wrappers/CSGD_Direct3D.h"
+#include "../Wrappers/CSGD_FModManager.h"
 
 CSaveSlotState::CSaveSlotState()
 {
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	m_nCurrSaveSlot = 0;
 	m_nIndex = 0;
-	SetCurrLevel(1);
+	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");
+	for(unsigned int i = 0; i < MAXSLOTS; i++)
+	{
+		m_nLoadedLevels[i] = 1;
+	}
 }
 
 // destructor
@@ -28,7 +36,15 @@ CSaveSlotState* CSaveSlotState::GetInstance()
 void CSaveSlotState::Enter(void)
 {
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
+	//load all the current levels
+	for(unsigned int i = 0; i < MAXSLOTS; i++)
+	{
+		Load(i);
+	}
+	SetSaveSlot(0);
+	COptionsState* Opt = COptionsState::GetInstance();
+	Opt->AdjustSound(m_nSoundID, true);
 }
 
 bool CSaveSlotState::Input(void)
@@ -36,6 +52,7 @@ bool CSaveSlotState::Input(void)
 	CGame* pGame = CGame::GetInstance();
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
 	CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	//Enter
 	if(pDI->KeyPressed(DIK_RETURN))
 	{
@@ -44,13 +61,17 @@ bool CSaveSlotState::Input(void)
 		case SELECT:
 			{
 				//Change to GamePlayState
-				Load();
 				pGame->ChangeState(pGamePlay);
 				break;
 			}
 		case SLOTDELETE:
 			{
 				Delete();
+				break;
+			}
+		case BACK:
+			{
+				pGame->ChangeState(CMainMenuState::GetInstance());
 				break;
 			}
 		};
@@ -60,6 +81,7 @@ bool CSaveSlotState::Input(void)
 	//Up
 	if(pDI->KeyPressed(DIK_UP))
 	{
+		FM->PlaySoundA(m_nSoundID);
 		if(m_nIndex != 0)
 			m_nIndex -= 1;
 		else
@@ -68,6 +90,7 @@ bool CSaveSlotState::Input(void)
 	//Down
 	if(pDI->KeyPressed(DIK_DOWN))
 	{
+		FM->PlaySoundA(m_nSoundID);
 		if(m_nIndex != (NUMSLOTOPTIONS - 1))
 			m_nIndex += 1;
 		else
@@ -77,13 +100,13 @@ bool CSaveSlotState::Input(void)
 	if(pDI->KeyPressed(DIK_LEFT))
 	{
 		SetSaveSlot(--m_nCurrSaveSlot);
-		//Play a sound
+		FM->PlaySoundA(m_nSoundID);
 	}
 	//Right
 	if(pDI->KeyPressed(DIK_RIGHT))
 	{
 		SetSaveSlot(++m_nCurrSaveSlot);
-		//Play a sound
+		FM->PlaySoundA(m_nSoundID);
 	}
 	return true;
 }
@@ -97,14 +120,25 @@ void CSaveSlotState::Render(void)
 {
 	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
 
+	char buffer[64] = { };
 	MetalText.Print( "---", 0 + (m_nCurrSaveSlot * 250), 80,  0.8f );
+	//Slot1	
 	MetalText.Print( "Slot 1", 0, 100, 0.6f );
+	sprintf_s(buffer,"Level: %i", m_nLoadedLevels[0]);
+	MetalText.Print( buffer, 0, 140, 0.5f );
+	//Slot2
 	MetalText.Print( "Slot 2", 250, 100, 0.6f );
+	sprintf_s(buffer,"Level: %i", m_nLoadedLevels[1]);
+	MetalText.Print( buffer, 250, 140, 0.5f );
+	//Slot3
 	MetalText.Print( "Slot 3", 500, 100, 0.6f );
-
+	sprintf_s(buffer,"Level: %i", m_nLoadedLevels[2]);
+	MetalText.Print( buffer, 500, 140, 0.5f );
+	//Options
 	MetalText.Print( "->", 100, 450 + (m_nIndex * 35), 0.8f );
 	MetalText.Print( "Select", 200, 450, 0.8f );
 	MetalText.Print( "Delete", 200, 485, 0.8f );
+	MetalText.Print( "Back", 200, 520, 0.8f );
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 }
 
@@ -136,8 +170,9 @@ void CSaveSlotState::Save()
 		out.close();
 	}
 }
-void CSaveSlotState::Load()
+void CSaveSlotState::Load(int nSaveSlot)
 {
+	SetSaveSlot(nSaveSlot);
 	CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
 
 	//load settings
@@ -149,16 +184,14 @@ void CSaveSlotState::Load()
 	if(!in.is_open())
 	{
 		//if we couldnt find the file start form lv1
-		SetCurrLevel(1);
-		pGamePlay->SetCurrentLevel(GetCurrLevel());
+		m_nLoadedLevels[m_nCurrSaveSlot] = 1;
 		return;
 	}
 
 	if (in.good())
 	{
 		in.read((char *)&nLevel, sizeof(int));
-		SetCurrLevel(nLevel);
-		pGamePlay->SetCurrentLevel(GetCurrLevel());
+		m_nLoadedLevels[m_nCurrSaveSlot] = nLevel;
 	}
 	in.close();
 
@@ -178,10 +211,10 @@ void CSaveSlotState::Delete()
 		if (out.good())
 		{
 			out.write(((const char *)&nLevel), 4); 
-			SetCurrLevel(nLevel);
 		}
 		out.close();
 	}
+	Load(m_nCurrSaveSlot);
 }
 
 //accessors
@@ -192,7 +225,9 @@ int CSaveSlotState::GetCurrLevel() const
 	//mutators
 void CSaveSlotState::SetCurrLevel(const int nLevel)
 {
+	CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
 	m_nCurrLoadedLevel = nLevel;
+	pGamePlay->SetCurrentLevel(GetCurrLevel());
 }
 void CSaveSlotState::SetSaveSlot(const int nSlot)
 {
@@ -200,6 +235,7 @@ void CSaveSlotState::SetSaveSlot(const int nSlot)
 	if(nSlot < 0 )
 	{
 		m_nCurrSaveSlot = (MAXSLOTS - 1);
+		SetCurrLevel(m_nLoadedLevels[m_nCurrSaveSlot]);
 		return;
 	}
 
@@ -207,8 +243,10 @@ void CSaveSlotState::SetSaveSlot(const int nSlot)
 	if(nSlot >= MAXSLOTS)
 	{
 		m_nCurrSaveSlot = 0;
+		SetCurrLevel(m_nLoadedLevels[m_nCurrSaveSlot]);
 		return;
 	}
 
 	m_nCurrSaveSlot = nSlot;
+	SetCurrLevel(m_nLoadedLevels[m_nCurrSaveSlot]);
 }

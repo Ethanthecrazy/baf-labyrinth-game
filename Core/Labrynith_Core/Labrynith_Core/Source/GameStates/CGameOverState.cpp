@@ -35,7 +35,7 @@ void CGameOverState::Enter(void)
 	cout << "GameOver\n";
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 }
 
 bool CGameOverState::Input(void)

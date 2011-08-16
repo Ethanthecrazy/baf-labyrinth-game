@@ -2,15 +2,22 @@
 #include "CGamePlayState.h"
 #include "CMainMenuState.h"
 #include "CLoadLevelState.h"
+#include "COptionsState.h"
 #include "..\CGame.h"
 #include "..\Wrappers\CSGD_Direct3D.h"
 #include "..\Wrappers\CSGD_TextureManager.h"
 #include "..\Wrappers\CSGD_DirectInput.h"
+#include "..\Wrappers\CSGD_FModManager.h"
 
 CPauseState::CPauseState(void)
 {
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
+	COptionsState* Opt = COptionsState::GetInstance();
+
 	m_nIndex = 0;
 	m_nImageID = -1;
+	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");	
+	Opt->AdjustSound(m_nSoundID, true);
 }
 
 CPauseState::~CPauseState(void)
@@ -22,18 +29,20 @@ void CPauseState::Enter(void)
 {
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
-		' ', 64, 64, 10, "resource/Game Saves/metalpng.txt" );
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 }
 //Input
 bool CPauseState::Input(void)
 {
 	CGame* pGame = CGame::GetInstance();
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 
 	//Directional
 	//Up
 	if(pDI->KeyPressed(DIK_UP))
 	{
+		FM->PlaySoundA(m_nSoundID);
 		if(m_nIndex != 0)
 			m_nIndex -= 1;
 		else
@@ -42,6 +51,7 @@ bool CPauseState::Input(void)
 	//Down
 	if(pDI->KeyPressed(DIK_DOWN))
 	{
+		FM->PlaySoundA(m_nSoundID);
 		if(m_nIndex != (NUMOPTIONS - 1))
 			m_nIndex += 1;
 		else
@@ -86,11 +96,11 @@ void CPauseState::Render(void)
 	//Get access to singletons
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 
-	MetalText.Print("Paused", 220, 50, 1.1f);
-	MetalText.Print("Resume", 300, 265);
-	MetalText.Print("Restart Level", 300, 300);
-	MetalText.Print("Exit", 300, 335);
-	MetalText.Print("->", 200, 265 + (m_nIndex * 35));
+	MetalText.Print("Paused", 220, 50);
+	MetalText.Print("Resume", 300, 265, 0.6f);
+	MetalText.Print("Restart Level", 300, 300, 0.6f);
+	MetalText.Print("Exit", 300, 335, 0.6f);
+	MetalText.Print("->", 200, 265 + (m_nIndex * 35), 0.6f);
 }
 CPauseState* CPauseState::GetInstance(void)
 {
