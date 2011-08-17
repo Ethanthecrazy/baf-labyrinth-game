@@ -8,6 +8,7 @@
 #include "../Tiles/CElectricButton.h"
 #include "CGolem_Iron.h"
 #include "../../../Animation Manager/CAnimationManager.h"
+#include "../Objects/CSteamPuff.h"
 
 void CGolem_Water::WaterGolemSetup()
 {
@@ -139,6 +140,15 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
 							//get rid of this the water golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+
+							CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						}
 					}
 					break;
@@ -164,9 +174,20 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 
 							//turn me into an Iron Golem
 							int* newID = new int;
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
 							//Get rid of the Lava golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(temp->m_nIdentificationNumber, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
+
+							CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+						
 						}						
 					}
 					break;

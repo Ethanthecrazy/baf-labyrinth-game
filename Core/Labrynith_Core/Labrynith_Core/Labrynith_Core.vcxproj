@@ -119,6 +119,7 @@
     <ClCompile Include="Source\Object Manager\Units\Objects\COilCan.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CPowerGloves.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Objects\CSteamPuff.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CBreakableWall.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Source\Object Manager\Units\Objects\COilCan.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CPowerGloves.h" />
     <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h" />
+    <ClInclude Include="Source\Object Manager\Units\Objects\CSteamPuff.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CBreakableWall.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h" />

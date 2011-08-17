@@ -30,7 +30,7 @@ CGolem_Shadow::~CGolem_Shadow(void)
 
 void CGolem_Shadow::Update(float fDT)
 {
-	DrainLight( 5 );
+	DrainLight( 4 );
 	CBaseGolem::Update(fDT);
 	UpdateAI();
 }

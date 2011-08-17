@@ -129,14 +129,14 @@ void CGamePlayState::GetCamera( int& X , int& Y )
 
 	if( player )
 	{
-		X = (int)player->GetPosX() - 800/2 + 16;
-		Y = (int)player->GetPosY() - 600/2 + 16;
+		X = (int)player->GetPosX() - 1024/2 + 32;
+		Y = (int)player->GetPosY() - 768/2 + 32;
 
-		if( X + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
-			X = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 800;
+		if( X + 1024 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
+			X = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 1024;
 		
-		if( Y + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
-			Y = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 600;
+		if( Y + 768 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
+			Y = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 768;
 
 		if( X < 0 )
 			X = 0;
@@ -158,14 +158,14 @@ void CGamePlayState::Render(void)
 
 	if( player )
 	{
-		int cameraX = (int)player->GetPosX() - 800/2 + 16;
-		int cameraY = (int)player->GetPosY() - 600/2 + 16;
+		int cameraX = (int)player->GetPosX() - 1024/2 + 32;
+		int cameraY = (int)player->GetPosY() - 768/2 + 32;
 
-		if( cameraX + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
-			cameraX = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 800;
+		if( cameraX + 1024 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
+			cameraX = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 1024;
 
-		if( cameraY + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
-			cameraY = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 600;
+		if( cameraY + 768 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
+			cameraY = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 768;
 
 		if( cameraX < 0 )
 			cameraX = 0;

@@ -121,9 +121,9 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Lava Golem
 							int* newID = new int;
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, LAVA_GOLEM, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, LAVA_GOLEM, newID));
 							//Get rid of the Fire golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(temp->m_nIdentificationNumber, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 						}						
 					}
 					break;

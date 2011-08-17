@@ -4,6 +4,8 @@
 #include "../../../Messaging/MMessageSystem.h"
 #include "../CBaseObject.h"
 #include "../../MObjectManager.h"
+#include "../Objects/CSteamPuff.h"
+
 void CGolem_Lava::LavaGolemSetup()
 {
 	SetGolemType(LAVA_GOLEM);
@@ -95,9 +97,19 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM));
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM));
 							//Get rid of the Water golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+
+							CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+						
 						}						
 					}
 					break;
@@ -111,9 +123,19 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM));
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM));
 							//Get rid of the Ice golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+
+							CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+						
 						}						
 					}
 					break;

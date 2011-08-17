@@ -88,7 +88,7 @@ void CAnimation::Draw(int nPosX, int nPosY,
 	CSGD_TextureManager::GetInstance()->Draw(GetImageID(), 
 		(nPosX + GetCurFrame()->GetAnchorX()), 
 		(nPosY + GetCurFrame()->GetAnchorY()), 
-		1.0f, 1.0f, &GetCurFrame()->GetDrawRect(), fRotCenterX,
+		fScaleX, fScaleY, &GetCurFrame()->GetDrawRect(), fRotCenterX,
 		fRotCenterY, fRotation, dwColor);
 }
 

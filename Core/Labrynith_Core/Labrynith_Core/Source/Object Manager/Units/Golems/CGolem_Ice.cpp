@@ -5,6 +5,7 @@
 #include "../Tiles/CWaterTile.h"
 #include "../../../AI Handler/CAI_Handler.h"
 #include "../../MObjectManager.h"
+#include "../Objects/CSteamPuff.h"
 
 void CGolem_Ice::IceGolemSetup()
 {
@@ -109,6 +110,17 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, WATER_GOLEM));
 							//Get rid of the Fire Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+
+						CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+						
+
 						}
 					}
 					break;
@@ -136,6 +148,16 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
 							//Get rid of this the Ice Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
+
+						CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+						
 						}
 					}
 					break;
@@ -191,7 +213,7 @@ bool CGolem_Ice::CanInteract(IUnitInterface* pBase)
 				{
 				case FIRE_GOLEM:
 					{
-						return true;
+						return false;
 					}
 					break;
 				};

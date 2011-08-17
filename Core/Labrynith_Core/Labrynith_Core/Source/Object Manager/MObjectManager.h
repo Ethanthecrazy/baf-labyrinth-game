@@ -25,9 +25,11 @@ private:
 	// destructor
 	~MObjectManager();
 	
+	
+public:
+
 	// Adds a unit to the object manager, but does not store it in the flake's data array.
 	int AddUnit( IUnitInterface* _toAdd, int _layer );
-public:
 
 	static MObjectManager* GetInstance( void );
 	void DeleteInstance(void);

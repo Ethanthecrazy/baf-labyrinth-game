@@ -240,6 +240,9 @@
     <ClCompile Include="Source\GameStates\CCreditsState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CSteamPuff.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -439,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameStates\CCreditsState.h">
       <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CSteamPuff.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

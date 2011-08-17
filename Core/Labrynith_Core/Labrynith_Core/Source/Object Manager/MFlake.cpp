@@ -9,6 +9,9 @@
 #include "MObjectManager.h"
 #include "../GameStates/CGamePlayState.h"
 
+#include "../Object Manager/Units/CBaseObject.h"
+#include "../Object Manager/Units/Tiles/CDoor.h"
+
 MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY, int _parentLayer ) : LayerWidth( _LayerWidth ), 
 	LayerHeight( _LayerHeight ), 
 	OffSetFromCenterX( _OffSetFromCenterX ), 
@@ -174,7 +177,7 @@ void MFlake::LightingProcess( int x, int y )
 	if( GetInfoAtIndex( x, y ) > 254 )
 		bCanTransfer = true;
 
-		SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 6 );
+		SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 12 );
 
 	if( GetInfoAtIndex( x, y ) < 5 )
 	{
@@ -184,25 +187,38 @@ void MFlake::LightingProcess( int x, int y )
 
 	if( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( x, y ) == 0 )
 	{
+		return;
+	}
+
+	IUnitInterface* doorCheck = MObjectManager::GetInstance()->GetUnit( MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( x, y ) );
+
+	if( doorCheck )
+	{
+		if( (((CBaseObject*)(doorCheck)))->m_nUnitType == OBJ_DOOR );
+		{
+			if( !(((CDoor*)(doorCheck)))->GetIsOpen() )
+			{
+				return;
+			}
+		}
 	}
 	//else if(  MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( x, y ) )
-	else
 	{
 		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x + 1, y ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
 		}
 		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x - 1, y ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
 		}
 		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y + 1 ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
 		}
 		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y - 1 ) )
 		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(GetInfoAtIndex( x, y ) / 1.05f), this ) );
+			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
 		}
 	}
 
@@ -236,8 +252,8 @@ void MFlake::Render( int CameraX, int CameraY )
 								RECT camRect;
 								camRect.top = (long)CameraY;
 								camRect.left = (long)CameraX;
-								camRect.bottom = (long)camRect.top + 600;
-								camRect.right = (long)camRect.left + 800;
+								camRect.bottom = (long)camRect.top + 768;
+								camRect.right = (long)camRect.left + 1024;
 		
 								RECT objRect;
 								objRect.top = (long)y * TILE_HEIGHT;
@@ -273,8 +289,8 @@ void MFlake::Render( int CameraX, int CameraY )
 								RECT camRect;
 								camRect.top = (long)CameraY;
 								camRect.left = (long)CameraX;
-								camRect.bottom = (long)camRect.top + 600;
-								camRect.right = (long)camRect.left + 800;
+								camRect.bottom = (long)camRect.top + 768;
+								camRect.right = (long)camRect.left + 1024;
 		
 								RECT objRect;
 								objRect.top = (long)y * TILE_HEIGHT;

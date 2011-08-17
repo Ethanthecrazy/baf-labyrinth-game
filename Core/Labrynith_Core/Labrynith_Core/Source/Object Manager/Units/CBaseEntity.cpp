@@ -5,6 +5,7 @@
 #include "../../AI Handler/CAI_Handler.h"
 #include "../../GameStates/CGamePlayState.h"
 #include "CBaseGolem.h"
+#include "CPlayer.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -53,22 +54,24 @@ void CBaseEntity::Update(float fDT)
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
-		SetDistanceLeft( GetDistanceLeft() - 125 * fDT );
+		int speed = 200;
+
+		SetDistanceLeft( GetDistanceLeft() - speed * fDT );
 		if( GetDistanceLeft() > 0 )
 		{
 			switch ( GetFlag_DirectionToMove() )
 			{
 			case FLAG_MOVE_RIGHT:
-				SetPosX( GetPosX() + 125 * fDT );
+				SetPosX( GetPosX() + speed * fDT );
 				break;
 			case FLAG_MOVE_LEFT:
-				SetPosX( GetPosX() - 125 * fDT );
+				SetPosX( GetPosX() - speed * fDT );
 				break;
 			case FLAG_MOVE_UP:
-				SetPosY( GetPosY() - 125 * fDT );				
+				SetPosY( GetPosY() - speed * fDT );				
 				break;
 			case FLAG_MOVE_DOWN:
-				SetPosY( GetPosY() + 125 * fDT );
+				SetPosY( GetPosY() + speed * fDT );
 				break;
 			}
 		}
@@ -118,8 +121,9 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 		RECT camRect;
 		camRect.top = (long)CameraPosY;
 		camRect.left = (long)CameraPosX;
-		camRect.bottom = (long)camRect.top + 600;
-		camRect.right = (long)camRect.left + 800;
+		camRect.right = (long)camRect.left + 1024;
+		camRect.bottom = (long)camRect.top + 768;
+		
 		
 		RECT objRect;
 		objRect.top = (long)GetPosY();
@@ -145,6 +149,15 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 				{
 					lightamount = 255;
 				}
+			}
+		}
+
+		if( m_nUnitType == OBJECT_ENTITY )
+		{
+			if( (((CBaseEntity*)(this)))->GetType() == ENT_PLAYER )
+			{
+				if( lightamount < 32 )
+					lightamount = 32;
 			}
 		}
 
