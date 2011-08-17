@@ -24,6 +24,11 @@ COil::COil( bool bIsOil ) : m_bIsOil(bIsOil)
 	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
 }
 
+COil::~COil()
+{
+	CSGD_FModManager::GetInstance()->StopSound( m_nFireSoundID ) ;
+}
+
 void COil::Update(float fDT)
 {
 	CBaseObject::Update(fDT) ;

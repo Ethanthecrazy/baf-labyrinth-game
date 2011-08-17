@@ -15,6 +15,7 @@ private:
 	bool m_bIsOil ;
 public:
 	COil( bool bIsOil = true ) ;
+	~COil() ;
 
 	void Update(float fDT) ;
 
