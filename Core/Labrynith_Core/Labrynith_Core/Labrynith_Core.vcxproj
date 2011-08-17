@@ -85,6 +85,7 @@
     <ClCompile Include="Source\Animation Manager\CFrame.cpp" />
     <ClCompile Include="Source\CBitFont.cpp" />
     <ClCompile Include="Source\CGame.cpp" />
+    <ClCompile Include="Source\GameStates\CCreditsState.cpp" />
     <ClCompile Include="Source\GameStates\CGameOverState.cpp" />
     <ClCompile Include="Source\GameStates\CGamePlayState.cpp" />
     <ClCompile Include="Source\GameStates\CLoadLevelState.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Source\BST.h" />
     <ClInclude Include="Source\CBitFont.h" />
     <ClInclude Include="Source\CGame.h" />
+    <ClInclude Include="Source\GameStates\CCreditsState.h" />
     <ClInclude Include="Source\GameStates\CGameOverState.h" />
     <ClInclude Include="Source\GameStates\CGamePlayState.h" />
     <ClInclude Include="Source\GameStates\CLoadLevelState.h" />

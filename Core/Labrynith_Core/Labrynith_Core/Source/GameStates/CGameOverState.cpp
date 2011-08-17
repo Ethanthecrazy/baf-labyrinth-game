@@ -83,9 +83,6 @@ void CGameOverState::Update(float fDT)
 
 void CGameOverState::Render(void)
 {
-	
-	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
-
 	MetalText.Print( "GameOver", 100, 100, 0.6f );
 	MetalText.Print( "->", 0, 230 + (m_nIndex * 30), 0.5f );
 	MetalText.Print( "Retry", 110, 230, 0.5f );
@@ -95,7 +92,7 @@ void CGameOverState::Render(void)
 
 void CGameOverState::Exit(void)
 {
-	cout << "left GameOver state -> ";
+	cout << "GameOver -> ";
 }
 
 void CGameOverState::EnterCommand(void)

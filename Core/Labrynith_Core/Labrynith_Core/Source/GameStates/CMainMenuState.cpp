@@ -3,6 +3,7 @@
 #include "CGamePlayState.h"
 #include "CSaveSlotState.h"
 #include "COptionsState.h"
+#include "CCreditsState.h"
 
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "../Wrappers/CSGD_DirectInput.h"
@@ -74,6 +75,7 @@ bool CMainMenuState::Input(void)
 			
 		case CREDITS:
 			//Change to credits
+			pGame->ChangeState( CCreditsState::GetInstance() );
 			break;
 
 		case EXIT:

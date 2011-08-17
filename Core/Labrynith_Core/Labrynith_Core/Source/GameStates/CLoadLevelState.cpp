@@ -223,9 +223,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 				int y = 0;
 				while(pTile)
 				{								
-					string prop = "";
-
-					
+					string prop = "";					
 
 					TiXmlElement* pType = pTile->FirstChildElement("Type");
 					if(pType)
