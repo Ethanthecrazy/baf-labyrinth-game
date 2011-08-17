@@ -1,6 +1,7 @@
 #include "CButton.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../../GameStates/COptionsState.h"
+#include "../../../GameStates/CGamePlayState.h"
 #include "../../../Messaging/MEventSystem.h"
 
 CButton::CButton(string nLink)
@@ -37,12 +38,12 @@ bool CButton::CheckCollision(IUnitInterface* pBase)
 	if(m_bIsPressed)
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)m_nLink.c_str());
-		//CSGD_FModManager::GetInstance()->PlaySoundA(OpenSoundID);
+		CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 	}
 	else
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)m_nLink.c_str());
-		//CSGD_FModManager::GetInstance()->PlaySoundA(CloseSoundID);
+		CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 	}
 
 	//printf("Steped on button\n");

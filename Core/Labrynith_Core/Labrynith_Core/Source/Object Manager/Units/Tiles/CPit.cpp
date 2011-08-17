@@ -30,7 +30,7 @@ bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	
 	if( this->GetLayerLocation() != CGamePlayState::GetInstance()->GetNumLevelFloors() )
 	{		
-		CSGD_FModManager::GetInstance()->PlaySoundA(HurtSoundID);
+		CSGD_FModManager::GetInstance()->PlaySound2D(HurtSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
 			this->GetLayerLocation() + 1) );

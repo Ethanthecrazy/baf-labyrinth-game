@@ -97,9 +97,10 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM));
+							int* newID = new int;
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
 							//Get rid of the Water golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 
 							CSteamPuff* toAdd = new CSteamPuff();
 
@@ -123,9 +124,10 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM));
+							int* newID = new int;
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
 							//Get rid of the Ice golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 
 							CSteamPuff* toAdd = new CSteamPuff();
 

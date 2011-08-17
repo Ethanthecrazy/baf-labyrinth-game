@@ -67,12 +67,14 @@ bool CElectricButton::CheckCollision(IUnitInterface* pBase, bool nCanHandleColli
 	if(GetIsPressed())
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)GetLink());
-		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pressed.mp3"));
+		CSGD_FModManager::GetInstance()->PlaySound2D(
+			CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/pressed.mp3"), CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 	}
 	else
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)GetLink());
-		CSGD_FModManager::GetInstance()->PlaySoundA(CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/un-pressed.mp3"));
+		CSGD_FModManager::GetInstance()->PlaySound2D(
+			CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/un-pressed.mp3"), CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 	}
 
 	return false;
@@ -112,7 +114,7 @@ void CElectricButton::SetPowered( bool powered )
 	{
 		m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0x88888888 ) ;
 		if( GetElectricUpdateTimer() <= 0.0f )
-			CSGD_FModManager::GetInstance()->PlaySoundA( m_nSoundID ) ;
+			CSGD_FModManager::GetInstance()->PlaySound2D( m_nSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber ) ;
 		CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
 		SetElectricUpdateTimer( 10.0f ) ;
 	}

@@ -65,13 +65,10 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		{
 			if(pBase->GetType() == OBJ_ATTRACTOR )
 			{
+				if( ((CAttractor*)pBase)->GetElemType() != this->GetGolemType() )
+					return true ;
 				if(nCanHandleCollision)
-				{
-					if( ((CAttractor*)pBase)->GetElemType() != this->GetGolemType() )
-						return true ;
-
-					
-					
+				{	
 					int cameraX = 0 , cameraY = 0 ;
 					CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
 					int tileXPos = (int)((pBase->GetPosX() + cameraX) / TILE_WIDTH) ;

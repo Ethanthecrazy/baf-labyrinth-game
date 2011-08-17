@@ -516,13 +516,17 @@ bool CSGD_FModManager::PlaySound2D(int nID, int playerID, int otherID)
 	
 	float volume = ((1.0f / dist) * (COptionsState::GetInstance()->GetSFXVolume() / 100.0f));
 
+	if( player->GetLayerLocation() != other->GetLayerLocation() )
+		volume = 0.0f;
+
 	SetVolume(nID, volume);
 
 	// pan goes -1 -> 1
-	float pan = (1.0f / distx)* (distx * (distx<0? -1 : 1));
+	float pan = (1.0f / distx) * (distx * (distx < 0 ? -1 : 1));
 
 	if(distx == 0)
 		pan = 0;
+
 	SetPan(nID, pan);
 
 	PlaySoundA(nID);

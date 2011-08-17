@@ -4,6 +4,7 @@
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../MObjectManager.h"
 #include "../../../GameStates/COptionsState.h"
+#include "../../../GameStates/CGamePlayState.h"
 
 CRamp::CRamp(string direction)
 {	
@@ -31,7 +32,7 @@ bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
-	CSGD_FModManager::GetInstance()->PlaySoundA(m_nMoveFloorSoundID);
+	CSGD_FModManager::GetInstance()->PlaySound2D(m_nMoveFloorSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 
 	if(Up)
 	{

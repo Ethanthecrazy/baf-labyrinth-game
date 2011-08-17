@@ -692,9 +692,12 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			};
 			//remove the current golem and add the new one
 			//in its place
-			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
 			idholder->newID = OM->AddUnitIndexed(pNewGolem, pGolem->GetLayerLocation());
-			msg->SetNewID(idholder->newID);
+			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
+
+			if(msg->GetNewID())
+				msg->SetNewID(idholder->newID);
+
 			MEventSystem::GetInstance()->SendEvent("spawner.idchanged", (void*)idholder);
 		}
 		break;
@@ -713,7 +716,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		{			
 			msgDeletIDHolder* msg = (msgDeletIDHolder*)_message;
 			IDHolder* idHolder = msg->GetPointer();
-			if(idHolder && idHolder->oldID > 0 && idHolder->newID > 0)
+			if(idHolder && idHolder->oldID > 0 && idHolder->newID > 0 && idHolder->oldID < 900000 && idHolder->newID < 900000)
 			{
 				delete idHolder;
 				idHolder = NULL;
