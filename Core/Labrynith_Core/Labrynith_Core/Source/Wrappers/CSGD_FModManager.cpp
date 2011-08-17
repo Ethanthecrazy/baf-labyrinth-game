@@ -12,6 +12,8 @@
 #include "CSGD_FModManager.h"
 #include <assert.h>
 
+#include "../Object Manager/MObjectManager.h"
+#include "../GameStates/COptionsState.h"
 
 
 CSGD_FModManager CSGD_FModManager::m_pInstance;	//	initialization of single class instance
@@ -363,7 +365,7 @@ float CSGD_FModManager::GetVolume(int nID)
 	//	check that ID is in range
 	assert( nID > -1 && nID < (int)m_SoundList.size() && "ID is out of range" );
 	
-	return m_SoundList[nID].fPan;
+	return m_SoundList[nID].fVolume;
 }
 
 
@@ -496,3 +498,33 @@ bool CSGD_FModManager::ShutdownFModManager( void )
 	return true;
 }
 
+
+bool CSGD_FModManager::PlaySound2D(int nID, int playerID, int otherID)
+{
+	IUnitInterface* player = MObjectManager::GetInstance()->GetUnit(playerID);
+	IUnitInterface* other = MObjectManager::GetInstance()->GetUnit(otherID);
+	
+	float distx = (other->GetIndexPosX() - player->GetIndexPosX());
+	float disty = (other->GetIndexPosY() - player->GetIndexPosY());
+
+	float dist = distx + disty;
+	if( dist < 0 )
+		dist *= -1;
+
+	if( dist == 0 )
+		dist = 1;
+	
+	float volume = ((1.0f / dist) * (COptionsState::GetInstance()->GetSFXVolume() / 100.0f));
+
+	SetVolume(nID, volume);
+
+	// pan goes -1 -> 1
+	float pan = (1.0f / distx)* (distx * (distx<0? -1 : 1));
+
+	if(distx == 0)
+		pan = 0;
+	SetPan(nID, pan);
+
+	PlaySoundA(nID);
+	return true;
+}

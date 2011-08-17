@@ -11,6 +11,7 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Animation Manager/CAnimationManager.h"
 #include "CWaterTile.h"
+#include "../../../GameStates/CGamePlayState.h"
 
 CElectricButton::CElectricButton(string nLink)
 {

@@ -3,6 +3,7 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../../GameStates/COptionsState.h"
+#include "../../../GameStates/CGamePlayState.h"
 
 CDoor::CDoor(string nLink)
 {
@@ -34,7 +35,7 @@ void CDoor::HandleEvent( Event* _toHandle )
 		{
 			m_bIsOpen = true;
 			this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Door_Open.png" ));
-			CSGD_FModManager::GetInstance()->PlaySoundA(OpenSoundID);
+			CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 		}
 	}
 
@@ -45,7 +46,7 @@ void CDoor::HandleEvent( Event* _toHandle )
 		{
 			m_bIsOpen = false;
 			this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Door_Closed.png" ));
-			CSGD_FModManager::GetInstance()->PlaySoundA(OpenSoundID);
+			CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 		}
 	}
 }

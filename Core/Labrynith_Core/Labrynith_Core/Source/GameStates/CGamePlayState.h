@@ -5,7 +5,6 @@
 #include "../Object Manager/MObjectManager.h"
 #include "../Messaging/MMessageSystem.h"
 
-class IDHolder;
 class CGamePlayState : public IGameState
 {
 	int m_nMouseID;
@@ -27,8 +26,6 @@ class CGamePlayState : public IGameState
 	bool m_bIsPaused;
 
 public:
-	
-	static IDHolder* holder;
 
 	static int testVaribale;
 	static CGamePlayState* GetInstance();

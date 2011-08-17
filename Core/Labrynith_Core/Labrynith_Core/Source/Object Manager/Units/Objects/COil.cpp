@@ -5,6 +5,7 @@
 #include "../CPlayer.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../../GameStates/COptionsState.h"
+#include "../../../GameStates/CGamePlayState.h"
 
 COil::COil( bool bIsOil ) : m_bIsOil(bIsOil)
 {
@@ -86,7 +87,7 @@ void COil::SetOnFire( bool onFire )
 	if( GetOnFire() == false && onFire == true )
 	{
 		CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
-		CSGD_FModManager::GetInstance()->PlaySoundA( m_nFireSoundID ) ;
+		CSGD_FModManager::GetInstance()->PlaySound2D( m_nFireSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber ) ;
 	}
 	m_bOnFire = onFire ; 
 }

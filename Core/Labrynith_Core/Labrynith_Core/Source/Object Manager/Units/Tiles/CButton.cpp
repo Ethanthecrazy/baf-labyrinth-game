@@ -37,12 +37,12 @@ bool CButton::CheckCollision(IUnitInterface* pBase)
 	if(m_bIsPressed)
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)m_nLink.c_str());
-		CSGD_FModManager::GetInstance()->PlaySoundA(OpenSoundID);
+		//CSGD_FModManager::GetInstance()->PlaySoundA(OpenSoundID);
 	}
 	else
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)m_nLink.c_str());
-		CSGD_FModManager::GetInstance()->PlaySoundA(CloseSoundID);
+		//CSGD_FModManager::GetInstance()->PlaySoundA(CloseSoundID);
 	}
 
 	//printf("Steped on button\n");

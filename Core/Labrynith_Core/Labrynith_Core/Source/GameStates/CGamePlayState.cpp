@@ -35,7 +35,6 @@
 using namespace std;
 
 int CGamePlayState::testVaribale = -1;
-IDHolder* CGamePlayState::holder = NULL;
 
 CGamePlayState::CGamePlayState()
 {
@@ -714,7 +713,6 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		{			
 			msgDeletIDHolder* msg = (msgDeletIDHolder*)_message;
 			IDHolder* idHolder = msg->GetPointer();
-			holder = idHolder;
 			if(idHolder && idHolder->oldID > 0 && idHolder->newID > 0)
 			{
 				delete idHolder;
