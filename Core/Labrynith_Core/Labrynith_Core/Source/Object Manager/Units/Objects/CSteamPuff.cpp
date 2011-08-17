@@ -9,7 +9,7 @@ CSteamPuff::CSteamPuff()
 {
 	CBaseObject();
 
-	m_nUnitType = OBJECT_ENTITY;
+	m_nUnitType = OBJECT_OBJECT;
 
 	ID_ANI = CAnimationManager::GetInstance()->GetID( "Puff" );
 
@@ -18,6 +18,8 @@ CSteamPuff::CSteamPuff()
 	CAnimationManager::GetInstance()->SetAnimTexture( ID_ANI, m_nImageID );
 
 	CAnimationManager::GetInstance()->PlayAnimation( ID_ANI );
+
+	scale = 0.5f;
 }
 
 void CSteamPuff::Update( float fDT )
@@ -33,6 +35,21 @@ void CSteamPuff::Update( float fDT )
 void CSteamPuff::Render( int CameraPosX, int CameraPosY )
 {
 	
-	CAnimationManager::GetInstance()->Draw( ID_ANI, (int)GetPosX(), (int)GetPosY(), 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255) );
+	CAnimationManager::GetInstance()->Draw( ID_ANI, (int)GetPosX(), (int)GetPosY(), scale, scale, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255) );
 
+}
+
+void CSteamPuff::MakeIce()
+{
+	CAnimationManager::GetInstance()->StopAnimation( ID_ANI );
+
+	ID_ANI = CAnimationManager::GetInstance()->GetID( "IcePuff" );
+
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/icePuff.png" );
+
+	CAnimationManager::GetInstance()->SetAnimTexture( ID_ANI, m_nImageID );
+
+	CAnimationManager::GetInstance()->PlayAnimation( ID_ANI );
+
+	scale = 1.0f;
 }

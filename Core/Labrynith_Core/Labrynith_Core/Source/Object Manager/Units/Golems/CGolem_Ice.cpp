@@ -79,6 +79,19 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					{
 					//if its water, freeze it
 					((CWaterTile*)temp)->SetIsFrozen(true);
+
+					CSteamPuff* toAdd = new CSteamPuff();
+
+					toAdd->SetPosX( GetPosX() - 32 );
+					toAdd->SetPosY( GetPosY() - 160 );
+					toAdd->SetIndexPosX( GetIndexPosX() );
+					toAdd->SetIndexPosY( GetIndexPosY() );
+
+					toAdd->MakeIce();
+
+					MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+
+
 					}
 				}
 				return false;
@@ -111,7 +124,7 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 							//Get rid of the Fire Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
 
-						CSteamPuff* toAdd = new CSteamPuff();
+							CSteamPuff* toAdd = new CSteamPuff();
 
 							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
 							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
@@ -119,7 +132,7 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 							toAdd->SetIndexPosY( GetIndexPosY() );
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
-						
+
 
 						}
 					}
@@ -129,8 +142,22 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					{
 						if(nCanHandleCollision)
 						{
-						//turn the Water golem into an Ice Golem
-						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, ICE_GOLEM));
+
+							int* ID = new int;
+							//turn the Water golem into an Ice Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, ICE_GOLEM, ID));
+
+							CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( temp->GetPosX() );
+							toAdd->SetPosY( temp->GetPosY() );
+							toAdd->SetIndexPosX( temp->GetIndexPosX() );
+							toAdd->SetIndexPosY( temp->GetIndexPosY() );
+
+							toAdd->MakeIce();
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+
 						}
 					}
 					break;

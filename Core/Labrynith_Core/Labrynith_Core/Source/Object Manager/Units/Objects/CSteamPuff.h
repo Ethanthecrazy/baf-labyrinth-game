@@ -8,14 +8,18 @@ class CSteamPuff : public CBaseObject
 
 private:
 
-	int ID_ANI;
+	float scale;
 
 public:
 	
+	int ID_ANI;
+
 	CSteamPuff();
 
 	virtual void Update(float fDT);
 	virtual void Render( int CameraPosX, int CameraPosY );
+
+	void MakeIce();
 
 };
 

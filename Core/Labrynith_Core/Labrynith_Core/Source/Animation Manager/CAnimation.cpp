@@ -1,5 +1,6 @@
 #include "precompiled_header.h"
 #include "../Wrappers/CSGD_TextureManager.h"
+#include "../Wrappers/CSGD_Direct3D.h"
 #include "CAnimation.h"
 #include "CFrame.h"
 
@@ -90,6 +91,15 @@ void CAnimation::Draw(int nPosX, int nPosY,
 		(nPosY + GetCurFrame()->GetAnchorY()), 
 		fScaleX, fScaleY, &GetCurFrame()->GetDrawRect(), fRotCenterX,
 		fRotCenterY, fRotation, dwColor);
+
+
+	RECT drawRect;
+	drawRect.top = 0 + nPosY + GetCurFrame()->GetAnchorY();
+	drawRect.bottom = GetCurFrame()->GetDrawRect().bottom - GetCurFrame()->GetDrawRect().top + nPosY + GetCurFrame()->GetAnchorY();
+	drawRect.left = 0 + nPosX + GetCurFrame()->GetAnchorX();
+	drawRect.right = GetCurFrame()->GetDrawRect().right - GetCurFrame()->GetDrawRect().left + nPosX + GetCurFrame()->GetAnchorX();
+
+	CSGD_Direct3D::GetInstance()->DrawRect( drawRect, 255, 255, 255 );
 }
 
 void CAnimation::Play()

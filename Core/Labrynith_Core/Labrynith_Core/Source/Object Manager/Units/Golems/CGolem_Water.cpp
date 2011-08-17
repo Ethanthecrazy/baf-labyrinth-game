@@ -100,8 +100,21 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 			{
 				if(((CWaterTile*)temp)->IsFrozen())
 				{
+					int* id = new int;
 					//turn me into an ice golem
-					MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, ICE_GOLEM));
+					MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, ICE_GOLEM, id));
+
+					CSteamPuff* toAdd = new CSteamPuff();
+
+					toAdd->SetPosX( GetPosX() - 32 );
+					toAdd->SetPosY( GetPosY() - 160 );
+					toAdd->SetIndexPosX( GetIndexPosX() );
+					toAdd->SetIndexPosY( GetIndexPosY() );
+
+					toAdd->MakeIce();
+
+					MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+
 				}
 				return false;
 			}
@@ -158,7 +171,10 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 						if(nCanHandleCollision)
 						{
 							//turn me into an Ice Golem
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, ICE_GOLEM));
+
+							int* ID = new int; 
+
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, ICE_GOLEM, ID));
 						}
 					}
 					break;
@@ -176,7 +192,7 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 							int* newID = new int;
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
 							//Get rid of the Lava golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+							//MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 
 							CSteamPuff* toAdd = new CSteamPuff();

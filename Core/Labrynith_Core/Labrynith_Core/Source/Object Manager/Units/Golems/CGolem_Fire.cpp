@@ -124,7 +124,7 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 							int* newID = new int;
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, LAVA_GOLEM, newID));
 							//Get rid of the Earth golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+							//MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 						}						
 					}
