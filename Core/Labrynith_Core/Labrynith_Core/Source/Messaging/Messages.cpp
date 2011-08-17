@@ -1,6 +1,7 @@
 #include "Messages.h"
 #include "../Object Manager/Units/CBaseObject.h"
 #include "../Object Manager/Units/CBaseEntity.h"
+#include "../Object Manager/Units/Objects/CSpawner.h"
 
 msgCreateEntity::msgCreateEntity( int _PosX, int _PosY ) : CBaseMessage( MSG_CREATE_ENTITY )
 {
@@ -56,15 +57,29 @@ msgMoveEntityFloor::msgMoveEntityFloor( CBaseEntity* pEntity, int nFloor ) : CBa
 	m_nFloor = nFloor;
 }
 
-msgChangeGolemType::msgChangeGolemType(CBaseGolem* pGolem, int nGolemType)
+msgChangeGolemType::msgChangeGolemType(CBaseGolem* pGolem, int nGolemType, int* nNewID)
 	: CBaseMessage( MSG_CHANGE_GOLEM_TYPE )
 {
 	m_pGolem = pGolem;
 	m_nGolemType = nGolemType;
+	m_nNewID = nNewID;
+}
+
+msgRemoveGolemCombined::msgRemoveGolemCombined(int nOldID, int* pGolemChanging)
+	: CBaseMessage( MSG_REMOVE_GOLEM_COMBINED )
+{
+	m_nOldID = nOldID;
+	m_pGolemChanging = pGolemChanging;
 }
 
 msgDeleteMe::msgDeleteMe(IUnitInterface* ptoDelete)
 	: CBaseMessage( MSG_DELETEME )
+{
+	m_ptoDelete = ptoDelete;
+}
+
+msgDeletIDHolder::msgDeletIDHolder(IDHolder* ptoDelete)
+	: CBaseMessage( DELETE_IDHOLDER )
 {
 	m_ptoDelete = ptoDelete;
 }

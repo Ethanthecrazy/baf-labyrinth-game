@@ -213,7 +213,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				//the player is already holding onto something
 				if( temp->GetType() == OBJ_ATTRACTOR && GetHeldItem() != NULL )
 				{
-					return true ;
+					return true;
 				}
 				else if( ( temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_LIGHTORB) && 
 					GetEquippedItem() != NULL && GetHeldItem() != NULL )
@@ -253,7 +253,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
 				return false;
 			}
-			else if( pBase->GetType() == OBJ_DOOR )
+			else if( pBase->GetType() == OBJ_DOOR && nCanHandleCollision)
 			{
 				//if we can hold the object we collided with...		
 				//allow the player to hold it unless 
@@ -263,7 +263,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				else
 					return true;
 			}
-			else if(pBase->GetType() == OBJ_EXIT)
+			else if(pBase->GetType() == OBJ_EXIT && nCanHandleCollision)
 			{
 				CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
 				//BUG- check if the level is valid

@@ -42,17 +42,43 @@ CSpawner::CSpawner(int nSpawnerType) : m_nSpawnerType(nSpawnerType)
 	m_nType = OBJ_SPAWNER;
 	m_nSpawnedID = 0;
 	MEventSystem::GetInstance()->RegisterClient("spawner.spawn", this);
+	MEventSystem::GetInstance()->RegisterClient("spawner.idchanged", this);
+	MEventSystem::GetInstance()->RegisterClient("spawner.createdplayer", this);
 	m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ));
 }
 
 CSpawner::~CSpawner(void)
-{
-
+{	
+	MEventSystem::GetInstance()->UnregisterClient("spawner.spawn", this);
+	MEventSystem::GetInstance()->UnregisterClient("spawner.idchanged", this);
 }
 
 void CSpawner::HandleEvent( Event* _toHandle )
 {
-	if(_toHandle->GetEventID() == "spawner.spawn")
+	if(_toHandle->GetEventID() == "spawner.createdplayer")
+	{
+		if(_toHandle->GetParam() && m_nSpawnerType == SPAWNER_PLAYER)
+			m_nSpawnedID = (int)_toHandle->GetParam();
+
+	}
+	else if(_toHandle->GetEventID() == "spawner.idchanged")
+	{
+		// if the spawned unit transferses a floor or combines with another golem change the id to the new id
+		// prob have to create struct to contain old id and new id
+		// to compare spawners id and old id (to make sure not all change) then change it to the new id
+		if(_toHandle->GetParam())
+		{
+			IDHolder* idHolder = (IDHolder*)_toHandle->GetParam();
+
+			if(idHolder->oldID != this->m_nSpawnedID)
+				return;
+
+			m_nSpawnedID = idHolder->newID;
+
+			MMessageSystem::GetInstance()->SendMsg(new msgDeletIDHolder(idHolder));
+		}
+	}
+	else if(_toHandle->GetEventID() == "spawner.spawn")
 	{
 		// if it cant find it in the object manager and its not held by the player
 		if(!MObjectManager::GetInstance()->GetUnit(m_nSpawnedID))
@@ -68,6 +94,12 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			if( ((CPlayer*)player)->GetHeldItem() )
 			{
 				if(((CPlayer*)player)->GetHeldItem()->m_nIdentificationNumber == m_nSpawnedID)
+					return;
+			}
+
+			if( ((CPlayer*)player)->GetEquippedItem() )
+			{
+				if(((CPlayer*)player)->GetEquippedItem()->m_nIdentificationNumber == m_nSpawnedID)
 					return;
 			}
 		}
@@ -343,7 +375,6 @@ void CSpawner::HandleEvent( Event* _toHandle )
 
 		case SPAWNER_PLAYER:
 			MMessageSystem::GetInstance()->SendMsg( new msgCreatePlayer( GetIndexPosX(), GetIndexPosY(), this->GetLayerLocation() ) );
-			m_nSpawnedID = CGamePlayState::GetInstance()->testVaribale;
 			break;
 		}
 	}

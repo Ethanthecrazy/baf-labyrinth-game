@@ -81,7 +81,7 @@ void CGolem_Water::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+	if(!pBase || pBase == this || this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//If the base collides with an object or entity leave
@@ -163,9 +163,10 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 
 							//turn me into an Iron Golem
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM));
+							int* newID = new int;
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM, newID));
 							//Get rid of the Lava golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(temp->m_nIdentificationNumber, newID));
 						}						
 					}
 					break;

@@ -28,12 +28,14 @@
 #include "../Object Manager/Units/Golems/CGolem_Iron.h"
 #include "../Object Manager/Units/Golems/CGolem_Light.h"
 #include "../Object Manager/Units/Golems/CGolem_Shadow.h"
+#include "../Object Manager/Units/Objects/CSpawner.h"
 
 #include <iostream>
 
 using namespace std;
 
 int CGamePlayState::testVaribale = -1;
+IDHolder* CGamePlayState::holder = NULL;
 
 CGamePlayState::CGamePlayState()
 {
@@ -447,6 +449,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			MObjectManager* OM = MObjectManager::GetInstance();
 			msgRemoveUnit* NewMessage = (msgRemoveUnit*)_message;
 			OM->RemoveUnit( NewMessage->GetTarget() );
+			MEventSystem::GetInstance()->SendEvent("spawner.spawn");
 		}
 		break;
 
@@ -569,22 +572,51 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		{			
 			MObjectManager* OM = MObjectManager::GetInstance();
 			msgMoveEntityFloor* msg = (msgMoveEntityFloor*)_message;
+
 			CBaseEntity* pEntity = msg->GetEntity();
+
+			
+			IDHolder* idholder = new IDHolder();
+			idholder->oldID = pEntity->m_nIdentificationNumber;
+
+
 			pEntity->SetLayerLocation(msg->GetFloor());
 			pEntity->AddRef();
+
 			OM->RemoveUnit(pEntity->m_nIdentificationNumber);
 			pEntity->m_nIdentificationNumber = 0;
 
 			if(pEntity->GetType() == ENT_PLAYER)
 			{
-				testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());
-				pEntity->Release();
+				MEventSystem::GetInstance()->SendEvent("spawner.createdplayer", (void*)testVaribale);
+				idholder->newID = testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());				
 			}
 			else
 			{
-				pEntity->m_nIdentificationNumber = OM->AddUnitIndexed(pEntity, msg->GetFloor());
-				pEntity->Release();
+				idholder->newID = pEntity->m_nIdentificationNumber = OM->AddUnitIndexed(pEntity, msg->GetFloor());
 			}
+
+			MEventSystem::GetInstance()->SendEvent("spawner.idchanged", (void*)idholder);
+
+			pEntity->Release();
+		}
+		break;
+
+		
+	case MSG_REMOVE_GOLEM_COMBINED:
+		{			
+			MObjectManager* OM = MObjectManager::GetInstance();
+			msgRemoveGolemCombined* msg = (msgRemoveGolemCombined*)_message;
+			
+			IDHolder* idholder = new IDHolder();
+			idholder->oldID = msg->GetOldID();
+			idholder->newID = *msg->GetGolemChanging();
+
+			MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(msg->GetOldID()));
+
+			MEventSystem::GetInstance()->SendEvent("spawner.idchanged", (void*)idholder);
+
+			delete msg->GetGolemChanging();
 		}
 		break;
 
@@ -594,6 +626,13 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgChangeGolemType* msg = (msgChangeGolemType*)_message;
 			CBaseGolem* pGolem = msg->GetGolem();
 			int nType = msg->GetGolemType();
+
+			if(pGolem->GetType() == msg->GetGolemType())
+				return;
+			
+			IDHolder* idholder = new IDHolder();
+			idholder->oldID = pGolem->m_nIdentificationNumber;
+
 			//Make a new golem based on type
 			CBaseGolem* pNewGolem;
 			switch(nType)
@@ -655,7 +694,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			//remove the current golem and add the new one
 			//in its place
 			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
-			OM->AddUnitIndexed(pNewGolem, pGolem->GetLayerLocation());
+			idholder->newID = OM->AddUnitIndexed(pNewGolem, pGolem->GetLayerLocation());
+			msg->SetNewID(idholder->newID);
+			MEventSystem::GetInstance()->SendEvent("spawner.idchanged", (void*)idholder);
 		}
 		break;
 
@@ -665,6 +706,20 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			IUnitInterface* unit = msg->GetPointer();
 			delete unit;
 			unit = NULL;
+			MEventSystem::GetInstance()->SendEvent("spawner.spawn");
+		}
+		break;
+
+	case DELETE_IDHOLDER:
+		{			
+			msgDeletIDHolder* msg = (msgDeletIDHolder*)_message;
+			IDHolder* idHolder = msg->GetPointer();
+			holder = idHolder;
+			if(idHolder && idHolder->oldID > 0 && idHolder->newID > 0)
+			{
+				delete idHolder;
+				idHolder = NULL;
+			}
 		}
 		break;
 	}

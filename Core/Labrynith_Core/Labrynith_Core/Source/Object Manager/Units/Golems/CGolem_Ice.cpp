@@ -56,7 +56,7 @@ void CGolem_Ice::Render( int CameraPosX, int CameraPosY )
 }
 bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+	if(!pBase || pBase == this || this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//If the base collides with an object or entity leave
@@ -105,10 +105,10 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
-						//turn me into a water golem
-						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, WATER_GOLEM));
-						//Get rid of the Fire Golem
-						MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
+							//turn me into a water golem
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, WATER_GOLEM));
+							//Get rid of the Fire Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
 						}
 					}
 					break;
@@ -131,10 +131,11 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
-						//turn the Lava golem into an Iron Golem
-						MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM));
-						//Get rid of this the Ice Golem
-						MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+							//turn the Lava golem into an Iron Golem
+							int* newID = new int;
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
+							//Get rid of this the Ice Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 						}
 					}
 					break;

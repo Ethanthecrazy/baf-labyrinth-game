@@ -2,8 +2,13 @@
 #define CSPAWNER_H_
 
 #include "../CBaseObject.h"
-//#include "../CBaseEntity.h"
 #include "../../../Messaging/IListener.h"
+
+struct IDHolder
+{
+	int oldID;
+	int newID;
+};
 
 enum SPAWNERTYPE{ 
 				  SPAWNER_EARTH, SPAWNER_FIRE, SPAWNER_WATER, SPAWNER_ICE, SPAWNER_AIR,

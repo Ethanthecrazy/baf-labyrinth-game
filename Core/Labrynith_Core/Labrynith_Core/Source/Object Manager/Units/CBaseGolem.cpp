@@ -109,6 +109,8 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				return false;
 			else if( pBase->GetType() == OBJ_OIL )
 				return pBase->CheckCollision(this, nCanHandleCollision);	
+			else if( pBase->GetType() == OBJ_LIGHTORB || pBase->GetType() == OBJ_POWERGLOVES || pBase->GetType() == OBJ_OILCAN )
+				return true;
 		}
 		break;
 	case OBJECT_ENTITY:

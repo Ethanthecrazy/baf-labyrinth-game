@@ -4,7 +4,7 @@
 enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
 	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_DRAIN_LIGHT, MSG_PLACE_OBJECT,
 				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MOVE_ENTITY_FLOOR,
-				 MSG_DELETEME, MSG_MAX };
+				 MSG_DELETEME, MSG_REMOVE_GOLEM_COMBINED, DELETE_IDHOLDER, MSG_MAX };
 
 class CBaseMessage
 {
@@ -136,10 +136,24 @@ class msgChangeGolemType : public CBaseMessage
 {
 	CBaseGolem* m_pGolem;
 	int m_nGolemType;
+	int* m_nNewID;
 public:
-	msgChangeGolemType(CBaseGolem* pGolem, int nGolemType);
+	msgChangeGolemType(CBaseGolem* pGolem, int nGolemType, int* nNewID = 0);
 	CBaseGolem* GetGolem() { return m_pGolem; };
 	int GetGolemType() { return m_nGolemType; };
+	int* GetNewID() { return m_nNewID; };
+	void SetNewID(int newNewID) { *m_nNewID = newNewID; };
+};
+
+class msgRemoveGolemCombined : public CBaseMessage
+{
+	int m_nOldID;
+	int* m_pGolemChanging;
+public:
+	msgRemoveGolemCombined(int nOldID, int* pGolemChanging);
+	
+	int GetOldID() { return m_nOldID; };
+	int* GetGolemChanging() { return m_pGolemChanging; };
 };
 
 class IUnitInterface;
@@ -149,6 +163,16 @@ class msgDeleteMe : public CBaseMessage
 public:
 	msgDeleteMe(IUnitInterface* ptoDelete);
 	IUnitInterface* GetPointer() { return m_ptoDelete; };
+};
+
+
+struct IDHolder;
+class msgDeletIDHolder : public CBaseMessage
+{
+	IDHolder* m_ptoDelete;
+public:
+	msgDeletIDHolder(IDHolder* ptoDelete);
+	IDHolder* GetPointer() { return m_ptoDelete; };
 };
 
 #endif
