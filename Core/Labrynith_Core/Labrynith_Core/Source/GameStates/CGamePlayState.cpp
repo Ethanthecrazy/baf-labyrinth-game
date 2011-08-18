@@ -45,6 +45,9 @@ CGamePlayState::CGamePlayState()
 	numLevelFloors = 1;
 	m_bRenderCulling = true;
 	SetPaused(false);
+
+	cameraX = 0;
+	cameraY = 0;
 }
 
 // destructor
@@ -158,8 +161,8 @@ void CGamePlayState::Render(void)
 
 	if( player )
 	{
-		int cameraX = (int)player->GetPosX() - 1024/2 + 32;
-		int cameraY = (int)player->GetPosY() - 768/2 + 32;
+		cameraX = (int)player->GetPosX() - 1024/2 + 32;
+		cameraY = (int)player->GetPosY() - 768/2 + 32;
 
 		if( cameraX + 1024 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
 			cameraX = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 1024;

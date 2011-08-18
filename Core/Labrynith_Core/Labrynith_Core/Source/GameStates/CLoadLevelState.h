@@ -19,6 +19,10 @@ class CLoadLevelState : public IGameState
 
 	float totalobjects, loadingat;
 	int percentComplete, lastPercent;
+
+	int m_nBar_IMG;
+	int m_nGlow_IMG;
+
 public:
 
 	static CLoadLevelState* GetInstance();

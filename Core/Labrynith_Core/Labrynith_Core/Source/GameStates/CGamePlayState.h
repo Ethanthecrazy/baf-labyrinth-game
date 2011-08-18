@@ -27,6 +27,9 @@ class CGamePlayState : public IGameState
 
 public:
 
+	int cameraX;
+	int cameraY;
+
 	static int testVaribale;
 	static CGamePlayState* GetInstance();
 

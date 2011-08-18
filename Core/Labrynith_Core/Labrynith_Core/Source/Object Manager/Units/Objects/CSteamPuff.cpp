@@ -35,7 +35,7 @@ void CSteamPuff::Update( float fDT )
 void CSteamPuff::Render( int CameraPosX, int CameraPosY )
 {
 	
-	CAnimationManager::GetInstance()->Draw( ID_ANI, (int)GetPosX(), (int)GetPosY(), scale, scale, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255) );
+	CAnimationManager::GetInstance()->Draw( ID_ANI, (int)GetPosX() - CameraPosX, (int)GetPosY() - CameraPosY, scale, scale, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 255, 255) );
 
 }
 

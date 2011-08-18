@@ -106,8 +106,8 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 
 					CSteamPuff* toAdd = new CSteamPuff();
 
-					toAdd->SetPosX( GetPosX() - 32 );
-					toAdd->SetPosY( GetPosY() - 160 );
+					toAdd->SetPosX( GetPosX() + 64 );
+					toAdd->SetPosY( GetPosY() );
 					toAdd->SetIndexPosX( GetIndexPosX() );
 					toAdd->SetIndexPosY( GetIndexPosY() );
 
@@ -175,6 +175,19 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 							int* ID = new int; 
 
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, ICE_GOLEM, ID));
+
+							CSteamPuff* toAdd = new CSteamPuff();
+
+							toAdd->SetPosX( GetPosX() + 64 );
+							toAdd->SetPosY( GetPosY() );
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+
+							toAdd->MakeIce();
+
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+
+
 						}
 					}
 					break;

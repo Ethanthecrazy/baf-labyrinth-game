@@ -99,7 +99,7 @@ void CAnimation::Draw(int nPosX, int nPosY,
 	drawRect.left = 0 + nPosX + GetCurFrame()->GetAnchorX();
 	drawRect.right = GetCurFrame()->GetDrawRect().right - GetCurFrame()->GetDrawRect().left + nPosX + GetCurFrame()->GetAnchorX();
 
-	CSGD_Direct3D::GetInstance()->DrawRect( drawRect, 255, 255, 255 );
+	//CSGD_Direct3D::GetInstance()->DrawRect( drawRect, 255, 255, 255 );
 }
 
 void CAnimation::Play()

@@ -194,35 +194,34 @@ void MFlake::LightingProcess( int x, int y )
 
 	if( doorCheck )
 	{
-		if( (((CBaseObject*)(doorCheck)))->m_nUnitType == OBJ_DOOR );
+		if( doorCheck->m_nUnitType == OBJECT_TILE )
 		{
-			if( !(((CDoor*)(doorCheck)))->GetIsOpen() )
+			if( (((CBaseObject*)(doorCheck)))->GetType() == OBJ_DOOR );
 			{
-				return;
+				if( !(((CDoor*)(doorCheck)))->GetIsOpen() )
+				{
+					return;
+				}
 			}
 		}
 	}
-	//else if(  MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( x, y ) )
+
+	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x + 1, y ) )
 	{
-		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x + 1, y ) )
-		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
-		}
-		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x - 1, y ) )
-		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
-		}
-		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y + 1 ) )
-		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
-		}
-		if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y - 1 ) )
-		{
-			MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
-		}
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
 	}
-
-
+	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x - 1, y ) )
+	{
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
+	}
+	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y + 1 ) )
+	{
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
+	}
+	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y - 1 ) )
+	{
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
+	}
 }
 
 void MFlake::Render( int CameraX, int CameraY )

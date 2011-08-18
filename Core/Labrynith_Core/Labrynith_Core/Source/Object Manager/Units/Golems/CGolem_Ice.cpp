@@ -82,8 +82,29 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 					CSteamPuff* toAdd = new CSteamPuff();
 
-					toAdd->SetPosX( GetPosX() - 32 );
-					toAdd->SetPosY( GetPosY() - 160 );
+					toAdd->SetPosX( GetPosX() );
+					toAdd->SetPosY( GetPosY() );
+
+					switch( GetFlag_DirectionToMove() )
+					{
+					case FLAG_MOVE_UP:
+						toAdd->SetPosY( toAdd->GetPosY() - 64 );
+						toAdd->SetPosX( toAdd->GetPosX() + 64 );
+						break;
+					case FLAG_MOVE_DOWN:
+						toAdd->SetPosY( toAdd->GetPosY() + 64 );
+						toAdd->SetPosX( toAdd->GetPosX() + 64 );
+						break;
+					case FLAG_MOVE_LEFT:
+						toAdd->SetPosX( toAdd->GetPosX() - 64 );
+						toAdd->SetPosX( toAdd->GetPosX() + 64 );
+						break;
+					case FLAG_MOVE_RIGHT:
+						toAdd->SetPosX( toAdd->GetPosX() + 64 );
+						toAdd->SetPosX( toAdd->GetPosX() + 64 );
+						break;
+					}
+
 					toAdd->SetIndexPosX( GetIndexPosX() );
 					toAdd->SetIndexPosY( GetIndexPosY() );
 

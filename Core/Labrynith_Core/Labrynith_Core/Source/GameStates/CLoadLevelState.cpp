@@ -54,6 +54,9 @@ void CLoadLevelState::Enter(void)
 	percentComplete = 0;
 	lastPercent = 0;
 
+	m_nBar_IMG = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/LoadingBar.png" );
+	m_nGlow_IMG = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/glow.png" );
+
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 
@@ -97,10 +100,10 @@ void CLoadLevelState::Update(float fDT)
 void CLoadLevelState::Render(void)
 {
 	RECT rect;
-	rect.left = 125;
-	rect.top = 450;
-	rect.right = (long)(rect.left + 6.25 * percentComplete);
-	rect.bottom = rect.top + 75;
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = 298;
+	rect.bottom = 30;
 
 	RECT rect2;
 	rect2.left = 125;
@@ -121,8 +124,22 @@ void CLoadLevelState::Render(void)
 	test += "%";
 
 	MetalText.Print((char*)test.c_str(), 100, 100, .5f);
-	CSGD_Direct3D::GetInstance()->DrawRect(rect2, 255, 255, 255);
-	CSGD_Direct3D::GetInstance()->DrawRect(rect, 255-percentComplete, percentComplete-100, 0 );
+
+	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214, 450, 2.0f, 2.0f, &rect );
+
+	
+
+	//CSGD_Direct3D::GetInstance()->DrawRect(rect2, 255, 255, 255);
+
+	rect.top += 30;
+	rect.bottom += 30;
+	rect.right = ( 290 * percentComplete / 100.0f );
+
+	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214, 450, 2.0f, 2.0f, &rect );
+
+	//CSGD_TextureManager::GetInstance()->Draw( m_nGlow_IMG, 214 - 48 + rect.right * 2, 450 - 49 + 32, 1.5f, 1.5f, 0, 32.0f, 32.0f, 0, D3DCOLOR_ARGB( 255, 0, 100, 255 ) );
+	//CSGD_TextureManager::GetInstance()->Draw( m_nGlow_IMG, 214 - 48 + rect.right * 2, 450 - 49 + 32, 1.5f, 1.5f, 0, 32.0f, 32.0f, D3DXToRadian( 45 ) );
+	//CSGD_Direct3D::GetInstance()->DrawRect(rect, 255-percentComplete, percentComplete-100, 0 );
 
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->Present();
