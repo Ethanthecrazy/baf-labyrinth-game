@@ -5,6 +5,7 @@
 #include "../../MObjectManager.h"
 #include "../../../GameStates/COptionsState.h"
 #include "../../../GameStates/CGamePlayState.h"
+#include "../CBaseEntity.h"
 
 CRamp::CRamp(string direction)
 {	
@@ -29,7 +30,7 @@ CRamp::CRamp(string direction)
 
 bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+	if(!pBase || pBase == this || !nCanHandleCollision || this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	CSGD_FModManager::GetInstance()->PlaySound2D(m_nMoveFloorSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
@@ -38,11 +39,13 @@ bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	{
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
 			this->GetLayerLocation() - 1) );
+		MMessageSystem::GetInstance()->ProcessMessages();
 	}
 	else
 	{
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
 			this->GetLayerLocation() + 1) );
+		MMessageSystem::GetInstance()->ProcessMessages();
 	}
 
 	return false;

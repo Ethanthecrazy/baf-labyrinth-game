@@ -587,8 +587,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 			if(pEntity->GetType() == ENT_PLAYER)
 			{
-				MEventSystem::GetInstance()->SendEvent("spawner.createdplayer", (void*)testVaribale);
-				idholder->newID = testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());				
+				MEventSystem::GetInstance()->SendEvent("spawner.createdplayer", (void*)testVaribale);	
+				idholder->newID = testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());			
 			}
 			else
 			{

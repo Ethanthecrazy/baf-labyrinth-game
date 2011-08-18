@@ -98,6 +98,9 @@ void CBaseEntity::Update(float fDT)
 
 			MObjectManager::GetInstance()->FindFlake( this->m_nIdentificationNumber ).FinishMovingEnt( this );
 			SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
+			
+			CAI_Handler* AI = CAI_Handler::GetInstance();
+			AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 		}
 	}
 	else

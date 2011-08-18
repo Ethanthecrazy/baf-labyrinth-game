@@ -205,6 +205,9 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	{
 	case OBJECT_OBJECT:
 		{
+			if(!nCanHandleCollision && !GetHeldItem())
+				return false;
+
 			CBaseObject* temp = (CBaseObject*)pBase;
 			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_LIGHTORB)
 			{
@@ -253,7 +256,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
 				return false;
 			}
-			else if( pBase->GetType() == OBJ_DOOR && nCanHandleCollision)
+			else if( pBase->GetType() == OBJ_DOOR )
 			{
 				//if we can hold the object we collided with...		
 				//allow the player to hold it unless 
