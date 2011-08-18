@@ -829,17 +829,11 @@ bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 	((CBaseEntity*)(pEntity))->SetFlag_DirectionToMove(nDirection);
 	//Check to see if we are colliding with anything
 	bool isColliding;
-	//if(((CBaseEntity*)pEntity)->GetType() == ENT_GOLEM)
-	//	isColliding = CheckCollisions(pEntity, nX, nY, true);
-	//else
-		isColliding = CheckCollisions(pEntity, nX, nY, false);
-
+	isColliding = CheckCollisions(pEntity, nX, nY, true);
 	if(!isColliding)
 	{
-		// POSSIBLE BUG
 		//Check the object we are standing on
 		//only if we are able to move
-		//CheckCollisions(pEntity, ((CBaseEntity*)pEntity)->GetIndexPosX(), ((CBaseEntity*)pEntity)->GetIndexPosY(), true);
 		DoExitCollision(pEntity, true);
 		//we can move if we're not colliding with something
 		cout << "AI:" << ((CBaseEntity*)(pEntity))->GetIndexPosX() 

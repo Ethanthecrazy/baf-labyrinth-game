@@ -2,6 +2,7 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
 #include "../../MObjectManager.h"
+#include "../Tiles/CWaterTile.h"
 #include "../CBaseObject.h"
 
 CGolem_Light::CGolem_Light(void)
@@ -52,6 +53,20 @@ bool CGolem_Light::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 	//Do Light Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
+	case OBJECT_TILE:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					return false;
+				}
+				return true;
+			}
+		}
+		break;
+
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;

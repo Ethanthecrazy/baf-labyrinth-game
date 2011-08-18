@@ -122,41 +122,59 @@ void CPlayer::Input()
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 		{
-
+			//Keyboard
 			if( pDI->KeyDown( DIK_W ) )
 			{
-				//MObjectManager::GetInstance()->MoveEntUp( m_nIdentificationNumber );
-				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_UP);
 				return;
 			}
 			else if( pDI->KeyDown( DIK_S ) )
 			{
-				//MObjectManager::GetInstance()->MoveEntDown( m_nIdentificationNumber );
-				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_DOWN);
 				return;
 			}
 			else if( pDI->KeyDown( DIK_A ) )
 			{
-				//MObjectManager::GetInstance()->MoveEntLeft( m_nIdentificationNumber );
-				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_LEFT);
 				return;
 			}
 			else if( pDI->KeyDown( DIK_D ) )
 			{
-				//MObjectManager::GetInstance()->MoveEntRight( m_nIdentificationNumber );
-				//AI->CheckCollisions(this, GetIndexPosX(), GetIndexPosY(), true);
 				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
 				return;
 			}
-			else if( pDI->KeyPressed( DIK_E ) )
+			else if( pDI->KeyPressed( DIK_E )||
+					pDI->JoystickButtonPressed(1) )
 			{
-				SwitchItems() ;
-				return ;
+				SwitchItems();
+				return;
 			}
-			if( pDI->MouseButtonPressed( 0 ) )
+
+			//Arcade controls
+			if( pDI->JoystickGetLStickDirDown(DIR_UP, 0) )
+			{
+				AI->CardinalMove(this, FLAG_MOVE_UP);
+				return;
+			}
+			else if( pDI->JoystickGetLStickDirDown(DIR_DOWN, 0) )
+			{
+				AI->CardinalMove(this, FLAG_MOVE_DOWN);
+				return;
+			}
+			else if( pDI->JoystickGetLStickDirDown(DIR_LEFT, 0) )
+			{
+				AI->CardinalMove(this, FLAG_MOVE_LEFT);
+				return;
+			}
+			else if( pDI->JoystickGetLStickDirDown(DIR_RIGHT, 0) )
+			{
+				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
+				return;
+			}
+
+
+			if( pDI->MouseButtonPressed( 0 ) ||
+				pDI->JoystickButtonPressed(0))
 			{
 				int cameraX = 0 , cameraY = 0 ;
 				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
@@ -182,7 +200,8 @@ void CPlayer::Input()
 				}
 
 			}
-			if( pDI->MouseButtonPressed( 1 ) )
+			if( pDI->MouseButtonPressed( 1 ) ||
+				pDI->JoystickButtonPressed(1))
 			{
 				if( GetEquippedItem() )
 				{

@@ -19,12 +19,11 @@
 CMainMenuState::CMainMenuState() 
 {
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
-	COptionsState* Opt = COptionsState::GetInstance();
 
 	m_nIndex = 0;
-	m_nImageID = -1;
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/darkCave.png");
 	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");	
-	Opt->AdjustSound(m_nSoundID, true);
+	
 }
 
 // destructor
@@ -42,9 +41,11 @@ CMainMenuState* CMainMenuState::GetInstance()
 void CMainMenuState::Enter(void)
 {
 	cout << "MainMenu\n";
+	COptionsState* Opt = COptionsState::GetInstance();
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
+	Opt->AdjustSound(m_nSoundID, true);
 }
 
 bool CMainMenuState::Input(void)
@@ -54,7 +55,8 @@ bool CMainMenuState::Input(void)
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 
 	//Enter
-	if(pDI->KeyPressed(DIK_RETURN))
+	if(pDI->KeyPressed(DIK_RETURN) ||
+		pDI->JoystickButtonPressed(0))
 	{
 		switch(m_nIndex)
 		{
@@ -99,6 +101,17 @@ bool CMainMenuState::Input(void)
 		FM->PlaySoundA(m_nSoundID);
 	}
 
+	//Arcade controls
+	if( pDI->JoystickGetLStickDirPressed(DIR_UP, 0) )
+	{
+		SetMenuIndex(--m_nIndex);
+		FM->PlaySoundA(m_nSoundID);
+	}
+	else if( pDI->JoystickGetLStickDirPressed(DIR_DOWN, 0) )
+	{
+		SetMenuIndex(++m_nIndex);
+		FM->PlaySoundA(m_nSoundID);
+	}
 	return true;
 }
 
@@ -109,6 +122,7 @@ void CMainMenuState::Update(float fDT)
 
 void CMainMenuState::Render(void)
 {
+	CSGD_TextureManager::GetInstance()->Draw(m_nImageID, 0 , 0);
 	MetalText.Print( "Main Menu", 100, 100, 0.6f );
 	MetalText.Print( "->", 0, 230 + (m_nIndex * 30), 0.5f );
 	MetalText.Print( "Play", 110, 230, 0.5f );

@@ -25,22 +25,22 @@ void CHUD::Render()
 	//Player Lives
 	for(int i = 0; i < pPlayer->GetLives(); i++)
 	{
-		TM->Draw(HeartImageID,(i * TILE_WIDTH), 0);
+		TM->Draw(HeartImageID,(i * TILE_WIDTH) + 30, 40);
 	}
 
 	//Player HeldItem
 	CBaseObject* pHeldItem = pPlayer->GetHeldItem();
-	TM->Draw(InvSlotImageID, 670, 536);
+	TM->Draw(InvSlotImageID, 670 - 30, 536 - 40);
 	if(pHeldItem)
 	{
-		TM->Draw(pHeldItem->m_nImageID, 686, 552);
+		TM->Draw(pHeldItem->m_nImageID, 686 - 30, 552 - 40);
 	}
 	//Player EquippedItem
 	CBaseObject* pEquipItem = pPlayer->GetEquippedItem();
-	TM->Draw(InvSlotImageID, 734, 536);
+	TM->Draw(InvSlotImageID, 734 - 30, 536 - 40);
 	if(pEquipItem)
 	{
-		TM->Draw(pEquipItem->m_nImageID, 750, 552);
+		TM->Draw(pEquipItem->m_nImageID, 750 - 30, 552 - 40);
 	}
 
 }

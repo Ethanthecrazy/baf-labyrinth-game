@@ -3,6 +3,7 @@
 #include "../../../Messaging/MEventSystem.h"
 #include "../../../Messaging/MMessageSystem.h"
 #include "../../MObjectManager.h"
+#include "../Tiles/CWaterTile.h"
 #include "../CBaseObject.h"
 
 
@@ -92,6 +93,20 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 	//Do Earth Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
+	case OBJECT_TILE:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					return false;
+				}
+				return true;
+			}
+		}
+		break;
+
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
@@ -101,10 +116,6 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 
 	case OBJECT_ENTITY:
 		{
-			//Entities cannot walk-thro other entities
-			//if(!nCanHandleCollision)
-				//return true;
-
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 
 			if(temp->GetType() == ENT_GOLEM)
@@ -114,7 +125,7 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 				{
 				case FIRE_GOLEM:
 					{
-						//if(nCanHandleCollision)
+						if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
@@ -125,7 +136,9 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, LAVA_GOLEM, newID));
 							//Get rid of the Fire golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
-						}						
+						}	
+						//It thinks it can walk thro the golem
+						return false;
 					}
 					break;
 				};

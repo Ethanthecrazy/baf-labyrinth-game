@@ -93,6 +93,20 @@ bool CGolem_Iron::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	//Do Iron Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
+	case OBJECT_TILE:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					return false;
+				}
+				return true;
+			}
+		}
+		break;
+
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;

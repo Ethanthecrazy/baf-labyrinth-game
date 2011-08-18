@@ -16,10 +16,8 @@ COptionsState::COptionsState(void)
 	m_nMusicVolume = 100;
 	m_nSFXVolume = 100;
 	m_bIsFullscreen = false;
-	m_nPANL = 50;
-	m_nPANR = 50;
 	m_nIndex = 0;
-	m_nImageID = -1;
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/labyrinth.png");
 	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");	
 	AdjustSound(m_nSoundID, true);
 }
@@ -47,7 +45,8 @@ bool COptionsState::Input(void)
 
 	//Directional
 	//Up
-	if(pDI->KeyPressed(DIK_UP))
+	if(pDI->KeyPressed(DIK_UP) ||
+		pDI->JoystickGetLStickDirPressed(DIR_UP, 0))
 	{
 		FM->PlaySoundA(m_nSoundID);
 		AdjustSound(m_nSoundID, true);
@@ -57,7 +56,8 @@ bool COptionsState::Input(void)
 			m_nIndex = NUMOPTIONS - 1;
 	}
 	//Down
-	if(pDI->KeyPressed(DIK_DOWN))
+	if(pDI->KeyPressed(DIK_DOWN) ||
+		pDI->JoystickGetLStickDirPressed(DIR_DOWN, 0))
 	{
 		FM->PlaySoundA(m_nSoundID);
 		AdjustSound(m_nSoundID, true);
@@ -70,7 +70,8 @@ bool COptionsState::Input(void)
 	static float fCollectedTime = 0.0f;
 	fCollectedTime += pGame->GetElapsedTime();
 	//	right
-	if(pDI->KeyPressed(DIK_RIGHT))
+	if(pDI->KeyPressed(DIK_RIGHT) ||
+		pDI->JoystickGetLStickDirPressed(DIR_RIGHT, 0))
 	{
 		switch( m_nIndex )
 		{
@@ -83,9 +84,10 @@ bool COptionsState::Input(void)
 			break;
 		};
 	}
-	if( pDI->KeyDown(DIK_RIGHT))
+	if( pDI->KeyDown(DIK_RIGHT) ||
+		pDI->JoystickGetLStickDirDown(DIR_RIGHT, 0))
 	{
-		if(fCollectedTime < 0.5f)
+		if(fCollectedTime < 0.2f)
 			return true;
 
 		switch( m_nIndex )
@@ -108,21 +110,12 @@ bool COptionsState::Input(void)
 				fCollectedTime = 0.0f;
 			}
 			break ;
-		case PANLR:
-			if(m_nPANL < 100)
-			{
-				m_nPANL += 5;
-				m_nPANR -= 5;
-				FM->PlaySoundA(m_nSoundID);
-				AdjustSound(m_nSoundID, true);
-				fCollectedTime = 0.0f;
-			}
-			break ;
 		} ;
 	}
 
 	//	left
-	if(pDI->KeyPressed(DIK_LEFT))
+	if(pDI->KeyPressed(DIK_LEFT) ||
+		pDI->JoystickGetLStickDirPressed(DIR_LEFT, 0))
 	{
 		switch( m_nIndex )
 		{
@@ -135,9 +128,10 @@ bool COptionsState::Input(void)
 			break;
 		};
 	}
-	if( pDI->KeyDown(DIK_LEFT))
+	if( pDI->KeyDown(DIK_LEFT) ||
+		pDI->JoystickGetLStickDirDown(DIR_LEFT, 0))
 	{
-		if(fCollectedTime < 0.5f)
+		if(fCollectedTime < 0.2f)
 			return true;
 
 		switch( m_nIndex )
@@ -160,21 +154,12 @@ bool COptionsState::Input(void)
 				fCollectedTime = 0.0f;
 			}
 			break ;
-		case PANLR:
-			if(m_nPANR < 100)
-			{
-				m_nPANR += 5;
-				m_nPANL -= 5;
-				FM->PlaySoundA(m_nSoundID);
-				AdjustSound(m_nSoundID, true);
-				fCollectedTime = 0.0f;
-			}
-			break ;
 		} ;
 	}
 
 	//Enter
-	if(pDI->KeyPressed(DIK_RETURN))
+	if(pDI->KeyPressed(DIK_RETURN) ||
+		pDI->JoystickButtonPressed(0))
 	{
 		if( m_nIndex == BACK ) 
 		{
@@ -193,6 +178,7 @@ void COptionsState::Render(void)
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 	CSGD_Direct3D* pDev = CSGD_Direct3D::GetInstance();
 
+	pTM->Draw(m_nImageID, 0 , 0);
 	MetalText.Print("Options Menu", 140, 50, 0.8f);
 
 	char buffer[200];
@@ -205,20 +191,14 @@ void COptionsState::Render(void)
 	MetalText.Print("Music Vol.", 150, 300, 0.6f);
 	sprintf_s(buffer, "<%i>", m_nMusicVolume);
 	MetalText.Print(buffer, 470, 300, 0.6f);
-	//Pan
-	MetalText.Print("Pan LR", 150, 335, 0.6f);
-	sprintf_s(buffer, "<%i>", m_nPANL);
-	MetalText.Print(buffer, 350, 340, 0.6f);
-	sprintf_s(buffer, "<%i>", m_nPANR);
-	MetalText.Print(buffer, 500, 340, 0.6f);
 	//FullScreen
-	MetalText.Print("Fullscreen: ", 150, 370, 0.5f);
+	MetalText.Print("Fullscreen: ", 150, 335, 0.6f);
 	if(GetFullScreen())
-		MetalText.Print("On", 460, 370, 0.5f);
+		MetalText.Print("On", 460, 335, 0.6f);
 	else
-		MetalText.Print("Off", 460, 370, 0.5f);
+		MetalText.Print("Off", 460, 335, 0.6f);
 	//Back
-	MetalText.Print("Back", 150, 400, 0.6f);
+	MetalText.Print("Back", 150, 370, 0.6f);
 	//Cursor
 	MetalText.Print("->", 80, 265  + (m_nIndex * 35), 0.6f);
 }
@@ -241,8 +221,6 @@ void COptionsState::Exit(void)
 		{
 			out.write((const char *)&m_nMusicVolume, sizeof m_nMusicVolume); 
 			out.write((const char *)&m_nSFXVolume, sizeof m_nSFXVolume); 
-			out.write((const char *)&m_nPANL, sizeof m_nPANL); 
-			out.write((const char *)&m_nPANR, sizeof m_nPANR); 
 			out.write((const char *)&m_bIsFullscreen, sizeof m_bIsFullscreen); 
 		}
 		out.close();
@@ -259,7 +237,6 @@ void COptionsState::LoadOptions()
 	//load options
 	ifstream in;
 	int nMusicVol, nSfxVol;
-	int nPanR, nPanL;
 	bool bIsFullScreen;
 	in.open("resource/Game Saves/soundoptions.dat", ios_base::in | ios_base::binary);
 	if(!in.is_open())
@@ -272,9 +249,7 @@ void COptionsState::LoadOptions()
 		in.read((char *)&nMusicVol, sizeof(int)); 
 		SetMusicVolume(nMusicVol);
 		in.read((char *)&nSfxVol, sizeof(int)); 
-		SetSFXVolume(nSfxVol);
-		in.read((char *)&nPanL, sizeof(int)); 
-		in.read((char *)&nPanR, sizeof(int)); 
+		SetSFXVolume(nSfxVol); 
 		in.read((char *)&bIsFullScreen, sizeof(bool));
 		SetFullScreen(bIsFullScreen);
 	}
@@ -301,14 +276,6 @@ int COptionsState::GetSFXVolume() const
 {
 	return m_nSFXVolume;
 }
-int COptionsState::GetPanLeft() const
-{
-	return m_nPANL;
-}
-int COptionsState::GetPanRight() const
-{
-	return m_nPANR;
-}
 bool COptionsState::GetFullScreen() const
 {
 	return m_bIsFullscreen;
@@ -327,14 +294,6 @@ void COptionsState::SetSFXVolume(const int nSFXVol)
 		return;
 
 	m_nSFXVolume = nSFXVol;
-}
-void COptionsState::SetPanLeft(const int nPanL)
-{
-	m_nPANL = nPanL;
-}
-void COptionsState::SetPanRight(const int nPanR)
-{
-	m_nPANR = nPanR;
 }
 void COptionsState::SetFullScreen(const bool bIsFullScreen)
 {

@@ -12,13 +12,12 @@ private:
 	CBitFont MetalText;
 	int m_nIndex;
 	int m_nMusicVolume, m_nSFXVolume;
-	int m_nPANL, m_nPANR;
 	bool m_bIsFullscreen;
 	//Asset ids:
 	int		m_nImageID;
 	int		m_nSoundID;
 	//Enums
-	enum MENUOPTIONS{SFXVOLUME , MUSICV , PANLR, FULLSCREEN , BACK , NUMOPTIONS};
+	enum MENUOPTIONS{SFXVOLUME , MUSICV , FULLSCREEN , BACK , NUMOPTIONS};
 
 
 	COptionsState(void);
@@ -39,14 +38,10 @@ public:
 	//accessors
 	int GetMusicVolume() const;
 	int GetSFXVolume() const;
-	int GetPanLeft() const;
-	int GetPanRight() const;
 	bool GetFullScreen() const;
 	//mutators
 	void SetMusicVolume(const int nMusicVol);
 	void SetSFXVolume(const int nSFXVol);
-	void SetPanLeft(const int nPanL);
-	void SetPanRight(const int nPanR);
 	void SetFullScreen(const bool bIsFullScreen);
 };
 

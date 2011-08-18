@@ -42,6 +42,7 @@ CGolem_Water::CGolem_Water(CBaseGolem* pGolem)
 	this->SetPosY(pGolem->GetPosY());
 	this->SetLastPosX(pGolem->GetLastPosX());
 	this->SetLastPosY(pGolem->GetLastPosY());
+	this->SetLayerLocation(pGolem->GetLayerLocation());
 	//copy its states
 	this->SetFlag_DirectionToMove(pGolem->GetFlag_DirectionToMove());
 	this->SetFlag_MovementState(pGolem->GetFlag_MovementState());
@@ -123,10 +124,6 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 
 	case OBJECT_ENTITY:
 		{
-			//Entities cannot walk-thro other entities
-			//if(!nCanHandleCollision)
-				//return true;
-
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if(temp->GetType() == ENT_GOLEM)
 			{
@@ -135,7 +132,7 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 				{
 				case FIRE_GOLEM:
 					{
-						//if(nCanHandleCollision)
+						if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
@@ -163,12 +160,14 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						}
+						//It thinks it can walk thro the golem
+						return false;
 					}
 					break;
 
 				case ICE_GOLEM:
 					{
-						//if(nCanHandleCollision)
+						if(nCanHandleCollision)
 						{
 							//turn me into an Ice Golem
 
@@ -189,12 +188,14 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 
 
 						}
+						//It thinks it can walk thro the golem
+						return false;
 					}
 					break;
 
 				case LAVA_GOLEM:
 					{
-						//if(nCanHandleCollision)
+						if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
@@ -217,7 +218,9 @@ bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						
-						}						
+						}		
+						//It thinks it can walk thro the golem
+						return false;
 					}
 					break;
 				};

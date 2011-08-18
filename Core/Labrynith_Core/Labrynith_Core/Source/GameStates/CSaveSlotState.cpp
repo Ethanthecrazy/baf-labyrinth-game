@@ -54,7 +54,8 @@ bool CSaveSlotState::Input(void)
 	CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	//Enter
-	if(pDI->KeyPressed(DIK_RETURN))
+	if(pDI->KeyPressed(DIK_RETURN) ||
+		pDI->JoystickButtonPressed(0))
 	{
 		switch(m_nIndex)
 		{
@@ -79,7 +80,8 @@ bool CSaveSlotState::Input(void)
 
 	//Directional
 	//Up
-	if(pDI->KeyPressed(DIK_UP))
+	if(pDI->KeyPressed(DIK_UP) ||
+	   pDI->JoystickGetLStickDirPressed(DIR_UP, 0))
 	{
 		FM->PlaySoundA(m_nSoundID);
 		if(m_nIndex != 0)
@@ -88,7 +90,8 @@ bool CSaveSlotState::Input(void)
 			m_nIndex = NUMSLOTOPTIONS - 1;
 	}
 	//Down
-	if(pDI->KeyPressed(DIK_DOWN))
+	if(pDI->KeyPressed(DIK_DOWN) ||
+		pDI->JoystickGetLStickDirPressed(DIR_DOWN, 0))
 	{
 		FM->PlaySoundA(m_nSoundID);
 		if(m_nIndex != (NUMSLOTOPTIONS - 1))
@@ -97,17 +100,20 @@ bool CSaveSlotState::Input(void)
 			m_nIndex = 0;
 	}
 	//Left
-	if(pDI->KeyPressed(DIK_LEFT))
+	if(pDI->KeyPressed(DIK_LEFT) ||
+		pDI->JoystickGetLStickDirPressed(DIR_LEFT, 0))
 	{
 		SetSaveSlot(--m_nCurrSaveSlot);
 		FM->PlaySoundA(m_nSoundID);
 	}
 	//Right
-	if(pDI->KeyPressed(DIK_RIGHT))
+	if(pDI->KeyPressed(DIK_RIGHT) ||
+		pDI->JoystickGetLStickDirPressed(DIR_RIGHT, 0))
 	{
 		SetSaveSlot(++m_nCurrSaveSlot);
 		FM->PlaySoundA(m_nSoundID);
 	}
+
 	return true;
 }
 

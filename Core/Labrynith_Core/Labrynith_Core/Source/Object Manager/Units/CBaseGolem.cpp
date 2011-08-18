@@ -63,15 +63,16 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 			if(pBase->GetType() == OBJ_ATTRACTOR )
 			{
 				if( ((CAttractor*)pBase)->GetElemType() != this->GetGolemType() )
-					return true ;
+						return true;
+
 				if(nCanHandleCollision)
-				{	
+				{
 					int cameraX = 0 , cameraY = 0 ;
 					CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
 					int tileXPos = (int)((pBase->GetPosX() + cameraX) / TILE_WIDTH) ;
 					int tileYPos = (int)((pBase->GetPosY() + cameraY) / TILE_HEIGHT) ;
 
-					int ObjectID = pBase->m_nIdentificationNumber ;
+					int ObjectID = pBase->m_nIdentificationNumber;
 					//int ObjectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
 					MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
 					MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;

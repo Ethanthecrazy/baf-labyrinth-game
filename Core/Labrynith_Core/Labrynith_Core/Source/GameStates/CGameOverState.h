@@ -16,6 +16,7 @@ class CGameOverState : public IGameState
 	//Data Members
 	CBitFont MetalText;
 	int m_nIndex;
+	int m_nSoundID;
 	
 	// default constructor
 	CGameOverState();

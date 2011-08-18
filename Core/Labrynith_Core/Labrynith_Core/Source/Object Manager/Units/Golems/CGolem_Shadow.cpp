@@ -3,6 +3,7 @@
 #include "../../../Messaging/MEventSystem.h"
 #include "../../../Messaging//MMessageSystem.h"
 #include "../CBaseObject.h"
+#include "../Tiles/CWaterTile.h"
 #include "../../MObjectManager.h"
 
 CGolem_Shadow::CGolem_Shadow(void)
@@ -51,6 +52,20 @@ bool CGolem_Shadow::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisi
 	//Do Shadow Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
+	case OBJECT_TILE:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					return false;
+				}
+				return true;
+			}
+		}
+		break;
+
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;

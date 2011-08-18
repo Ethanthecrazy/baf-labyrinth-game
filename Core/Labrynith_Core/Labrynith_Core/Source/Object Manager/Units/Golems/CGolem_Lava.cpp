@@ -2,9 +2,15 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Messaging/MEventSystem.h"
 #include "../../../Messaging/MMessageSystem.h"
+#include "../../../AI Handler/CAI_Handler.h"
 #include "../CBaseObject.h"
 #include "../../MObjectManager.h"
+#include "../Objects/COil.h"
+#include "../CPlayer.h"
+#include "../Tiles/CWaterTile.h"
+#include "../Objects/CAttractor.h"
 #include "../Objects/CSteamPuff.h"
+
 
 void CGolem_Lava::LavaGolemSetup()
 {
@@ -69,19 +75,42 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	//Do Lava Golem specific Collisions
 	switch(pBase->m_nUnitType)
 	{
+	case OBJECT_TILE:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					if(nCanHandleCollision)
+					{
+						//if its ice, melt it
+						((CWaterTile*)temp)->SetIsFrozen(false);
+					}
+					return false;
+				}
+				return true;
+			}
+		}
+		break;
+
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_OIL )
+			{
+				if(nCanHandleCollision)
+				{
+					((COil*)temp)->SetOnFire(true);
+				}
+				return true;
+			}
 			
 		}
 		break;
 
 	case OBJECT_ENTITY:
 		{
-			//Entities cannot walk-thro other entities
-			//if(!nCanHandleCollision)
-				//return true;
-
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if(temp->GetType() == ENT_GOLEM)
 			{
@@ -90,7 +119,7 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 				{
 				case WATER_GOLEM:
 					{
-						//if(nCanHandleCollision)
+						if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
@@ -98,9 +127,9 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
 							int* newID = new int;
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM, newID));
 							//Get rid of the Water golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(temp->m_nIdentificationNumber, newID));
 
 							CSteamPuff* toAdd = new CSteamPuff();
 
@@ -111,13 +140,15 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						
-						}						
+						}		
+						//It thinks it can walk thro the golem
+						return false;
 					}
 					break;
 
 				case ICE_GOLEM:
 					{
-						//if(nCanHandleCollision)
+						if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
@@ -125,9 +156,9 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
 							//turn me into an Iron Golem
 							int* newID = new int;
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, IRON_GOLEM, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, IRON_GOLEM, newID));
 							//Get rid of the Ice golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(temp->m_nIdentificationNumber, newID));
 
 							CSteamPuff* toAdd = new CSteamPuff();
 
@@ -138,7 +169,9 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						
-						}						
+						}	
+						//It thinks it can walk thro the golem
+						return false;
 					}
 					break;
 				};
@@ -162,6 +195,7 @@ bool CGolem_Lava::CheckTileCollision(int TileID)
 void CGolem_Lava::UpdateAI()
 {
 	CBaseGolem::UpdateAI();
+	CAI_Handler::GetInstance()->CheckCollisionRange(this, 1);
 }
 void CGolem_Lava::HandleEvent( Event* _toHandle )
 {
@@ -175,9 +209,29 @@ bool CGolem_Lava::CanInteract(IUnitInterface* pBase)
 
 	switch(pBase->m_nUnitType)
 	{
+	case OBJECT_TILE:
+		{
+			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_WATER )
+			{
+				if(((CWaterTile*)temp)->IsFrozen())
+				{
+					return true;
+				}
+				return false;
+			}
+			return false;
+		}
+		break;
+
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase;
+			if( temp->GetType() == OBJ_OIL )
+			{
+				((COil*)temp)->SetOnFire(true) ;
+				return true;
+			}
 			return false;
 		}
 		break;
@@ -185,14 +239,19 @@ bool CGolem_Lava::CanInteract(IUnitInterface* pBase)
 	case OBJECT_ENTITY:
 		{
 			CBaseEntity* temp = (CBaseEntity*)pBase;
-			if(temp->GetType() == ENT_GOLEM)
+			if( temp->GetType() == ENT_PLAYER )
+			{
+				((CPlayer*)temp)->SetLives( ((CPlayer*)temp)->GetLives() - 1 ) ;
+				return true;
+			}
+			else if(temp->GetType() == ENT_GOLEM)
 			{
 				CBaseGolem* temp = (CBaseGolem*)pBase;
 				switch(temp->GetGolemType())
 				{
 				case WATER_GOLEM:
 					{
-						return true;
+						return false;
 					}
 					break;
 				};

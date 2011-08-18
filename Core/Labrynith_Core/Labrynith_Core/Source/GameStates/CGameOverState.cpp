@@ -3,10 +3,12 @@
 #include "CGamePlayState.h"
 #include "CMainMenuState.h"
 #include "CLoadLevelState.h"
+#include "COptionsState.h"
 
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "../Wrappers/CSGD_DirectInput.h"
 #include "../Wrappers/CSGD_TextureManager.h"
+#include "../Wrappers/CSGD_FModManager.h"
 #include "../CGame.h"
 
 #include <iostream>
@@ -15,7 +17,10 @@
 // default constructor
 CGameOverState::CGameOverState() 
 {
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
+
 	m_nIndex = 0;
+	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");
 }
 
 // destructor
@@ -33,18 +38,22 @@ CGameOverState* CGameOverState::GetInstance()
 void CGameOverState::Enter(void)
 {
 	cout << "GameOver\n";
+	COptionsState* Opt = COptionsState::GetInstance();
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
+	Opt->AdjustSound(m_nSoundID, true);
 }
 
 bool CGameOverState::Input(void)
 {
 	CGame* pGame = CGame::GetInstance();
-	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();	
+	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
+	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	
 	//Enter
-	if(pDI->KeyPressed(DIK_RETURN))
+	if(pDI->KeyPressed(DIK_RETURN) ||
+		pDI->JoystickButtonPressed(0))
 	{
 		switch(m_nIndex)
 		{
@@ -61,16 +70,18 @@ bool CGameOverState::Input(void)
 
 	//Directional
 	//Up
-	if(pDI->KeyPressed(DIK_UP))
+	if(pDI->KeyPressed(DIK_UP) ||
+		pDI->JoystickGetLStickDirPressed(DIR_UP, 0))
 	{
 		SetMenuIndex(--m_nIndex);
-		//Play a sound
+		FM->PlaySoundA(m_nSoundID);
 	}
 	//Down
-	if(pDI->KeyPressed(DIK_DOWN))
+	if(pDI->KeyPressed(DIK_DOWN) ||
+		pDI->JoystickGetLStickDirPressed(DIR_DOWN, 0))
 	{
 		SetMenuIndex(++m_nIndex);
-		//Play a sound
+		FM->PlaySoundA(m_nSoundID);
 	}
 
 	return true;

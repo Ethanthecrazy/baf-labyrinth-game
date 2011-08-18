@@ -82,7 +82,8 @@ bool CGamePlayState::Input(void)
 
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();	
 
-	if( pDI->KeyPressed( DIK_ESCAPE ) )
+	if( pDI->KeyPressed( DIK_ESCAPE )||
+		pDI->JoystickButtonPressed(2) )
 		CGame::GetInstance()->PushState( CPauseState::GetInstance() );
 	
 	if( pDI->KeyPressed( DIK_T ) )
@@ -614,8 +615,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			idholder->oldID = msg->GetOldID();
 			idholder->newID = *msg->GetGolemChanging();
 
-			MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(msg->GetOldID()));
 
+			MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(msg->GetOldID()));
 			MEventSystem::GetInstance()->SendEvent("spawner.idchanged", (void*)idholder);
 
 			delete msg->GetGolemChanging();
@@ -636,7 +637,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			idholder->oldID = pGolem->m_nIdentificationNumber;
 
 			//Make a new golem based on type
-			CBaseGolem* pNewGolem;
+			CBaseGolem* pNewGolem = NULL;
 			switch(nType)
 			{
 			case EARTH_GOLEM:

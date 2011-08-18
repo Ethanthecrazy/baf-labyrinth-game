@@ -28,7 +28,7 @@
 
 #include <windows.h>	//	Needed for Windows Applications.
 
-//#include <vld.h>
+#include <vld.h>
 
 #include <iostream>
 
@@ -36,7 +36,7 @@
 
 #include "CGame.h"
 
-#pragma comment( linker, "/SUBSYSTEM:Console" )
+//#pragma comment( linker, "/SUBSYSTEM:Console" )
 
 const char* g_szWINDOW_CLASS_NAME	= "LabyrinthCore";			//	Window Class Name.
 
@@ -182,11 +182,11 @@ HWND MakeWindow(HINSTANCE hInstance)
 
 	if (g_bIS_WINDOWED)
 	{
-		dwWindowStyleFlags |= WS_OVERLAPPEDWINDOW;
+		dwWindowStyleFlags = WS_POPUP | WS_MINIMIZEBOX;
 	}
 	else
 	{
-		dwWindowStyleFlags |= WS_POPUP;
+		dwWindowStyleFlags |= WS_OVERLAPPEDWINDOW;
 		ShowCursor(FALSE);	// Stop showing the mouse cursor
 	}
 
@@ -245,7 +245,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	if (!hPrevInstance)
 	{
 		if (CheckIfAlreadyRunning())
+		{
+			hPrevInstance = hInstance;
 			return FALSE;
+		}
 	}
 	////////////////////////////////////////////////////////////////////////
 

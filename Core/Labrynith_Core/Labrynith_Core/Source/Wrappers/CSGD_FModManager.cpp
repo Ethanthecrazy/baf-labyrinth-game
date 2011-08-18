@@ -504,8 +504,8 @@ bool CSGD_FModManager::PlaySound2D(int nID, int playerID, int otherID)
 	IUnitInterface* player = MObjectManager::GetInstance()->GetUnit(playerID);
 	IUnitInterface* other = MObjectManager::GetInstance()->GetUnit(otherID);
 	
-	float distx = (other->GetIndexPosX() - player->GetIndexPosX());
-	float disty = (other->GetIndexPosY() - player->GetIndexPosY());
+	float distx = (float)(other->GetIndexPosX() - player->GetIndexPosX());
+	float disty = (float)(other->GetIndexPosY() - player->GetIndexPosY());
 
 	if(distx < 0)
 		distx *= -1;
@@ -527,7 +527,7 @@ bool CSGD_FModManager::PlaySound2D(int nID, int playerID, int otherID)
 	SetVolume(nID, volume);
 
 	// pan goes -1 -> 1
-	float distxreal = (other->GetIndexPosX() - player->GetIndexPosX());
+	float distxreal = (float)(other->GetIndexPosX() - player->GetIndexPosX());
 	float pan = distxreal / dist ;
 
 	if(distx == 0 || dist < 2)

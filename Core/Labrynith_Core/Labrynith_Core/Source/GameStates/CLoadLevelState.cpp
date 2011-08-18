@@ -143,7 +143,6 @@ void CLoadLevelState::Render(void)
 
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->Present();
-	;
 }
 
 void CLoadLevelState::Exit(void)
