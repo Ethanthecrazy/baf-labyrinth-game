@@ -55,9 +55,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
-	
-	if(this->GetLayerLocation() != pBase->GetLayerLocation())
-		return false;
 
 	switch(pBase->m_nUnitType)
 	{

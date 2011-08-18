@@ -209,7 +209,8 @@ void CBaseObject::UseObject( CBaseObject* user )
 
 bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+	
+	if(!pBase || pBase == this ||  MObjectManager::GetInstance()->GetUnit( CGamePlayState::GetInstance()->testVaribale )->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//if we collide with an object

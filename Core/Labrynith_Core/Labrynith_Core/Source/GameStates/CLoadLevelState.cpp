@@ -133,7 +133,7 @@ void CLoadLevelState::Render(void)
 
 	rect.top += 30;
 	rect.bottom += 30;
-	rect.right = ( 290 * percentComplete / 100.0f );
+	rect.right = (long)( 290 * percentComplete / 100.0f );
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214, 450, 2.0f, 2.0f, &rect );
 

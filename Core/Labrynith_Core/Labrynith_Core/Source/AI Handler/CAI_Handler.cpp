@@ -3,6 +3,7 @@
 #include "../Object Manager/MObjectManager.h"
 
 #include "../Object Manager/Units/CBaseGolem.h"
+#include "../Object Manager/Units/CPlayer.h"
 #include "../Object Manager/Units/CBaseObject.h"
 
 //singleton
@@ -190,7 +191,15 @@ bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX,
 		//Let the Entity handle its object collision
 		if(Collided)
 		{
-			return Collided;
+			if( ((CBaseEntity*)(pEntity))->GetType() == ENT_PLAYER )
+			{
+				if( ((CPlayer*)(pEntity))->GetHeldItem() )
+				{
+					return Collided;	
+				}
+			}
+			else
+				return Collided;
 		}
 	}
 

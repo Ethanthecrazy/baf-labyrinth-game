@@ -205,8 +205,8 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	{
 	case OBJECT_OBJECT:
 		{
-			if(!nCanHandleCollision && !GetHeldItem())
-				return false;
+			//if(!nCanHandleCollision)
+				//return false;
 
 			CBaseObject* temp = (CBaseObject*)pBase;
 			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_LIGHTORB)

@@ -6,6 +6,7 @@
 #include "../../../GameStates/COptionsState.h"
 #include "../../../GameStates/CGamePlayState.h"
 #include "../CBaseEntity.h"
+#include "../CPlayer.h"
 
 CRamp::CRamp(string direction)
 {	

@@ -196,7 +196,7 @@ void MFlake::LightingProcess( int x, int y )
 	{
 		if( doorCheck->m_nUnitType == OBJECT_TILE )
 		{
-			if( (((CBaseObject*)(doorCheck)))->GetType() == OBJ_DOOR );
+			if( (((CBaseObject*)(doorCheck)))->GetType() == OBJ_DOOR )
 			{
 				if( !(((CDoor*)(doorCheck)))->GetIsOpen() )
 				{

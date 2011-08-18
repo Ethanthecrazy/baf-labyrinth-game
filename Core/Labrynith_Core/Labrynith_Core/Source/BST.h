@@ -496,6 +496,7 @@ int
 template< typename Type >
 int 
 	BST<Type>::rConvertTrueValue( Node* input, const Type& _searchKey )
+
 {
 	if( input && input != (void*)0xfeeefeee  )
 	{
