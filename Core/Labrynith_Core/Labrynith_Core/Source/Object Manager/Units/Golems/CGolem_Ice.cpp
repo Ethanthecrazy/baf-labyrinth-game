@@ -123,8 +123,8 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	case OBJECT_ENTITY:
 		{
 			//Entities cannot walk-thro other entities
-			if(!nCanHandleCollision)
-				return true;
+			//if(!nCanHandleCollision)
+				//return true;
 
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if(temp->GetType() == ENT_GOLEM)
@@ -134,7 +134,7 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				{
 				case FIRE_GOLEM:
 					{
-						if(nCanHandleCollision)
+						//if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
@@ -161,7 +161,7 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 				case WATER_GOLEM:
 					{
-						if(nCanHandleCollision)
+						//if(nCanHandleCollision)
 						{
 
 							int* ID = new int;
@@ -185,7 +185,7 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 				case LAVA_GOLEM:
 					{
-						if(nCanHandleCollision)
+						//if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());

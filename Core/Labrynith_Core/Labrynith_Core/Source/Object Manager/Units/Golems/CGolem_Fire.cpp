@@ -103,8 +103,8 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	case OBJECT_ENTITY:
 		{
 			//Entities cannot walk-thro other entities
-			if(!nCanHandleCollision)
-				return true;
+			//if(!nCanHandleCollision)
+				//return true;
 
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if(temp->GetType() == ENT_GOLEM)
@@ -114,7 +114,7 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 				{
 				case EARTH_GOLEM:
 					{
-						if(nCanHandleCollision)
+						//if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(temp->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
@@ -126,13 +126,13 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 							//Get rid of the Earth golem
 							//MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
-						}						
+						}	
 					}
 					break;
 
 				case WATER_GOLEM:
 					{
-						if(nCanHandleCollision)
+						//if(nCanHandleCollision)
 						{
 							//Check exit collision before removing the objects
 							int tileid = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
@@ -166,7 +166,7 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 				case ICE_GOLEM:
 					{
-						if(nCanHandleCollision)
+						//if(nCanHandleCollision)
 						{
 							int tileid = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());

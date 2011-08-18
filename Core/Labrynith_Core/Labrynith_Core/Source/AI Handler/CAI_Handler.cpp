@@ -819,8 +819,11 @@ bool CAI_Handler::CardinalMove(const CBaseEntity* pEntity, const int nDirection)
 	//regardless of collision
 	((CBaseEntity*)(pEntity))->SetFlag_DirectionToMove(nDirection);
 	//Check to see if we are colliding with anything
-
-	bool isColliding = CheckCollisions(pEntity, nX, nY, false);
+	bool isColliding;
+	//if(((CBaseEntity*)pEntity)->GetType() == ENT_GOLEM)
+	//	isColliding = CheckCollisions(pEntity, nX, nY, true);
+	//else
+		isColliding = CheckCollisions(pEntity, nX, nY, false);
 
 	if(!isColliding)
 	{

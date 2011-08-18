@@ -110,6 +110,7 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				return true;
 		}
 		break;
+
 	case OBJECT_ENTITY:
 		{
 			return CheckEntCollision((CBaseEntity*)pBase);

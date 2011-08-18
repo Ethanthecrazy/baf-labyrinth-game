@@ -59,8 +59,8 @@ bool CGolem_Air::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 	case OBJECT_ENTITY:
 		{
 			//Entities cannot walk-thro other entities
-			if(!nCanHandleCollision)
-				return true;
+			//if(!nCanHandleCollision)
+				//return true;
 
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if(temp->GetType() == ENT_GOLEM)

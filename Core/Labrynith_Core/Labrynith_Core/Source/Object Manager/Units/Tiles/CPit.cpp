@@ -7,6 +7,7 @@
 #include "../CBaseEntity.h"
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../../GameStates/COptionsState.h"
+#include "../../../AI Handler/CAI_Handler.h"
 
 CPit::CPit()
 {
@@ -34,6 +35,8 @@ bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
 			this->GetLayerLocation() + 1) );
+		MMessageSystem::GetInstance()->ProcessMessages();
+		CAI_Handler::GetInstance()->CheckCollisions((CBaseEntity*)pBase, pBase->GetIndexPosX(), pBase->GetIndexPosY(), true);
 	}
 	else
 	{
