@@ -34,6 +34,8 @@
 
 #include <ctime>
 
+#include "../resource.h"
+
 #include "CGame.h"
 
 //#pragma comment( linker, "/SUBSYSTEM:Console" )
@@ -162,7 +164,7 @@ BOOL RegisterWindowClass(HINSTANCE hInstance)
 	winClassEx.cbClsExtra		= 0;
 	winClassEx.cbWndExtra		= 0;
 	winClassEx.hInstance		= hInstance;
-	winClassEx.hIcon			= LoadIcon(hInstance, IDI_WINLOGO);
+	winClassEx.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	winClassEx.hIconSm			= NULL;
 	winClassEx.hCursor			= LoadCursor(NULL, IDC_ARROW);
 	winClassEx.hbrBackground	= (HBRUSH)GetStockObject(BLACK_BRUSH);

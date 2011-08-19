@@ -3,6 +3,7 @@
 #include "CLoadLevelState.h"
 #include "CGameOverState.h"
 #include "CPauseState.h"
+#include "COptionsState.h"
 
 #include <string>
 
@@ -48,6 +49,7 @@ CGamePlayState::CGamePlayState()
 
 	cameraX = 0;
 	cameraY = 0;
+	PlayGameSongID = -1;
 }
 
 // destructor
@@ -68,6 +70,15 @@ void CGamePlayState::Enter(void)
 	
 
 	cout << "GamePlay\n";
+	
+	if(PlayGameSongID == -1)
+		PlayGameSongID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/Music/chapter1.mp3", FMOD_LOOP_NORMAL);
+
+	COptionsState::GetInstance()->AdjustSound(PlayGameSongID, false);
+
+	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(PlayGameSongID) )
+		CSGD_FModManager::GetInstance()->PlaySoundA( PlayGameSongID );
+
 
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
 	
@@ -213,8 +224,9 @@ void CGamePlayState::Exit(void)
 	MMessageSystem::GetInstance()->ShutdownMessageSystem();
 	MEventSystem::GetInstance()->ShutdownEventSystem();
 	cout << "GamePlay -> ";
-	testVaribale = -1;
-
+	testVaribale = -1;	
+	CSGD_FModManager::GetInstance()->StopSound(PlayGameSongID);
+	PlayGameSongID = -1;
 }
 
 void CGamePlayState::KillPlayer(void)

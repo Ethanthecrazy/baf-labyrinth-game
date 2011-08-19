@@ -24,6 +24,8 @@ class CGamePlayState : public IGameState
 	int numLevelFloors;
 	bool m_bRenderCulling;
 	bool m_bIsPaused;
+
+	int PlayGameSongID;
 public:
 
 	int cameraX;

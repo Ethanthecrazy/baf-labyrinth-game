@@ -464,6 +464,9 @@
     <ClInclude Include="Source\Object Manager\Units\Tiles\CLightEffected.h">
       <Filter>ObjectManager\Units\Tiles</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Inspector Results\r000mi4\r000mi4.insp">
@@ -475,5 +478,13 @@
     <None Include="My Inspector Results\r002mi4\r002mi4.insp">
       <Filter>My Inspector Results</Filter>
     </None>
+    <None Include="Icon.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Labrynith_Core.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

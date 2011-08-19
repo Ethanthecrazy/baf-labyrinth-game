@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDataManagerState.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Source\AI Handler\CAI_Handler.h" />
     <ClInclude Include="Source\Animation Manager\CAnimation.h" />
     <ClInclude Include="Source\Animation Manager\CAnimationManager.h" />
@@ -220,9 +221,13 @@
     <ClInclude Include="Source\Wrappers\SGD_Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Icon.ico" />
     <None Include="My Inspector Results\r000mi4\r000mi4.insp" />
     <None Include="My Inspector Results\r001mi4\r001mi4.insp" />
     <None Include="My Inspector Results\r002mi4\r002mi4.insp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Labrynith_Core.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
