@@ -184,6 +184,11 @@ void CPlayer::Input()
 					if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
 					{
 						MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
+						//Call objects exitcollision
+						int tileID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).
+							GetFlake( OBJECT_TILE ).GetInfoAtIndex(tileXPos , tileYPos);
+						IUnitInterface* obj = (MObjectManager::GetInstance()->GetUnit(tileID));
+						GetHeldItem()->ExitCollision(obj, true);
 					}
 				}
 
