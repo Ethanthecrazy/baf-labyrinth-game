@@ -158,6 +158,10 @@ void CBaseEntity::CheckAtDestinationCollision()
 		{
 			pBase->CheckCollision(this, true);	
 		}
+		else if( pBase->GetType() == OBJ_LIGHTEFFECTED)
+		{
+			pBase->CheckCollision(this, true);	
+		}
 		else if( pBase->GetType() == OBJ_DOOR)
 		{
 			((CDoor*)pBase)->CheckCollision(this);

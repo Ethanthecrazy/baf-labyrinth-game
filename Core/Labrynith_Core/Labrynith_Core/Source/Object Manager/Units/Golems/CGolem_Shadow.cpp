@@ -148,7 +148,7 @@ void CGolem_Shadow::DrainLight( int _range )
 			MFlake* FlakeScope = &MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_LIGHT ); 
 
 			FlakeScope->SetInfoAtIndex( x, y, 
-				FlakeScope->GetInfoAtIndex( x, y ) - newValue );
+				FlakeScope->GetInfoAtIndex( x, y ) - (int)newValue );
 				//newValue );
 
 			if( FlakeScope->GetInfoAtIndex( x, y ) < 0 )

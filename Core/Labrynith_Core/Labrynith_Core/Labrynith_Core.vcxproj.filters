@@ -249,6 +249,9 @@
     <ClCompile Include="Source\GameStates\CHelpState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CLightEffected.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
@@ -457,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameStates\CHelpState.h">
       <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CLightEffected.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

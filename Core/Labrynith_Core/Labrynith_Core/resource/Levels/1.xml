@@ -6,8 +6,8 @@
     <Depth>2</Depth>
   </MapSize>
   <TileSize>
-    <Width>32</Width>
-    <Height>32</Height>
+    <Width>64</Width>
+    <Height>64</Height>
   </TileSize>
   <TileSetSize>
     <Width>5</Width>
@@ -382,202 +382,20 @@
       <ArrayOfTile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-      </ArrayOfTile>
-      <ArrayOfTile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
@@ -746,6 +564,30 @@
       <ArrayOfTile>
         <Tile>
           <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
             <X>0</X>
             <Y>0</Y>
           </Type>
@@ -760,6 +602,164 @@
           <Type>
             <X>0</X>
             <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+      </ArrayOfTile>
+      <ArrayOfTile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
@@ -1536,26 +1536,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
@@ -1718,26 +1718,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
@@ -1900,26 +1900,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
@@ -2082,208 +2082,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-      </ArrayOfTile>
-      <ArrayOfTile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
-          </Type>
-        </Tile>
-        <Tile>
-          <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
@@ -2446,6 +2264,42 @@
         </Tile>
         <Tile>
           <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
             <X>0</X>
             <Y>0</Y>
           </Type>
@@ -2466,6 +2320,152 @@
           <Type>
             <X>0</X>
             <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+      </ArrayOfTile>
+      <ArrayOfTile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>0</X>
+            <Y>0</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
+          </Type>
+        </Tile>
+        <Tile>
+          <Type>
+            <X>4</X>
+            <Y>2</Y>
           </Type>
         </Tile>
         <Tile>
@@ -6615,9 +6615,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
+            <X>2</X>
             <Y>0</Y>
           </Type>
+          <Property>1</Property>
         </Tile>
         <Tile>
           <Type>
@@ -11152,8 +11153,44 @@
         <Z>0</Z>
       </Position>
     </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>7</X>
+        <Y>5</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>12</X>
+        <Y>8</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>6</X>
+        <Y>10</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
   </Objects>
-  <FileName>C:\Users\Jon M Taylor\Desktop\Labrynith_Core\Labrynith_Core\resource\Levels\1.xml</FileName>
+  <FileName>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrynith_Core\Labrynith_Core\resource\Levels\1.xml</FileName>
   <Tilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
   <ObjectTilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>

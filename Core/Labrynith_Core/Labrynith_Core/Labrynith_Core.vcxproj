@@ -130,6 +130,7 @@
     <ClCompile Include="Source\Object Manager\Units\Tiles\CElectricGenerator.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CExit.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CHelpTile.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CLightEffected.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CMetal.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CPit.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CRamp.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Source\Object Manager\Units\Tiles\CElectricGenerator.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CExit.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CHelpTile.h" />
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CLightEffected.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CMetal.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CPit.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CRamp.h" />

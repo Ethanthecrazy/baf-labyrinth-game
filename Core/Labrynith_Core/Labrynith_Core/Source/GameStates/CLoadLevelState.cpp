@@ -30,6 +30,7 @@ using std::string;
 #include "../Object Manager/Units/Tiles/CElectricButton.h"
 #include "../Object Manager/Units/Tiles/CElectricGenerator.h"
 #include "../Object Manager/Units/Tiles/CHelpTile.h"
+#include "../Object Manager/Units/Tiles/CLightEffected.h"
 
 #include "../TinyXML/tinyxml.h"
 #include "../AI Handler/CAI_Handler.h"
@@ -419,6 +420,17 @@ bool CLoadLevelState::LoadLevel(int _level)
 								((CHelpTile*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CHelpTile*)temp)->SetIndexPosX(x);
 								((CHelpTile*)temp)->SetIndexPosY(y);
+								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+							}
+							break;					
+						case 14: // lighting effected tile
+							{	
+								CLightEffected* temp = new CLightEffected();
+								temp->SetLayerLocation(z);
+								((CLightEffected*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CLightEffected*)temp)->SetPosY((float)(y * TILE_HEIGHT));
+								((CLightEffected*)temp)->SetIndexPosX(x);
+								((CLightEffected*)temp)->SetIndexPosY(y);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							}
 							break;
