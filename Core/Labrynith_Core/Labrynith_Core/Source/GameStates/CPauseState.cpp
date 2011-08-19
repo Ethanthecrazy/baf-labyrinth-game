@@ -101,11 +101,11 @@ void CPauseState::Render(void)
 	//Get access to singletons
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 
-	MetalText.Print("Paused", 220, 50);
-	MetalText.Print("Resume", 300, 265, 0.6f);
-	MetalText.Print("Restart Level", 300, 300, 0.6f);
-	MetalText.Print("Exit", 300, 335, 0.6f);
-	MetalText.Print("->", 200, 265 + (m_nIndex * 35), 0.6f);
+	MetalText.Print("Paused", 320, 150);
+	MetalText.Print("Resume", 400, 365, 0.6f);
+	MetalText.Print("Restart Level", 400, 400, 0.6f);
+	MetalText.Print("Exit", 400, 435, 0.6f);
+	MetalText.Print("->", 300, 365 + (m_nIndex * 35), 0.6f);
 }
 CPauseState* CPauseState::GetInstance(void)
 {

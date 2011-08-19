@@ -437,7 +437,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 			CPlayer* temp = new CPlayer();
 			temp->SetLayerLocation(NewMessage->GetZ());
-			((CPlayer*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Sprites/MainCharacter.png" ));
+			((CPlayer*)(temp))->SetImageID(CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Player.png" ));
 			((CPlayer*)(temp))->SetPlayAnimWhileStill(false);
 			((CPlayer*)(temp))->SetIndexPosX( NewMessage->GetX() );
 			((CPlayer*)(temp))->SetIndexPosY( NewMessage->GetY() );

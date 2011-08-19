@@ -36,6 +36,7 @@ public:
 	bool CheckTileCollision(int TileID);
 	void SwitchItems(void); // switches held and equipped items if it is possible
 	void ActivateEquipped(void);	//	activates the equipped item
+	void LoadEntMoveAnimIDs();
 
 	//accessors
 	int GetLives() const;

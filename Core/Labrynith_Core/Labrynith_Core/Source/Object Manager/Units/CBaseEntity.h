@@ -4,8 +4,10 @@
 #include "../IUnitInterface.h"
 #include <vector>
 
+class CPlayer;
 class CAI_Handler;
 enum AI_TYPE{AI_LOW = 0, AI_MED, AI_HIGH};
+
 class CBaseEntity : public IUnitInterface
 {
 	unsigned int m_uiRefCount;
@@ -18,6 +20,7 @@ class CBaseEntity : public IUnitInterface
 	int nAI_Type;
 	void SetTargetPosX(const int nTargetX);
 	void SetTargetPosY(const int nTargetY);
+	friend class CPlayer;
 protected:
 	int m_nType;
 	friend class CAI_Handler;

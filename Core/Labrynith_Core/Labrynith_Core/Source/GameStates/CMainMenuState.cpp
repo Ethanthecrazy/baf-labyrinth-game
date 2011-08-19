@@ -65,11 +65,6 @@ bool CMainMenuState::Input(void)
 			pGame->ChangeState( CSaveSlotState::GetInstance() ) ;
 			break;
 
-		case LOAD:
-			//Choose a different slot
-			pGame->ChangeState( CSaveSlotState::GetInstance() );
-			break;
-
 		case OPTIONS:
 			//Change to Options State
 			pGame->ChangeState( COptionsState::GetInstance() );
@@ -123,13 +118,12 @@ void CMainMenuState::Update(float fDT)
 void CMainMenuState::Render(void)
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nImageID, 0 , 0);
-	MetalText.Print( "Main Menu", 100, 100, 0.6f );
-	MetalText.Print( "->", 0, 230 + (m_nIndex * 30), 0.5f );
-	MetalText.Print( "Play", 110, 230, 0.5f );
-	MetalText.Print( "Load", 110, 260, 0.5f );
-	MetalText.Print( "Options", 110, 290, 0.5f );
-	MetalText.Print( "Credits", 110, 320, 0.5f );
-	MetalText.Print( "Exit", 110, 350, 0.5f );
+	MetalText.Print( "Main Menu", 450, 200, 0.6f );
+	MetalText.Print( "->", 430, 330 + (m_nIndex * 30), 0.5f );
+	MetalText.Print( "Play", 460, 330, 0.5f );
+	MetalText.Print( "Options", 460, 360, 0.5f );
+	MetalText.Print( "Credits", 460, 390, 0.5f );
+	MetalText.Print( "Exit", 460, 420, 0.5f );
 }
 
 void CMainMenuState::Exit(void)

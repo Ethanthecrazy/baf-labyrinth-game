@@ -94,10 +94,10 @@ void CGameOverState::Update(float fDT)
 
 void CGameOverState::Render(void)
 {
-	MetalText.Print( "GameOver", 100, 100, 0.6f );
-	MetalText.Print( "->", 0, 230 + (m_nIndex * 30), 0.5f );
-	MetalText.Print( "Retry", 110, 230, 0.5f );
-	MetalText.Print( "Quit", 110, 260, 0.5f );
+	MetalText.Print( "GameOver", 300, 200, 0.6f );
+	MetalText.Print( "->", 200, 330 + (m_nIndex * 30), 0.5f );
+	MetalText.Print( "Retry", 310, 330, 0.5f );
+	MetalText.Print( "Quit", 310, 360, 0.5f );
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 }
 

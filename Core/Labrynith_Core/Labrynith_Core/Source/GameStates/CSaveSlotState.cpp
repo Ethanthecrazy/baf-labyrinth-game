@@ -127,24 +127,24 @@ void CSaveSlotState::Render(void)
 	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
 
 	char buffer[64] = { };
-	MetalText.Print( "---", 0 + (m_nCurrSaveSlot * 250), 80,  0.8f );
+	MetalText.Print( "---", 100 + (m_nCurrSaveSlot * 300), 80,  0.8f );
 	//Slot1	
-	MetalText.Print( "Slot 1", 0, 100, 0.6f );
+	MetalText.Print( "Slot 1", 100, 100, 0.6f );
 	sprintf_s(buffer,"Level: %i", m_nLoadedLevels[0]);
-	MetalText.Print( buffer, 0, 140, 0.5f );
+	MetalText.Print( buffer, 100, 140, 0.5f );
 	//Slot2
-	MetalText.Print( "Slot 2", 250, 100, 0.6f );
+	MetalText.Print( "Slot 2", 400, 100, 0.6f );
 	sprintf_s(buffer,"Level: %i", m_nLoadedLevels[1]);
-	MetalText.Print( buffer, 250, 140, 0.5f );
+	MetalText.Print( buffer, 400, 140, 0.5f );
 	//Slot3
-	MetalText.Print( "Slot 3", 500, 100, 0.6f );
+	MetalText.Print( "Slot 3", 700, 100, 0.6f );
 	sprintf_s(buffer,"Level: %i", m_nLoadedLevels[2]);
-	MetalText.Print( buffer, 500, 140, 0.5f );
+	MetalText.Print( buffer, 700, 140, 0.5f );
 	//Options
-	MetalText.Print( "->", 100, 450 + (m_nIndex * 35), 0.8f );
-	MetalText.Print( "Select", 200, 450, 0.8f );
-	MetalText.Print( "Delete", 200, 485, 0.8f );
-	MetalText.Print( "Back", 200, 520, 0.8f );
+	MetalText.Print( "->", 250, 450 + (m_nIndex * 35), 0.8f );
+	MetalText.Print( "Select", 350, 450, 0.8f );
+	MetalText.Print( "Delete", 350, 485, 0.8f );
+	MetalText.Print( "Back", 350, 520, 0.8f );
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 }
 
@@ -221,6 +221,7 @@ void CSaveSlotState::Delete()
 		out.close();
 	}
 	Load(m_nCurrSaveSlot);
+	SetCurrLevel(nLevel);
 }
 
 //accessors

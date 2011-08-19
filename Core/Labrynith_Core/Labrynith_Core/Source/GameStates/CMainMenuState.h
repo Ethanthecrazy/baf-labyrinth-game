@@ -10,7 +10,7 @@
 //Controls will be displayed in-game + tutorial level
 //HighScore State
 //no highscores
-enum MenuItems{ PLAY, LOAD, OPTIONS, CREDITS, EXIT, NUM_MENUITEMS };
+enum MenuItems{ PLAY, OPTIONS, CREDITS, EXIT, NUM_MENUITEMS };
 
 class CMainMenuState : public IGameState
 {

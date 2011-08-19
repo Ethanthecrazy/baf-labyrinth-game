@@ -179,28 +179,28 @@ void COptionsState::Render(void)
 	CSGD_Direct3D* pDev = CSGD_Direct3D::GetInstance();
 
 	pTM->Draw(m_nImageID, 0 , 0);
-	MetalText.Print("Options Menu", 140, 50, 0.8f);
+	MetalText.Print("Options Menu", 240, 50, 0.8f);
 
 	char buffer[200];
 	float i = 30;
 	//Sfx Vol
-	MetalText.Print("Sfx Vol.", 150, 265, 0.6f);
+	MetalText.Print("Sfx Vol.", 250, 265, 0.6f);
 	sprintf_s(buffer, "<%i>", m_nSFXVolume);
-	MetalText.Print(buffer, 450, 265, 0.6f);
+	MetalText.Print(buffer, 550, 265, 0.6f);
 	//Music Vol
-	MetalText.Print("Music Vol.", 150, 300, 0.6f);
+	MetalText.Print("Music Vol.", 250, 300, 0.6f);
 	sprintf_s(buffer, "<%i>", m_nMusicVolume);
-	MetalText.Print(buffer, 470, 300, 0.6f);
+	MetalText.Print(buffer, 570, 300, 0.6f);
 	//FullScreen
-	MetalText.Print("Fullscreen: ", 150, 335, 0.6f);
+	MetalText.Print("Fullscreen: ", 250, 335, 0.6f);
 	if(GetFullScreen())
-		MetalText.Print("On", 460, 335, 0.6f);
+		MetalText.Print("On", 560, 335, 0.6f);
 	else
-		MetalText.Print("Off", 460, 335, 0.6f);
+		MetalText.Print("Off", 560, 335, 0.6f);
 	//Back
-	MetalText.Print("Back", 150, 370, 0.6f);
+	MetalText.Print("Back", 250, 370, 0.6f);
 	//Cursor
-	MetalText.Print("->", 80, 265  + (m_nIndex * 35), 0.6f);
+	MetalText.Print("->", 180, 265  + (m_nIndex * 35), 0.6f);
 }
 COptionsState* COptionsState::GetInstance(void)
 {

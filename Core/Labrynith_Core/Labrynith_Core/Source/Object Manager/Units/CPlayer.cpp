@@ -14,12 +14,14 @@
 #include <iostream>
 #include "../../Wrappers/CSGD_Direct3D.h"
 #include "../../Wrappers/CSGD_FModManager.h"
+#include "../../Animation Manager/CAnimationManager.h"
 #include "Tiles\CMetal.h"
 #include "Tiles\CElectricButton.h"
 
 CPlayer::CPlayer(void)
 {
 	CBaseEntity::CBaseEntity();
+	LoadEntMoveAnimIDs();
 	m_fInvincilibilityTimer = 0.0f;
 	m_nType = ENT_PLAYER;
 	SetHeldItem(NULL);
@@ -363,6 +365,16 @@ void CPlayer::UpdateInvincibilityTime(float fDT)
 	{
 		SetInvincilibity(false);
 	}
+}
+void CPlayer::LoadEntMoveAnimIDs()
+{
+	m_vMovementAnimIDs.clear();
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-movedown"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-moveleft"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-moveright"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-moveup"));
+	//down animation by default
+	SetAnimID(m_vMovementAnimIDs[0]);
 }
 //accessors
 int CPlayer::GetLives() const
