@@ -11,6 +11,7 @@
 #include "../../GameStates/CSaveSlotState.h"
 #include "../../CGame.h"
 #include "../../GameStates/CLoadLevelState.h"
+#include "Tiles\CDoor.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -156,6 +157,10 @@ void CBaseEntity::CheckAtDestinationCollision()
 		else if( pBase->GetType() == OBJ_HELPER)
 		{
 			pBase->CheckCollision(this, true);	
+		}
+		else if( pBase->GetType() == OBJ_DOOR)
+		{
+			((CDoor*)pBase)->CheckCollision(this);
 		}
 	}
 }

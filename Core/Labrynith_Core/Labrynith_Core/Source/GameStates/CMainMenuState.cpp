@@ -23,7 +23,7 @@ CMainMenuState::CMainMenuState()
 	m_nIndex = 0;
 	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/darkCave.png");
 	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");	
-	
+	SongID = -1;
 }
 
 // destructor
@@ -45,6 +45,15 @@ void CMainMenuState::Enter(void)
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
+	
+	if(SongID == -1)
+		SongID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/Music/menu.mp3", FMOD_LOOP_NORMAL);
+
+	Opt->AdjustSound(SongID, false);
+
+	if( !CSGD_FModManager::GetInstance()->IsSoundPlaying(SongID) )
+		CSGD_FModManager::GetInstance()->PlaySoundA( SongID );
+
 	Opt->AdjustSound(m_nSoundID, true);
 }
 
@@ -72,6 +81,8 @@ bool CMainMenuState::Input(void)
 			
 		case CREDITS:
 			//Change to credits
+			CSGD_FModManager::GetInstance()->StopSound(SongID);
+			SongID = -1;
 			pGame->ChangeState( CCreditsState::GetInstance() );
 			break;
 

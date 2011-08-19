@@ -12,7 +12,7 @@ COptionsState::COptionsState(void)
 {
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	CGame* pGame = CGame::GetInstance();
-
+	
 	m_nMusicVolume = 100;
 	m_nSFXVolume = 100;
 	m_bIsFullscreen = false;
@@ -105,8 +105,7 @@ bool COptionsState::Input(void)
 			if( m_nMusicVolume < 100 )
 			{
 				m_nMusicVolume += 5;
-				FM->PlaySoundA(m_nSoundID);
-				AdjustSound(m_nSoundID, true);
+				AdjustSound(CMainMenuState::GetInstance()->GetSongID(), false);
 				fCollectedTime = 0.0f;
 			}
 			break ;
@@ -149,8 +148,7 @@ bool COptionsState::Input(void)
 			if( m_nMusicVolume > 0 )
 			{
 				m_nMusicVolume -= 5;
-				FM->PlaySoundA(m_nSoundID);
-				AdjustSound(m_nSoundID, true);
+				AdjustSound(CMainMenuState::GetInstance()->GetSongID(), false);
 				fCollectedTime = 0.0f;
 			}
 			break ;

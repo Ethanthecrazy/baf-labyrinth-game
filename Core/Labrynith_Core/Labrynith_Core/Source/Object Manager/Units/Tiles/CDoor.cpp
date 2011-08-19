@@ -4,6 +4,8 @@
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../../GameStates/COptionsState.h"
 #include "../../../GameStates/CGamePlayState.h"
+#include "../../../AI Handler/CAI_Handler.h"
+#include "../CBaseEntity.h"
 
 CDoor::CDoor(string nLink)
 {
@@ -58,12 +60,14 @@ bool CDoor::CheckCollision(IUnitInterface* pBase)
 
 	if(m_bIsOpen)
 	{
-		printf("Door is open!\n");
 		return false;
 	}
 	else
 	{
-		printf("Door is closed, cant go through\n");
+		if(pBase->GetIndexPosX() == this->GetIndexPosX() && pBase->GetIndexPosY() == this->GetIndexPosY())
+		{
+			CAI_Handler::GetInstance()->CardinalMove((CBaseEntity*)pBase, ((CBaseEntity*)pBase)->GetFlag_DirectionToMove());
+		}
 		return true;
 	}
 }

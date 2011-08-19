@@ -4,6 +4,8 @@
 #include "../Wrappers/CSGD_DirectInput.h"
 #include "../Wrappers/CSGD_TextureManager.h"
 #include "../CGame.h"
+#include "../Wrappers/CSGD_FModManager.h"
+#include "COptionsState.h"
 
 #include <iostream>
 #include <fstream>
@@ -12,6 +14,7 @@
 CCreditsState::CCreditsState() 
 {
 	scrollSpeed = 120;
+	soundid = -1;
 }
 
 // destructor
@@ -29,12 +32,16 @@ CCreditsState* CCreditsState::GetInstance()
 void CCreditsState::Enter(void)
 {
 	Credits.clear();
-
+	soundid = -1;
 	cout << "Credits\n";
 	m_fYposition = 0;
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
+
+	soundid = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/Music/credits.mp3", FMOD_LOOP_NORMAL);
+	COptionsState::GetInstance()->AdjustSound(soundid, false);
+	CSGD_FModManager::GetInstance()->PlaySoundA( soundid );
 
 	ifstream fin;
 	fin.open("resource/credits.txt");
@@ -124,6 +131,7 @@ void CCreditsState::Render(void)
 void CCreditsState::Exit(void)
 {
 	cout << "Credits -> ";
+	CSGD_FModManager::GetInstance()->StopSound(soundid);
 }
 
 void CCreditsState::EnterCommand(void)

@@ -32,7 +32,7 @@ class CCreditsState : public IGameState
 	CBitFont MetalText;
 	int m_fYposition;
 	int scrollSpeed;
-
+	int soundid;
 	std::vector<CreditLine> Credits;
 
 public:

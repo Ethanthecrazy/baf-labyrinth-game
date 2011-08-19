@@ -20,6 +20,7 @@ class CMainMenuState : public IGameState
 	//Asset ids:
 	int		m_nImageID;
 	int		m_nSoundID;
+	int		SongID;
 	
 	// default constructor
 	CMainMenuState();
@@ -40,6 +41,8 @@ public:
 	void Update(float fDT);
 	void Render(void);
 	void Exit(void);
+
+	int GetSongID() { return SongID; }
 
 	void EnterCommand(void);
 };
