@@ -91,3 +91,8 @@ msgDrawGeneratorTop::msgDrawGeneratorTop( int tileXPos , int tileYPos, int Image
 	m_nIMG_Top = ImageID;
 	brightness = newBright;
 }
+
+msgEndGame::msgEndGame() : CBaseMessage( MSG_END_GAME )
+{
+
+}

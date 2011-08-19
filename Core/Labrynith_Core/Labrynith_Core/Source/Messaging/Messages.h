@@ -4,7 +4,7 @@
 enum eMsgTypes { MSG_NULL = 0, MSG_CREATE_ENTITY, MSG_CREATE_PLAYER,
 	             MSG_REMOVE_UNIT, MSG_TRANSFER_LIGHT, MSG_DRAIN_LIGHT, MSG_PLACE_OBJECT,
 				 MSG_PICKUP_OBJECT, MSG_CHANGE_GOLEM_TYPE, MSG_MOVE_ENTITY_FLOOR,
-				 MSG_DELETEME, MSG_REMOVE_GOLEM_COMBINED, DELETE_IDHOLDER, MSG_DRAW_GENERATORTOP, MSG_MAX };
+				 MSG_DELETEME, MSG_REMOVE_GOLEM_COMBINED, DELETE_IDHOLDER, MSG_DRAW_GENERATORTOP, MSG_END_GAME, MSG_MAX };
 
 class CBaseMessage
 {
@@ -190,6 +190,15 @@ public:
 	int GetTileYPos(void) { return m_nTileYPos ; }
 	int GetTop(void) { return m_nIMG_Top; }
 	int GetBright(void) { return brightness; } 
+};
+
+
+class msgEndGame : public CBaseMessage
+{
+
+public:
+
+	msgEndGame();
 };
 
 #endif

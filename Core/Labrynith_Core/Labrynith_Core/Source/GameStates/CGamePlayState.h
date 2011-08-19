@@ -4,6 +4,7 @@
 #include "IGameState.h"
 #include "../Object Manager/MObjectManager.h"
 #include "../Messaging/MMessageSystem.h"
+#include "../CBitFont.h"
 
 class CGamePlayState : public IGameState
 {
@@ -19,14 +20,24 @@ class CGamePlayState : public IGameState
 	~CGamePlayState();
 
 	float timestep;
-	int m_nCurrLevel;
+	
 	int currFloor;
 	int numLevelFloors;
 	bool m_bRenderCulling;
 	bool m_bIsPaused;
 
 	int PlayGameSongID;
+
+	CBitFont MetalText;
+	int m_nIndex;
+
 public:
+
+	int m_nCurrLevel;
+
+	int m_nIMG_Black;
+	float m_fCountdown;
+	bool m_bIsOver;
 
 	int cameraX;
 	int cameraY;

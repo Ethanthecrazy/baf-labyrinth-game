@@ -4,6 +4,7 @@
 #include "CGameOverState.h"
 #include "CPauseState.h"
 #include "COptionsState.h"
+#include "CCreditsState.h"
 
 #include <string>
 
@@ -83,7 +84,13 @@ void CGamePlayState::Enter(void)
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
 	
 	CGame::GetInstance()->PushState( CLoadLevelState::GetInstance() );
-	
+
+	m_nIMG_Black = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/black.png" ); 
+	m_bIsOver = false;
+	m_fCountdown = 0.0f;
+
+	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
+		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 }
 
 bool CGamePlayState::Input(void)
@@ -116,11 +123,16 @@ bool CGamePlayState::Input(void)
 
 void CGamePlayState::Update(float fDT)
 {
+
+	if( m_bIsOver )
+		m_fCountdown += fDT;
+	else
+		MObjectManager::GetInstance()->Update( fDT );
+
 	if(IsPaused())
 		return;
 
 	timestep = fDT;
-	MObjectManager::GetInstance()->Update( fDT );
 	MEventSystem::GetInstance()->ProcessEvents();
 	MMessageSystem::GetInstance()->ProcessMessages();
 
@@ -135,6 +147,9 @@ void CGamePlayState::Update(float fDT)
 		CSGD_DirectInput::GetInstance()->MouseSetPosY( 0 ) ;
 	else if( CSGD_DirectInput::GetInstance()->MouseGetPosY() > CGame::GetInstance()->GetScreenHeight() - 20 )
 		CSGD_DirectInput::GetInstance()->MouseSetPosY( CGame::GetInstance()->GetScreenHeight() - 20 ) ;
+
+	if( m_fCountdown >= 15.0f )
+		CGame::GetInstance()->ChangeState( CCreditsState::GetInstance() );
 
 }
 
@@ -217,6 +232,18 @@ void CGamePlayState::Render(void)
 	//sprintf( temp, "%f", 1.0f / timestep ); 
 
 	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, 100, 164 );
+
+	if( m_bIsOver )
+	{
+		int fade = int( 255 * ( m_fCountdown / 10.0f ) ); 
+
+		if( fade > 255 )
+			fade = 255;
+
+		CSGD_TextureManager::GetInstance()->Draw( m_nIMG_Black, 0, 0, 1.0f, 1.0f, 0, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB( fade, 255, 255, 255 ) ); 
+
+		MetalText.Print( "But Now You Must Escape . . .", 1024 / 2 - 256, 768 / 2, 0.5f );
+	}
 }
 
 void CGamePlayState::Exit(void)
@@ -744,18 +771,21 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		break;
 
 	case MSG_DRAW_GENERATORTOP:
+		{
 
-		msgDrawGeneratorTop* msg = (msgDrawGeneratorTop*)_message;
+			msgDrawGeneratorTop* msg = (msgDrawGeneratorTop*)_message;
 
-		CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+			CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 
-		CSGD_TextureManager::GetInstance()->Draw( msg->GetTop(), msg->GetTileXPos(), msg->GetTileYPos(), 1.0f, 1.0f, 0, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB( 255, msg->GetBright(), msg->GetBright(), msg->GetBright() )  );
+			CSGD_TextureManager::GetInstance()->Draw( msg->GetTop(), msg->GetTileXPos(), msg->GetTileYPos(), 1.0f, 1.0f, 0, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB( 255, msg->GetBright(), msg->GetBright(), msg->GetBright() )  );
 
+			break;
+		}
+
+	case MSG_END_GAME:
+		CGamePlayState::GetInstance()->m_bIsOver = true;
 		break;
 	}
-
-	
-
 }
 //accessors
 bool CGamePlayState::IsPaused() const

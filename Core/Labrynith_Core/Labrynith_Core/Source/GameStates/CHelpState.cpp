@@ -4,6 +4,8 @@
 #include "..\Wrappers\CSGD_TextureManager.h"
 #include "..\Wrappers\CSGD_DirectInput.h"
 #include "..\Wrappers\CSGD_FModManager.h"
+#include "CGamePlayState.h"
+#include "../Messaging/MMessageSystem.h"
 
 string CHelpState::helptext = "";
 
@@ -60,7 +62,7 @@ void CHelpState::Render(void)
 CHelpState* CHelpState::GetInstance(string text)
 {
 	helptext = "";
-	for(int i = 0; i < text.size(); ++i)
+	for(unsigned int i = 0; i < text.size(); ++i)
 	{
 		if(text[i] == '\\')
 		{
@@ -82,6 +84,10 @@ CHelpState* CHelpState::GetInstance(string text)
 }
 void CHelpState::Exit(void)
 {
+
+	if( CGamePlayState::GetInstance()->m_nCurrLevel == 4 )
+		MMessageSystem::GetInstance()->SendMsg( new msgEndGame() );
+
 }
 void CHelpState::EnterCommand(void)
 {
