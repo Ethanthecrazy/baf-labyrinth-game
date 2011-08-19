@@ -142,5 +142,7 @@ void CElectricButton::SetPowered( bool powered )
 		//m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTileElectric.png" , 0xffffffff ) ;
 		//CSGD_FModManager::GetInstance()->StopSound( m_nSoundID ) ;
 	}
-	m_bPowered = powered ; 
+
+	m_bPowered = powered; 
+
 }
