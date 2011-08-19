@@ -266,7 +266,7 @@ namespace Labrinthium___World_Editor
             set { objecttilesetpath = value; }
         }
 
-        Size objectTilSet = new Size(5, 4);
+        Size objectTilSet = new Size(5, 3);
         public Size ObjectTilSet
         {
             get { return objectTilSet; }
@@ -282,9 +282,9 @@ namespace Labrinthium___World_Editor
         {
             mapsize = new Size3D(_width, _height, _depth);
 
-            tileSize = new Size(32, 32);
+            tileSize = new Size(64, 64);
 
-            tileSetSize = new Size(5, 4);
+            tileSetSize = new Size(5, 3);
 
             for (int i = 0; i < _depth; ++i)
                 AddLayer();
