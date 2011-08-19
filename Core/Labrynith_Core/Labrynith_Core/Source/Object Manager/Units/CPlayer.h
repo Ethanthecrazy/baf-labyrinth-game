@@ -16,11 +16,14 @@ class CPlayer : public CBaseEntity
 	int m_nPickUpSoundID;
 	int m_nPutDownSoundID;
 	int m_nLvCompSoundID;
+	int m_nAnimState;
 	//Item the player is holding
 	//this must not be in the object manager when this happens
 	CBaseObject *m_pHeldItem;
 	CBaseObject *m_pEquippedItem;
 	int HurtSoundID;
+	enum ANIMSTATE{ANIM_MOVING, ANIM_THROW, NUMANIMSTATE};
+
 	void UpdateInvincibilityTime(float fDT);
 public:
 	CPlayer(void);
@@ -40,6 +43,8 @@ public:
 	void LoadEntMoveAnimIDs();
 	void DrawMouseRange(int nRange, CBaseObject* item, unsigned char red,
 	                         unsigned char green, unsigned char blue);
+	void RenderAnimState( int CameraPosX, int CameraPosY );
+	void UpdateAnimState(float fDT);
 
 	//accessors
 	int GetLives() const;
@@ -49,6 +54,8 @@ public:
 	int GetLvlCompSoundID() { return m_nLvCompSoundID ; } ;
 	CBaseObject* GetHeldItem() const;
 	CBaseObject* GetEquippedItem() { return m_pEquippedItem ; } ;
+	int GetAnimState() {return m_nAnimState;}
+	int GetStateAnimID();
 	
 	//mutators
 	void SetLives(const int nLives);
@@ -57,5 +64,6 @@ public:
 	void SetPutDownSoundID(int ID) { m_nPutDownSoundID = ID ; } ;
 	void SetHeldItem(CBaseObject* const pHeldItem);
 	void SetEquippedItem( CBaseObject* const pItem ) { m_pEquippedItem = pItem ; } ;
+	void SetAnimState(int nAnimState);
 };
 #endif

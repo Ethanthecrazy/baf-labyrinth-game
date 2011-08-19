@@ -8,6 +8,7 @@ class CPowerGloves : public CBaseObject
 private:
 
 public:
+	CPowerGloves();
 	void UseObject( CBaseObject* user ) ;
 
 } ;

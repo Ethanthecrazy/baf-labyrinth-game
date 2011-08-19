@@ -21,6 +21,7 @@
 CPlayer::CPlayer(void)
 {
 	CBaseEntity::CBaseEntity();
+	SetAnimState(ANIM_MOVING);
 	LoadEntMoveAnimIDs();
 	m_fInvincilibilityTimer = 0.0f;
 	m_nType = ENT_PLAYER;
@@ -52,12 +53,12 @@ void CPlayer::Update(float fDT)
 {
 	CBaseEntity::Update(fDT);
 	UpdateInvincibilityTime(fDT);
+	UpdateAnimState(fDT);
 	Input();
 
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
 {
-
 	
 	if( GetHeldItem() )
 	{
@@ -68,7 +69,7 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 		}
 	}
 
-	CBaseEntity::Render(CameraPosX, CameraPosY);
+	RenderAnimState(CameraPosX, CameraPosY);
 
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
 
@@ -82,6 +83,41 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 		{
 			DrawMouseRange(1, GetEquippedItem(), 255, 0, 0);
 		}
+	}
+}
+void CPlayer::RenderAnimState( int CameraPosX, int CameraPosY )
+{
+	int state = GetAnimState();
+	if(state == ANIM_MOVING)
+	{
+		CBaseEntity::Render(CameraPosX, CameraPosY);
+		return;
+	}
+
+	int id = m_vMovementAnimIDs[GetStateAnimID()];
+	CAnimationManager* AM = CAnimationManager::GetInstance();
+	int DrawPositionX = (int)GetPosX() - CameraPosX;
+	int DrawPositionY = (int)GetPosY() - CameraPosY;
+	AM->Draw(id, DrawPositionX, DrawPositionY, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+	D3DCOLOR_ARGB( 255, 255, 255, 255) );
+}
+void CPlayer::UpdateAnimState(float fDT)
+{
+	if(GetAnimState() == ANIM_MOVING)
+		return;
+
+	int animindex = GetStateAnimID();
+	if(animindex > (int)m_vMovementAnimIDs.size() || animindex == -1)
+		return;
+
+	int id = m_vMovementAnimIDs[GetStateAnimID()];
+	CAnimationManager* AM = CAnimationManager::GetInstance();
+	AM->UpdateAnimation(fDT, id);
+
+	if(!AM->IsAnimationPlaying(id))
+	{
+		//animation is done set back to norm
+		SetAnimState(ANIM_MOVING);
 	}
 }
 void CPlayer::DrawMouseRange(int nRange, CBaseObject* item, unsigned char red,
@@ -116,28 +152,36 @@ void CPlayer::Input()
 {
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
 	CAI_Handler* AI = CAI_Handler::GetInstance();
+	CAnimationManager* AM = CAnimationManager::GetInstance();
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 		{
-			//Keyboard
-			if( pDI->KeyDown( DIK_W ) )
+			if( pDI->KeyDown( DIK_W ) || 
+				pDI->JoystickGetLStickDirDown(DIR_UP, 0))
 			{
 				AI->CardinalMove(this, FLAG_MOVE_UP);
+				SetAnimState(ANIM_MOVING);
 				return;
 			}
-			else if( pDI->KeyDown( DIK_S ) )
+			else if( pDI->KeyDown( DIK_S ) ||
+				pDI->JoystickGetLStickDirDown(DIR_DOWN, 0))
 			{
 				AI->CardinalMove(this, FLAG_MOVE_DOWN);
+				SetAnimState(ANIM_MOVING);
 				return;
 			}
-			else if( pDI->KeyDown( DIK_A ) )
+			else if( pDI->KeyDown( DIK_A ) ||
+				pDI->JoystickGetLStickDirDown(DIR_LEFT, 0))
 			{
 				AI->CardinalMove(this, FLAG_MOVE_LEFT);
+				SetAnimState(ANIM_MOVING);
 				return;
 			}
-			else if( pDI->KeyDown( DIK_D ) )
+			else if( pDI->KeyDown( DIK_D ) ||
+				pDI->JoystickGetLStickDirDown(DIR_RIGHT, 0) )
 			{
 				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
+				SetAnimState(ANIM_MOVING);
 				return;
 			}
 			else if( pDI->KeyPressed( DIK_E )||
@@ -146,29 +190,6 @@ void CPlayer::Input()
 				SwitchItems();
 				return;
 			}
-
-			//Arcade controls
-			if( pDI->JoystickGetLStickDirDown(DIR_UP, 0) )
-			{
-				AI->CardinalMove(this, FLAG_MOVE_UP);
-				return;
-			}
-			else if( pDI->JoystickGetLStickDirDown(DIR_DOWN, 0) )
-			{
-				AI->CardinalMove(this, FLAG_MOVE_DOWN);
-				return;
-			}
-			else if( pDI->JoystickGetLStickDirDown(DIR_LEFT, 0) )
-			{
-				AI->CardinalMove(this, FLAG_MOVE_LEFT);
-				return;
-			}
-			else if( pDI->JoystickGetLStickDirDown(DIR_RIGHT, 0) )
-			{
-				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
-				return;
-			}
-
 
 			if( pDI->MouseButtonPressed( 0 ) ||
 				pDI->JoystickButtonPressed(0))
@@ -207,6 +228,16 @@ void CPlayer::Input()
 			{
 				if( GetEquippedItem() )
 				{
+					switch(GetEquippedItem()->GetType())
+					{
+					case OBJ_POWERGLOVES:
+						{
+							SetAnimState(ANIM_THROW);
+							AM->SetAnimTexture(m_vMovementAnimIDs[GetStateAnimID()], m_nImageID);
+							AM->PlayAnimation(m_vMovementAnimIDs[GetStateAnimID()]);						
+							break;
+						}
+					};
 					GetEquippedItem()->UseObject( (CBaseObject*)this ) ;
 				}
 			}
@@ -379,6 +410,10 @@ void CPlayer::LoadEntMoveAnimIDs()
 	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-moveleft"));
 	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-moveright"));
 	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-moveup"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-place-down"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-place-left"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-place-right"));
+	m_vMovementAnimIDs.push_back(CAnimationManager::GetInstance()->GetID("player-place-up"));
 	//down animation by default
 	SetAnimID(m_vMovementAnimIDs[0]);
 }
@@ -394,6 +429,32 @@ bool CPlayer::IsInvincible() const
 CBaseObject* CPlayer::GetHeldItem() const
 {
 	return m_pHeldItem;
+}
+int CPlayer::GetStateAnimID()
+{
+	int dir = IUnitInterface::GetFlag_DirectionToMove();
+	int animstate = GetAnimState();
+	
+	switch(dir)
+	{
+	case FLAG_MOVE_RIGHT:
+		{
+			return (animstate * 4) + 2;
+		}
+	case FLAG_MOVE_LEFT:
+		{
+			return (animstate * 4) + 1;
+		}
+	case FLAG_MOVE_UP:
+		{
+			return (animstate * 4) + 3;
+		}
+	case FLAG_MOVE_DOWN:
+		{
+			return (animstate * 4);
+		}
+	}
+	return -1;
 }
 //mutators
 void CPlayer::SetLives(const int nLives)
@@ -438,4 +499,8 @@ void CPlayer::SwitchItems(void)
 	CBaseObject* temp = GetHeldItem() ;
 	SetHeldItem(GetEquippedItem()) ;
 	SetEquippedItem(temp) ;
+}
+void CPlayer::SetAnimState(int nAnimState)
+{
+	m_nAnimState = nAnimState;
 }

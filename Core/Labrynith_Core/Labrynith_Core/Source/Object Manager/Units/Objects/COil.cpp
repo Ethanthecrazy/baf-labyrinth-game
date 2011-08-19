@@ -77,8 +77,8 @@ void COil::Render( int CameraPosX , int CameraPosY )
 	CBaseObject::Render( CameraPosX , CameraPosY ) ;
 	if( GetOnFire() )
 	{
-		CAnimationManager::GetInstance()->Draw(m_nAnimID, (int)(GetPosX() - CameraPosX), (int)(GetPosY() - CameraPosY),
-			0.2f, 0.2f, 0, 0, 0, 0xffffffff);
+		CAnimationManager::GetInstance()->Draw(m_nAnimID, (int)(GetPosX() - CameraPosX) + 12, (int)(GetPosY() - CameraPosY) + 12,
+			1.3f, 1.3f, 0, 0, 0, 0xffffffff);
 
 		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
 			.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 185 );

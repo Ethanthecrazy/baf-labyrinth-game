@@ -267,8 +267,11 @@ void CBaseObject::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		{			
 			if(pBase->GetType() == OBJ_WATER )
 			{
-				//remove this object
-				MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+				if(!((CWaterTile*)pBase)->IsFrozen())
+				{
+					//remove this object
+					MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+				}
 			}
 
 			if(pBase->GetType() == OBJ_PIT )

@@ -3,6 +3,10 @@
 #include "../CPlayer.h"
 #include "../../MObjectManager.h"
 
+CPowerGloves::CPowerGloves()
+{
+	m_nType = OBJ_POWERGLOVES;
+}
 
 void CPowerGloves::UseObject( CBaseObject* user )
 {
