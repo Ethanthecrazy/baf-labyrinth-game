@@ -7,7 +7,7 @@ CHelpTile::CHelpTile(string sHelpText)
 {
 	m_sHelpText = sHelpText;
 	m_nUnitType = OBJECT_TILE;
-	this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Exit.png" ));
+	this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/HelpTile.png" ));
 	this->m_nType = OBJ_HELPER;
 }
 

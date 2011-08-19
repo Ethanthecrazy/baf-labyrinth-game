@@ -63,6 +63,9 @@ void CElectricGenerator::Render( int CameraPosX, int CameraPosY )
 	CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) + 36 , (int)(GetPosY() - CameraPosY) + 32,
 		1.0f , 1.0f , 0.0f , 0.0f , 0.0f , 0xffffffff ) ;
 
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+				.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), 100 );
+
 	int lightamount = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() );
 	if(lightamount == 0)
 		return;
