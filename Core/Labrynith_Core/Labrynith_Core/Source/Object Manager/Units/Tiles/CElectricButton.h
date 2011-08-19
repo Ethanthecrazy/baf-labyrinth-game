@@ -13,6 +13,9 @@ private:
 	bool m_bPowered ;
 	bool m_bGolemPowered ;
 	float m_nElectricUpdateTimer ;
+
+	int m_nIMG_Powered;
+
 public:
 	CElectricButton(string nLink = "-5234");
 	~CElectricButton(void);

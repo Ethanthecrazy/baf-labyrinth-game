@@ -29,6 +29,12 @@ CElectricButton::CElectricButton(string nLink)
 	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/electricity.png") ;
 	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
 	m_nSoundID = CSGD_FModManager::GetInstance()->LoadSound( "resource/Sounds/Electricity.mp3" ) ;	
+
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/ElectricButtonUnpowered.png" );
+	m_nIMG_Up = m_nImageID;
+	m_nIMG_Down = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/electricbuttonDown.png" );
+	m_nIMG_Powered =  CSGD_TextureManager::GetInstance()->LoadTexture( "resource/ElectricButtonPowered.png" );
+
 	//adjust the sounds to match configurations
 	COptionsState* Opt = COptionsState::GetInstance();
 	Opt->AdjustSound(m_nSoundID, true);
@@ -51,6 +57,18 @@ void CElectricButton::Update( float fDT )
 	if( GetIsElectrified() )
 	{
 		CAnimationManager::GetInstance()->UpdateAnimation( fDT , m_nAnimID ) ;
+	}
+
+	if( m_bPowered )
+	{
+		if( m_bIsPressed )
+			m_nImageID = m_nIMG_Down;
+		else
+			m_nImageID = m_nIMG_Powered;
+	}
+	else
+	{
+		m_nImageID = m_nIMG_Up;
 	}
 }
 
@@ -83,6 +101,7 @@ bool CElectricButton::CheckCollision(IUnitInterface* pBase, bool nCanHandleColli
 void CElectricButton::Render( int CameraPosX, int CameraPosY )
 {
 	CButton::Render( CameraPosX , CameraPosY ) ;
+
 	if( GetIsElectrified() )
 		CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) + 36 , (int)(GetPosY() - CameraPosY) + 32,
 		1.0f, 1.0f, 0, 0, 0, 0xffffffff);
@@ -112,7 +131,7 @@ void CElectricButton::SetPowered( bool powered )
 { 
 	if( GetIsElectrified() == false && powered == true )
 	{
-		m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0x88888888 ) ;
+		//m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" , 0x88888888 ) ;
 		if( GetElectricUpdateTimer() <= 0.0f )
 			CSGD_FModManager::GetInstance()->PlaySound2D( m_nSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber ) ;
 		CAnimationManager::GetInstance()->PlayAnimation( m_nAnimID ) ;
@@ -120,7 +139,7 @@ void CElectricButton::SetPowered( bool powered )
 	}
 	else if( GetIsElectrified() == true && powered == false )
 	{
-		m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTileElectric.png" , 0xffffffff ) ;
+		//m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTileElectric.png" , 0xffffffff ) ;
 		//CSGD_FModManager::GetInstance()->StopSound( m_nSoundID ) ;
 	}
 	m_bPowered = powered ; 

@@ -3,6 +3,7 @@
 #include "../../../GameStates/COptionsState.h"
 #include "../../../GameStates/CGamePlayState.h"
 #include "../../../Messaging/MEventSystem.h"
+#include "../../../Wrappers/CSGD_TextureManager.h"
 
 CButton::CButton(string nLink)
 {
@@ -20,7 +21,10 @@ CButton::CButton(string nLink)
 	COptionsState* Opt = COptionsState::GetInstance();
 	Opt->AdjustSound(OpenSoundID, true);
 	Opt->AdjustSound(CloseSoundID, true);
-	
+
+	m_nIMG_Up = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" );
+	m_nIMG_Down = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/buttonDown.png" );
+
 }
 CButton::~CButton(void)
 {	
@@ -53,6 +57,11 @@ bool CButton::CheckCollision(IUnitInterface* pBase)
 void CButton::Update(float fDT)
 {	
 	//MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)m_nLink.c_str());
+
+	if( m_bIsPressed )
+		m_nImageID = m_nIMG_Down;
+	else
+		m_nImageID = m_nIMG_Up;
 }
 
 

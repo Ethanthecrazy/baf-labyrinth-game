@@ -10,9 +10,16 @@ using std::string;
 class CButton : public CBaseObject, public IListener
 {
 private:
-	bool m_bIsPressed;
+	
 	string m_nLink;
 	int OpenSoundID, CloseSoundID;
+
+protected:
+
+	bool m_bIsPressed;
+	int m_nIMG_Up;
+	int m_nIMG_Down;
+
 public:
 	CButton(string nLink = "-5234");
 	~CButton(void);

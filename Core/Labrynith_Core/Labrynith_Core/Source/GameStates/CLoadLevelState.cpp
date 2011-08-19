@@ -283,7 +283,6 @@ bool CLoadLevelState::LoadLevel(int _level)
 								((CButton*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CButton*)temp)->SetIndexPosX(x);
 								((CButton*)temp)->SetIndexPosY(y);
-								((CBaseObject*)(temp))->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/singleTile.png" ));
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							break;
 							}
