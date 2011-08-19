@@ -35,7 +35,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -71,7 +71,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -107,7 +107,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -143,11 +143,11 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
     </frames>
-    <ImageID>-1</ImageID>
+    <ImageID>0</ImageID>
     <SzName>player-movedown</SzName>
     <SzFilename>Player.png</SzFilename>
     <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
@@ -191,7 +191,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -227,7 +227,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -263,7 +263,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -299,11 +299,11 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
     </frames>
-    <ImageID>-1</ImageID>
+    <ImageID>0</ImageID>
     <SzName>player-moveleft</SzName>
     <SzFilename>Player.png</SzFilename>
     <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
@@ -347,7 +347,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -383,7 +383,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -419,7 +419,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -455,11 +455,11 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
     </frames>
-    <ImageID>-1</ImageID>
+    <ImageID>0</ImageID>
     <SzName>player-moveup</SzName>
     <SzFilename>Player.png</SzFilename>
     <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
@@ -503,7 +503,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -539,7 +539,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -575,7 +575,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -611,17 +611,977 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.3</FDuration>
+        <FDuration>0.5</FDuration>
         <SzTriggerID />
       </CFrame>
     </frames>
-    <ImageID>-1</ImageID>
+    <ImageID>0</ImageID>
     <SzName>player-moveright</SzName>
     <SzFilename>Player.png</SzFilename>
     <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
     <FSpeed>2</FSpeed>
     <BIsPlaying>false</BIsPlaying>
     <BIsLooping>true</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>71</X>
+          <Y>729</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>21</X>
+            <Y>677</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>21</X>
+          <Y>677</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>128</X>
+          <Y>729</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>78</X>
+            <Y>677</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>78</X>
+          <Y>677</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>185</X>
+          <Y>729</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>135</X>
+            <Y>677</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>135</X>
+          <Y>677</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>241</X>
+          <Y>729</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>191</X>
+            <Y>677</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>191</X>
+          <Y>677</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-place-down</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>71</X>
+          <Y>790</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>21</X>
+            <Y>738</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>21</X>
+          <Y>738</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>128</X>
+          <Y>790</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>78</X>
+            <Y>738</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>78</X>
+          <Y>738</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>185</X>
+          <Y>790</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>135</X>
+            <Y>738</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>135</X>
+          <Y>738</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>241</X>
+          <Y>790</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>191</X>
+            <Y>738</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>191</X>
+          <Y>738</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-place-left</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>71</X>
+          <Y>853</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>21</X>
+            <Y>801</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>21</X>
+          <Y>801</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>128</X>
+          <Y>853</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>78</X>
+            <Y>801</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>78</X>
+          <Y>801</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>185</X>
+          <Y>853</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>135</X>
+            <Y>801</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>135</X>
+          <Y>801</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>241</X>
+          <Y>853</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>191</X>
+            <Y>801</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>191</X>
+          <Y>801</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-place-up</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>71</X>
+          <Y>912</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>21</X>
+            <Y>862</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>21</X>
+          <Y>862</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>128</X>
+          <Y>912</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>78</X>
+            <Y>862</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>78</X>
+          <Y>862</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>185</X>
+          <Y>912</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>135</X>
+            <Y>862</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>135</X>
+          <Y>862</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>241</X>
+          <Y>912</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>191</X>
+            <Y>862</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>191</X>
+          <Y>862</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>0.5</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-place-right</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>71</X>
+          <Y>974</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>21</X>
+            <Y>922</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>21</X>
+          <Y>922</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>72</X>
+          <Y>1030</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>22</X>
+            <Y>978</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>22</X>
+          <Y>978</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-pickup-down</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>128</X>
+          <Y>974</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>78</X>
+            <Y>922</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>78</X>
+          <Y>922</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>128</X>
+          <Y>1030</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>78</X>
+            <Y>978</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>78</X>
+          <Y>978</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-pickup-left</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>185</X>
+          <Y>974</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>135</X>
+            <Y>922</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>135</X>
+          <Y>922</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>185</X>
+          <Y>1030</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>135</X>
+            <Y>978</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>135</X>
+          <Y>978</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-pickup-right</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
+    <BIsReversed>false</BIsReversed>
+  </CAnimation>
+  <CAnimation>
+    <frames>
+      <CFrame>
+        <PAnchor>
+          <X>238</X>
+          <Y>974</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>188</X>
+            <Y>922</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>188</X>
+          <Y>922</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+      <CFrame>
+        <PAnchor>
+          <X>238</X>
+          <Y>1030</Y>
+        </PAnchor>
+        <RDrawRect>
+          <Location>
+            <X>188</X>
+            <Y>978</Y>
+          </Location>
+          <Size>
+            <Width>40</Width>
+            <Height>52</Height>
+          </Size>
+          <X>188</X>
+          <Y>978</Y>
+          <Width>40</Width>
+          <Height>52</Height>
+        </RDrawRect>
+        <RCollisionRect>
+          <Location>
+            <X>0</X>
+            <Y>0</Y>
+          </Location>
+          <Size>
+            <Width>8</Width>
+            <Height>8</Height>
+          </Size>
+          <X>0</X>
+          <Y>0</Y>
+          <Width>8</Width>
+          <Height>8</Height>
+        </RCollisionRect>
+        <FDuration>1</FDuration>
+        <SzTriggerID />
+      </CFrame>
+    </frames>
+    <ImageID>0</ImageID>
+    <SzName>player-pickup-up</SzName>
+    <SzFilename>Player.png</SzFilename>
+    <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Player.png</SzFilenameWithPath>
+    <FSpeed>2</FSpeed>
+    <BIsPlaying>false</BIsPlaying>
+    <BIsLooping>false</BIsLooping>
     <BIsReversed>false</BIsReversed>
   </CAnimation>
 </ArrayOfCAnimation>

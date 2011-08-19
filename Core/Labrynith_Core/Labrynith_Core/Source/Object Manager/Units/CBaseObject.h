@@ -30,6 +30,8 @@ public:
 	virtual void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	virtual bool CanInteract(IUnitInterface* pBase);
 
+	void SetFlag_MovementState( int newFlag );
+
 	void AddRef(void);
 	void Release(void);
 

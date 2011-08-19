@@ -21,6 +21,7 @@ class CSaveSlotState : public IGameState
 	int m_nIndex;
 
 	int m_nSoundID;
+	int m_nImageID;
 
 	//Enums
 	enum SLOTOPTIONS{SELECT, SLOTDELETE, BACK, NUMSLOTOPTIONS};

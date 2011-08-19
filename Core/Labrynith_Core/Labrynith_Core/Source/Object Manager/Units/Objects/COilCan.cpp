@@ -61,7 +61,5 @@ void COilCan::UseObject( CBaseObject* user )
 void COilCan::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseObject::Render( CameraPosX , CameraPosY ) ;
-
-
 	// display the number of charges left
 }

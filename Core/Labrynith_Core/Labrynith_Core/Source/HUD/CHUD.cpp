@@ -30,17 +30,17 @@ void CHUD::Render()
 
 	//Player HeldItem
 	CBaseObject* pHeldItem = pPlayer->GetHeldItem();
-	TM->Draw(InvSlotImageID, 670 - 30, 536 - 40);
+	TM->Draw(InvSlotImageID, 770 - 30, 636 - 40);
 	if(pHeldItem)
 	{
-		TM->Draw(pHeldItem->m_nImageID, 686 - 30, 552 - 40);
+		TM->Draw(pHeldItem->m_nImageID, 786 - 30, 652 - 40);
 	}
 	//Player EquippedItem
 	CBaseObject* pEquipItem = pPlayer->GetEquippedItem();
-	TM->Draw(InvSlotImageID, 734 - 30, 536 - 40);
+	TM->Draw(InvSlotImageID, 834 - 30, 636 - 40);
 	if(pEquipItem)
 	{
-		TM->Draw(pEquipItem->m_nImageID, 750 - 30, 552 - 40);
+		TM->Draw(pEquipItem->m_nImageID, 850 - 30, 652 - 40);
 	}
 
 }

@@ -231,13 +231,13 @@ void MFlake::Render( int CameraX, int CameraY )
 	{
 	case OBJECT_TILE:
 		{
-			//char temp[64];
+			char temp[64];
 
 			for( int y = 0; y < LayerHeight; ++y )
 			{
 				for( int x = 0; x < LayerWidth; ++x )
 				{
-					//sprintf( temp, "%i", MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ) ); 
+					sprintf( temp, "%i", MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ) ); 
 
 					if( InformationArray[ x + y * LayerWidth] >= 0 )
 					{
@@ -341,7 +341,7 @@ void MFlake::Render( int CameraX, int CameraY )
 			m_vObjects[i]->Render( CameraX, CameraY );
 		}
 
-		/*char temp[64];
+		char temp[64];
 
 		for( int y = 0; y < LayerHeight; ++y )
 		{
@@ -354,7 +354,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
 			}
-		}*/
+		}
 
 		break;
 

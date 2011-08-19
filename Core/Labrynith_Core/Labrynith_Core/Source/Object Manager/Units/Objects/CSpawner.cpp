@@ -316,7 +316,7 @@ void CSpawner::HandleEvent( Event* _toHandle )
 		case SPAWNER_ATTRACTOR_LAVA:
 			{
 			CAttractor* temp = new CAttractor();			
-			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+			temp->m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/LavaAttractor.png" );
 			((CAttractor*)(temp))->SetPosX( GetPosX() );
 			((CAttractor*)(temp))->SetPosY( GetPosY() );
 			((CAttractor*)(temp))->SetIndexPosX( GetIndexPosX() );

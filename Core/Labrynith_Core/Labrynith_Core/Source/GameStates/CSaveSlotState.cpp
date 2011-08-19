@@ -14,6 +14,7 @@ CSaveSlotState::CSaveSlotState()
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	m_nCurrSaveSlot = 0;
 	m_nIndex = 0;
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/darkCave.png");
 	m_nSoundID = FM->LoadSound("resource/Sounds/Clic1.wav");
 	for(unsigned int i = 0; i < MAXSLOTS; i++)
 	{
@@ -126,6 +127,7 @@ void CSaveSlotState::Render(void)
 {
 	CSGD_Direct3D* pD3D = CSGD_Direct3D::GetInstance();
 
+	CSGD_TextureManager::GetInstance()->Draw(m_nImageID, 0 , 0);
 	char buffer[64] = { };
 	MetalText.Print( "---", 100 + (m_nCurrSaveSlot * 300), 80,  0.8f );
 	//Slot1	

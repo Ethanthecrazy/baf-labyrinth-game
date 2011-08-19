@@ -56,8 +56,8 @@ void CPlayer::Update(float fDT)
 void CPlayer::Render( int CameraPosX, int CameraPosY )
 {
 
-		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
-		.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
+	MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+	.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 240 );
 
 	CBaseEntity::Render(CameraPosX, CameraPosY);
 
@@ -65,57 +65,43 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 
 	if( GetHeldItem() != NULL )
 	{
-		int cameraX = 0 , cameraY = 0 ;
-		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
-		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
-		
-		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
-		{
-			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-			if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
-			{
-				int xPos1 = tileXPos * TILE_WIDTH - cameraX ;
-				int yPos1 = tileYPos * TILE_HEIGHT - cameraY ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + TILE_HEIGHT , yPos1 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 , xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT , xPos1 , yPos1 + TILE_HEIGHT ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + TILE_HEIGHT , xPos1 , yPos1 ) ;
-			}
-		}
+		DrawMouseRange(1, GetHeldItem(), 255, 255, 255);
 	}
 	else if( GetEquippedItem() != NULL )
+	{
 		if( GetEquippedItem()->GetType() == OBJ_OILCAN )
 		{
-			int cameraX = 0 , cameraY = 0 ;
-		CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-		int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
-		int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
+			DrawMouseRange(1, GetEquippedItem(), 255, 0, 0);
+		}
+	}
+}
+void CPlayer::DrawMouseRange(int nRange, CBaseObject* item, unsigned char red,
+	                         unsigned char green, unsigned char blue)
+{
+	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
+	int cameraX = 0, cameraY = 0;
+	CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+	int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
+	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
 		
-		if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
+	if( tileXPos >= GetIndexPosX() - nRange && tileXPos <= GetIndexPosX() + nRange && tileYPos >= GetIndexPosY() - nRange && tileYPos <= GetIndexPosY() + nRange )
+	{
+		int objectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+		int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+		int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+		IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(objectID)) ;
+		IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+		IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
+		if( !item->CheckCollision( object , false ) && !item->CheckCollision( entity , false ) && !item->CheckCollision( tile , false ) && tileID != 0 )
 		{
-			int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;;
-			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-			IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-			IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-			if( !GetEquippedItem()->CheckCollision( object , false ) && !GetEquippedItem()->CheckCollision( entity , false ) && !GetEquippedItem()->CheckCollision( tile , false ) && tileID != 0 )
-			{
-				int xPos1 = tileXPos * TILE_WIDTH - cameraX ;
-				int yPos1 = tileYPos * TILE_HEIGHT - cameraY ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + TILE_WIDTH , yPos1 , 255 , 0 , 0 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 , xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT , 255 , 0 , 0 ) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT , xPos1 , yPos1 + TILE_HEIGHT , 255 , 0 , 0) ;
-				CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + TILE_HEIGHT , xPos1 , yPos1 , 255 , 0 , 0 ) ;
-			}
+			int xPos1 = tileXPos * TILE_WIDTH - cameraX ;
+			int yPos1 = tileYPos * TILE_HEIGHT - cameraY ;
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 , xPos1 + TILE_HEIGHT , yPos1, red, green, blue);
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 , xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT, red, green, blue);
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 + TILE_WIDTH , yPos1 + TILE_HEIGHT , xPos1 , yPos1 + TILE_HEIGHT, red, green, blue);
+			CSGD_Direct3D::GetInstance()->DrawLine( xPos1 , yPos1 + TILE_HEIGHT , xPos1 , yPos1, red, green, blue);
 		}
-		}
+	}
 }
 void CPlayer::Input()
 {

@@ -9,7 +9,7 @@ void CPowerGloves::UseObject( CBaseObject* user )
 	CPlayer* player = (CPlayer*)user ;
 
 	if( player->GetHeldItem() == NULL )
-								return ;
+		return;
 
 	int xDirection = 0 ;
 	int yDirection = 0 ;
@@ -59,9 +59,9 @@ void CPowerGloves::UseObject( CBaseObject* user )
 	IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
 	if( player->GetHeldItem()->CheckCollision( object , false ) || player->GetHeldItem()->CheckCollision( entity , false ) || player->GetHeldItem()->CheckCollision( tile , false ) || tileID == 0 )
 	{
-		player->GetHeldItem()->SetVelX( 0 ) ;
-		player->GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_LEFT ) ;
-		player->GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+		player->GetHeldItem()->SetVelX( 0 );
+		player->GetHeldItem()->SetFlag_DirectionToMove( FLAG_MOVE_LEFT );
+		player->GetHeldItem()->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 	}
 	else
 	{

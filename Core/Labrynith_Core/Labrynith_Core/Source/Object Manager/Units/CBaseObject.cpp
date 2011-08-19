@@ -17,15 +17,10 @@ CBaseObject::CBaseObject()
 	 SetVelY(0);
 
 	 m_nUnitType = OBJECT_OBJECT;
-
-	 m_nImageID = -1;
-
-	 this->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
-	 
-
-	 m_uiRefCount = 1;
-
 	 m_nIdentificationNumber = 0;
+	 m_nImageID = -1;
+	  m_uiRefCount = 1;
+	 this->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );	 
 }
 
 CBaseObject::~CBaseObject(void)
@@ -104,9 +99,9 @@ void CBaseObject::Update(float fDT)
 				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
-				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item));
 				IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
+				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID));
 				if( CheckCollision( object , true ) || CheckCollision( entity , true ) || CheckCollision( tile , true ) || tileID == 0 )
 				{
 					SetVelY( 0 ) ;
@@ -234,11 +229,20 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	case OBJECT_TILE:
 		{				
 			if(pBase->GetType() == OBJ_WATER)
-				if( !((CWaterTile*)pBase)->IsFrozen() && this->GetType() != OBJ_OILCAN )
-					return true;
+			{
+				//if(this->GetType() != OBJ_OILCAN )
+					//return true;
 
-			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_PIT || pBase->GetType() == OBJ_ELECTRICGENERATOR)
-				return true ;
+				return false;
+			}
+
+			if(pBase->GetType() == OBJ_PIT )
+			{
+				return false;
+			}
+
+			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_ELECTRICGENERATOR)
+				return true;
 		}
 		break ;
 	};
@@ -247,11 +251,59 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 }
 void CBaseObject::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
+	if(!pBase || pBase == this ||  MObjectManager::GetInstance()->GetUnit( CGamePlayState::GetInstance()->testVaribale )->GetLayerLocation() != pBase->GetLayerLocation())
+		return;
 
+	//if we collide with an object
+	switch(pBase->m_nUnitType)
+	{
+	case OBJECT_OBJECT:
+		{
+
+		}
+		break;
+
+	case OBJECT_TILE:
+		{			
+			if(pBase->GetType() == OBJ_WATER )
+			{
+				//remove this object
+				MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+			}
+
+			if(pBase->GetType() == OBJ_PIT )
+			{
+				if(this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION)
+				{
+					//remove this object
+					MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+				}
+			}
+		}
+		break;
+	};
 }
 bool CBaseObject::CanInteract(IUnitInterface* pBase)
 {
 	return false;
+}
+
+void CBaseObject::SetFlag_MovementState( int newFlag )
+{
+	IUnitInterface::SetFlag_MovementState(newFlag);
+	//Check the tile we are on, if were not moving
+	if(newFlag == FLAG_MOVESTATE_ATDESTINATION)
+	{
+		//Dont try to reference to the object manager if were not added
+		if(this->m_nIdentificationNumber == 0)
+			return;
+
+		//Call ExitCollision on the tile we are on
+		int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE )
+			.GetInfoAtIndex( GetIndexPosX(), GetIndexPosY());
+		IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID));
+		ExitCollision(tile, true);
+	}
 }
 
 void CBaseObject::AddRef(void)

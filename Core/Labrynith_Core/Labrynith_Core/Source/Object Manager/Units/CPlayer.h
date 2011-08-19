@@ -38,6 +38,8 @@ public:
 	void SwitchItems(void); // switches held and equipped items if it is possible
 	void ActivateEquipped(void);	//	activates the equipped item
 	void LoadEntMoveAnimIDs();
+	void DrawMouseRange(int nRange, CBaseObject* item, unsigned char red,
+	                         unsigned char green, unsigned char blue);
 
 	//accessors
 	int GetLives() const;

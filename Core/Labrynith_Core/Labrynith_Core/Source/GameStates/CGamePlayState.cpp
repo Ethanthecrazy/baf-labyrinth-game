@@ -510,11 +510,14 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				IUnitInterface* object = player->GetHeldItem() ;
 				object->SetIndexPosX( tileXPos ) ;
 				object->SetIndexPosY( tileYPos ) ;
-				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem() , MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetLayerID() ) ;
-				//MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , PlacedID ) ;
+				//Set movement state, in order for the object to call its exit collision
+				int PlacedID = MObjectManager::GetInstance()->AddUnitIndexed( player->GetHeldItem(),
+					MObjectManager::GetInstance()->FindLayer( player->m_nIdentificationNumber ).GetLayerID());
+				//IUnitInterface* item = (MObjectManager::GetInstance()->GetUnit(PlacedID));
+				//item->SetFlag_MovementState(FLAG_MOVESTATE_ATDESTINATION);
+
 				player->GetHeldItem()->SetPosX( (float)(tileXPos * TILE_WIDTH) );
 				player->GetHeldItem()->SetPosY( (float)(tileYPos * TILE_HEIGHT) );
-
 				player->GetHeldItem()->Release();
 				player->SetHeldItem(NULL);
 
