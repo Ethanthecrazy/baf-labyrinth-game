@@ -123,7 +123,7 @@ void CLoadLevelState::Render(void)
 	string test = percent;
 	test += "%";
 
-	MetalText.Print((char*)test.c_str(), 100, 100, .5f);
+	MetalText.Print((char*)test.c_str(), 315, 425, .5f);
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214, 450, 2.0f, 2.0f, &rect );
 

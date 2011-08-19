@@ -194,6 +194,8 @@ void CGamePlayState::Render(void)
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
 
+	MMessageSystem::GetInstance()->ProcessMessages();
+
 	//char temp[64];
 
 	//sprintf_s( temp, "%f", timestep ); 
@@ -728,7 +730,19 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			}
 		}
 		break;
+
+	case MSG_DRAW_GENERATORTOP:
+
+		msgDrawGeneratorTop* msg = (msgDrawGeneratorTop*)_message;
+
+		CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+
+		CSGD_TextureManager::GetInstance()->Draw( msg->GetTop(), msg->GetTileXPos(), msg->GetTileYPos(), 1.0f, 1.0f, 0, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB( 255, msg->GetBright(), msg->GetBright(), msg->GetBright() )  );
+
+		break;
 	}
+
+	
 
 }
 //accessors

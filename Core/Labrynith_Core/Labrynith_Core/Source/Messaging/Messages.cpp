@@ -83,3 +83,11 @@ msgDeletIDHolder::msgDeletIDHolder(IDHolder* ptoDelete)
 {
 	m_ptoDelete = ptoDelete;
 }
+
+msgDrawGeneratorTop::msgDrawGeneratorTop( int tileXPos , int tileYPos, int ImageID, int newBright ) : CBaseMessage( MSG_DRAW_GENERATORTOP )
+{
+	m_nTileXPos = tileXPos;
+	m_nTileYPos = tileYPos;
+	m_nIMG_Top = ImageID;
+	brightness = newBright;
+}

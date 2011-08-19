@@ -10,6 +10,7 @@
 #include "../../../Wrappers/CSGD_TextureManager.h"
 #include "../../../Animation Manager/CAnimationManager.h"
 #include "../../../AI Handler/CAI_Handler.h"
+#include "../../../Messaging/MMessageSystem.h"
 #include "CWaterTile.h"
 
 CElectricGenerator::CElectricGenerator() 
@@ -21,6 +22,7 @@ CElectricGenerator::CElectricGenerator()
 	m_bGolemConnected = false ;
 	m_bEvaluateConnections = true ;
 	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/GeneratorTile.png" ) ;
+	m_nIMG_Top = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/GeneratorTop.png" ) ;
 	m_nAnimID = CAnimationManager::GetInstance()->GetID( "Electricity" ) ;
 	m_nAnimImageID = CSGD_TextureManager::GetInstance()->LoadTexture("resource/electricity.png") ;
 	CAnimationManager::GetInstance()->SetAnimTexture( m_nAnimID , m_nAnimImageID ) ;
@@ -58,8 +60,16 @@ void CElectricGenerator::Update(float fDT )
 void CElectricGenerator::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseObject::Render( CameraPosX , CameraPosY ) ;
-	CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) , (int)(GetPosY() - CameraPosY),
-		0.2f , 0.2f , 0.0f , 0.0f , 0.0f , 0xffffffff ) ;
+	CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) + 36 , (int)(GetPosY() - CameraPosY) + 32,
+		1.0f , 1.0f , 0.0f , 0.0f , 0.0f , 0xffffffff ) ;
+
+	int lightamount = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() );
+	if(lightamount == 0)
+		return;
+
+	MMessageSystem::GetInstance()->SendMsg( new msgDrawGeneratorTop( (int)(GetPosX() - CameraPosX), (int)(GetPosY() - 64 - CameraPosY), m_nIMG_Top, lightamount ) );
+
+	//CSGD_TextureManager::GetInstance()->Draw(m_nIMG_Top , (int)(GetPosX() - CameraPosX) , (int)(GetPosY() - 64 - CameraPosY) );
 }
 bool CElectricGenerator::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {

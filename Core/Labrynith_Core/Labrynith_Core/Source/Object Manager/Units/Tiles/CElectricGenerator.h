@@ -14,6 +14,9 @@ private:
 	int m_nAnimID ;
 	int m_nAnimImageID ;
 	float m_nElectricUpdateTimer ;
+
+	int m_nIMG_Top;
+
 public:
 	CElectricGenerator() ;
 	~CElectricGenerator() ;

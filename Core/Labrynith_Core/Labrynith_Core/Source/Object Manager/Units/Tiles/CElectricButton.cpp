@@ -84,8 +84,8 @@ void CElectricButton::Render( int CameraPosX, int CameraPosY )
 {
 	CButton::Render( CameraPosX , CameraPosY ) ;
 	if( GetIsElectrified() )
-		CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) , (int)(GetPosY() - CameraPosY),
-		0.2f, 0.2f, 0, 0, 0, 0xffffffff);
+		CAnimationManager::GetInstance()->Draw(m_nAnimID , (int)(GetPosX() - CameraPosX) + 36 , (int)(GetPosY() - CameraPosY) + 32,
+		1.0f, 1.0f, 0, 0, 0, 0xffffffff);
 }
 
 void CElectricButton::HandleEvent( Event* _toHandle )

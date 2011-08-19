@@ -78,8 +78,8 @@ void CGolem_Water::Render( int CameraPosX, int CameraPosY )
 {
 	CBaseGolem::Render(CameraPosX, CameraPosY);
 	if( GetIsElectrified() )
-		CAnimationManager::GetInstance()->Draw(m_nAnimID, (int)(GetPosX() - CameraPosX), (int)(GetPosY() - CameraPosY),
-		0.2f, 0.2f, 0 , 0 , 0 , 0xffffffff ) ;
+		CAnimationManager::GetInstance()->Draw(m_nAnimID, (int)(GetPosX() - CameraPosX) + 36, (int)(GetPosY() - CameraPosY) + 32,
+		1.0f, 1.0f, 0 , 0 , 0 , 0xffffffff ) ;
 }
 bool CGolem_Water::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
