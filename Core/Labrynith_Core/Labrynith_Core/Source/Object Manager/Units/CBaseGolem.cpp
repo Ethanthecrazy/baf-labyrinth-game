@@ -39,13 +39,7 @@ void CBaseGolem::Update(float fDT)
 	if(( GetDistanceLeft() <= 32 && GetDistanceLeft() >= 30 ) || (GetDistanceLeft() <= 16 && GetDistanceLeft() >= 14 ) )
 		CSGD_FModManager::GetInstance()->PlaySound2D( m_nStepSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber) ;
 
-	fCollectedTime += fDT;
-	if(fCollectedTime > 1.0f)
-	{
-		
-		fCollectedTime = 0.0f;
-	}
-	UpdateAI();
+	//UpdateAI();
 }
 void CBaseGolem::Render( int CameraPosX, int CameraPosY )
 {

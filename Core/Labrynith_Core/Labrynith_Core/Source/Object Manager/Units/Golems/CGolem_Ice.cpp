@@ -122,8 +122,8 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	case OBJECT_ENTITY:
 		{
-			CBaseEntity* temp = (CBaseEntity*)pBase;
-			if(temp->GetType() == ENT_GOLEM)
+			CBaseEntity* ent = (CBaseEntity*)pBase;
+			if(ent->GetType() == ENT_GOLEM)
 			{
 				CBaseGolem* temp = (CBaseGolem*)pBase;
 				switch(temp->GetGolemType())
@@ -197,12 +197,10 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 
 							CSteamPuff* toAdd = new CSteamPuff();
-
 							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
 							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
 							toAdd->SetIndexPosX(GetIndexPosX());
 							toAdd->SetIndexPosY(GetIndexPosY());
-
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						
 						}
