@@ -63,6 +63,7 @@ bool CSaveSlotState::Input(void)
 		case SELECT:
 			{
 				//Change to GamePlayState
+				FM->StopSound( CMainMenuState::GetInstance()->GetSongID() );
 				pGame->ChangeState(pGamePlay);
 				break;
 			}

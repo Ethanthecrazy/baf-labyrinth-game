@@ -6,6 +6,7 @@
 #include "../../../GameStates/CGamePlayState.h"
 #include "../../../AI Handler/CAI_Handler.h"
 #include "../CBaseEntity.h"
+#include "../../MObjectManager.h"
 
 CDoor::CDoor(string nLink)
 {
@@ -49,6 +50,46 @@ void CDoor::HandleEvent( Event* _toHandle )
 			m_bIsOpen = false;
 			this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Door_Closed.png" ));
 			CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
+
+
+			////Check to see if we are colliding with an entity
+			//int EntityID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY)
+			//	.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+			////we cannot collide with ourselves
+			//CBaseEntity* pTemp = ((CBaseEntity*)MObjectManager::GetInstance()->GetUnit(EntityID));
+			//if( EntityID > 0 && pTemp )
+			//{
+			//	MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY).FinishMovingEnt(pTemp);
+			//	//pTemp->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
+			//	
+			//	switch(pTemp->GetFlag_DirectionToMove())
+			//	{
+			//	case FLAG_MOVE_RIGHT:
+			//		{
+			//			CAI_Handler::GetInstance()->CardinalMove(pTemp, FLAG_MOVE_LEFT);
+			//		}
+			//		break;
+
+			//	case FLAG_MOVE_LEFT:
+			//		{
+			//			CAI_Handler::GetInstance()->CardinalMove(pTemp, FLAG_MOVE_RIGHT);
+			//		}
+			//		break;
+
+			//	case FLAG_MOVE_UP:
+			//		{
+			//			CAI_Handler::GetInstance()->CardinalMove(pTemp, FLAG_MOVE_DOWN);
+			//		}
+			//		break;
+
+			//	case FLAG_MOVE_DOWN:
+			//		{
+			//			CAI_Handler::GetInstance()->CardinalMove(pTemp, FLAG_MOVE_UP);
+			//		}
+			//		break;
+			//	}
+			//}
 		}
 	}
 }
