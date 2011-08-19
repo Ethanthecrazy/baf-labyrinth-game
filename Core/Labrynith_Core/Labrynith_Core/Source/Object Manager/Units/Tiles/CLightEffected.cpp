@@ -36,7 +36,19 @@ void CLightEffected::Update(float fDT)
 	{
 		pitTimer += fDT;
 		if(pitTimer > .15f)
+		{
+			//Check to see if we are colliding with an entity
+			int EntityID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY)
+				.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+			//we cannot collide with ourselves
+			CBaseEntity* pTemp = ((CBaseEntity*)MObjectManager::GetInstance()->GetUnit(EntityID));
+			if( EntityID > 0 && pTemp )
+			{
+				this->CheckCollision( (IUnitInterface*)pTemp, true);
+			}
 			m_bIsFloor = false;
+		}
 	}
 	else
 	{

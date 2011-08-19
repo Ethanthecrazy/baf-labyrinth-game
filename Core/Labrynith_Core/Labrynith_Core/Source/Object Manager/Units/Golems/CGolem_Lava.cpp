@@ -10,6 +10,8 @@
 #include "../Tiles/CWaterTile.h"
 #include "../Objects/CAttractor.h"
 #include "../Objects/CSteamPuff.h"
+#include "../../../Wrappers/CSGD_FModManager.h"
+#include "../../../GameStates/COptionsState.h"
 
 
 void CGolem_Lava::LavaGolemSetup()

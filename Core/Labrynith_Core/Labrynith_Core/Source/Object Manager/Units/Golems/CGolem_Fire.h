@@ -6,7 +6,7 @@
 
 class CGolem_Fire : public CBaseGolem , public IListener
 {
-
+	
 public:
 	CGolem_Fire(void);
 	CGolem_Fire(CBaseGolem* pGolem);

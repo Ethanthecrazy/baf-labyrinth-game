@@ -31,11 +31,13 @@ CPlayer::CPlayer(void)
 	m_nPickUpSoundID = FM->LoadSound("resource/Sounds/pick-up.mp3" );
 	m_nPutDownSoundID = FM->LoadSound("resource/Sounds/put-down.mp3" );
 	m_nLvCompSoundID = FM->LoadSound("resource/Sounds/completeLevel.wav");
+	HurtSoundID = FM->LoadSound("resource/Sounds/hurt.mp3");
 	//adjust the sounds to match configurations
 	COptionsState* Opt = COptionsState::GetInstance();
 	Opt->AdjustSound(m_nPickUpSoundID, true);
 	Opt->AdjustSound(m_nPutDownSoundID, true);
 	Opt->AdjustSound(m_nLvCompSoundID, true);
+	Opt->AdjustSound(HurtSoundID, true);	
 }
 CPlayer::~CPlayer(void)
 {
@@ -408,6 +410,9 @@ void CPlayer::SetLives(const int nLives)
 		SetInvincilibity(true);
 
 	m_nLives = nLives;
+
+	if(HurtSoundID > -1)
+		CSGD_FModManager::GetInstance()->PlaySoundA(HurtSoundID);
 
 	if(GetLives() <= 0)
 		CGamePlayState::GetInstance()->KillPlayer();

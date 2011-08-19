@@ -20,7 +20,7 @@ class CPlayer : public CBaseEntity
 	//this must not be in the object manager when this happens
 	CBaseObject *m_pHeldItem;
 	CBaseObject *m_pEquippedItem;
-
+	int HurtSoundID;
 	void UpdateInvincibilityTime(float fDT);
 public:
 	CPlayer(void);
