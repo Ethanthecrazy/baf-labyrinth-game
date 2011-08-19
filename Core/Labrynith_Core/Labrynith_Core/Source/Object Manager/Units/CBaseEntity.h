@@ -46,6 +46,7 @@ public:
 	bool HasTarget();
 	void AddRef(void);
 	void Release(void);
+	void CheckAtDestinationCollision();
 
 	//accessors
 	int GetType(void) { return m_nType; }

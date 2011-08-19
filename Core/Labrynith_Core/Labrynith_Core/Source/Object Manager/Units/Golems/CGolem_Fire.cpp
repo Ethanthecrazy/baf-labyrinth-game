@@ -60,7 +60,7 @@ void CGolem_Fire::Update(float fDT)
 				continue;
 			if( entity->GetType() == ENT_PLAYER )
 			{
-				//((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
+				((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
 			}
 		}
 	}

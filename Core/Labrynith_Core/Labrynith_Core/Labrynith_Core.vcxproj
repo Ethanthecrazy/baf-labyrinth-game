@@ -90,6 +90,7 @@
     <ClCompile Include="Source\GameStates\CCreditsState.cpp" />
     <ClCompile Include="Source\GameStates\CGameOverState.cpp" />
     <ClCompile Include="Source\GameStates\CGamePlayState.cpp" />
+    <ClCompile Include="Source\GameStates\CHelpState.cpp" />
     <ClCompile Include="Source\GameStates\CLoadLevelState.cpp" />
     <ClCompile Include="Source\GameStates\CMainMenuState.cpp" />
     <ClCompile Include="Source\GameStates\COptionsState.cpp" />
@@ -128,6 +129,7 @@
     <ClCompile Include="Source\Object Manager\Units\Tiles\CElectricButton.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CElectricGenerator.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CExit.cpp" />
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CHelpTile.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CMetal.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CPit.cpp" />
     <ClCompile Include="Source\Object Manager\Units\Tiles\CRamp.cpp" />
@@ -157,6 +159,7 @@
     <ClInclude Include="Source\GameStates\CCreditsState.h" />
     <ClInclude Include="Source\GameStates\CGameOverState.h" />
     <ClInclude Include="Source\GameStates\CGamePlayState.h" />
+    <ClInclude Include="Source\GameStates\CHelpState.h" />
     <ClInclude Include="Source\GameStates\CLoadLevelState.h" />
     <ClInclude Include="Source\GameStates\CMainMenuState.h" />
     <ClInclude Include="Source\GameStates\COptionsState.h" />
@@ -199,6 +202,7 @@
     <ClInclude Include="Source\Object Manager\Units\Tiles\CElectricButton.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CElectricGenerator.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CExit.h" />
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CHelpTile.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CMetal.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CPit.h" />
     <ClInclude Include="Source\Object Manager\Units\Tiles\CRamp.h" />

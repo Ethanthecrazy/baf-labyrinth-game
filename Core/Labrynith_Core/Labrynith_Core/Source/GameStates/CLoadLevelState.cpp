@@ -29,6 +29,7 @@ using std::string;
 #include "../Object Manager/Units/Tiles/CMetal.h"
 #include "../Object Manager/Units/Tiles/CElectricButton.h"
 #include "../Object Manager/Units/Tiles/CElectricGenerator.h"
+#include "../Object Manager/Units/Tiles/CHelpTile.h"
 
 #include "../TinyXML/tinyxml.h"
 #include "../AI Handler/CAI_Handler.h"
@@ -405,6 +406,22 @@ bool CLoadLevelState::LoadLevel(int _level)
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							}
 							break ;
+						case 12: // wall
+							{
+								MObjectManager::GetInstance()->GetLayer( z ).GetFlake( OBJECT_TILE ).SetInfoAtIndex( x, y, 0 );
+							}
+							break;							
+						case 13: // helper tile
+							{	
+								CHelpTile* temp = new CHelpTile(prop);
+								temp->SetLayerLocation(z);
+								((CHelpTile*)temp)->SetPosX((float)(x * TILE_WIDTH));
+								((CHelpTile*)temp)->SetPosY((float)(y * TILE_HEIGHT));
+								((CHelpTile*)temp)->SetIndexPosX(x);
+								((CHelpTile*)temp)->SetIndexPosY(y);
+								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
+							}
+							break;
 						}
 						
 						++loadingat;
@@ -423,7 +440,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 					++y;
 					pTile = pTile->NextSiblingElement("Tile");
 				}
-
+				
 				
 				++x;
 				pArray = pArray->NextSiblingElement("ArrayOfTile");

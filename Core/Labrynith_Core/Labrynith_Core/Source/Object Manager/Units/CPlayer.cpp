@@ -213,12 +213,14 @@ void CPlayer::Input()
 
 		}
 }
+bool CPlayer::CanInteract(IUnitInterface* pBase)
+{	
+	
+	return false;
+}
 bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
 	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
-		return false;
-	
-	if(this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	//if we collide with an object
@@ -284,22 +286,26 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				else
 					return true;
 			}
-			else if(pBase->GetType() == OBJ_EXIT && nCanHandleCollision)
-			{
-				CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
-				//BUG- check if the level is valid
-				pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
-				//Save the new current level we are on
-				CSaveSlotState::GetInstance()->Save();
-				//Load the next level
-				CSGD_FModManager::GetInstance()->PlaySoundA(m_nLvCompSoundID);
-				CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
-				return true;
-			}
-			else if( pBase->GetType() == OBJ_PIT )
-				return pBase->CheckCollision(this, nCanHandleCollision);		
-			else if( pBase->GetType() == OBJ_RAMP )
-				return pBase->CheckCollision(this, nCanHandleCollision);	
+			//else if(pBase->GetType() == OBJ_EXIT && nCanHandleCollision && this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
+			//{
+			//	CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
+			//	//BUG- check if the level is valid
+			//	pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
+			//	//Save the new current level we are on
+			//	CSaveSlotState::GetInstance()->Save();
+			//	//Load the next level
+			//	CSGD_FModManager::GetInstance()->PlaySoundA(m_nLvCompSoundID);
+			//	CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
+			//	return true;
+			//}
+			//else if( pBase->GetType() == OBJ_PIT && this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION)
+			//{
+			//	return pBase->CheckCollision(this, nCanHandleCollision);		
+			//}
+			//else if( pBase->GetType() == OBJ_RAMP && this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION)
+			//{
+			//	return pBase->CheckCollision(this, nCanHandleCollision);	
+			//}
 			else if(pBase->GetType() == OBJ_WATER)
 			{
 				//if the tile is frozen we can walk past it

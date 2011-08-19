@@ -50,14 +50,21 @@ void CBitFont::LoadCharInfo(std::string filename)
 		pChar = pChar->NextSiblingElement("Char");	
 	}
 }
-void CBitFont::Print( char* _ToPrint, int _PosX, int _PosY, float _scale )
+void CBitFont::Print( std::string _ToPrint, int _PosX, int _PosY, float _scale )
 {
 	int OrgX = _PosX; 
 
-	for( unsigned int i  = 0; i < strlen( _ToPrint ); ++i )
+	for( unsigned int i  = 0; i < _ToPrint.size(); ++i )
 	{
 		char proc = _ToPrint[i];
 		int index = proc - m_cStart;
+		if(index == -22)
+		{
+			_PosX = OrgX;
+			_PosY += (int)(dimensions.y * _scale);
+			continue;
+		}
+			//index = 10;
 		//Dont try to print any invalid characters
 		if(index >= CharInfo.size() || index < 0)
 			continue;
@@ -68,7 +75,7 @@ void CBitFont::Print( char* _ToPrint, int _PosX, int _PosY, float _scale )
 				_PosX += (int)(( dimensions.x / 2 )* _scale);
 				continue;
 			}
-			else if( proc == '\n' )
+			else if( (char*)_ToPrint[i] == "" )
 			{
 				_PosX = OrgX;
 				_PosY += (int)(dimensions.y * _scale);

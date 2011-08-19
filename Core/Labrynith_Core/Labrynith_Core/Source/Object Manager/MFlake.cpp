@@ -436,6 +436,7 @@ int MFlake::GetInfoAtIndex( int _x, int _y )
 
 void MFlake::SetInfoAtIndex( int _x, int _y, int _value )
 {
+	// 11 or 12 && 3
 	if( _x < LayerWidth && _x >= 0 )
 	{
 		if(_y >= 0)

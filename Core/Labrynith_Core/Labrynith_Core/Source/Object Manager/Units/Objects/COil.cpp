@@ -74,7 +74,7 @@ void COil::Update(float fDT)
 
 void COil::Render( int CameraPosX , int CameraPosY )
 {
-	CBaseObject::Render( CameraPosX , CameraPosY ) ;
+	/*CBaseObject::Render( CameraPosX , CameraPosY ) ;
 	if( GetOnFire() )
 	{
 		CAnimationManager::GetInstance()->Draw(m_nAnimID, (int)(GetPosX() - CameraPosX), (int)(GetPosY() - CameraPosY),
@@ -82,7 +82,7 @@ void COil::Render( int CameraPosX , int CameraPosY )
 
 		MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
 			.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 185 );
-	}
+	}*/
 }
 
 
@@ -98,7 +98,7 @@ void COil::SetOnFire( bool onFire )
 
 bool COil::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 {
-	if(!pBase || pBase == this ||  this->GetLayerLocation() != pBase->GetLayerLocation())
+	if(!pBase || pBase == this || this->GetLayerLocation() != pBase->GetLayerLocation())
 		return false;
 
 	if(GetIsOil())

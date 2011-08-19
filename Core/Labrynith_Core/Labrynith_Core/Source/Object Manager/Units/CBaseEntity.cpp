@@ -6,6 +6,11 @@
 #include "../../GameStates/CGamePlayState.h"
 #include "CBaseGolem.h"
 #include "CPlayer.h"
+#include "CBaseObject.h"
+#include "../../Wrappers/CSGD_FModManager.h"
+#include "../../GameStates/CSaveSlotState.h"
+#include "../../CGame.h"
+#include "../../GameStates/CLoadLevelState.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -98,6 +103,7 @@ void CBaseEntity::Update(float fDT)
 
 			MObjectManager::GetInstance()->FindFlake( this->m_nIdentificationNumber ).FinishMovingEnt( this );
 			SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
+			CheckAtDestinationCollision();
 		}
 	}
 	else
@@ -112,6 +118,45 @@ void CBaseEntity::Update(float fDT)
 			CAnimationManager::GetInstance()->StopAnimationAtFrame(GetCurrentAnimID(), 0);
 		}
 		
+	}
+}
+
+void CBaseEntity::CheckAtDestinationCollision()
+{
+	//Check to see if we are colliding with a tile
+	int tileID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
+		.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+	CBaseObject* pBase = (CBaseObject*)(MObjectManager::GetInstance()->GetUnit(tileID));
+
+	if(!pBase || this->GetLayerLocation() != pBase->GetLayerLocation())
+		return;
+
+	if( pBase->m_nIdentificationNumber > 0 )
+	{
+		if(pBase->GetType() == OBJ_EXIT)
+		{
+			CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
+			//BUG- check if the level is valid
+			pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
+			//Save the new current level we are on
+			CSaveSlotState::GetInstance()->Save();
+			//Load the next level
+			CSGD_FModManager::GetInstance()->PlaySoundA(((CPlayer*)this)->GetLvlCompSoundID());
+			CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
+		}
+		else if( pBase->GetType() == OBJ_PIT)
+		{
+			pBase->CheckCollision(this, true);		
+		}
+		else if( pBase->GetType() == OBJ_RAMP)
+		{
+			pBase->CheckCollision(this, true);	
+		}
+		else if( pBase->GetType() == OBJ_HELPER)
+		{
+			pBase->CheckCollision(this, true);	
+		}
 	}
 }
 void CBaseEntity::Render( int CameraPosX, int CameraPosY )

@@ -245,7 +245,7 @@ bool CGolem_Lava::CanInteract(IUnitInterface* pBase)
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if( temp->GetType() == ENT_PLAYER )
 			{
-				//((CPlayer*)temp)->SetLives( ((CPlayer*)temp)->GetLives() - 1 ) ;
+				((CPlayer*)temp)->SetLives( ((CPlayer*)temp)->GetLives() - 1 ) ;
 				return true;
 			}
 			else if(temp->GetType() == ENT_GOLEM)

@@ -4,7 +4,7 @@
 #include "CBaseEntity.h"
 
 //how long the player is invincible
-#define INVTIME 2.0f
+#define INVTIME 3.0f
 
 class CBaseObject;
 
@@ -33,6 +33,7 @@ public:
 	void Input();
 	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 	void ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision);
+	bool CanInteract(IUnitInterface* pBase);
 	bool CheckTileCollision(int TileID);
 	void SwitchItems(void); // switches held and equipped items if it is possible
 	void ActivateEquipped(void);	//	activates the equipped item
@@ -43,6 +44,7 @@ public:
 	bool IsInvincible() const;
 	int GetPickUpSoundID() { return m_nPickUpSoundID ; } ;
 	int GetPutDownSoundID() { return m_nPutDownSoundID ; } ;
+	int GetLvlCompSoundID() { return m_nLvCompSoundID ; } ;
 	CBaseObject* GetHeldItem() const;
 	CBaseObject* GetEquippedItem() { return m_pEquippedItem ; } ;
 	

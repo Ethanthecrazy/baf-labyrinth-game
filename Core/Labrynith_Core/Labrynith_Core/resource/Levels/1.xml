@@ -946,9 +946,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>3</X>
+            <Y>2</Y>
           </Type>
+          <Property>this is a\ntest</Property>
         </Tile>
         <Tile>
           <Type>
@@ -7162,9 +7163,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>3</X>
+            <Y>2</Y>
           </Type>
+          <Property>this is another test</Property>
         </Tile>
         <Tile>
           <Type>
@@ -11151,9 +11153,9 @@
       </Position>
     </TileObject>
   </Objects>
-  <FileName>C:\Users\Ethan\Desktop\Labyrinth\Labrynith_Core\Labrynith_Core\resource\Levels\1.xml</FileName>
-  <Tilesetpath>C:\Users\Ethan\Desktop\Labrinth Level Editor\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
-  <ObjectTilesetpath>C:\Users\Ethan\Desktop\Labrinth Level Editor\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
+  <FileName>C:\Users\Jon M Taylor\Desktop\Labrynith_Core\Labrynith_Core\resource\Levels\1.xml</FileName>
+  <Tilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
+  <ObjectTilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>
     <Width>5</Width>
     <Height>4</Height>
