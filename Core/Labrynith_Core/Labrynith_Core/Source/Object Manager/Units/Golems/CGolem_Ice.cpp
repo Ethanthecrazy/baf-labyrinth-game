@@ -136,11 +136,11 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
-							//turn me into a water golem
-							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, WATER_GOLEM));
 							//Get rid of the Fire Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(temp->m_nIdentificationNumber));
-
+							//turn me into a water golem
+							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(this, WATER_GOLEM));
+							
 							CSteamPuff* toAdd = new CSteamPuff();
 
 							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
@@ -150,8 +150,10 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						}
-						//It thinks it can walk thro the golem
-						return false;
+						//Trick the AI into thinking it can walk tho
+						//this entity, however when it actully tries to
+						//it wont be able to walk past it
+						return nCanHandleCollision;
 					}
 					break;
 
@@ -194,18 +196,20 @@ bool CGolem_Ice::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 							//Get rid of this the Ice Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 
-						CSteamPuff* toAdd = new CSteamPuff();
+							CSteamPuff* toAdd = new CSteamPuff();
 
 							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2 - 64 );
 							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2 - 16 );
-							toAdd->SetIndexPosX( GetIndexPosX() );
-							toAdd->SetIndexPosY( GetIndexPosY() );
+							toAdd->SetIndexPosX(GetIndexPosX());
+							toAdd->SetIndexPosY(GetIndexPosY());
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						
 						}
-						//It thinks it can walk thro the golem
-						return false;
+						//Trick the AI into thinking it can walk tho
+						//this entity, however when it actully tries to
+						//it wont be able to walk past it
+						return nCanHandleCollision;
 					}
 					break;
 				};

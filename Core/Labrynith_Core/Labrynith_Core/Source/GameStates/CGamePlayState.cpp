@@ -696,8 +696,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			};
 			//remove the current golem and add the new one
 			//in its place
-			idholder->newID = OM->AddUnitIndexed(pNewGolem, pGolem->GetLayerLocation());
+			int layerlocation = pGolem->GetLayerLocation();
 			OM->RemoveUnit(pGolem->m_nIdentificationNumber);
+			idholder->newID = OM->AddUnitIndexed(pNewGolem, layerlocation);
 
 			if(msg->GetNewID())
 				msg->SetNewID(idholder->newID);

@@ -131,14 +131,16 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
+							int* newID = new int;						
 							//turn me into an Lava Golem
-							int* newID = new int;
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, LAVA_GOLEM, newID));
-							//Get rid of the Fire golem
+							//Get rid of the Fire golem							
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
 						}	
-						//It thinks it can walk thro the golem
-						return false;
+						//Trick the AI into thinking it can walk tho
+						//this entity, however when it actully tries to
+						//it wont be able to walk past it
+						return nCanHandleCollision;
 					}
 					break;
 				};

@@ -341,11 +341,11 @@ void MFlake::Render( int CameraX, int CameraY )
 			m_vObjects[i]->Render( CameraX, CameraY );
 		}
 
-		/*char temp[64];
+		char temp[64];
 
 		for( int y = 0; y < LayerHeight; ++y )
 		{
-			for( int x = 0; x < LayerWidt6h; ++x )
+			for( int x = 0; x < LayerWidth; ++x )
 			{
 				if(InformationArray[ x + y * LayerWidth ] == 0)
 					continue;
@@ -354,7 +354,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
 			}
-		}*/
+		}
 
 		break;
 
@@ -369,7 +369,7 @@ void MFlake::Render( int CameraX, int CameraY )
 				m_vObjects[i]->Render( CameraX, CameraY );
 			}
 
-			/*char temp[64];
+			char temp[64];
 
 			for( int y = 0; y < LayerHeight; ++y )
 			{
@@ -382,7 +382,7 @@ void MFlake::Render( int CameraX, int CameraY )
 
 					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
 				}
-			}*/
+			}
 		}
 
 		break;

@@ -68,7 +68,6 @@ void COil::Update(float fDT)
 			MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( this->GetIndexPosX() , this->GetIndexPosY() , 0 ) ;
 			MObjectManager::GetInstance()->RemoveUnit( this->m_nIdentificationNumber ) ;
 			CSGD_FModManager::GetInstance()->StopSound( m_nFireSoundID ) ;
-			//this->Release();
 		}
 	}
 }

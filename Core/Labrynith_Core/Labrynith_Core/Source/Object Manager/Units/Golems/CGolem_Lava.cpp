@@ -141,8 +141,10 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						
 						}		
-						//It thinks it can walk thro the golem
-						return false;
+						//Trick the AI into thinking it can walk tho
+						//this entity, however when it actully tries to
+						//it wont be able to walk past it
+						return nCanHandleCollision;
 					}
 					break;
 
@@ -170,8 +172,10 @@ bool CGolem_Lava::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						
 						}	
-						//It thinks it can walk thro the golem
-						return false;
+						//Trick the AI into thinking it can walk tho
+						//this entity, however when it actully tries to
+						//it wont be able to walk past it
+						return nCanHandleCollision;
 					}
 					break;
 				};
@@ -241,7 +245,7 @@ bool CGolem_Lava::CanInteract(IUnitInterface* pBase)
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if( temp->GetType() == ENT_PLAYER )
 			{
-				((CPlayer*)temp)->SetLives( ((CPlayer*)temp)->GetLives() - 1 ) ;
+				//((CPlayer*)temp)->SetLives( ((CPlayer*)temp)->GetLives() - 1 ) ;
 				return true;
 			}
 			else if(temp->GetType() == ENT_GOLEM)

@@ -60,7 +60,7 @@ void CGolem_Fire::Update(float fDT)
 				continue;
 			if( entity->GetType() == ENT_PLAYER )
 			{
-				((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
+				//((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
 			}
 		}
 	}
@@ -116,15 +116,16 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(temp->GetIndexPosX(), temp->GetIndexPosY());
 
 							temp->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
-							//turn me into an Lava Golem
 							int* newID = new int;
+							//turn me into an Lava Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, LAVA_GOLEM, newID));
-							//Get rid of the Earth golem
-							//MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
+							//Get rid of the Earth golem		
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));						
 						}	
-						//It thinks it can walk thro the golem
-						return false;
+						//Trick the AI into thinking it can walk tho
+						//this entity, however when it actully tries to
+						//it wont be able to walk past it
+						return nCanHandleCollision;
 					}
 					break;
 
@@ -172,10 +173,11 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 												.GetFlake(OBJECT_TILE).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
 
 							this->ExitCollision(MObjectManager::GetInstance()->GetUnit(tileid), nCanHandleCollision);
-							//Get rid of this the Fire Golem
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
 							//Change the Ice Golem into a Water Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, WATER_GOLEM));
+							//Get rid of this the Fire Golem
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+							
 
 							CSteamPuff* toAdd = new CSteamPuff();
 
@@ -186,8 +188,10 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						}	
-						//It thinks it can walk thro the golem
-						return false;
+						//Trick the AI into thinking it can walk tho
+						//this entity, however when it actully tries to
+						//it wont be able to walk past it
+						return nCanHandleCollision;
 					}
 					break;
 				};
@@ -267,7 +271,7 @@ bool CGolem_Fire::CanInteract(IUnitInterface* pBase)
 				{
 				case ICE_GOLEM:
 					{
-						return true;
+						return false;
 					}
 					break;
 				};
