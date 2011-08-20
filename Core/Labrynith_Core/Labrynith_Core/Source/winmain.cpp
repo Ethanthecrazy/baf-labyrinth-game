@@ -38,7 +38,7 @@
 
 #include "CGame.h"
 
-//#pragma comment( linker, "/SUBSYSTEM:Console" )
+#pragma comment( linker, "/SUBSYSTEM:Console" )
 
 const char* g_szWINDOW_CLASS_NAME	= "LabyrinthCore";			//	Window Class Name.
 
