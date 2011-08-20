@@ -58,7 +58,7 @@ public:
 	int GetStateAnimID();
 	
 	//mutators
-	void SetLives(const int nLives);
+	bool SetLives(const int nLives);
 	void SetInvincilibity(const bool bIsInvincible);
 	void SetPickUpSoundID(int ID ) { m_nPickUpSoundID = ID ; } ;
 	void SetPutDownSoundID(int ID) { m_nPutDownSoundID = ID ; } ;

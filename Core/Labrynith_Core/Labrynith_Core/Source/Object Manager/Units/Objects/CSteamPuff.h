@@ -20,6 +20,7 @@ public:
 	virtual void Render( int CameraPosX, int CameraPosY );
 
 	void MakeIce();
+	void MakeFire();
 
 };
 

@@ -247,7 +247,16 @@ bool CGolem_Lava::CanInteract(IUnitInterface* pBase)
 			CBaseEntity* temp = (CBaseEntity*)pBase;
 			if( temp->GetType() == ENT_PLAYER )
 			{
-				((CPlayer*)temp)->SetLives( ((CPlayer*)temp)->GetLives() - 1 ) ;
+				if(((CPlayer*)temp)->SetLives( ((CPlayer*)temp)->GetLives() - 1 ))
+				{
+					CSteamPuff* toAdd = new CSteamPuff();
+					toAdd->MakeFire();
+					toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2);
+					toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2);
+					toAdd->SetIndexPosX( GetIndexPosX() );
+					toAdd->SetIndexPosY( GetIndexPosY() );
+					MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+				}
 				return true;
 			}
 			else if(temp->GetType() == ENT_GOLEM)

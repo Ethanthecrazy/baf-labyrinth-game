@@ -55,7 +55,6 @@ void CPlayer::Update(float fDT)
 	UpdateInvincibilityTime(fDT);
 	UpdateAnimState(fDT);
 	Input();
-
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
 {
@@ -110,7 +109,7 @@ void CPlayer::UpdateAnimState(float fDT)
 	if(animindex > (int)m_vMovementAnimIDs.size() || animindex == -1)
 		return;
 
-	int id = m_vMovementAnimIDs[GetStateAnimID()];
+	int id = m_vMovementAnimIDs[animindex];
 	CAnimationManager* AM = CAnimationManager::GetInstance();
 	AM->UpdateAnimation(fDT, id);
 
@@ -457,13 +456,13 @@ int CPlayer::GetStateAnimID()
 	return -1;
 }
 //mutators
-void CPlayer::SetLives(const int nLives)
+bool CPlayer::SetLives(const int nLives)
 {
 	if(nLives < 0)
-		return;
+		return false;
 
 	if(IsInvincible() && nLives < m_nLives)
-		return;
+		return false;
 
 	//if the player loses a life(s) they are
 	//temporarily invincible
@@ -477,6 +476,7 @@ void CPlayer::SetLives(const int nLives)
 
 	if(GetLives() <= 0)
 		CGamePlayState::GetInstance()->KillPlayer();
+	return true;
 }
 void CPlayer::SetInvincilibity(const bool bIsInvincible)
 {

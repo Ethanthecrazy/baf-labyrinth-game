@@ -62,7 +62,16 @@ void CGolem_Fire::Update(float fDT)
 				continue;
 			if( entity->GetType() == ENT_PLAYER )
 			{
-				((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ) ;
+				if(((CPlayer*)entity)->SetLives( ((CPlayer*)entity)->GetLives() - 1 ))
+				{
+					CSteamPuff* toAdd = new CSteamPuff();
+					toAdd->MakeFire();
+					toAdd->SetPosX(GetPosX() + (i * 64));
+					toAdd->SetPosY(GetPosY() + (u * 64));
+					toAdd->SetIndexPosX( entity->GetIndexPosX() );
+					toAdd->SetIndexPosY( entity->GetIndexPosY() );
+					MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
+				}
 			}
 		}
 	}
@@ -122,7 +131,15 @@ bool CGolem_Fire::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 							//turn me into an Lava Golem
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, LAVA_GOLEM, newID));
 							//Get rid of the Earth golem		
-							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));						
+							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));	
+
+							CSteamPuff* toAdd = new CSteamPuff();
+							toAdd->MakeFire();
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2);
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2);
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						}	
 						//Trick the AI into thinking it can walk tho
 						//this entity, however when it actully tries to

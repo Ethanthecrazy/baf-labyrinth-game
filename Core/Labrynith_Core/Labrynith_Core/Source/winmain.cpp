@@ -248,7 +248,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	{
 		if (CheckIfAlreadyRunning())
 		{
-			hPrevInstance = hInstance;
+			//hPrevInstance = hInstance;
 			return FALSE;
 		}
 	}

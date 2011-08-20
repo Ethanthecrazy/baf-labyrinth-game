@@ -5,6 +5,7 @@
 #include "../../MObjectManager.h"
 #include "../Tiles/CWaterTile.h"
 #include "../CBaseObject.h"
+#include "../Objects/CSteamPuff.h"
 
 
 void CGolem_Earth::EarthGolemSetup()
@@ -136,6 +137,14 @@ bool CGolem_Earth::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollisio
 							MMessageSystem::GetInstance()->SendMsg(new msgChangeGolemType(temp, LAVA_GOLEM, newID));
 							//Get rid of the Fire golem							
 							MMessageSystem::GetInstance()->SendMsg(new msgRemoveGolemCombined(this->m_nIdentificationNumber, newID));
+
+							CSteamPuff* toAdd = new CSteamPuff();
+							toAdd->MakeFire();
+							toAdd->SetPosX( ( ( GetPosX() ) + ( temp->GetPosX() ) ) / 2);
+							toAdd->SetPosY( ( ( GetPosY() ) + ( temp->GetPosY() ) ) / 2);
+							toAdd->SetIndexPosX( GetIndexPosX() );
+							toAdd->SetIndexPosY( GetIndexPosY() );
+							MObjectManager::GetInstance()->AddUnit( toAdd, MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetLayerID() );
 						}	
 						//Trick the AI into thinking it can walk tho
 						//this entity, however when it actully tries to

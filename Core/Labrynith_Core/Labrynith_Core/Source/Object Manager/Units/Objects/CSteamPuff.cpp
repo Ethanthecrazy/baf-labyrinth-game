@@ -53,3 +53,16 @@ void CSteamPuff::MakeIce()
 
 	scale = 1.0f;
 }
+
+void CSteamPuff::MakeFire()
+{
+	CAnimationManager::GetInstance()->StopAnimation( ID_ANI );
+
+	ID_ANI = CAnimationManager::GetInstance()->GetID("burning-animation");
+	m_nImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Fire1(2).png" );
+
+	CAnimationManager::GetInstance()->SetAnimTexture( ID_ANI, m_nImageID );
+	CAnimationManager::GetInstance()->PlayAnimation( ID_ANI );
+
+	scale = 0.8f;
+}

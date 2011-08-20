@@ -33,14 +33,14 @@ void CHUD::Render()
 	TM->Draw(InvSlotImageID, 770 - 30, 636 - 40);
 	if(pHeldItem)
 	{
-		TM->Draw(pHeldItem->m_nImageID, 786 - 30, 652 - 40);
+		TM->Draw(pHeldItem->m_nImageID, 770 - 30, 636 - 40);
 	}
 	//Player EquippedItem
 	CBaseObject* pEquipItem = pPlayer->GetEquippedItem();
 	TM->Draw(InvSlotImageID, 834 - 30, 636 - 40);
 	if(pEquipItem)
 	{
-		TM->Draw(pEquipItem->m_nImageID, 850 - 30, 652 - 40);
+		TM->Draw(pEquipItem->m_nImageID, 834 - 30, 636 - 40);
 	}
 
 }

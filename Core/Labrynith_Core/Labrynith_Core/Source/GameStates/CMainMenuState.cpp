@@ -135,6 +135,7 @@ void CMainMenuState::Render(void)
 	MetalText.Print( "Options", 460, 360, 0.5f );
 	MetalText.Print( "Credits", 460, 390, 0.5f );
 	MetalText.Print( "Exit", 460, 420, 0.5f );
+	MetalText.Print( "Labyrinthium", 150, 50, 0.7f );
 }
 
 void CMainMenuState::Exit(void)

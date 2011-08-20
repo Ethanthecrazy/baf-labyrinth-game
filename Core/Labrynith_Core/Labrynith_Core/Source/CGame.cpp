@@ -51,6 +51,7 @@ void CGame::Initialize(HWND hWnd, HINSTANCE hInstance,
 	//CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/ice.xml", true );
 	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/icetest.xml", true );
 	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/playeranims.xml", true );
+	CAnimationManager::GetInstance()->LoadAnimation("resource/Animation Files/playerburn.xml", true );
 
 	CSGD_DirectInput::GetInstance()->InitDirectInput(hWnd, hInstance, DI_JOYSTICKS | DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
 
