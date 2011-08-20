@@ -149,8 +149,8 @@ void CLoadLevelState::Render(void)
 }
 
 void CLoadLevelState::Exit(void)
-{	
-	cout << "Load Level State -> ";
+{
+	cout << "LoadLevel -> ";
 }
 
 void CLoadLevelState::EnterCommand(void)
