@@ -8,8 +8,9 @@
 #include "../CBaseEntity.h"
 #include "../CPlayer.h"
 
-CRamp::CRamp(string direction)
+CRamp::CRamp(string direction, int nFloorlevel)// : floorlevel(nFloorlevel)
 {	
+	floorlevel = nFloorlevel;
 	this->m_nType = OBJ_RAMP;
 	m_nUnitType = OBJECT_TILE;
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
@@ -22,7 +23,7 @@ CRamp::CRamp(string direction)
 		Up = true;
 		this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Stairs_Up.png" ));
 	}
-	else
+	else if(direction == "down")
 	{
 		Up = false;
 		this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Stairs_Down.png" ));
@@ -38,14 +39,30 @@ bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	if(Up)
 	{
-		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-			this->GetLayerLocation() - 1) );
+		if(floorlevel == -1)
+		{
+			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
+				this->GetLayerLocation() - 1) );
+		}
+		else
+		{
+			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
+			floorlevel) );
+		}
 		MMessageSystem::GetInstance()->ProcessMessages();
 	}
 	else
 	{
-		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-			this->GetLayerLocation() + 1) );
+		if(floorlevel == -1)
+		{
+			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
+				this->GetLayerLocation() + 1) );
+		}
+		else
+		{			
+			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
+				floorlevel) );
+		}
 		MMessageSystem::GetInstance()->ProcessMessages();
 	}
 

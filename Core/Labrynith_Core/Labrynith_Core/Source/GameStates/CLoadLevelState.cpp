@@ -366,7 +366,31 @@ bool CLoadLevelState::LoadLevel(int _level)
 						
 						case 8: // ramp tile
 							{
-								CRamp* temp = new CRamp(prop);
+								string info = "";
+								string gotolevel = "";
+								int realgotolevel;
+								for(unsigned int i = 0; i < prop.length(); ++i)
+								{
+									if(prop[i] == '.')
+										break;
+
+									info += prop[i];
+								}
+								bool hitit = false;
+								for(unsigned int i = 0; i < prop.length(); ++i)
+								{
+									if(prop[i] != '.' && !hitit)
+										continue;
+
+									hitit = true;
+									if(prop[i] == '.')
+										continue;
+
+									gotolevel += prop[i];
+								}
+								realgotolevel = atoi(gotolevel.c_str());
+
+								CRamp* temp = new CRamp(info, realgotolevel);
 								temp->SetLayerLocation(z);
 								((CRamp*)temp)->SetPosX((float)(x * TILE_WIDTH));
 								((CRamp*)temp)->SetPosY((float)(y * TILE_HEIGHT));

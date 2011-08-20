@@ -9,9 +9,10 @@ using std::string;
 class CRamp : public CBaseObject
 {
 	bool Up;
+	int floorlevel;
 	int m_nMoveFloorSoundID;
 public:
-	CRamp(string direction = "");
+	CRamp(string direction = "", int nFloorlevel = -1);
 
 	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 };
