@@ -51,6 +51,7 @@ CLoadLevelState* CLoadLevelState::GetInstance()
 
 void CLoadLevelState::Enter(void)
 {	
+	cout << "Load Level State\n";
 	totalobjects = 0;
 	loadingat = 0;
 	percentComplete = 0;
@@ -148,8 +149,8 @@ void CLoadLevelState::Render(void)
 }
 
 void CLoadLevelState::Exit(void)
-{
-
+{	
+	cout << "Load Level State -> ";
 }
 
 void CLoadLevelState::EnterCommand(void)
@@ -464,6 +465,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 		CGamePlayState::GetInstance()->SetNumLevelFloors(z-1);
 	}
+	cout << "Tiles loaded\n";
 
 
 	TiXmlElement* pObjects = pRoot->FirstChildElement("Objects");	
@@ -708,7 +710,10 @@ bool CLoadLevelState::LoadLevel(int _level)
 		}
 	}
 	
+	cout << "Objects created\n";
 	
 	MEventSystem::GetInstance()->SendEvent("spawner.spawn");
+
+	cout << "Spawn event sent\n";
 	return true;
 }

@@ -22,6 +22,7 @@ class CPlayer : public CBaseEntity
 	CBaseObject *m_pHeldItem;
 	CBaseObject *m_pEquippedItem;
 	int HurtSoundID;
+	int HeartImageID;
 	enum ANIMSTATE{ANIM_MOVING, ANIM_THROW, NUMANIMSTATE};
 
 	void UpdateInvincibilityTime(float fDT);

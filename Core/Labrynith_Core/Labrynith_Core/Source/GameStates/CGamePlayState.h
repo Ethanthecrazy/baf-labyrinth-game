@@ -42,7 +42,7 @@ public:
 	int cameraX;
 	int cameraY;
 
-	static int testVaribale;
+	int testVaribale;
 	static CGamePlayState* GetInstance();
 
 	void Enter(void);

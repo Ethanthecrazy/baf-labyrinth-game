@@ -19,7 +19,7 @@ CBaseObject::CBaseObject()
 	 m_nUnitType = OBJECT_OBJECT;
 	 m_nIdentificationNumber = 0;
 	 m_nImageID = -1;
-	  m_uiRefCount = 1;
+	 m_uiRefCount = 1;
 	 this->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );	 
 }
 

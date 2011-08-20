@@ -6,7 +6,7 @@
 #include "..\Wrappers\CSGD_DirectInput.h"
 #include "..\Wrappers\CSGD_TextureManager.h"
 #include "..\Wrappers\CSGD_Direct3D.h"
-
+#include <iostream>
 
 COptionsState::COptionsState(void)
 {
@@ -29,6 +29,7 @@ COptionsState::~COptionsState(void)
 
 void COptionsState::Enter(void)
 {
+	cout << "Options\n";
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 	CSGD_FModManager* pFM = CSGD_FModManager::GetInstance();
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
@@ -224,7 +225,8 @@ void COptionsState::Exit(void)
 		out.close();
 	}
 
-
+	
+	cout << "Options -> ";
 }
 void COptionsState::EnterCommand(void)
 {

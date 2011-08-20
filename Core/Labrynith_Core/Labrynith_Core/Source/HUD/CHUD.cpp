@@ -3,7 +3,8 @@
 #include "../Object Manager/MObjectManager.h"
 #include "../Object Manager/Units/CPlayer.h"
 #include "../Object Manager/Units/CBaseObject.h"
-
+#include "../GameStates/CGamePlayState.h"
+#include <iostream>
 CHUD::CHUD()
 {
 	pPlayer = NULL;
@@ -17,16 +18,14 @@ CHUD::~CHUD()
 }
 void CHUD::Render()
 {
+	pPlayer = (CPlayer*)MObjectManager::GetInstance()->GetUnit( CGamePlayState::GetInstance()->testVaribale );
+	
 	if(pPlayer == NULL)
-		return;
-
-	CSGD_TextureManager* TM = CSGD_TextureManager::GetInstance();
-
-	//Player Lives
-	for(int i = 0; i < pPlayer->GetLives(); i++)
 	{
-		TM->Draw(HeartImageID,(i * TILE_WIDTH) + 30, 40);
+		return;
 	}
+	
+	CSGD_TextureManager* TM = CSGD_TextureManager::GetInstance();
 
 	//Player HeldItem
 	CBaseObject* pHeldItem = pPlayer->GetHeldItem();
@@ -42,7 +41,7 @@ void CHUD::Render()
 	{
 		TM->Draw(pEquipItem->m_nImageID, 834 - 30, 636 - 40);
 	}
-
+	
 }
 CHUD* CHUD::GetInstance()
 {
@@ -55,12 +54,13 @@ void CHUD::SetPlayer(const int nID)
 	//if this is a player object
 	//BUG - need a way to determine if this obj
 	// is the player or not
-	if(obj->GetType() == OBJECT_ENTITY)
+	if(obj->m_nUnitType == OBJECT_ENTITY)
 	{
-		pPlayer = (CPlayer*)obj;
+		if(obj->GetType() == ENT_PLAYER)
+			pPlayer = (CPlayer*)obj;
 	}
 }
-void CHUD::SetPlayer(const CPlayer* player)
+void CHUD::SetPlayer(CPlayer* player)
 {
-	pPlayer = ((CPlayer*)(player));
+	pPlayer = player;
 }

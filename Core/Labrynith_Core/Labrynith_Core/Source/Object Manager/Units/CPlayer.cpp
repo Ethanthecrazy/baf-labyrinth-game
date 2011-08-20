@@ -1,7 +1,6 @@
 #include "CPlayer.h"	
 #include "../MObjectManager.h"
 #include "../../AI Handler/CAI_Handler.h"
-#include "../../Wrappers/CSGD_DirectInput.h"
 #include "../../GameStates/CGamePlayState.h"
 #include "../../GameStates/CSaveSlotState.h"
 #include "Tiles\CDoor.h"
@@ -12,8 +11,10 @@
 #include "../../CGame.h"
 #include "CBaseObject.h"
 #include <iostream>
+#include "../../Wrappers/CSGD_DirectInput.h"
 #include "../../Wrappers/CSGD_Direct3D.h"
 #include "../../Wrappers/CSGD_FModManager.h"
+#include "../../Wrappers/CSGD_TextureManager.h"
 #include "../../Animation Manager/CAnimationManager.h"
 #include "Tiles\CMetal.h"
 #include "Tiles\CElectricButton.h"
@@ -27,7 +28,9 @@ CPlayer::CPlayer(void)
 	m_nType = ENT_PLAYER;
 	SetHeldItem(NULL);
 	SetEquippedItem(NULL);	
-	SetLives(4);	
+	HeartImageID = CSGD_TextureManager::GetInstance()->LoadTexture( "resource/heart.png" );
+	//SetLives(4);	
+	m_nLives = 4;
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	m_nPickUpSoundID = FM->LoadSound("resource/Sounds/pick-up.mp3" );
 	m_nPutDownSoundID = FM->LoadSound("resource/Sounds/put-down.mp3" );
@@ -57,8 +60,16 @@ void CPlayer::Update(float fDT)
 	Input();
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
-{
-	
+{	
+	CSGD_TextureManager* TM = CSGD_TextureManager::GetInstance();
+
+	//Player Lives
+	for(int i = 0; i < GetLives(); i++)
+	{
+		TM->Draw(HeartImageID,(i * TILE_WIDTH) + 30, 40);
+	}
+
+
 	if( GetHeldItem() )
 	{
 		if( GetHeldItem()->GetType() == OBJ_LIGHTORB )

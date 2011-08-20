@@ -36,8 +36,6 @@
 
 using namespace std;
 
-int CGamePlayState::testVaribale = -1;
-
 CGamePlayState::CGamePlayState()
 {
 	m_nCurrLevel = 5;
@@ -91,6 +89,8 @@ void CGamePlayState::Enter(void)
 
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
+	
+	cout << "Leaving CGamePlayStates'Enter\n";
 }
 
 bool CGamePlayState::Input(void)
@@ -175,6 +175,7 @@ void CGamePlayState::GetCamera( int& X , int& Y )
 			Y = 0;
 
 	}
+
 	return ;
 }
 
@@ -184,7 +185,13 @@ void CGamePlayState::Render(void)
 
 	CBaseEntity* player = nullptr;
 	if( testVaribale > 0 )
+	{
 		player = (CBaseEntity*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+	}
+	else
+	{		
+		cout << "No player to render\n";
+	}
 
 	if( player )
 	{
@@ -219,7 +226,7 @@ void CGamePlayState::Render(void)
 	int mouseY = CSGD_DirectInput::GetInstance()->MouseGetPosY() ;
 
 	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
-
+	
 	MMessageSystem::GetInstance()->ProcessMessages();
 
 	//char temp[64];
@@ -483,8 +490,9 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			((CPlayer*)(temp))->SetPosX( (float)NewMessage->GetX() * TILE_WIDTH );
 			((CPlayer*)(temp))->SetPosY( (float)NewMessage->GetY() * TILE_HEIGHT );
 			//set-up the HUD so it renders player info
-			CHUD::GetInstance()->SetPlayer(((CPlayer*)(temp)));
-			testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, NewMessage->GetZ() );
+			CHUD::GetInstance()->SetPlayer(temp);
+			CGamePlayState::GetInstance()->testVaribale = MObjectManager::GetInstance()->AddUnitIndexed( temp, NewMessage->GetZ() );
+			//CHUD::GetInstance()->SetPlayer(testVaribale);
 		}
 		break;
 
@@ -527,7 +535,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgPlaceObject* NewMessage = (msgPlaceObject*)_message;
 			int tileXPos = NewMessage->GetTileXPos() ;
 			int tileYPos = NewMessage->GetTileYPos() ;
-			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( CGamePlayState::GetInstance()->testVaribale );
 
 			if( !player->GetHeldItem() )	//	break if the player isnt holding an item
 				break;
@@ -570,7 +578,7 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 		{
 			msgPickUpObject* NewMessage = (msgPickUpObject*)_message;
 			CBaseObject* pBase = NewMessage->GetMsgObject() ;
-			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( testVaribale );
+			CPlayer* player = (CPlayer*)MObjectManager::GetInstance()->GetUnit( CGamePlayState::GetInstance()->testVaribale );
 
 			if( pBase->GetType() == OBJ_POWERGLOVES || pBase->GetType() == OBJ_OILCAN )
 			{
@@ -632,8 +640,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 			if(pEntity->GetType() == ENT_PLAYER)
 			{
-				MEventSystem::GetInstance()->SendEvent("spawner.createdplayer", (void*)testVaribale);	
-				idholder->newID = testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());			
+				MEventSystem::GetInstance()->SendEvent("spawner.createdplayer", (void*)CGamePlayState::GetInstance()->testVaribale);	
+				idholder->newID = CGamePlayState::GetInstance()->testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());			
 			}
 			else
 			{

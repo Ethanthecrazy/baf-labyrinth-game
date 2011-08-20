@@ -6,7 +6,7 @@
 #include "..\Wrappers\CSGD_FModManager.h"
 #include "CGamePlayState.h"
 #include "../Messaging/MMessageSystem.h"
-
+#include <iostream>
 string CHelpState::helptext = "";
 
 CHelpState::CHelpState(void)
@@ -24,6 +24,7 @@ CHelpState::~CHelpState(void)
 
 void CHelpState::Enter(void)
 {
+	cout << "HelpState\n";
 	CSGD_TextureManager* pTM = CSGD_TextureManager::GetInstance();
 	COptionsState* Opt = COptionsState::GetInstance();
 
@@ -87,7 +88,8 @@ void CHelpState::Exit(void)
 
 	if( CGamePlayState::GetInstance()->m_nCurrLevel == 4 )
 		MMessageSystem::GetInstance()->SendMsg( new msgEndGame() );
-
+	
+	cout << "HelpState -> ";
 }
 void CHelpState::EnterCommand(void)
 {

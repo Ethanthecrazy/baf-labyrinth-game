@@ -8,6 +8,7 @@
 #include "../Wrappers/CSGD_TextureManager.h"
 #include "../Wrappers/CSGD_Direct3D.h"
 #include "../Wrappers/CSGD_FModManager.h"
+#include <iostream>
 
 CSaveSlotState::CSaveSlotState()
 {
@@ -36,6 +37,7 @@ CSaveSlotState* CSaveSlotState::GetInstance()
 
 void CSaveSlotState::Enter(void)
 {
+	cout << "SaveSlot\n";
 	MetalText.Initialize( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/metal.png" ),
 		' ', 64, 64, 10, "resource/Game Saves/metalpng.xml" );
 	//load all the current levels
@@ -115,7 +117,7 @@ bool CSaveSlotState::Input(void)
 		SetSaveSlot(++m_nCurrSaveSlot);
 		FM->PlaySoundA(m_nSoundID);
 	}
-
+	
 	return true;
 }
 
@@ -152,8 +154,8 @@ void CSaveSlotState::Render(void)
 }
 
 void CSaveSlotState::Exit(void)
-{
-
+{	
+	cout << "SaveSlot -> ";
 }
 
 void CSaveSlotState::EnterCommand(void)

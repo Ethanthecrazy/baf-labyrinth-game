@@ -21,6 +21,6 @@ public:
 	void Render();
 	static CHUD* GetInstance();
 	
-	void SetPlayer(const CPlayer* player);
+	void SetPlayer(CPlayer* player);
 };
 #endif
