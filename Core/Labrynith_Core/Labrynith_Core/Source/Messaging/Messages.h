@@ -124,11 +124,14 @@ class msgMoveEntityFloor : public CBaseMessage
 {
 	CBaseEntity* m_pEntity;
 	int m_nFloor;
-
+	int m_nPosX;
+	int m_nPosY;
 public:
-	msgMoveEntityFloor( CBaseEntity* pEntity, int nFloor );
+	msgMoveEntityFloor( CBaseEntity* pEntity, int nFloor, int nPosX, int nPosY  );
 	CBaseEntity* GetEntity() { return m_pEntity; }
 	int GetFloor() { return m_nFloor; }
+	int GetPosX() { return m_nPosX; }
+	int GetPosY() { return m_nPosY; }
 };
 
 class CBaseGolem;

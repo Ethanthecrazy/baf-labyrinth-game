@@ -367,10 +367,14 @@ bool CLoadLevelState::LoadLevel(int _level)
 						
 						case 8: // ramp tile
 							{
-								string info = "";
-								string gotolevel = "";
+								std::string info = "";
+								std::string gotolevel = "";
+								std::string posx = "", posy = "";
 								int realgotolevel;
-								for(unsigned int i = 0; i < prop.length(); ++i)
+								int nposx = -1;
+								int nposy = -1;
+								unsigned int i = 0;
+								for(i = 0; i < prop.length(); ++i)
 								{
 									if(prop[i] == '.')
 										break;
@@ -378,7 +382,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 									info += prop[i];
 								}
 								bool hitit = false;
-								for(unsigned int i = 0; i < prop.length(); ++i)
+								bool haspos = false;
+								for(i; i < prop.length(); ++i)
 								{
 									if(prop[i] != '.' && !hitit)
 										continue;
@@ -386,10 +391,40 @@ bool CLoadLevelState::LoadLevel(int _level)
 									hitit = true;
 									if(prop[i] == '.')
 										continue;
-
+									
+									if(prop[i] == ',')
+									{
+										haspos = true;
+										++i;
+										break;
+									}
 									gotolevel += prop[i];
 								}
 								realgotolevel = atoi(gotolevel.c_str());
+								bool nextpos = false;
+								for(i; i < prop.length(); ++i)
+								{
+									if(!haspos)
+										break;
+
+									if(nextpos)
+									{
+										posy += prop[i];
+										continue;
+									}
+
+									if(prop[i] == ',')
+									{
+										nextpos = true;
+										continue;
+									}
+									posx += prop[i];
+								}
+								if(haspos)
+								{
+									nposx = atoi(posx.c_str());
+									nposy = atoi(posy.c_str());
+								}
 
 								CRamp* temp = new CRamp(info, realgotolevel);
 								temp->SetLayerLocation(z);
@@ -397,6 +432,8 @@ bool CLoadLevelState::LoadLevel(int _level)
 								((CRamp*)temp)->SetPosY((float)(y * TILE_HEIGHT));
 								((CRamp*)temp)->SetIndexPosX(x);
 								((CRamp*)temp)->SetIndexPosY(y);
+								((CRamp*)temp)->SetLinkX(nposx);
+								((CRamp*)temp)->SetLinkY(nposy);
 								MObjectManager::GetInstance()->AddUnitIndexed( temp, z );
 							}
 							break;					

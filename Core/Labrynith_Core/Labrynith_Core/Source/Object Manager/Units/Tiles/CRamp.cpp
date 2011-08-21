@@ -13,6 +13,8 @@ CRamp::CRamp(std::string direction, int nFloorlevel)// : floorlevel(nFloorlevel)
 {	
 	floorlevel = nFloorlevel;
 	this->m_nType = OBJ_RAMP;
+	SetLinkX(-1);
+	SetLinkY(-1);
 	m_nUnitType = OBJECT_TILE;
 	CSGD_FModManager* FM = CSGD_FModManager::GetInstance();
 	m_nMoveFloorSoundID = FM->LoadSound("resource/Sounds/moveFloor.wav");
@@ -43,12 +45,12 @@ bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		if(floorlevel == -1)
 		{
 			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-				this->GetLayerLocation() - 1) );
+				this->GetLayerLocation() - 1, GetLinkX(), GetLinkY()) );
 		}
 		else
 		{
 			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-			floorlevel) );
+			floorlevel, GetLinkX(), GetLinkY()) );
 		}
 		MMessageSystem::GetInstance()->ProcessMessages();
 	}
@@ -57,15 +59,32 @@ bool CRamp::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		if(floorlevel == -1)
 		{
 			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-				this->GetLayerLocation() + 1) );
+				this->GetLayerLocation() + 1, GetLinkX(), GetLinkY()) );
 		}
 		else
 		{			
 			MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-				floorlevel) );
+				floorlevel, GetLinkX(), GetLinkY()) );
 		}
 		MMessageSystem::GetInstance()->ProcessMessages();
 	}
 
 	return false;
+}
+
+void CRamp::SetLinkX(const int nPosX)
+{
+	m_nLinkPosX = nPosX;
+}
+void CRamp::SetLinkY(const int nPosY)
+{
+	m_nLinkPosY = nPosY;
+}
+int CRamp::GetLinkX() const
+{
+	return m_nLinkPosX;
+}
+int CRamp::GetLinkY() const
+{
+	return m_nLinkPosY;
 }

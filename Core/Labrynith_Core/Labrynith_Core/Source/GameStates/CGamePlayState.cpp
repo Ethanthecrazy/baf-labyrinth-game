@@ -626,13 +626,24 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			msgMoveEntityFloor* msg = (msgMoveEntityFloor*)_message;
 
 			CBaseEntity* pEntity = msg->GetEntity();
-
+			int posx = msg->GetPosX();
+			int posy = msg->GetPosY();
 			
 			IDHolder* idholder = new IDHolder();
 			idholder->oldID = pEntity->m_nIdentificationNumber;
 
 
 			pEntity->SetLayerLocation(msg->GetFloor());
+			if(posx > -1)
+			{
+				pEntity->SetPosX(posx * TILE_WIDTH);
+				pEntity->SetIndexPosX(posx);
+			}
+			if(posy > -1)
+			{
+				pEntity->SetPosY(posy * TILE_HEIGHT);
+				pEntity->SetIndexPosY(posy);
+			}
 			pEntity->AddRef();
 
 			OM->RemoveUnit(pEntity->m_nIdentificationNumber);

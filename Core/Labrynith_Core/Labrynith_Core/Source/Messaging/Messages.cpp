@@ -51,10 +51,12 @@ msgPickUpObject::msgPickUpObject( CBaseObject* object ) : CBaseMessage( MSG_PICK
 	m_pObject = object ;
 }
 
-msgMoveEntityFloor::msgMoveEntityFloor( CBaseEntity* pEntity, int nFloor ) : CBaseMessage( MSG_MOVE_ENTITY_FLOOR )
+msgMoveEntityFloor::msgMoveEntityFloor( CBaseEntity* pEntity, int nFloor, int nPosX, int nPosY ) : CBaseMessage( MSG_MOVE_ENTITY_FLOOR )
 {
 	m_pEntity = pEntity;
 	m_nFloor = nFloor;
+	m_nPosX = nPosX;
+	m_nPosY = nPosY;
 }
 
 msgChangeGolemType::msgChangeGolemType(CBaseGolem* pGolem, int nGolemType, int* nNewID)
