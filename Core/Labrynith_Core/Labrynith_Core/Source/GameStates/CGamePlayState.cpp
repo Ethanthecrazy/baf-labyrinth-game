@@ -175,7 +175,6 @@ void CGamePlayState::GetCamera( int& X , int& Y )
 			Y = 0;
 
 	}
-
 	return ;
 }
 
@@ -636,12 +635,14 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 			pEntity->SetLayerLocation(msg->GetFloor());
 			if(posx > -1)
 			{
-				pEntity->SetPosX(posx * TILE_WIDTH);
+				pEntity->SetPosX((float)posx * TILE_WIDTH);
+				pEntity->SetLastPosX(pEntity->GetPosX());
 				pEntity->SetIndexPosX(posx);
 			}
 			if(posy > -1)
 			{
-				pEntity->SetPosY(posy * TILE_HEIGHT);
+				pEntity->SetPosY((float)posy * TILE_HEIGHT);
+				pEntity->SetLastPosY(pEntity->GetPosY());
 				pEntity->SetIndexPosY(posy);
 			}
 			pEntity->AddRef();

@@ -316,7 +316,7 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 			{
 				//if we check out of bounds leave
 				if(nPosY <= 0)
-					return -1;
+					return nDistance;
 
 				//if we find our target let others know
 				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
@@ -335,7 +335,7 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 			{
 				//if we check out of bounds leave
 				if(nPosY >= OM->FindLayer(pEntity->m_nIdentificationNumber).GetLayerHeight())
-					return -1;
+					return nDistance;
 
 				//if we find our target let others know
 				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
@@ -354,7 +354,7 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 			{
 				//if we check out of bounds leave
 				if(nPosX <= 0)
-					return -1;
+					return nDistance;
 
 				//if we find our target let others know
 				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
@@ -373,7 +373,7 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 			{
 				//if we check out of bounds leave
 				if(nPosX >= OM->FindLayer(pEntity->m_nIdentificationNumber).GetLayerWidth())
-					return -1;
+					return nDistance;
 
 				//if we find our target let others know
 				if(tTarget(nPosX, nPosY, true) == m_vEntities[index]->m_vTargets[0])
