@@ -12,7 +12,8 @@ class CRamp : public CBaseObject
 	int floorlevel;
 	int m_nMoveFloorSoundID;
 public:
-	CRamp(string direction = "", int nFloorlevel = -1);
+	CRamp(std::string direction = "");
+	CRamp(std::string direction = "", int nFloorlevel = -1);
 
 	bool CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision);
 };

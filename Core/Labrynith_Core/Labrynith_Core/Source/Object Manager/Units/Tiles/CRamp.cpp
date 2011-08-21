@@ -8,7 +8,8 @@
 #include "../CBaseEntity.h"
 #include "../CPlayer.h"
 
-CRamp::CRamp(string direction, int nFloorlevel)// : floorlevel(nFloorlevel)
+
+CRamp::CRamp(std::string direction, int nFloorlevel)// : floorlevel(nFloorlevel)
 {	
 	floorlevel = nFloorlevel;
 	this->m_nType = OBJ_RAMP;

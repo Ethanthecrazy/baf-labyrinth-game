@@ -242,18 +242,19 @@ bool CLoadLevelState::LoadLevel(int _level)
 				int y = 0;
 				while(pTile)
 				{								
-					string prop = "";					
+					std::string prop = "";					
 
 					TiXmlElement* pType = pTile->FirstChildElement("Type");
 					if(pType)
 					{
 						TiXmlElement* pProp = pTile->FirstChildElement("Property");
 						if(pProp)
-						{			
-							prop = pProp->GetText();
+						{	
+							if(pProp->GetText())
+								prop = pProp->GetText();
 						}
 
-						string sTypeX, sTypeY;
+						std::string sTypeX = "", sTypeY = "";
 
 						sTypeX = pType->FirstChildElement("X")->GetText();
 						sTypeY = pType->FirstChildElement("Y")->GetText();
@@ -500,13 +501,13 @@ bool CLoadLevelState::LoadLevel(int _level)
 		{			
 			int TypeX, TypeY, theType;
 			int posX, posY, posZ;
-			string prop = "";
+			std::string prop = "";
 
 			TiXmlElement* pType = pObject->FirstChildElement("Type");
 			if(pType)
 			{
-				string sTypeX, sTypeY;
-
+				std::string sTypeX = "", sTypeY = "";
+				
 				sTypeX = pType->FirstChildElement("X")->GetText();
 				sTypeY = pType->FirstChildElement("Y")->GetText();
 
@@ -519,7 +520,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 			TiXmlElement* pPos = pObject->FirstChildElement("Position");
 			if(pPos)
 			{			
-				string sposX, sposY, sposZ;
+				std::string sposX, sposY, sposZ;
 
 				sposX = pPos->FirstChildElement("X")->GetText();
 				sposY = pPos->FirstChildElement("Y")->GetText();
@@ -532,15 +533,16 @@ bool CLoadLevelState::LoadLevel(int _level)
 
 			TiXmlElement* pProp = pObject->FirstChildElement("Property");
 			if(pProp)
-			{			
-				prop = pProp->GetText();
+			{
+				if(pProp->GetText())
+					prop = pProp->GetText();
 			}
 			
 			switch(theType)
 			{
 			case 0:				
 				{
-					string typeofspawner;
+					std::string typeofspawner;
 					for(unsigned int i = 0; i < prop.length(); ++i)
 					{
 						if(prop[i] == '.')
