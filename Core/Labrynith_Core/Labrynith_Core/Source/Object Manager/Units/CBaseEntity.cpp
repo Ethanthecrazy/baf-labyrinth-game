@@ -12,6 +12,7 @@
 #include "../../CGame.h"
 #include "../../GameStates/CLoadLevelState.h"
 #include "Tiles\CDoor.h"
+#include "Tiles\CButton.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -165,6 +166,10 @@ void CBaseEntity::CheckAtDestinationCollision()
 		else if( pBase->GetType() == OBJ_DOOR)
 		{
 			((CDoor*)pBase)->CheckCollision(this);
+		}
+		else if( pBase->GetType() == OBJ_BUTTON )
+		{
+			((CButton*)pBase)->CheckCollision(this);
 		}
 	}
 }

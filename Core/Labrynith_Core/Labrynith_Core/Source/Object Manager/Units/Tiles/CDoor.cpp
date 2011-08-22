@@ -47,17 +47,23 @@ void CDoor::HandleEvent( Event* _toHandle )
 		string tmp = (const char*)_toHandle->GetParam();
 		if( tmp ==  m_nLink)
 		{
+			//Check to see if we are colliding with an entity
+			int EntityID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY)
+				.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+			
 			m_bIsOpen = false;
-			this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Door_Closed.png" ));
-			CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
+			//we cannot collide with ourselves
+			CBaseEntity* pTemp = ((CBaseEntity*)MObjectManager::GetInstance()->GetUnit(EntityID));
+			if( EntityID > 0 && pTemp )
+			{
 
-
-			////Check to see if we are colliding with an entity
-			//int EntityID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY)
-			//	.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
-
-			////we cannot collide with ourselves
-			//CBaseEntity* pTemp = ((CBaseEntity*)MObjectManager::GetInstance()->GetUnit(EntityID));
+			}
+			else
+			{
+				
+				this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Door_Closed.png" ));
+				CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
+			}
 			//if( EntityID > 0 && pTemp )
 			//{
 			//	MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY).FinishMovingEnt(pTemp);
@@ -91,6 +97,25 @@ void CDoor::HandleEvent( Event* _toHandle )
 			//	}
 			//}
 		}
+	}
+}
+void CDoor::Update(float fDT)
+{
+	//Check to see if we are colliding with an entity
+	int EntityID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY)
+		.GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+	//we cannot collide with ourselves
+	CBaseEntity* pTemp = ((CBaseEntity*)MObjectManager::GetInstance()->GetUnit(EntityID));
+	if( EntityID > 0 && pTemp && !m_bIsOpen)
+	{
+		this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Door_Open.png" ));
+	}
+	else if(!m_bIsOpen)
+	{				
+		this->m_nImageID = (CSGD_TextureManager::GetInstance()->LoadTexture( "resource/Door_Closed.png" ));
+		//m_bIsOpen = false;
+		//CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 	}
 }
 

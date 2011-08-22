@@ -58,7 +58,7 @@ void CHelpState::Render(void)
 {
 	MetalText.Print(helptext, 300, 150, 0.5f);
 
-	MetalText.Print("Press anything to continue", 300, 635, 0.5f);
+	MetalText.Print("Press any key to continue", 300, 635, 0.5f);
 }
 CHelpState* CHelpState::GetInstance(string text)
 {

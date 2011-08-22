@@ -24,7 +24,7 @@ public:
 	bool CheckCollision(IUnitInterface* pBase);
 	
 	void Render( int CameraPosX, int CameraPosY );
-	void Update(float fDT) {}
+	void Update(float fDT);
 
 	bool GetIsOpen(void) {return m_bIsOpen;}
 };
