@@ -35,7 +35,7 @@ void CLightEffected::Update(float fDT)
 	if(lightamount < 100)
 	{
 		pitTimer += fDT;
-		if(pitTimer > .15f)
+		if(pitTimer > .25f)
 		{
 			//Check to see if we are colliding with an entity
 			int EntityID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY)
