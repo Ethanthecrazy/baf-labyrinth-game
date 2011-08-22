@@ -159,14 +159,14 @@ void CGamePlayState::GetCamera( int& X , int& Y )
 
 	if( player )
 	{
-		X = (int)player->GetPosX() - 1024/2 + 32;
-		Y = (int)player->GetPosY() - 768/2 + 32;
+		X = (int)player->GetPosX() - 800/2 + 32;
+		Y = (int)player->GetPosY() - 600/2 + 32;
 
-		if( X + 1024 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
-			X = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 1024;
+		if( X + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
+			X = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 800;
 		
-		if( Y + 768 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
-			Y = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 768;
+		if( Y + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
+			Y = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 600;
 
 		if( X < 0 )
 			X = 0;
@@ -194,14 +194,14 @@ void CGamePlayState::Render(void)
 
 	if( player )
 	{
-		cameraX = (int)player->GetPosX() - 1024/2 + 32;
-		cameraY = (int)player->GetPosY() - 768/2 + 32;
+		cameraX = (int)player->GetPosX() - 800/2 + 32;
+		cameraY = (int)player->GetPosY() - 600/2 + 32;
 
-		if( cameraX + 1024 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
-			cameraX = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 1024;
+		if( cameraX + 800 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH )
+			cameraX = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerWidth() * TILE_WIDTH - 800;
 
-		if( cameraY + 768 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
-			cameraY = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 768;
+		if( cameraY + 600 > MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT )
+			cameraY = MObjectManager::GetInstance()->FindLayer( testVaribale ).GetLayerHeight() * TILE_HEIGHT - 600;
 
 		if( cameraX < 0 )
 			cameraX = 0;
@@ -248,7 +248,7 @@ void CGamePlayState::Render(void)
 
 		CSGD_TextureManager::GetInstance()->Draw( m_nIMG_Black, 0, 0, 1.0f, 1.0f, 0, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB( fade, 255, 255, 255 ) ); 
 
-		MetalText.Print( "But Now You Must Escape . . .", 1024 / 2 - 256, 768 / 2, 0.5f );
+		MetalText.Print( "But Now You Must Escape . . .", 800 / 2 - 256, 600 / 2, 0.5f );
 	}
 }
 

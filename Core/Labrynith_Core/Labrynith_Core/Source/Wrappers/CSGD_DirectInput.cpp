@@ -2087,7 +2087,7 @@ long CSGD_DIMouse::WheelMovement(void)
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 //	Constants:
-const int	JOYSTICK_AXIS_RANGE = 1024;
+const int	JOYSTICK_AXIS_RANGE = 800;
 const float PERCENTAGE_RANGE	= 0.7f;
 const int	JOYSTICK_THRESHOLD	= (int)(JOYSTICK_AXIS_RANGE * PERCENTAGE_RANGE);
 
@@ -2589,7 +2589,7 @@ bool CSGD_DIJoystick::TranslatePOV(int nDir, DWORD dwPOVDir)
 //
 //	Input	:	diJoyState	-	The joystate to translate.
 //
-//	Return	:	-JOYSTICK_RANGE to +JOYSTICK_RANGE (which is 1024)
+//	Return	:	-JOYSTICK_RANGE to +JOYSTICK_RANGE (which is 800)
 //
 //	Purpose	:	To get the position of the joystick in a digital range.
 ///////////////////////////////////////////////////////////////////	
@@ -2617,7 +2617,7 @@ LONG CSGD_DIJoystick::TranslateRStickX(DIJOYSTATE2& diJoyState)
 //
 //	Input	:	diJoyState	-	The joystate to translate.
 //
-//	Return	:	-JOYSTICK_RANGE to +JOYSTICK_RANGE (which is 1024)
+//	Return	:	-JOYSTICK_RANGE to +JOYSTICK_RANGE (which is 800)
 //
 //	Purpose	:	To get the position of the joystick in a digital range.
 ///////////////////////////////////////////////////////////////////	

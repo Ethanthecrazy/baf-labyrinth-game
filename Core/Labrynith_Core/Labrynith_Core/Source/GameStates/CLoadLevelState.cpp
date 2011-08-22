@@ -127,9 +127,9 @@ void CLoadLevelState::Render(void)
 	string test = percent;
 	test += "%";
 
-	MetalText.Print((char*)test.c_str(), 315, 425, .5f);
+	MetalText.Print((char*)test.c_str(), 315 / 2, 425, .5f);
 
-	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214, 450, 2.0f, 2.0f, &rect );
+	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214 / 2, 450, 2.0f, 2.0f, &rect );
 
 	
 
@@ -139,7 +139,7 @@ void CLoadLevelState::Render(void)
 	rect.bottom += 30;
 	rect.right = (long)( 290 * percentComplete / 100.0f );
 
-	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214, 450, 2.0f, 2.0f, &rect );
+	CSGD_TextureManager::GetInstance()->Draw( m_nBar_IMG, 214 / 2, 450, 2.0f, 2.0f, &rect );
 
 	//CSGD_TextureManager::GetInstance()->Draw( m_nGlow_IMG, 214 - 48 + rect.right * 2, 450 - 49 + 32, 1.5f, 1.5f, 0, 32.0f, 32.0f, 0, D3DCOLOR_ARGB( 255, 0, 100, 255 ) );
 	//CSGD_TextureManager::GetInstance()->Draw( m_nGlow_IMG, 214 - 48 + rect.right * 2, 450 - 49 + 32, 1.5f, 1.5f, 0, 32.0f, 32.0f, D3DXToRadian( 45 ) );

@@ -180,8 +180,8 @@ void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 		RECT camRect;
 		camRect.top = (long)CameraPosY;
 		camRect.left = (long)CameraPosX;
-		camRect.right = (long)camRect.left + 1024;
-		camRect.bottom = (long)camRect.top + 768;
+		camRect.right = (long)camRect.left + 800;
+		camRect.bottom = (long)camRect.top + 600;
 		
 		
 		RECT objRect;

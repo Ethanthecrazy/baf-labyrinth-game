@@ -257,8 +257,8 @@ void MFlake::Render( int CameraX, int CameraY )
 								RECT camRect;
 								camRect.top = (long)CameraY;
 								camRect.left = (long)CameraX;
-								camRect.bottom = (long)camRect.top + 768;
-								camRect.right = (long)camRect.left + 1024;
+								camRect.bottom = (long)camRect.top + 600;
+								camRect.right = (long)camRect.left + 800;
 		
 								RECT objRect;
 								objRect.top = (long)y * TILE_HEIGHT;
@@ -294,8 +294,8 @@ void MFlake::Render( int CameraX, int CameraY )
 								RECT camRect;
 								camRect.top = (long)CameraY;
 								camRect.left = (long)CameraX;
-								camRect.bottom = (long)camRect.top + 768;
-								camRect.right = (long)camRect.left + 1024;
+								camRect.bottom = (long)camRect.top + 600;
+								camRect.right = (long)camRect.left + 800;
 		
 								RECT objRect;
 								objRect.top = (long)y * TILE_HEIGHT;
