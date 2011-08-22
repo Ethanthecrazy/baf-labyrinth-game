@@ -79,6 +79,15 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 		}
 	}
 
+	if( GetEquippedItem() )
+	{
+		if( GetEquippedItem()->GetType() == OBJ_LIGHTORB )
+		{
+			MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber )
+				.GetFlake( OBJECT_LIGHT ).SetInfoAtIndex(GetIndexPosX(), GetIndexPosY(), rand() % 15 + 200 );
+		}
+	}
+
 	RenderAnimState(CameraPosX, CameraPosY);
 
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();

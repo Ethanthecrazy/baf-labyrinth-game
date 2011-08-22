@@ -76,7 +76,9 @@ void CLoadLevelState::Enter(void)
 
 	cout << "Loading Level...\n";
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
-	if( !LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel()) )
+	//if( !LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel()) )
+	if( !LoadLevel( 16
+		) )
 	{
 		cout << "...level loading failed.\n";
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
@@ -688,6 +690,7 @@ bool CLoadLevelState::LoadLevel(int _level)
 						}
 						
 						CSpawner* temp;
+
 						if(typeofgolem == "earth")
 						{
 							temp = new CSpawner(SPAWNER_EARTH);
@@ -724,15 +727,21 @@ bool CLoadLevelState::LoadLevel(int _level)
 						{
 							temp = new CSpawner(SPAWNER_LAVA);
 						}
+						else
+						{
+							temp = NULL;
+						}
 
-						
-						temp->SetLayerLocation(posZ);
-						((CSpawner*)temp)->SetPosX((float)(posX * TILE_WIDTH));
-						((CSpawner*)temp)->SetPosY((float)(posY * TILE_HEIGHT));
-						((CSpawner*)temp)->SetIndexPosX(posX);
-						((CSpawner*)temp)->SetIndexPosY(posY);
+						if( temp )
+						{
+							temp->SetLayerLocation(posZ);
+							((CSpawner*)temp)->SetPosX((float)(posX * TILE_WIDTH));
+							((CSpawner*)temp)->SetPosY((float)(posY * TILE_HEIGHT));
+							((CSpawner*)temp)->SetIndexPosX(posX);
+							((CSpawner*)temp)->SetIndexPosY(posY);
 
-						MObjectManager::GetInstance()->AddUnitIndexed( temp, posZ );
+							MObjectManager::GetInstance()->AddUnitIndexed( temp, posZ );
+						}
 						break;
 					}
 				}

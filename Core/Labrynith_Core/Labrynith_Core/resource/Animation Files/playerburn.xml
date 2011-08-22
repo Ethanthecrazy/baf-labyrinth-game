@@ -35,7 +35,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.5</FDuration>
+        <FDuration>0.2</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -71,7 +71,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.5</FDuration>
+        <FDuration>0.2</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -107,7 +107,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.5</FDuration>
+        <FDuration>0.2</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -143,7 +143,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.5</FDuration>
+        <FDuration>0.2</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -179,7 +179,7 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.5</FDuration>
+        <FDuration>0.2</FDuration>
         <SzTriggerID />
       </CFrame>
       <CFrame>
@@ -215,16 +215,14 @@
           <Width>8</Width>
           <Height>8</Height>
         </RCollisionRect>
-        <FDuration>0.5</FDuration>
+        <FDuration>0.2</FDuration>
         <SzTriggerID />
       </CFrame>
     </frames>
-    <ImageID>0</ImageID>
+    <ImageID>-1</ImageID>
     <SzName>burning-animation</SzName>
     <SzFilename>Fire1(2).png</SzFilename>
     <SzFilenameWithPath>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Fire1(2).png</SzFilenameWithPath>
-    <NPosX>150</NPosX>
-    <NPosY>100</NPosY>
     <FSpeed>3</FSpeed>
     <BIsPlaying>false</BIsPlaying>
     <BIsLooping>false</BIsLooping>

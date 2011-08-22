@@ -20,6 +20,12 @@ MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _
 {
 	ArrayIndex.clear();	
 	m_nSize = 0;
+
+	//if( _LayerHeight < 1 )
+	//	_LayerHeight = 30;
+	//if( _LayerWidth < 1 )
+	//	_LayerWidth = 30;
+
 	Resize(_LayerWidth, _LayerHeight);	
 }
 
