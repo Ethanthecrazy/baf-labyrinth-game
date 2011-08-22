@@ -11,6 +11,10 @@ class CHUD
 	//id to render heart image
 	int HeartImageID;
 	int InvSlotImageID;
+
+	int m_nIMG_Hand;
+	int m_nIMG_Armor;
+
 	//singleton
 	CHUD();
 	CHUD(CHUD& hud);
