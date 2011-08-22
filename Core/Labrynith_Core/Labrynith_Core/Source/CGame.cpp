@@ -84,10 +84,10 @@ bool CGame::Input()
 {
 	CSGD_DirectInput::GetInstance()->ReadDevices();
 
-	if( CSGD_DirectInput::GetInstance()->KeyPressed( DIK_GRAVE ) )
-	{
-		m_pGameStates[m_pGameStates.size() - 1]->EnterCommand();
-	}
+	//if( CSGD_DirectInput::GetInstance()->KeyPressed( DIK_GRAVE ) )
+	//{
+		//m_pGameStates[m_pGameStates.size() - 1]->EnterCommand();
+	//}
 
 	static bool Is_Fullscreen = false;
 

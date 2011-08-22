@@ -86,7 +86,7 @@ CHelpState* CHelpState::GetInstance(string text)
 void CHelpState::Exit(void)
 {
 
-	if( CGamePlayState::GetInstance()->m_nCurrLevel == 4 )
+	if( CGamePlayState::GetInstance()->m_nCurrLevel == 14 )
 		MMessageSystem::GetInstance()->SendMsg( new msgEndGame() );
 	
 	cout << "HelpState -> ";
