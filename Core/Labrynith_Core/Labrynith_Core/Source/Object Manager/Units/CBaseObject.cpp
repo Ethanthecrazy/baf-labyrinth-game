@@ -5,6 +5,7 @@
 #include "../MObjectManager.h"
 #include "../../GameStates/CGamePlayState.h"
 #include "Tiles\CWaterTile.h"
+#include "Tiles\CDoor.h"
 
 CBaseObject::CBaseObject()
 {
@@ -214,7 +215,7 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase; // this is hilarious, who did this? - Nathan
-			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_OIL || temp->GetType() == OBJ_LIGHTORB || temp->GetType() == OBJ_DOOR || temp->GetType() == OBJ_RAMP || temp->GetType() == OBJ_ELECTRICGENERATOR || temp->GetType() == OBJ_EXIT )
+			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_OIL || temp->GetType() == OBJ_LIGHTORB || temp->GetType() == OBJ_RAMP || temp->GetType() == OBJ_ELECTRICGENERATOR || temp->GetType() == OBJ_EXIT )
 			{
 				return true;
 			}
@@ -241,7 +242,12 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 				return false;
 			}
 
-			if( pBase->GetType() == OBJ_DOOR || pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_ELECTRICGENERATOR)
+			if(pBase->GetType() == OBJ_DOOR)
+			{
+				return true;
+			}
+
+			if(pBase->GetType() == OBJ_EXIT || pBase->GetType() == OBJ_RAMP || pBase->GetType() == OBJ_ELECTRICGENERATOR)
 				return true;
 		}
 		break ;
@@ -298,7 +304,7 @@ void CBaseObject::SetFlag_MovementState( int newFlag )
 	if(newFlag == FLAG_MOVESTATE_ATDESTINATION)
 	{
 		//Dont try to reference to the object manager if were not added
-		if(this->m_nIdentificationNumber == 0)
+		if(m_nIdentificationNumber == 0)
 			return;
 
 		//Call ExitCollision on the tile we are on
