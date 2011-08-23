@@ -31,6 +31,8 @@ class CGamePlayState : public IGameState
 	CBitFont MetalText;
 	int m_nIndex;
 
+	bool m_bDrawMouse;
+
 public:
 
 	int m_nCurrLevel;

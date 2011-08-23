@@ -49,6 +49,10 @@ CGamePlayState::CGamePlayState()
 	cameraX = 0;
 	cameraY = 0;
 	PlayGameSongID = -1;
+
+	m_bIsPaused = false;
+
+	m_bDrawMouse = true;
 }
 
 // destructor
@@ -102,7 +106,11 @@ bool CGamePlayState::Input(void)
 
 	if( pDI->KeyPressed( DIK_ESCAPE )||
 		pDI->JoystickButtonPressed(2) )
+	{
+		//m_bIsPaused = true;
+		m_bDrawMouse = false;
 		CGame::GetInstance()->PushState( CPauseState::GetInstance() );
+	}
 	
 	if( pDI->KeyPressed( DIK_T ) )
 		m_bRenderCulling = !m_bRenderCulling;
@@ -150,6 +158,8 @@ void CGamePlayState::Update(float fDT)
 
 	if( m_fCountdown >= 15.0f )
 		CGame::GetInstance()->ChangeState( CCreditsState::GetInstance() );
+
+	m_bDrawMouse = true;
 
 }
 
@@ -224,7 +234,8 @@ void CGamePlayState::Render(void)
 	int mouseX = CSGD_DirectInput::GetInstance()->MouseGetPosX() ;
 	int mouseY = CSGD_DirectInput::GetInstance()->MouseGetPosY() ;
 
-	CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
+	if( m_bDrawMouse )
+		CSGD_TextureManager::GetInstance()->Draw( m_nMouseID , mouseX - 8 , mouseY - 2 ) ;
 	
 	MMessageSystem::GetInstance()->ProcessMessages();
 

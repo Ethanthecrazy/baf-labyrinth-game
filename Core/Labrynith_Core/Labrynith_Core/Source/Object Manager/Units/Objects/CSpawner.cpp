@@ -104,6 +104,15 @@ void CSpawner::HandleEvent( Event* _toHandle )
 			}
 		}
 
+		int nItem = MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() );
+
+		if( nItem > 0 )
+		{
+			MObjectManager::GetInstance()->RemoveUnit( nItem );
+			MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( GetIndexPosX(), GetIndexPosY(), 0 ) ;
+			MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
+		}
+
 		switch(m_nSpawnerType)
 		{
 		case SPAWNER_LIGHTORB:

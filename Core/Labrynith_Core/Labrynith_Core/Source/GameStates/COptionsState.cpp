@@ -299,5 +299,5 @@ void COptionsState::SetFullScreen(const bool bIsFullScreen)
 {
 	CGame* pGame = CGame::GetInstance();
 	m_bIsFullscreen = bIsFullScreen;
-	pGame->SetFullScreen(GetFullScreen());
+	pGame->SetFullScreen(bIsFullScreen);
 }
