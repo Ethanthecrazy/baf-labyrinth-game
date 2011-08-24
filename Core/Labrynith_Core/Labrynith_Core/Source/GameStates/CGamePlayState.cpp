@@ -75,7 +75,22 @@ void CGamePlayState::Enter(void)
 	cout << "GamePlay\n";
 	
 	if(PlayGameSongID == -1)
-		PlayGameSongID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/Music/chapter1.mp3", FMOD_LOOP_NORMAL);
+	{
+		int decision = rand() % 3;
+
+		switch (decision)
+		{
+		case 0:
+			PlayGameSongID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/Music/chapter1.mp3", FMOD_LOOP_NORMAL);
+			break;
+		case 1:
+			PlayGameSongID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/Music/chapter2.mp3", FMOD_LOOP_NORMAL);
+			break;
+		case 2:
+			PlayGameSongID = CSGD_FModManager::GetInstance()->LoadSound("resource/Sounds/Music/chapter3.mp3", FMOD_LOOP_NORMAL);
+			break;
+		}
+	}
 
 	COptionsState::GetInstance()->AdjustSound(PlayGameSongID, false);
 
