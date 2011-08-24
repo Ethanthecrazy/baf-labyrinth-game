@@ -2,6 +2,7 @@
 
 
 #include "../../Wrappers/CSGD_TextureManager.h"
+#include "../../Wrappers/CSGD_Direct3D.h"
 #include "../MObjectManager.h"
 #include "../../GameStates/CGamePlayState.h"
 #include "Tiles\CWaterTile.h"
@@ -202,6 +203,7 @@ void CBaseObject::Render( int CameraPosX, int CameraPosY )
 		0.0f,
 		D3DCOLOR_ARGB( 255, lightamount, lightamount, lightamount) );	
 
+		//CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	}
 }
 

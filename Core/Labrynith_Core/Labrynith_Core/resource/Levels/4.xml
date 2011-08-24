@@ -8768,9 +8768,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
+            <X>1</X>
             <Y>0</Y>
           </Type>
+          <Property>16</Property>
         </Tile>
         <Tile>
           <Type>
@@ -8916,7 +8917,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>15</Property>
@@ -9088,7 +9089,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>14</Property>
@@ -9330,7 +9331,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>15</Property>
@@ -9417,8 +9418,8 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>0</X>
+            <Y>0</Y>
           </Type>
         </Tile>
         <Tile>
@@ -9697,7 +9698,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>16</Property>
@@ -12023,7 +12024,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>17</Property>
@@ -12195,7 +12196,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>17</Property>
@@ -12208,7 +12209,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>17</Property>
@@ -12393,7 +12394,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
           <Property>17</Property>
@@ -16870,18 +16871,6 @@
         <X>0</X>
         <Y>0</Y>
       </Type>
-      <Property>lightorb</Property>
-      <Position>
-        <X>7</X>
-        <Y>12</Y>
-        <Z>2</Z>
-      </Position>
-    </TileObject>
-    <TileObject>
-      <Type>
-        <X>0</X>
-        <Y>0</Y>
-      </Type>
       <Property>attractor.earth</Property>
       <Position>
         <X>5</X>
@@ -16901,10 +16890,82 @@
         <Z>2</Z>
       </Position>
     </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>20</X>
+        <Y>16</Y>
+        <Z>1</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>13</X>
+        <Y>19</Y>
+        <Z>1</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>23</X>
+        <Y>21</Y>
+        <Z>1</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>21</X>
+        <Y>7</Y>
+        <Z>1</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>19</X>
+        <Y>2</Y>
+        <Z>1</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>7</X>
+        <Y>13</Y>
+        <Z>2</Z>
+      </Position>
+    </TileObject>
   </Objects>
-  <FileName>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Levels\my4.xml</FileName>
-  <Tilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Tiles.png</Tilesetpath>
-  <ObjectTilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Objects.png</ObjectTilesetpath>
+  <FileName>C:\Users\Ethan\Desktop\Labyrinth 2\Labrynith_Core\resource\Levels\4.xml</FileName>
+  <Tilesetpath>C:\Users\Ethan\Desktop\Labrinth Level Editor\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
+  <ObjectTilesetpath>C:\Users\Ethan\Desktop\Labrinth Level Editor\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>
     <Width>5</Width>
     <Height>3</Height>

@@ -118,7 +118,7 @@ void CPlayer::RenderAnimState( int CameraPosX, int CameraPosY )
 	int DrawPositionX = (int)GetPosX() - CameraPosX;
 	int DrawPositionY = (int)GetPosY() - CameraPosY;
 	AM->Draw(id, DrawPositionX, DrawPositionY, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-	D3DCOLOR_ARGB( 255, 255, 255, 255) );
+		D3DCOLOR_ARGB( 255, 255, 255, 255) );
 }
 void CPlayer::UpdateAnimState(float fDT)
 {
@@ -140,14 +140,14 @@ void CPlayer::UpdateAnimState(float fDT)
 	}
 }
 void CPlayer::DrawMouseRange(int nRange, CBaseObject* item, unsigned char red,
-	                         unsigned char green, unsigned char blue)
+	unsigned char green, unsigned char blue)
 {
 	CSGD_DirectInput* pDI = CSGD_DirectInput::GetInstance();
 	int cameraX = 0, cameraY = 0;
 	CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
 	int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
 	int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
-		
+
 	if( tileXPos >= GetIndexPosX() - nRange && tileXPos <= GetIndexPosX() + nRange && tileYPos >= GetIndexPosY() - nRange && tileYPos <= GetIndexPosY() + nRange )
 	{
 		int objectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
@@ -180,92 +180,98 @@ void CPlayer::Input()
 	}
 
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
+	{
+		if( pDI->KeyDown( DIK_W ) || 
+			pDI->JoystickGetLStickDirDown(DIR_UP, 0))
 		{
-			if( pDI->KeyDown( DIK_W ) || 
-				pDI->JoystickGetLStickDirDown(DIR_UP, 0))
-			{
-				AI->CardinalMove(this, FLAG_MOVE_UP);
-				SetAnimState(ANIM_MOVING);
-				return;
-			}
-			else if( pDI->KeyDown( DIK_S ) ||
-				pDI->JoystickGetLStickDirDown(DIR_DOWN, 0))
-			{
-				AI->CardinalMove(this, FLAG_MOVE_DOWN);
-				SetAnimState(ANIM_MOVING);
-				return;
-			}
-			else if( pDI->KeyDown( DIK_A ) ||
-				pDI->JoystickGetLStickDirDown(DIR_LEFT, 0))
-			{
-				AI->CardinalMove(this, FLAG_MOVE_LEFT);
-				SetAnimState(ANIM_MOVING);
-				return;
-			}
-			else if( pDI->KeyDown( DIK_D ) ||
-				pDI->JoystickGetLStickDirDown(DIR_RIGHT, 0) )
-			{
-				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
-				SetAnimState(ANIM_MOVING);
-				return;
-			}
+			AI->CardinalMove(this, FLAG_MOVE_UP);
+			SetAnimState(ANIM_MOVING);
+			return;
+		}
+		else if( pDI->KeyDown( DIK_S ) ||
+			pDI->JoystickGetLStickDirDown(DIR_DOWN, 0))
+		{
+			AI->CardinalMove(this, FLAG_MOVE_DOWN);
+			SetAnimState(ANIM_MOVING);
+			return;
+		}
+		else if( pDI->KeyDown( DIK_A ) ||
+			pDI->JoystickGetLStickDirDown(DIR_LEFT, 0))
+		{
+			AI->CardinalMove(this, FLAG_MOVE_LEFT);
+			SetAnimState(ANIM_MOVING);
+			return;
+		}
+		else if( pDI->KeyDown( DIK_D ) ||
+			pDI->JoystickGetLStickDirDown(DIR_RIGHT, 0) )
+		{
+			AI->CardinalMove(this, FLAG_MOVE_RIGHT);
+			SetAnimState(ANIM_MOVING);
+			return;
+		}
 
-			if( pDI->MouseButtonPressed( 0 ) ||
-				pDI->JoystickButtonPressed(0))
+		if( pDI->MouseButtonPressed( 0 ) ||
+			pDI->JoystickButtonPressed(0))
+		{
+			int cameraX = 0 , cameraY = 0 ;
+			CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
+			int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
+			int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
+			cout << " mouse clicked at ( " << tileXPos << " , " << tileYPos << " )\n" ;
+
+			if( GetHeldItem() == NULL )
+				return ;
+
+			if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
 			{
-				int cameraX = 0 , cameraY = 0 ;
-				CGamePlayState::GetInstance()->GetCamera(cameraX , cameraY);
-				int tileXPos = (int)((pDI->MouseGetPosX() + cameraX) / TILE_WIDTH) ;
-				int tileYPos = (int)((pDI->MouseGetPosY() + cameraY) / TILE_HEIGHT) ;
-				cout << " mouse clicked at ( " << tileXPos << " , " << tileYPos << " )\n" ;
-
-				if( GetHeldItem() == NULL )
-					return ;
-
-				if( tileXPos >= GetIndexPosX() - 1 && tileXPos <= GetIndexPosX() + 1 && tileYPos >= GetIndexPosY() - 1 && tileYPos <= GetIndexPosY() + 1 )
+				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+				int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+				int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
+				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
+				IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
+				if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
 				{
-					int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-					int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-					int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( tileXPos , tileYPos ) ;
-					IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item)) ;
-					IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
-					IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
-					if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
-					{
-						MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
-						//Call objects exitcollision
-						int tileID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).
-							GetFlake( OBJECT_TILE ).GetInfoAtIndex(tileXPos , tileYPos);
-						IUnitInterface* obj = (MObjectManager::GetInstance()->GetUnit(tileID));
-						GetHeldItem()->ExitCollision(obj, true);
-					}
-				}
-
-			}
-			if( pDI->MouseButtonPressed( 1 ) ||
-				pDI->JoystickButtonPressed(1))
-			{
-				if( GetEquippedItem() )
-				{
-					switch(GetEquippedItem()->GetType())
-					{
-					case OBJ_POWERGLOVES:
-						{
-							SetAnimState(ANIM_THROW);
-							AM->SetAnimTexture(m_vMovementAnimIDs[GetStateAnimID()], m_nImageID);
-							AM->PlayAnimation(m_vMovementAnimIDs[GetStateAnimID()]);						
-							break;
-						}
-					};
-					GetEquippedItem()->UseObject( (CBaseObject*)this ) ;
+					MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
+					//Call objects exitcollision
+					int tileID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).
+						GetFlake( OBJECT_TILE ).GetInfoAtIndex(tileXPos , tileYPos);
+					IUnitInterface* obj = (MObjectManager::GetInstance()->GetUnit(tileID));
+					GetHeldItem()->ExitCollision(obj, true);
 				}
 			}
 
 		}
+		if( pDI->MouseButtonPressed( 1 ) ||
+			pDI->JoystickButtonPressed(1))
+		{
+			if( GetEquippedItem() )
+			{
+				switch(GetEquippedItem()->GetType())
+				{
+				case OBJ_POWERGLOVES:
+					{
+						SetAnimState(ANIM_THROW);
+						AM->SetAnimTexture(m_vMovementAnimIDs[GetStateAnimID()], m_nImageID);
+						AM->PlayAnimation(m_vMovementAnimIDs[GetStateAnimID()]);						
+						break;
+					}
+				};
+				GetEquippedItem()->UseObject( (CBaseObject*)this ) ;
+			}
+		}
+	}
+
+	if( pDI->KeyPressed( DIK_E )||
+		pDI->JoystickButtonPressed(1) )
+	{
+		SwitchItems();
+		return;
+	}
 }
 bool CPlayer::CanInteract(IUnitInterface* pBase)
 {	
-	
+
 	return false;
 }
 bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
@@ -314,6 +320,11 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	case OBJECT_TILE:
 		{
+			/*if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
+			{
+			((CButton*)pBase)->CheckCollision(this);
+			return false;
+			}*/
 			if(pBase->GetType() == OBJ_ELECTRICBUTTON)
 			{				
 				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
@@ -349,7 +360,7 @@ void CPlayer::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	switch(pBase->m_nUnitType)
 	{
-		case OBJECT_TILE:
+	case OBJECT_TILE:
 		{
 			if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
 			{
@@ -366,7 +377,7 @@ bool CPlayer::CheckTileCollision(int TileID)
 {
 	switch(TileID)
 	{
-	//nothing is there
+		//nothing is there
 	case -1:
 		{
 			return true;
@@ -426,7 +437,7 @@ int CPlayer::GetStateAnimID()
 {
 	int dir = IUnitInterface::GetFlag_DirectionToMove();
 	int animstate = GetAnimState();
-	
+
 	switch(dir)
 	{
 	case FLAG_MOVE_RIGHT:
@@ -489,9 +500,9 @@ void CPlayer::SwitchItems(void)
 		{
 			return ;
 		}
-	CBaseObject* temp = GetHeldItem() ;
-	SetHeldItem(GetEquippedItem()) ;
-	SetEquippedItem(temp) ;
+		CBaseObject* temp = GetHeldItem() ;
+		SetHeldItem(GetEquippedItem()) ;
+		SetEquippedItem(temp) ;
 }
 void CPlayer::SetAnimState(int nAnimState)
 {

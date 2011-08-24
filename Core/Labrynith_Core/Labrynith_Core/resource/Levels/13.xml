@@ -7890,7 +7890,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
         </Tile>
@@ -7945,7 +7945,7 @@
         <Tile>
           <Type>
             <X>0</X>
-            <Y>0</Y>
+            <Y>1</Y>
           </Type>
         </Tile>
         <Tile>
@@ -8078,7 +8078,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
         </Tile>
@@ -8481,8 +8481,8 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
-            <Y>1</Y>
+            <X>0</X>
+            <Y>0</Y>
           </Type>
         </Tile>
         <Tile>
@@ -8810,7 +8810,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
         </Tile>
@@ -8986,7 +8986,7 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
         </Tile>
@@ -9041,7 +9041,7 @@
         <Tile>
           <Type>
             <X>0</X>
-            <Y>0</Y>
+            <Y>1</Y>
           </Type>
         </Tile>
         <Tile>
@@ -17074,6 +17074,30 @@
       <Position>
         <X>2</X>
         <Y>19</Y>
+        <Z>2</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>attractor.ice</Property>
+      <Position>
+        <X>14</X>
+        <Y>12</Y>
+        <Z>2</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>attractor.shadow</Property>
+      <Position>
+        <X>18</X>
+        <Y>12</Y>
         <Z>2</Z>
       </Position>
     </TileObject>
