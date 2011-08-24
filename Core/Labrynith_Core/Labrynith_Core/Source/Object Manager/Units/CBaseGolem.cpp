@@ -51,6 +51,18 @@ void CBaseGolem::Update(float fDT)
 		CSGD_FModManager::GetInstance()->PlaySound2D( m_nStepSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber) ;
 
 	//UpdateAI();
+
+
+
+	if( LastDistance > 0.0f && GetDistanceLeft() < 0.1f )
+	{
+		CheckCollision( 
+			MObjectManager::GetInstance()->GetUnit( 
+			MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX(), GetIndexPosY() ) ), true );
+	}
+
+	LastDistance = GetDistanceLeft();
+
 }
 void CBaseGolem::Render( int CameraPosX, int CameraPosY )
 {
@@ -82,8 +94,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
 					MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
 					MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
-					
-					
 
 					switch( GetFlag_DirectionToMove() )
 					{

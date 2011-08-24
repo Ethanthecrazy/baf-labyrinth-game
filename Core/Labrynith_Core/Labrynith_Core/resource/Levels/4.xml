@@ -2411,9 +2411,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>1</X>
+            <Y>0</Y>
           </Type>
+          <Property>1</Property>
         </Tile>
         <Tile>
           <Type>
@@ -2599,6 +2600,7 @@
             <X>2</X>
             <Y>2</Y>
           </Type>
+          <Property>1</Property>
         </Tile>
         <Tile>
           <Type>
@@ -2780,8 +2782,8 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
-            <Y>0</Y>
+            <X>2</X>
+            <Y>2</Y>
           </Type>
           <Property>1</Property>
         </Tile>

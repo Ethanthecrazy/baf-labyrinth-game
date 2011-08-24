@@ -15,6 +15,9 @@ class CBaseGolem : public CBaseEntity
 	int m_nStepSoundID;
 	float fCollectedTime;
 	bool CheckEntCollision(CBaseEntity* pEntity);
+
+	float LastDistance;
+
 protected:
 	
 public:
