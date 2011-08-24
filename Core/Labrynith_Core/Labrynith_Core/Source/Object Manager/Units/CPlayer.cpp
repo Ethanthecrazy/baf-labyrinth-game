@@ -25,6 +25,7 @@ CPlayer::CPlayer(void)
 	SetAnimState(ANIM_MOVING);
 	LoadEntMoveAnimIDs();
 	m_fInvincilibilityTimer = 0.0f;
+	m_fRegenTimer = 0.0f;
 	m_nType = ENT_PLAYER;
 	SetHeldItem(NULL);
 	SetEquippedItem(NULL);	
@@ -58,17 +59,40 @@ void CPlayer::Update(float fDT)
 	UpdateInvincibilityTime(fDT);
 	UpdateAnimState(fDT);
 	Input();
+
+	if( GetLives() < 4 )
+		m_fRegenTimer += fDT;
+	else
+		m_fRegenTimer = 0.0f;
+
+	if( m_fRegenTimer > 10.0f )
+	{
+		m_fRegenTimer = 0.0f;
+		SetLives( GetLives() + 1 );
+	}
 }
 void CPlayer::Render( int CameraPosX, int CameraPosY )
 {	
 	CSGD_TextureManager* TM = CSGD_TextureManager::GetInstance();
 
 	//Player Lives
-	for(int i = 0; i < GetLives(); i++)
+
+	int l;
+
+	for( l = 0; l < GetLives(); l++)
 	{
-		TM->Draw(HeartImageID,(i * TILE_WIDTH) + 30, 40);
+		TM->Draw(HeartImageID,(l * TILE_WIDTH) + 30, 40);
 	}
 
+	if( GetLives() < 4 )
+	{
+		RECT heart = {};
+		heart.right = 32;
+		heart.bottom = 32;
+		heart.top = 32 - 32 * m_fRegenTimer / 10.0f;
+
+		TM->Draw(HeartImageID,(l * TILE_WIDTH) + 30, 40 + heart.top, 1.0f, 1.0f, &heart, 0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB( int( m_fRegenTimer / 10.0f * 255 ), 255, 255, 255  ));
+	}
 
 	if( GetHeldItem() )
 	{
@@ -103,6 +127,14 @@ void CPlayer::Render( int CameraPosX, int CameraPosY )
 			DrawMouseRange(1, GetEquippedItem(), 255, 0, 0);
 		}
 	}
+
+	//char temp[64];
+
+	//sprintf( temp, "%f", m_fRegenTimer ); 
+
+	//CSGD_Direct3D::GetInstance()->DrawTextA( temp, GetPosX() - CameraPosX, GetPosY() - CameraPosY );
+
+
 }
 void CPlayer::RenderAnimState( int CameraPosX, int CameraPosY )
 {
@@ -173,8 +205,7 @@ void CPlayer::Input()
 	CAI_Handler* AI = CAI_Handler::GetInstance();
 	CAnimationManager* AM = CAnimationManager::GetInstance();
 
-	if( pDI->KeyPressed( DIK_E )||
-		pDI->JoystickButtonPressed(1) )
+	if( pDI->KeyPressed( DIK_E ) || pDI->JoystickButtonPressed(1))
 	{
 		SwitchItems();
 	}
@@ -471,12 +502,16 @@ bool CPlayer::SetLives(const int nLives)
 	//if the player loses a life(s) they are
 	//temporarily invincible
 	if(nLives < m_nLives)
+	{
 		SetInvincilibity(true);
+
+		if(HurtSoundID > -1)
+		CSGD_FModManager::GetInstance()->PlaySoundA(HurtSoundID);
+	}
 
 	m_nLives = nLives;
 
-	if(HurtSoundID > -1)
-		CSGD_FModManager::GetInstance()->PlaySoundA(HurtSoundID);
+	
 
 	if(GetLives() <= 0)
 		CGamePlayState::GetInstance()->KillPlayer();

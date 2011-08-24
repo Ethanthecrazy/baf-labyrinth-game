@@ -17,6 +17,8 @@ class CPlayer : public CBaseEntity
 	int m_nPutDownSoundID;
 	int m_nLvCompSoundID;
 	int m_nAnimState;
+
+	float m_fRegenTimer;
 	//Item the player is holding
 	//this must not be in the object manager when this happens
 	CBaseObject *m_pHeldItem;
