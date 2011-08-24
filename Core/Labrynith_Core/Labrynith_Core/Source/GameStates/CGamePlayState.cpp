@@ -592,6 +592,14 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 
 				if( object->GetType() == OBJ_ATTRACTOR )
 				{
+					if(player->GetEquippedItem())
+					{
+						if(player->GetEquippedItem()->GetType() == OBJ_POWERGLOVES)
+						{							
+							CSGD_FModManager::GetInstance()->PlaySoundA(player->GetPutDownSoundID()) ;
+							break;
+						}
+					}
 					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , object ) ;
 				}
 				CSGD_FModManager::GetInstance()->PlaySoundA(player->GetPutDownSoundID()) ;

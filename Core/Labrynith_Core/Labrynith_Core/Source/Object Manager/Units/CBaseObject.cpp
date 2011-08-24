@@ -89,8 +89,8 @@ void CBaseObject::Update(float fDT)
 			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , m_nIdentificationNumber ) ;
 			SetIndexPosX( (int)(GetPosX() / TILE_WIDTH) ) ;
 			SetIndexPosY( (int)(GetPosY() / TILE_HEIGHT) ) ;
-			if( (GetVelX() > 0 || GetVelY() > 0) && this->GetType() == OBJ_ATTRACTOR )
-				MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
+			//if( (GetVelX() > 0 || GetVelY() > 0) && this->GetType() == OBJ_ATTRACTOR )
+				//MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
 			
 			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , m_nIdentificationNumber ) ;
 
@@ -98,29 +98,35 @@ void CBaseObject::Update(float fDT)
 			SetLastPosY( GetPosY() );
 
 			MObjectManager::GetInstance()->FindFlake( this->m_nIdentificationNumber ).FinishMovingEnt( this );
-			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
-			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
+			int entityHereID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() , GetIndexPosY() ) ;
+			IUnitInterface* entityHere = (MObjectManager::GetInstance()->GetUnit(entityHereID)) ;
 
 			if( GetVelX() != 0 || GetVelY() != 0 )
 			{
 				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
+				int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item));
 				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID));
+				IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityHereID)) ;
 				if( CheckCollision( object , true ) || CheckCollision( entity , true ) || CheckCollision( tile , true ) || tileID == 0 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
-					CheckCollision( entity , true );
-					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;					
+					if(entityHere)
+						entityHere->CheckCollision(this, true);
+					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;		
+					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
 					SetDistanceLeft( 0 ) ;
 				}
 				else if( GetIndexPosY() - 1 < 0 || GetIndexPosY() + 1 > MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber).GetLayerHeight() - 1 || GetIndexPosX() - 1 < 0 || GetIndexPosX() + 1 > MObjectManager::GetInstance()->FindLayer(m_nIdentificationNumber).GetLayerWidth() - 1 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
-					CheckCollision( entity , true );
+					if(entityHere)
+						entityHere->CheckCollision(this, true);
 					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
 					SetDistanceLeft( 0 ) ;
 				}
 
@@ -128,12 +134,13 @@ void CBaseObject::Update(float fDT)
 
 			if( GetVelX() != 0 )
 			{
-
 				SetVelX( GetVelX() - 1 ) ;
 				if( GetVelX() == 0 )
 				{
-					CheckCollision( entity , true );
+					if(entityHere)
+						entityHere->CheckCollision(this, true);
 					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
 					SetDistanceLeft( 0 ) ;
 				}
 				else
@@ -141,12 +148,13 @@ void CBaseObject::Update(float fDT)
 			}
 			if( GetVelY() != 0 )
 			{
-
 				SetVelY( GetVelY() - 1 ) ;
 				if( GetVelY() == 0 )
 				{
-					CheckCollision( entity , true );
+					if(entityHere)
+						entityHere->CheckCollision(this, true);
 					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , this ) ;
 					SetDistanceLeft( 0 ) ;
 				}
 				else

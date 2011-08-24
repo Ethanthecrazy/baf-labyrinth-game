@@ -9,6 +9,7 @@ CButton::CButton(string nLink)
 {
 	m_nUnitType = OBJECT_TILE;
 	m_nType = OBJ_BUTTON;
+	m_bLooksPressed = false;
 	m_bIsPressed = false;
 	m_nLink = nLink;
 
@@ -38,15 +39,23 @@ bool CButton::CheckCollision(IUnitInterface* pBase)
 		return false;
 
 	m_bIsPressed = !m_bIsPressed;
+	m_bLooksPressed = !m_bLooksPressed;
 
 	if(m_bIsPressed)
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Pressed", (void*)m_nLink.c_str());
-		CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 	}
 	else
 	{
 		MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)m_nLink.c_str());
+	}
+
+	if(m_bLooksPressed)
+	{
+		CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
+	}
+	else
+	{
 		CSGD_FModManager::GetInstance()->PlaySound2D(OpenSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 	}
 
@@ -58,7 +67,7 @@ void CButton::Update(float fDT)
 {	
 	//MEventSystem::GetInstance()->SendEvent("Button.Unpress", (void*)m_nLink.c_str());
 
-	if( m_bIsPressed )
+	if( m_bLooksPressed )
 		m_nImageID = m_nIMG_Down;
 	else
 		m_nImageID = m_nIMG_Up;

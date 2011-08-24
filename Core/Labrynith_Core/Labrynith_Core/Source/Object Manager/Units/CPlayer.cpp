@@ -231,7 +231,8 @@ void CPlayer::Input()
 				IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID)) ;
 				if( !GetHeldItem()->CheckCollision( object , false ) && !GetHeldItem()->CheckCollision( entity , false ) && !GetHeldItem()->CheckCollision( tile , false ) && tileID != 0 )
-				{
+				{					
+					MEventSystem::GetInstance()->SendEvent( "ATTRACTORPLACED" , GetHeldItem() ) ;
 					MMessageSystem::GetInstance()->SendMsg( new msgPlaceObject(tileXPos , tileYPos ) ) ;
 					//Call objects exitcollision
 					int tileID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).
@@ -306,7 +307,8 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					pBase->SetDistanceLeft( 0 ) ;
 					pBase->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 
-					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;					
+					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;	
+					return false;				
 				}
 				return true;
 			}					

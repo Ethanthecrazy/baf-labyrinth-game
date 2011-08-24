@@ -16,7 +16,7 @@ private:
 
 protected:
 
-	bool m_bIsPressed;
+	bool m_bIsPressed, m_bLooksPressed;
 	int m_nIMG_Up;
 	int m_nIMG_Down;
 
