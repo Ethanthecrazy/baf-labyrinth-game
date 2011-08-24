@@ -5,6 +5,7 @@
 #include "../../../Wrappers/CSGD_FModManager.h"
 #include "../../../GameStates/COptionsState.h"
 #include "../../../AI Handler/CAI_Handler.h"
+#include "../CBaseEntity.h"
 
 CLightEffected::CLightEffected()
 {
@@ -35,7 +36,7 @@ void CLightEffected::Update(float fDT)
 	if(lightamount < 100)
 	{
 		pitTimer += fDT;
-		if(pitTimer > .25f)
+		if(pitTimer > .35f && m_bIsFloor)
 		{
 			//Check to see if we are colliding with an entity
 			int EntityID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber).GetFlake(OBJECT_ENTITY)
@@ -43,7 +44,7 @@ void CLightEffected::Update(float fDT)
 
 			//we cannot collide with ourselves
 			CBaseEntity* pTemp = ((CBaseEntity*)MObjectManager::GetInstance()->GetUnit(EntityID));
-			if( EntityID > 0 && pTemp )
+			if( EntityID > 0 && pTemp && ((CBaseEntity*)pTemp)->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 			{
 				this->CheckCollision( (IUnitInterface*)pTemp, true);
 			}

@@ -94,8 +94,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				}
 				return false;
 			}			
-			else if( pBase->GetType() == OBJ_SPAWNER )
-				return false;
 			else if( pBase->GetType() == OBJ_OIL )
 				return pBase->CheckCollision(this, nCanHandleCollision);	
 			else if( pBase->GetType() == OBJ_LIGHTORB || pBase->GetType() == OBJ_POWERGLOVES || pBase->GetType() == OBJ_OILCAN )
@@ -111,11 +109,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 		case OBJECT_TILE:
 		{
-			/*if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
-			{
-				((CButton*)pBase)->CheckCollision(this);
-				return false;
-			}*/
 			if(pBase->GetType() == OBJ_ELECTRICBUTTON)
 			{				
 				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
@@ -123,10 +116,7 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 			}
 			else if( pBase->GetType() == OBJ_DOOR )
 			{
-				if( ((CDoor*)pBase)->GetIsOpen() )
-					return false;
-				else
-					return true;
+				return !((CDoor*)pBase)->GetIsOpen();
 			}
 			else if(pBase->GetType() == OBJ_EXIT)
 			{

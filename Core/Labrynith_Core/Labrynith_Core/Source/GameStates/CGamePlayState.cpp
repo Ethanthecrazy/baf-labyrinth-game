@@ -501,8 +501,8 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 	case MSG_CREATE_PLAYER:
 		{
 			//we only need one player object
-			//if(testVaribale != -1)
-				//return;
+			if( CGamePlayState::GetInstance()->testVaribale != -1)
+				return;
 
 			msgCreatePlayer* NewMessage = (msgCreatePlayer*)_message;
 

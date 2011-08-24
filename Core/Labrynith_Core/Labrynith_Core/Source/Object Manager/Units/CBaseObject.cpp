@@ -33,8 +33,8 @@ void CBaseObject::Update(float fDT)
 {
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
-
-		SetDistanceLeft( GetDistanceLeft() - 150 * fDT );
+		int movespeed = 2000;
+		SetDistanceLeft( GetDistanceLeft() - movespeed * fDT );
 
 		if( GetDistanceLeft() >= 0 )
 		{
@@ -43,16 +43,16 @@ void CBaseObject::Update(float fDT)
 			{
 
 			case FLAG_MOVE_RIGHT:
-				SetPosX( GetPosX() + 150 * fDT );
+				SetPosX( GetPosX() + movespeed * fDT );
 				break;
 			case FLAG_MOVE_LEFT:
-				SetPosX( GetPosX() - 150 * fDT );
+				SetPosX( GetPosX() - movespeed * fDT );
 				break;
 			case FLAG_MOVE_UP:
-				SetPosY( GetPosY() - 150 * fDT );
+				SetPosY( GetPosY() - movespeed * fDT );
 				break;
 			case FLAG_MOVE_DOWN:
-				SetPosY( GetPosY() + 150 * fDT );
+				SetPosY( GetPosY() + movespeed * fDT );
 				break;
 			}
 		}
@@ -215,7 +215,7 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 	case OBJECT_OBJECT:
 		{
 			CBaseObject* temp = (CBaseObject*)pBase; // this is hilarious, who did this? - Nathan
-			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_OIL || temp->GetType() == OBJ_LIGHTORB || temp->GetType() == OBJ_RAMP || temp->GetType() == OBJ_ELECTRICGENERATOR || temp->GetType() == OBJ_EXIT )
+			if( temp->GetType() == OBJ_ATTRACTOR || temp->GetType() == OBJ_POWERGLOVES || temp->GetType() == OBJ_OILCAN || temp->GetType() == OBJ_OIL || temp->GetType() == OBJ_LIGHTORB )
 			{
 				return true;
 			}

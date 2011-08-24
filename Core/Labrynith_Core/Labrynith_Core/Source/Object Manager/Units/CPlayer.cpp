@@ -298,9 +298,7 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
 				}
 				return true;
-			}
-			else if( temp->GetType() == OBJ_SPAWNER )
-				return false;						
+			}					
 			else if( temp->GetType() == OBJ_OIL )
 				return temp->CheckCollision(this, nCanHandleCollision);			
 
@@ -316,11 +314,6 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 
 	case OBJECT_TILE:
 		{
-			/*if( pBase->GetType() == OBJ_BUTTON && nCanHandleCollision )
-			{
-				((CButton*)pBase)->CheckCollision(this);
-				return false;
-			}*/
 			if(pBase->GetType() == OBJ_ELECTRICBUTTON)
 			{				
 				((CElectricButton*)pBase)->CheckCollision(this, nCanHandleCollision);
@@ -336,26 +329,6 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				else
 					return true;
 			}
-			//else if(pBase->GetType() == OBJ_EXIT && nCanHandleCollision && this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
-			//{
-			//	CGamePlayState* pGamePlay = CGamePlayState::GetInstance();
-			//	//BUG- check if the level is valid
-			//	pGamePlay->SetCurrentLevel(pGamePlay->GetCurrentLevel() + 1);
-			//	//Save the new current level we are on
-			//	CSaveSlotState::GetInstance()->Save();
-			//	//Load the next level
-			//	CSGD_FModManager::GetInstance()->PlaySoundA(m_nLvCompSoundID);
-			//	CGame::GetInstance()->PushState(CLoadLevelState::GetInstance());
-			//	return true;
-			//}
-			//else if( pBase->GetType() == OBJ_PIT && this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION)
-			//{
-			//	return pBase->CheckCollision(this, nCanHandleCollision);		
-			//}
-			//else if( pBase->GetType() == OBJ_RAMP && this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION)
-			//{
-			//	return pBase->CheckCollision(this, nCanHandleCollision);	
-			//}
 			else if(pBase->GetType() == OBJ_WATER)
 			{
 				//if the tile is frozen we can walk past it

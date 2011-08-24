@@ -76,8 +76,8 @@ void CLoadLevelState::Enter(void)
 
 	cout << "Loading Level...\n";
 	MMessageSystem::GetInstance()->InitMessageSystem( CGamePlayState::MessageProc );
-	if( !LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel()) )
-	//if( !LoadLevel( 10 ) )
+	//if( !LoadLevel(CGamePlayState::GetInstance()->GetCurrentLevel()) )
+	if( !LoadLevel( 4 ) )
 	{
 		cout << "...level loading failed.\n";
 		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
