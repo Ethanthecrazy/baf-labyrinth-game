@@ -1341,10 +1341,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
+            <X>2</X>
             <Y>0</Y>
           </Type>
-          <Property>1</Property>
+          <Property>8</Property>
         </Tile>
         <Tile>
           <Type>
@@ -1527,7 +1527,7 @@
             <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>0</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -1695,35 +1695,38 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
             <X>0</X>
             <Y>0</Y>
           </Type>
+          <Property />
         </Tile>
         <Tile>
           <Type>
             <X>0</X>
             <Y>0</Y>
           </Type>
+          <Property />
         </Tile>
         <Tile>
           <Type>
             <X>0</X>
             <Y>0</Y>
           </Type>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -1879,38 +1882,38 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -2066,38 +2069,38 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>8</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>8</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>8</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>8</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>8</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -2229,10 +2232,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>3</X>
-            <Y>2</Y>
+            <X>0</X>
+            <Y>0</Y>
           </Type>
-          <Property>The only light you shall\nhave here are the golems!\nMuhahahahaha!</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -5169,8 +5172,8 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>0</X>
+            <Y>0</Y>
           </Type>
         </Tile>
         <Tile>
@@ -5359,8 +5362,8 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>0</X>
+            <Y>0</Y>
           </Type>
         </Tile>
         <Tile>
@@ -5642,10 +5645,34 @@
         <Z>0</Z>
       </Position>
     </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>9</X>
+        <Y>10</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>28</X>
+        <Y>11</Y>
+        <Z>0</Z>
+      </Position>
+    </TileObject>
   </Objects>
-  <FileName>C:\Users\Jon M Taylor\Desktop\Repo SGP\OurGame\resource\Levels\1.xml</FileName>
-  <Tilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Tiles.png</Tilesetpath>
-  <ObjectTilesetpath>C:\Users\Jon M Taylor\Desktop\Repo SGP\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Objects.png</ObjectTilesetpath>
+  <FileName>C:\Users\Jon M Taylor\Desktop\SGP Repo\Labrynith_Core\Labrynith_Core\resource\Levels\6.xml</FileName>
+  <Tilesetpath>C:\Users\Jon M Taylor\Desktop\SGP Repo\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
+  <ObjectTilesetpath>C:\Users\Jon M Taylor\Desktop\SGP Repo\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>
     <Width>5</Width>
     <Height>3</Height>

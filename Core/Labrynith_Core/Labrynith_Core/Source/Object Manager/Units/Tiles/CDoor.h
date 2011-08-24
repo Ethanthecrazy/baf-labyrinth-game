@@ -12,8 +12,7 @@ class CDoor : public CBaseObject, public IListener
 private:
 	int OpenSoundID;
 	string m_nLink;
-	bool m_bIsOpen;
-
+	bool m_bIsOpen;	
 public:
 
 	CDoor(string nLink = "-1");

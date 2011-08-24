@@ -129,13 +129,13 @@ void CMainMenuState::Update(float fDT)
 void CMainMenuState::Render(void)
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nImageID, 0 , 0);
-	MetalText.Print( "Main Menu", 450, 200, 0.6f );
+	//MetalText.Print( "Main Menu", 450, 200, 0.6f );
 	MetalText.Print( "->", 430, 330 + (m_nIndex * 30), 0.5f );
 	MetalText.Print( "Play", 460, 330, 0.5f );
 	MetalText.Print( "Options", 460, 360, 0.5f );
 	MetalText.Print( "Credits", 460, 390, 0.5f );
 	MetalText.Print( "Exit", 460, 420, 0.5f );
-	MetalText.Print( "Labyrinthium", 150, 50, 0.7f );
+	MetalText.Print( "Labyrinthium", 355, 150, 0.7f );
 }
 
 void CMainMenuState::Exit(void)
