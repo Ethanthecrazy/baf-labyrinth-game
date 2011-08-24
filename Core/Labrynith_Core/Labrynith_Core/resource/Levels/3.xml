@@ -11348,9 +11348,9 @@
       </Position>
     </TileObject>
   </Objects>
-  <FileName>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Levels\3.xml</FileName>
-  <Tilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Tiles.png</Tilesetpath>
-  <ObjectTilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Objects.png</ObjectTilesetpath>
+  <FileName>C:\Users\Ethan\Desktop\Labyrinth 2\Labrynith_Core\resource\Levels\3.xml</FileName>
+  <Tilesetpath>C:\Users\Ethan\Desktop\Labrinth Level Editor\Labrinthium - World Editor\Labrinthium - World Editor\Tiles.png</Tilesetpath>
+  <ObjectTilesetpath>C:\Users\Ethan\Desktop\Labrinth Level Editor\Labrinthium - World Editor\Labrinthium - World Editor\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>
     <Width>5</Width>
     <Height>3</Height>

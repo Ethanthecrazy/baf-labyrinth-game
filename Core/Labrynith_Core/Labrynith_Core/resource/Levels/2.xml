@@ -6631,26 +6631,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
@@ -6813,26 +6813,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
@@ -6998,26 +6998,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
@@ -7184,26 +7184,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>0</X>
-            <Y>0</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
@@ -7369,26 +7369,26 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
-            <Y>2</Y>
+            <X>-1</X>
+            <Y>-1</Y>
           </Type>
         </Tile>
         <Tile>
@@ -11152,34 +11152,10 @@
         <X>0</X>
         <Y>0</Y>
       </Type>
-      <Property>golem.earth</Property>
-      <Position>
-        <X>8</X>
-        <Y>6</Y>
-        <Z>1</Z>
-      </Position>
-    </TileObject>
-    <TileObject>
-      <Type>
-        <X>0</X>
-        <Y>0</Y>
-      </Type>
       <Property>lightorb</Property>
       <Position>
         <X>8</X>
         <Y>23</Y>
-        <Z>1</Z>
-      </Position>
-    </TileObject>
-    <TileObject>
-      <Type>
-        <X>0</X>
-        <Y>0</Y>
-      </Type>
-      <Property>lightorb</Property>
-      <Position>
-        <X>8</X>
-        <Y>5</Y>
         <Z>1</Z>
       </Position>
     </TileObject>
@@ -11240,6 +11216,30 @@
       <Position>
         <X>22</X>
         <Y>11</Y>
+        <Z>1</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>golem.earth</Property>
+      <Position>
+        <X>8</X>
+        <Y>8</Y>
+        <Z>1</Z>
+      </Position>
+    </TileObject>
+    <TileObject>
+      <Type>
+        <X>0</X>
+        <Y>0</Y>
+      </Type>
+      <Property>lightorb</Property>
+      <Position>
+        <X>9</X>
+        <Y>8</Y>
         <Z>1</Z>
       </Position>
     </TileObject>
