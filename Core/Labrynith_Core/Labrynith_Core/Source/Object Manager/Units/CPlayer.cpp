@@ -173,6 +173,12 @@ void CPlayer::Input()
 	CAI_Handler* AI = CAI_Handler::GetInstance();
 	CAnimationManager* AM = CAnimationManager::GetInstance();
 
+	if( pDI->KeyPressed( DIK_E )||
+		pDI->JoystickButtonPressed(1) )
+	{
+		SwitchItems();
+	}
+
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION )
 		{
 			if( pDI->KeyDown( DIK_W ) || 
@@ -201,12 +207,6 @@ void CPlayer::Input()
 			{
 				AI->CardinalMove(this, FLAG_MOVE_RIGHT);
 				SetAnimState(ANIM_MOVING);
-				return;
-			}
-			else if( pDI->KeyPressed( DIK_E )||
-					pDI->JoystickButtonPressed(1) )
-			{
-				SwitchItems();
 				return;
 			}
 

@@ -66,7 +66,7 @@ void CBitFont::Print( std::string _ToPrint, int _PosX, int _PosY, float _scale )
 		}
 			//index = 10;
 		//Dont try to print any invalid characters
-		if(index >= CharInfo.size() || index < 0)
+		if(index >= (signed int)CharInfo.size() || index < 0)
 			continue;
 
 			if( proc == ' ' )

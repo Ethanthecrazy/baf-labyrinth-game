@@ -239,7 +239,7 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 			if(pBase->GetType() == OBJ_PIT )
 			{
-				return false;
+				return pBase->CheckCollision(this, nCanHandleCollision);
 			}
 
 			if(pBase->GetType() == OBJ_DOOR)
@@ -285,7 +285,8 @@ void CBaseObject::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				if(this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION)
 				{
 					//remove this object
-					MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
+					pBase->CheckCollision(this, true);
+					//MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
 				}
 			}
 		}

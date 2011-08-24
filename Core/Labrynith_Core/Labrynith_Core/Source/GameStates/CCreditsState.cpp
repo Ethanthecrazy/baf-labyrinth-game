@@ -87,12 +87,12 @@ bool CCreditsState::Input(void)
 
 void CCreditsState::Update(float fDT)
 {
-	m_fYposition += fDT * scrollSpeed;
+	m_fYposition += (int)(fDT * scrollSpeed);
 }
 
 void CCreditsState::Render(void)
 {	
-	float lastthing = Credits[Credits.size()-1].posY - m_fYposition;
+	int lastthing = Credits[Credits.size()-1].posY - m_fYposition;
 	
 	for(unsigned int i = 0; i < Credits.size(); ++i)
 	{

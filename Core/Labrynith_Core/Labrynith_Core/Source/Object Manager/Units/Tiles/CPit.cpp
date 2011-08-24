@@ -34,7 +34,7 @@ bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		CSGD_FModManager::GetInstance()->PlaySound2D(HurtSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber);
 
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
-			this->GetLayerLocation() + 1, -1, -1));
+			this->GetLayerLocation() + 1, GetIndexPosX(), GetIndexPosY()));
 		MMessageSystem::GetInstance()->ProcessMessages();
 		CAI_Handler::GetInstance()->CheckCollisions((CBaseEntity*)pBase, pBase->GetIndexPosX(), pBase->GetIndexPosY(), true);
 	}

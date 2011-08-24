@@ -627,6 +627,11 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 					player->SetHeldItem(pBase);
 					pBase->AddRef();
 				}
+				else if( player->GetEquippedItem() == NULL && pBase->GetType() == OBJ_LIGHTORB )
+				{
+					player->SetEquippedItem(pBase) ;
+					pBase->AddRef();
+				}
 				else
 					break;
 			}
@@ -672,14 +677,19 @@ void CGamePlayState::MessageProc( CBaseMessage* _message )
 				pEntity->SetIndexPosY(posy);
 			}
 			pEntity->AddRef();
-
 			OM->RemoveUnit(pEntity->m_nIdentificationNumber);
 			pEntity->m_nIdentificationNumber = 0;
 
 			if(pEntity->GetType() == ENT_PLAYER)
 			{
-				MEventSystem::GetInstance()->SendEvent("spawner.createdplayer", (void*)CGamePlayState::GetInstance()->testVaribale);	
-				idholder->newID = CGamePlayState::GetInstance()->testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());			
+				MEventSystem::GetInstance()->SendEvent("spawner.createdplayer", (void*)CGamePlayState::GetInstance()->testVaribale);
+				
+				idholder->newID = CGamePlayState::GetInstance()->testVaribale = OM->AddUnitIndexed(pEntity, msg->GetFloor());	
+				if(((CPlayer*)OM->GetUnit(CGamePlayState::GetInstance()->testVaribale))->GetHeldItem())
+					((CPlayer*)OM->GetUnit(CGamePlayState::GetInstance()->testVaribale))->GetHeldItem()->SetLayerLocation(msg->GetFloor());
+				
+				if(((CPlayer*)OM->GetUnit(CGamePlayState::GetInstance()->testVaribale))->GetEquippedItem())
+					((CPlayer*)OM->GetUnit(CGamePlayState::GetInstance()->testVaribale))->GetEquippedItem()->SetLayerLocation(msg->GetFloor());
 			}
 			else
 			{
