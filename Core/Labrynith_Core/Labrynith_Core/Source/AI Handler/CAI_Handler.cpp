@@ -144,7 +144,7 @@ void CAI_Handler::ClearEntityList()
 	}
 	m_vEntities.clear();
 }
-bool CAI_Handler::CheckCollisions(const CBaseEntity* pEntity, const int nX, 
+bool CAI_Handler::CheckCollisions(const IUnitInterface* pEntity, const int nX, 
 		const int nY, bool nCanHandleCollision)
 {
 	if(!pEntity)
@@ -394,7 +394,81 @@ int CAI_Handler::CheckWallDistance(const CBaseEntity* pEntity, int nPosX,
 		break;
 	};
 }
-void CAI_Handler::DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCollision)
+bool CAI_Handler::CheckPathDistance(const CBaseEntity* pEntity, const int nDirection, int& nDistance, int nWallDist)
+{
+	int index = ((CBaseEntity*)(pEntity))->GetAI_ID();
+	MObjectManager* OM = MObjectManager::GetInstance();
+	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX();
+	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
+
+	switch(nDirection)
+	{
+	case FLAG_MOVE_UP:
+		{
+			//check up wall path distance
+			for(nDistance = 0; nDistance < (nWallDist + 1); nDistance++)
+			 {
+				 if(CheckCollisions(pEntity, nX, nY - nDistance, false))
+				 {
+					 return false;
+				 }			 
+			 }
+		}
+		break;
+
+	case FLAG_MOVE_DOWN:
+		{
+			//check down wall path distance
+			for(nDistance = 0; nDistance < (nWallDist + 1); nDistance++)
+			 {
+				 if(CheckCollisions(pEntity, nX, nY + nDistance, false))
+				 {
+					 return false;
+				 }
+			 }
+			return true;
+		}
+		break;
+
+	case FLAG_MOVE_LEFT:
+		{
+			//check left wall path distance first
+			for(nDistance = 0; nDistance < (nWallDist + 1); nDistance++)
+			 {
+				 if(CheckCollisions(pEntity, nX - nDistance, nY, false))
+				 {
+					 return false;
+				 }
+			 }
+			return true;
+		}
+		break;
+
+	case FLAG_MOVE_RIGHT:
+		{
+			//check right wall path distance first
+			for(nDistance = 0; nDistance < (nWallDist + 1); nDistance++)
+			 {
+				 if(CheckCollisions(pEntity, nX + nDistance, nY, false))
+				 {
+					 return false;
+				 }
+			 }
+			return true;
+		}
+		break;
+
+	default:
+		{
+			//Leave if those directions arent hit
+			//direction is invalid
+			return false;
+		}
+		break;
+	};
+	return false;
+}
+void CAI_Handler::DoExitCollision(const IUnitInterface* pEntity, bool nCanHandleCollision)
 {
 	MObjectManager* OM = MObjectManager::GetInstance();
 	int nX = ((CBaseEntity*)(pEntity))->GetIndexPosX(); 
@@ -490,7 +564,7 @@ void CAI_Handler::CheckCollisionRange(const IUnitInterface* pEntity, const unsig
 	}
 }
 bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
-	const int StartDirection, tTarget& startPos, bool useStartDir)
+			      int nNumChecks, tTarget& startPos)
 {
 	//this is for the wall
 	bool isHorizontal;
@@ -503,10 +577,10 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 	int nDistanceRight, nDistanceLeft;
 	int nDistanceUp, nDistanceDown;
 
-	//if we re-check the direction we started checking
-	//we are stuck in one position
-	if(useStartDir && (StartDirection == nDirection))
-			return false;
+	if(nNumChecks > 4)
+		return false;
+
+	nNumChecks += 1;
 
 	switch(nDirection)
 	{
@@ -549,49 +623,32 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 		//Get the wall distance
 		if(!isHorizontal)
 		{
-			 bool isWallLeft = false, isWallRight = false;
-			 int nPathLeft = 0, PathRight = 0; 
+			bool isWallLeft = false, isWallRight = false;
+			 int nPathLeft = -1, PathRight = -1; 
 			 nDistanceLeft = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRLEFT);
 			 nDistanceRight = CheckWallDistance(pEntity, nX + offsetX, nY + offsetY, DIRRIGHT);
-
+			 //Bounds/Target checks
 			 //if our target was found in the wall we cannot reach it
 			 if(nDistanceLeft == -2 || nDistanceRight == -2)
 				 return false;
-
 			 //we cannot reach our target, both ways lead out of bounds
 			 if(nDistanceLeft == -1 && nDistanceRight == -1)
 				 return false;
-
 			 //treat out of bounds in one direction as a wall
 			 if(nDistanceLeft == -1)
 				 isWallLeft = true;
-
 			 if(nDistanceRight == -1)
 				 isWallRight = true;
 
 			 //Check the number of tiles the player can walk on
 			 //Right check
-			 for(PathRight = 0; PathRight < nDistanceRight; PathRight++)
-			 {
-				 //if the player cant walk past that tile
-				 //there is another wall to the right
-				 if(CheckCollisions(pEntity, nX + PathRight, nY, false))
-				 {
-					 isWallRight = true;
-					 break;
-				 }
-			 }
+			 if(!isWallRight)
+				isWallRight = !CheckPathDistance(pEntity, DIRRIGHT, PathRight, nDistanceRight);
 			 //Left check
-			 for(nPathLeft = 0; nPathLeft < nDistanceLeft; nPathLeft++)
-			 {
-				 //if the player cant walk past that tile
-				 //there is another wall to the left
-				 if(CheckCollisions(pEntity, nX - nPathLeft, nY, false))
-				 {
-					 isWallLeft = true;
-					 break;
-				 }
-			 }
+			 if(!isWallLeft)
+				isWallLeft = !CheckPathDistance(pEntity, DIRLEFT, nPathLeft, nDistanceLeft);
+
+
 			 //if there is a wall in both directions
 			 if(isWallLeft && isWallRight)
 			 {
@@ -599,36 +656,39 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 				 //go the other way
 				 if(nDistanceLeft == -1)
 				 {
-					 startPos.m_nX += nDistanceRight;
+					 startPos.m_nX += PathRight;
 					 startPos.m_nY += offsetY;
-					 return CheckPath(pEntity, DIRRIGHT, StartDirection, startPos, true);
+					 return CheckPath(pEntity, DIRRIGHT, nNumChecks, startPos);
 				 }
 				 else if(nDistanceRight ==  -1)
 				 {
-					 startPos.m_nX -= nDistanceLeft;
+					 startPos.m_nX -= nPathLeft;
 					 startPos.m_nY += offsetY;
-					 return CheckPath(pEntity, DIRLEFT, StartDirection, startPos, true);
+					 return CheckPath(pEntity, DIRLEFT, nNumChecks, startPos);
 				 }
 
 				 //Left Path has to be smaller
 				 //than right path to check left
-				 if(PathRight <= nPathLeft)
+				 if(PathRight < nPathLeft)
 				 {
 					//Check the right path wall				
-					 startPos.m_nX += nDistanceRight;
+					 startPos.m_nX += PathRight;
 					 //since golem favors horzontal movement offset the target
 					 startPos.m_nY += offsetY;
-					 return CheckPath(pEntity, DIRRIGHT, StartDirection, startPos, true);
+					 return CheckPath(pEntity, DIRRIGHT, nNumChecks, startPos);
 				 }
-				 else
+				 else if(PathRight > nPathLeft)
 				 {
 					//Check the left path wall
-					 startPos.m_nX -= nDistanceLeft;
+					 startPos.m_nX -= nPathLeft;
 					 //since golem favors horzontal movement offset the target
 					 startPos.m_nY += offsetY;
-					 return CheckPath(pEntity, DIRLEFT, StartDirection, startPos, true);
+					 return CheckPath(pEntity, DIRLEFT, nNumChecks, startPos);
 				 }
 			 }
+
+			 //The wall distance can be used to offset the target
+			 //if there is no wall in that direction
 			 //there is only a left wall, go right
 			 if(isWallLeft)
 			 {
@@ -674,41 +734,23 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 			 //if our target was found in the wall we cannot reach it
 			 if(nDistanceUp == -2 || nDistanceDown == -2)
 				 return false;
-
 			 //we cannot reach our target, both ways lead out of bounds
 			 if(nDistanceUp == -1 && nDistanceDown == -1)
 				 return false;
-
 			 //treat out of bounds in one direction as a wall
 			 if(nDistanceUp == -1)
 				 isWallUp = true;
-
 			 if(nDistanceDown == -1)
 				 isWallDown = true;
 
 			 //Check the number of tiles the player can walk on
 			 //Down check
-			 for(PathDown = 0; PathDown < nDistanceDown; PathDown++)
-			 {
-				 //if the player cant walk past that tile
-				 //there is another wall to the Down
-				 if(CheckCollisions(pEntity, nX, nY + PathDown, false))
-				 {
-					 isWallDown = true;
-					 break;
-				 }
-			 }
+			 if(!isWallDown)
+				isWallDown = !CheckPathDistance(pEntity, DIRDOWN, PathDown, nDistanceDown);
 			 //Up check
-			 for(nPathUp = 0; nPathUp < nDistanceUp; nPathUp++)
-			 {
-				 //if the player cant walk past that tile
-				 //there is another wall to the Up
-				 if(CheckCollisions(pEntity, nX, nY - nPathUp, false))
-				 {
-					 isWallUp = true;
-					 break;
-				 }
-			 }
+			 if(!isWallUp)
+				isWallUp = !CheckPathDistance(pEntity, DIRUP, nPathUp, nDistanceUp);
+
 			 //if there is a wall in both directions
 			 if(isWallUp && isWallDown)
 			 {
@@ -716,28 +758,28 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 				 //go the other way
 				 if(nDistanceUp == -1)
 				 {
-					 startPos.m_nY += nDistanceDown;
-					 return CheckPath(pEntity, DIRDOWN, StartDirection, startPos, true);
+					 startPos.m_nY += PathDown;
+					 return CheckPath(pEntity, DIRDOWN, nNumChecks, startPos);
 				 }
 				 else if(nDistanceDown ==  -1)
 				 {
-					 startPos.m_nY -= nDistanceUp;
-					 return CheckPath(pEntity, DIRUP, StartDirection, startPos, true);
+					 startPos.m_nY -= nPathUp;
+					 return CheckPath(pEntity, DIRUP, nNumChecks, startPos);
 				 }
 
 				 //Up Path has to be smaller
 				 //than Down path to check Up
-				 if(PathDown <= nPathUp)
+				 if(PathDown < nPathUp)
 				 {
 					//Check the Down path wall				
-					 startPos.m_nY += nDistanceDown;
-					 return CheckPath(pEntity, DIRDOWN, StartDirection, startPos, true);
+					 startPos.m_nY += PathDown;
+					 return CheckPath(pEntity, DIRDOWN, nNumChecks, startPos);
 				 }
-				 else
+				 else if(PathDown > nPathUp)
 				 {
 					//Check the Up path wall
-					 startPos.m_nY -= nDistanceUp;
-					 return CheckPath(pEntity, DIRUP, StartDirection, startPos, true);
+					 startPos.m_nY -= nPathUp;
+					 return CheckPath(pEntity, DIRUP, nNumChecks, startPos);
 				 }
 			 }
 			 //there is only a Up wall, go Down
@@ -756,8 +798,6 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 			//There are no walls
 			//Up Path has to be smaller
 			//than Down path to check Up
-			//BUG- equal to is missing, need to check the walls that arent on
-			//the same side as the player
 			if(PathDown <= nPathUp)
 			{
 				startPos.m_nY += nDistanceDown;
@@ -944,7 +984,7 @@ bool CAI_Handler::GetNewTarget(const CBaseEntity* pEntity, const int nDirection)
 	int nY = ((CBaseEntity*)(pEntity))->GetIndexPosY();
 
 	tTarget target = tTarget(nX, nY, false);
-	if(CheckPath(pEntity, nDirection, nDirection, target, false))
+	if(CheckPath(pEntity, nDirection, 0, target))
 	{
 		//add the target to our list
 		m_vEntities[index]->AddNewTarget(target);

@@ -37,7 +37,7 @@ bool CPit::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 		MMessageSystem::GetInstance()->SendMsg( new msgMoveEntityFloor((CBaseEntity*)pBase, 
 			this->GetLayerLocation() + 1, GetIndexPosX(), GetIndexPosY()));
 		MMessageSystem::GetInstance()->ProcessMessages();
-		CAI_Handler::GetInstance()->CheckCollisions((CBaseEntity*)pBase, pBase->GetIndexPosX(), pBase->GetIndexPosY(), true);
+		CAI_Handler::GetInstance()->CheckCollisions(pBase, pBase->GetIndexPosX(), pBase->GetIndexPosY(), true);
 	}
 	else
 	{

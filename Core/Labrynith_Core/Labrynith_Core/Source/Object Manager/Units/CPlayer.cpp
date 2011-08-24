@@ -262,13 +262,6 @@ void CPlayer::Input()
 			}
 		}
 	}
-
-	if( pDI->KeyPressed( DIK_E )||
-		pDI->JoystickButtonPressed(1) )
-	{
-		SwitchItems();
-		return;
-	}
 }
 bool CPlayer::CanInteract(IUnitInterface* pBase)
 {	

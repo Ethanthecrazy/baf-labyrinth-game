@@ -2884,10 +2884,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -3063,17 +3063,17 @@
         </Tile>
         <Tile>
           <Type>
-            <X>1</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -3255,10 +3255,10 @@
         </Tile>
         <Tile>
           <Type>
-            <X>2</X>
+            <X>0</X>
             <Y>0</Y>
           </Type>
-          <Property>4</Property>
+          <Property />
         </Tile>
         <Tile>
           <Type>
@@ -11348,7 +11348,7 @@
       </Position>
     </TileObject>
   </Objects>
-  <FileName>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Levels\my3.xml</FileName>
+  <FileName>C:\Users\Rob Taylor\Desktop\SGP Game\Core\Labrynith_Core\Labrynith_Core\resource\Levels\3.xml</FileName>
   <Tilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Tiles.png</Tilesetpath>
   <ObjectTilesetpath>C:\Users\Rob Taylor\Desktop\SGP Game\Labrinthium - World Editor\Labrinthium - World Editor\bin\Release\..\..\Objects.png</ObjectTilesetpath>
   <ObjectTilSet>

@@ -97,19 +97,20 @@ class CAI_Handler
 	void SetNewTarget(const CBaseEntity* pEntity);	
 	int CheckWallDistance(const CBaseEntity* pEntity, int nPosX, 
 		                  int nPosY, const int nDirection);
-	int CheckPathDistance(const CBaseEntity* pEntity, const int nDirection);
+	bool CheckPathDistance(const CBaseEntity* pEntity, const int nDirection, int& nDistance,
+						  int nWallDist);
 	bool CheckPath(const CBaseEntity* pEntity, const int nDirection,
-			      const int StartDirection, tTarget& startPos, bool useStartDir);
+			      int nNumChecks, tTarget& startPos);
 public:
 
 	static CAI_Handler* GetInstance();
 	//Checks to see if an object is in that position
 	//bool- determines weather to allow the Entity to handle
 	// its own collisions
-	bool CheckCollisions(const CBaseEntity* pEntity, const int nX, 
+	bool CheckCollisions(const IUnitInterface* pEntity, const int nX, 
 		const int nY, bool nCanHandleCollision);
 	//called when an entity is no longer colliding with an object
-	void DoExitCollision(const CBaseEntity* pEntity, bool nCanHandleCollision);
+	void DoExitCollision(const IUnitInterface* pEntity, bool nCanHandleCollision);
 	//checks for collisions with an entity in the specified range
 	void CheckCollisionRange(const IUnitInterface* pEntity, const unsigned int nRange);
 	//moves in the 4 cardinal dircetions
