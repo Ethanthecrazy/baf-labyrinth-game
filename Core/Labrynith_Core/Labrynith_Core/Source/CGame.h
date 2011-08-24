@@ -65,7 +65,7 @@ public:
 	void ClearAllStates( void );
 	void PopState(void);
 	void PushState(IGameState* pNextState);
-
+	IGameState* GetGameState(void) {return m_pGameStates.size() ? m_pGameStates[0] : NULL;}
 };
 
 

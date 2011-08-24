@@ -84,10 +84,6 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
 					
 					
-					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetVelY( 0 ) ;
-					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetVelX( 0 ) ;
-					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetDistanceLeft( 0 ) ;
-					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 
 					switch( GetFlag_DirectionToMove() )
 					{

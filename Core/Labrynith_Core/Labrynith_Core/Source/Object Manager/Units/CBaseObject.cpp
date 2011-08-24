@@ -316,12 +316,13 @@ void CBaseObject::SetFlag_MovementState( int newFlag )
 	if(newFlag == FLAG_MOVESTATE_ATDESTINATION)
 	{
 		//Dont try to reference to the object manager if were not added
-		if(m_nIdentificationNumber == 0)
+		if(m_nIdentificationNumber == 0 || this == NULL)
 			return;
-
 		//Call ExitCollision on the tile we are on
-		int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE )
+		int tileID = MObjectManager::GetInstance()->GetLayer( this->GetLayerLocation() ).GetFlake( OBJECT_TILE )
 			.GetInfoAtIndex( GetIndexPosX(), GetIndexPosY());
+		if(tileID < 0)
+			return;
 		IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID));
 		ExitCollision(tile, true);
 	}

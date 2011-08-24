@@ -37,6 +37,8 @@
 #include "../resource.h"
 
 #include "CGame.h"
+#include "GameStates\CPauseState.h"
+#include "GameStates\CGamePlayState.h"
 
 //#pragma comment( linker, "/SUBSYSTEM:Console" )
 
@@ -88,6 +90,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			else // losing focus
 			{
 				// pause game code here
+				if( CGame::GetInstance()->GetGameState() == CGamePlayState::GetInstance() )
+					CGame::GetInstance()->PushState( CPauseState::GetInstance() );
 			}
 		}
 		break;
