@@ -90,6 +90,8 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					}
 					CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
 					CSGD_FModManager::GetInstance()->PlaySound2D( m_nEatSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber ) ;
+					
+					this->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 					MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
 				}
 				return false;

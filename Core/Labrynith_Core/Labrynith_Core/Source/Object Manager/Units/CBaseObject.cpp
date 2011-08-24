@@ -6,6 +6,7 @@
 #include "../../GameStates/CGamePlayState.h"
 #include "Tiles\CWaterTile.h"
 #include "Tiles\CDoor.h"
+#include "../../AI Handler/CAI_Handler.h"
 
 CBaseObject::CBaseObject()
 {
@@ -16,6 +17,8 @@ CBaseObject::CBaseObject()
 	// velocity
 	 SetVelX(0);
 	 SetVelY(0);
+
+	 SetDistanceLeft( 0 ) ;
 
 	 m_nUnitType = OBJECT_OBJECT;
 	 m_nIdentificationNumber = 0;
@@ -33,7 +36,7 @@ void CBaseObject::Update(float fDT)
 {
 	if( GetFlag_MovementState() == FLAG_MOVESTATE_MOVING )
 	{
-		int movespeed = 2000;
+		int movespeed = 150;
 		SetDistanceLeft( GetDistanceLeft() - movespeed * fDT );
 
 		if( GetDistanceLeft() >= 0 )
@@ -82,7 +85,7 @@ void CBaseObject::Update(float fDT)
 				break;
 			}
 
-			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , 0 ) ;
+			MObjectManager::GetInstance()->FindFlake(m_nIdentificationNumber).SetInfoAtIndex( GetIndexPosX() , GetIndexPosY() , m_nIdentificationNumber ) ;
 			SetIndexPosX( (int)(GetPosX() / TILE_WIDTH) ) ;
 			SetIndexPosY( (int)(GetPosY() / TILE_HEIGHT) ) ;
 			if( (GetVelX() > 0 || GetVelY() > 0) && this->GetType() == OBJ_ATTRACTOR )
@@ -94,26 +97,28 @@ void CBaseObject::Update(float fDT)
 			SetLastPosY( GetPosY() );
 
 			MObjectManager::GetInstance()->FindFlake( this->m_nIdentificationNumber ).FinishMovingEnt( this );
+			int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
+			IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 
 			if( GetVelX() != 0 || GetVelY() != 0 )
 			{
 				int item = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
-				int entityID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_ENTITY ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				int tileID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_TILE ).GetInfoAtIndex( GetIndexPosX() + xDirection , GetIndexPosY() + yDirection ) ;
 				IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(item));
-				IUnitInterface* entity = (MObjectManager::GetInstance()->GetUnit(entityID)) ;
 				IUnitInterface* tile = (MObjectManager::GetInstance()->GetUnit(tileID));
 				if( CheckCollision( object , true ) || CheckCollision( entity , true ) || CheckCollision( tile , true ) || tileID == 0 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
-					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
+					CheckCollision( entity , true );
+					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;					
 					SetDistanceLeft( 0 ) ;
 				}
 				else if( GetIndexPosY() - 1 < 0 || GetIndexPosY() + 1 > MObjectManager::GetInstance()->FindLayer( m_nIdentificationNumber).GetLayerHeight() - 1 || GetIndexPosX() - 1 < 0 || GetIndexPosX() + 1 > MObjectManager::GetInstance()->FindLayer(m_nIdentificationNumber).GetLayerWidth() - 1 )
 				{
 					SetVelY( 0 ) ;
 					SetVelX( 0 ) ;
+					CheckCollision( entity , true );
 					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
 					SetDistanceLeft( 0 ) ;
 				}
@@ -126,6 +131,7 @@ void CBaseObject::Update(float fDT)
 				SetVelX( GetVelX() - 1 ) ;
 				if( GetVelX() == 0 )
 				{
+					CheckCollision( entity , true );
 					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
 					SetDistanceLeft( 0 ) ;
 				}
@@ -138,6 +144,7 @@ void CBaseObject::Update(float fDT)
 				SetVelY( GetVelY() - 1 ) ;
 				if( GetVelY() == 0 )
 				{
+					CheckCollision( entity , true );
 					SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION ) ;
 					SetDistanceLeft( 0 ) ;
 				}
@@ -224,7 +231,8 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 	case OBJECT_ENTITY:
 		{
-			return true;
+			if(this->GetType() != OBJ_ATTRACTOR)
+				return true;
 		}
 		break;
 	case OBJECT_TILE:
@@ -239,7 +247,7 @@ bool CBaseObject::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision
 
 			if(pBase->GetType() == OBJ_PIT )
 			{
-				return pBase->CheckCollision(this, nCanHandleCollision);
+				return false;//pBase->CheckCollision(this, nCanHandleCollision);
 			}
 
 			if(pBase->GetType() == OBJ_DOOR)
@@ -275,6 +283,7 @@ void CBaseObject::ExitCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 			{
 				if(!((CWaterTile*)pBase)->IsFrozen())
 				{
+					// check if ice or water attractor and return if it is
 					//remove this object
 					MMessageSystem::GetInstance()->SendMsg(new msgRemoveUnit(this->m_nIdentificationNumber));
 				}

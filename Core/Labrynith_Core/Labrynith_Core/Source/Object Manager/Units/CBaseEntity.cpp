@@ -25,7 +25,8 @@ CBaseEntity::CBaseEntity()
 	// velocity
 	 SetVelX(0);
 	 SetVelY(0);
-
+	 
+	 SetDistanceLeft( 0 ) ;
 	 m_nUnitType = OBJECT_ENTITY;
 
 	 SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
