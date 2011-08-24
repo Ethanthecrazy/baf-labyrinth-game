@@ -173,6 +173,25 @@ void CBaseEntity::CheckAtDestinationCollision()
 			((CButton*)pBase)->CheckCollision(this);
 		}
 	}
+
+
+	
+	
+	/*int objectID = MObjectManager::GetInstance()->FindLayer(this->m_nIdentificationNumber)
+		.GetFlake(OBJECT_OBJECT).GetInfoAtIndex(this->GetIndexPosX(), this->GetIndexPosY());
+
+	CBaseObject* pObject = (CBaseObject*)(MObjectManager::GetInstance()->GetUnit(objectID));
+	
+	if(!pObject || this->GetLayerLocation() != pObject->GetLayerLocation())
+		return;
+
+	if( pObject->m_nIdentificationNumber > 0 )
+	{
+		if(pObject->GetType() == OBJ_ATTRACTOR)
+		{
+			this->CheckCollision(pObject, true);
+		}
+	}*/
 }
 void CBaseEntity::Render( int CameraPosX, int CameraPosY )
 {

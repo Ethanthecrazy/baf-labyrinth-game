@@ -36,6 +36,17 @@ void CBaseGolem::Update(float fDT)
 {
 	CBaseEntity::Update(fDT);
 
+	/*if( GetFlag_prev_MovementState() == FLAG_MOVESTATE_MOVING)
+	{		
+		if(this->GetFlag_MovementState() == FLAG_MOVESTATE_ATDESTINATION)
+		{
+		int objectID = MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).GetInfoAtIndex( GetIndexPosX() , GetIndexPosY() ) ;
+		IUnitInterface* object = (MObjectManager::GetInstance()->GetUnit(objectID)) ;
+		
+		CheckCollision( object , true );
+		}
+	}*/
+
 	if(( GetDistanceLeft() <= 32 && GetDistanceLeft() >= 30 ) || (GetDistanceLeft() <= 16 && GetDistanceLeft() >= 14 ) )
 		CSGD_FModManager::GetInstance()->PlaySound2D( m_nStepSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber) ;
 
@@ -71,7 +82,12 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					MEventSystem::GetInstance()->SendEvent( "ATTRACTORREMOVED" , MObjectManager::GetInstance()->GetUnit( ObjectID ) ) ;
 					MObjectManager::GetInstance()->RemoveUnit( ObjectID ) ;
 					MObjectManager::GetInstance()->FindLayer( this->m_nIdentificationNumber ).GetFlake( OBJECT_OBJECT ).SetInfoAtIndex( tileXPos , tileYPos , 0 ) ;
-
+					
+					
+					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetVelY( 0 ) ;
+					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetVelX( 0 ) ;
+					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetDistanceLeft( 0 ) ;
+					MObjectManager::GetInstance()->GetUnit( ObjectID )->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 
 					switch( GetFlag_DirectionToMove() )
 					{
@@ -91,7 +107,7 @@ bool CBaseGolem::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 					CAnimationManager::GetInstance()->PlayAnimation( GetCurrentAnimID() ) ;
 					CSGD_FModManager::GetInstance()->PlaySound2D( m_nEatSoundID, CGamePlayState::GetInstance()->testVaribale, this->m_nIdentificationNumber ) ;
 					
-					this->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
+					//this->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
 					MEventSystem::GetInstance()->SendEvent( "spawner.spawn" );
 				}
 				return false;

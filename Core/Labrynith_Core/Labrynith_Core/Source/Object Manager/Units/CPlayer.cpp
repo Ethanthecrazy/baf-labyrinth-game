@@ -301,7 +301,12 @@ bool CPlayer::CheckCollision(IUnitInterface* pBase, bool nCanHandleCollision)
 				}
 				else
 				{
-					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;
+					pBase->SetVelY( 0 ) ;
+					pBase->SetVelX( 0 ) ;
+					pBase->SetDistanceLeft( 0 ) ;
+					pBase->SetFlag_MovementState( FLAG_MOVESTATE_ATDESTINATION );
+
+					MMessageSystem::GetInstance()->SendMsg( new msgPickUpObject( (CBaseObject*)pBase ) ) ;					
 				}
 				return true;
 			}					
