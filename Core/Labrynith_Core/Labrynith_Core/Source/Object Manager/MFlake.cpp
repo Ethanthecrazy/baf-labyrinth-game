@@ -12,6 +12,8 @@
 #include "../Object Manager/Units/CBaseObject.h"
 #include "../Object Manager/Units/Tiles/CDoor.h"
 
+#define OFFSCREENAMOUNT 5
+
 MFlake::MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY, int _parentLayer ) : LayerWidth( _LayerWidth ), 
 	LayerHeight( _LayerHeight ), 
 	OffSetFromCenterX( _OffSetFromCenterX ), 
@@ -179,13 +181,14 @@ void MFlake::Update( float fDT )
 void MFlake::LightingProcess( int x, int y )
 {
 	bool bCanTransfer = false;
+	int index = GetInfoAtIndex( x, y );
 
-	if( GetInfoAtIndex( x, y ) > 254 )
+	if( index > 254 )
 		bCanTransfer = true;
 
-		SetInfoAtIndex( x, y, GetInfoAtIndex( x, y ) - 12 );
+		SetInfoAtIndex( x, y, index - 12 );
 
-	if( GetInfoAtIndex( x, y ) < 5 )
+	if( index < 5 )
 	{
 		SetInfoAtIndex( x, y, 0 );
 		return;
@@ -212,70 +215,98 @@ void MFlake::LightingProcess( int x, int y )
 		}
 	}
 
-	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x + 1, y ) )
+	if( index >= GetInfoAtIndex( x + 1, y ) )
 	{
-		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x + 1, y, (int)(index / 1.1f), this ) );
 	}
-	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x - 1, y ) )
+	if( index >= GetInfoAtIndex( x - 1, y ) )
 	{
-		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x - 1, y, (int)(index / 1.1f), this ) );
 	}
-	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y + 1 ) )
+	if( index >= GetInfoAtIndex( x, y + 1 ) )
 	{
-		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y + 1, (int)(index / 1.1f), this ) );
 	}
-	if( GetInfoAtIndex( x, y ) >= GetInfoAtIndex( x, y - 1 ) )
+	if( index >= GetInfoAtIndex( x, y - 1 ) )
 	{
-		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(GetInfoAtIndex( x, y ) / 1.1f), this ) );
+		MMessageSystem::GetInstance()->SendMsg( new msgTransferLight( x, y, x, y - 1, (int)(index / 1.1f), this ) );
 	}
 }
 
+void MFlake::RenderObjects( int CameraX, int CameraY )
+{
+	unsigned int size = m_vObjects.size();
+	for( unsigned int i = 0; i < size; ++i )
+	{
+		//Dont Render things off-screen(exception: lights by a certain amount(OFFSCREENAMOUNT))
+		//Top Check
+		if(m_vObjects[i]->GetPosY() + (OFFSCREENAMOUNT * TILE_WIDTH) < CameraY)
+			continue;
+		//Bottom Check
+		if(m_vObjects[i]->GetPosY() > CameraY + 600 + (OFFSCREENAMOUNT * TILE_HEIGHT))
+			continue;
+		//Left Check
+		if(m_vObjects[i]->GetPosX() + (OFFSCREENAMOUNT * TILE_WIDTH) < CameraX)
+			continue;
+		//Right Check
+		if(m_vObjects[i]->GetPosX() > CameraX + 800 + (OFFSCREENAMOUNT * TILE_WIDTH))
+			continue;
+
+		m_vObjects[i]->Render( CameraX, CameraY );
+	}
+}
+void MFlake::RenderDebug( int CameraX, int CameraY )
+{
+	char temp[64];
+	for( int y = 0; y < LayerHeight; ++y )
+	{
+		for( int x = 0; x < LayerWidth; ++x )
+		{
+			if(InformationArray[ x + y * LayerWidth ] == 0)
+				continue;
+
+			sprintf_s( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
+
+			CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
+		}
+	}
+}
 void MFlake::Render( int CameraX, int CameraY )
 {
-
 	switch ( m_nFlakeType )
 	{
 	case OBJECT_TILE:
 		{
 			//char temp[64];
+			CSGD_TextureManager* TM = CSGD_TextureManager::GetInstance();
+			MObjectManager* OM = MObjectManager::GetInstance();
+			bool renderCulling = CGamePlayState::GetInstance()->GetRenderCulling();
+			int stoneTileID, wallTileID;
+			stoneTileID = TM->LoadTexture( "resource/stoneTile.png" );
+			wallTileID = TM->LoadTexture( "resource/wall.png" );
 
-			for( int y = 0; y < LayerHeight; ++y )
+			int startY = CameraY/TILE_HEIGHT;
+			int startX = CameraX/TILE_WIDTH;
+			int camBottom = (CameraY + 600)/TILE_HEIGHT;
+			int camRight = (CameraX + 800)/TILE_WIDTH;
+			for(int y = startY; y < camBottom; ++y )
 			{
-				for( int x = 0; x < LayerWidth; ++x )
+				for(int x = startX; x < camRight; ++x )
 				{
-					//sprintf( temp, "%i", MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ) ); 
+					//sprintf( temp, "%i", OM->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y ) ); 
 
 					if( InformationArray[ x + y * LayerWidth] >= 0 )
-					{
-
-						int nBrightness = MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y );
+					{	
+						int nBrightness = OM->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y );
 						switch( InformationArray[ x + y * LayerWidth] )
 						{
-
 						case 0:
-							{
-								RECT camRect;
-								camRect.top = (long)CameraY;
-								camRect.left = (long)CameraX;
-								camRect.bottom = (long)camRect.top + 600;
-								camRect.right = (long)camRect.left + 800;
-		
-								RECT objRect;
-								objRect.top = (long)y * TILE_HEIGHT;
-								objRect.left = (long)x * TILE_WIDTH;
-								objRect.bottom = (long)objRect.top + TILE_HEIGHT;
-								objRect.right = (long)objRect.left + TILE_WIDTH;
-
-								RECT out;
-								if(!IntersectRect(&out, &camRect, &objRect) && CGamePlayState::GetInstance()->GetRenderCulling())
+							{		
+								int lightamount = OM->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y );
+								if(lightamount == 0 && renderCulling)
 									break;
 
-								int lightamount = MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y );
-								if(lightamount == 0 && CGamePlayState::GetInstance()->GetRenderCulling())
-									break;
-
-
-								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/wall.png" ),
+								TM->Draw( wallTileID,
 										x * TILE_WIDTH - CameraX,
 										y * TILE_HEIGHT - CameraY,
 										1.0f,
@@ -284,35 +315,17 @@ void MFlake::Render( int CameraX, int CameraY )
 										0.0f,
 										0.0f,
 										0.0f,
-										D3DCOLOR_ARGB( 255, nBrightness, nBrightness, nBrightness) );	
-
-								break;
+										D3DCOLOR_ARGB( 255, nBrightness, nBrightness, nBrightness) );			
 							}
+							break;
 
 						case 1:
 							{
-								RECT camRect;
-								camRect.top = (long)CameraY;
-								camRect.left = (long)CameraX;
-								camRect.bottom = (long)camRect.top + 600;
-								camRect.right = (long)camRect.left + 800;
-		
-								RECT objRect;
-								objRect.top = (long)y * TILE_HEIGHT;
-								objRect.left = (long)x * TILE_WIDTH;
-								objRect.bottom = (long)objRect.top + TILE_HEIGHT;
-								objRect.right = (long)objRect.left + TILE_WIDTH;
-
-								RECT out;
-								if(!IntersectRect(&out, &camRect, &objRect) && CGamePlayState::GetInstance()->GetRenderCulling())
+								int lightamount = OM->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y );
+								if(lightamount == 0 && renderCulling)
 									break;
 
-								int lightamount = MObjectManager::GetInstance()->GetLayer( parentLayer ).GetFlake( OBJECT_LIGHT ).GetInfoAtIndex( x, y );
-								if(lightamount == 0 && CGamePlayState::GetInstance()->GetRenderCulling())
-									break;
-
-
-								CSGD_TextureManager::GetInstance()->Draw( CSGD_TextureManager::GetInstance()->LoadTexture( "resource/stoneTile.png" ),
+								TM->Draw( stoneTileID,
 									x * TILE_WIDTH - CameraX,
 									y * TILE_HEIGHT - CameraY,
 									1.0f,
@@ -323,92 +336,32 @@ void MFlake::Render( int CameraX, int CameraY )
 									0.0f,
 									D3DCOLOR_ARGB( 255, nBrightness, nBrightness, nBrightness) );	
 
-								//CSGD_TextureManager::GetInstance()->UnloadTexture( toUnload );
-								break;
+								//TM->UnloadTexture( toUnload );								
 							}
+							break;
 						}
 					}	
 				}
 			}
-
-			CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
-
-			for( unsigned int i = 0; i < m_vObjects.size(); ++i )
-			{
-				m_vObjects[i]->Render( CameraX, CameraY );
-			}
+			RenderObjects( CameraX, CameraY );
+			//RenderDebug( CameraX, CameraY );
 		}
 		break;
 
 	case OBJECT_OBJECT:
-
-		for( unsigned int i = 0; i < m_vObjects.size(); ++i )
-		{
-			m_vObjects[i]->Render( CameraX, CameraY );
-		}
-
-		/*char temp[64];
-
-		for( int y = 0; y < LayerHeight; ++y )
-		{
-			for( int x = 0; x < LayerWidth; ++x )
-			{
-				if(InformationArray[ x + y * LayerWidth ] == 0)
-					continue;
-
-				sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
-
-				CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
-			}
-		}*/
-
+		CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+		RenderObjects( CameraX, CameraY );
+		//RenderDebug( CameraX, CameraY );
 		break;
 
 	case OBJECT_ENTITY:
-
-		if( m_nFlakeType == OBJECT_ENTITY )
-		{
-			CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
-
-			for( unsigned int i = 0; i < m_vObjects.size(); ++i )
-			{
-				m_vObjects[i]->Render( CameraX, CameraY );
-			}
-
-			/*char temp[64];
-
-			for( int y = 0; y < LayerHeight; ++y )
-			{
-				for( int x = 0; x < LayerWidth; ++x )
-				{
-					if(InformationArray[ x + y * LayerWidth ] == 0)
-						continue;
-
-					sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] ); 
-
-					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
-				}
-			}*/
-		}
-
+		CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+		RenderObjects( CameraX, CameraY );
+		//RenderDebug( CameraX, CameraY );
 		break;
 
 	case OBJECT_LIGHT:
-		{
-			/*char temp[64];
-
-			for( int y = 0; y < LayerHeight; ++y )
-			{
-				for( int x = 0; x < LayerWidth; ++x )
-				{
-					CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
-
-					sprintf( temp, "%i", InformationArray[ x + y * LayerWidth ] / 100 ); 
-
-					CSGD_Direct3D::GetInstance()->DrawTextA( temp, x * TILE_WIDTH  - CameraX, y * TILE_HEIGHT - CameraY );
-				}
-			}*/
-		}
+		//RenderDebug( CameraX, CameraY );
 		break;
 	}
 }

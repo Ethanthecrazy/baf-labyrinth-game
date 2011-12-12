@@ -139,7 +139,8 @@ void MLayer::Update( float fDT )
 }
 void MLayer::Render( int CameraX, int CameraY )
 {
-	for( unsigned int i = 0; i < m_vFlakes.size() - 4; ++i )
+	unsigned int size = m_vFlakes.size() - 4;
+	for( unsigned int i = 0; i < size; ++i )
 	{
 		m_vFlakes[i].Render( CameraX, CameraY );
 	}

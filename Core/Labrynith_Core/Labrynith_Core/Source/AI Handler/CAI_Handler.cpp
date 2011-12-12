@@ -577,7 +577,7 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 	int nDistanceRight, nDistanceLeft;
 	int nDistanceUp, nDistanceDown;
 
-	if(nNumChecks > 4)
+	if(nNumChecks > 10)
 		return false;
 
 	nNumChecks += 1;
@@ -657,13 +657,13 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 				 if(nDistanceLeft == -1)
 				 {
 					 startPos.m_nX += PathRight;
-					 startPos.m_nY += offsetY;
+					 //startPos.m_nY += offsetY;
 					 return CheckPath(pEntity, DIRRIGHT, nNumChecks, startPos);
 				 }
 				 else if(nDistanceRight ==  -1)
 				 {
 					 startPos.m_nX -= nPathLeft;
-					 startPos.m_nY += offsetY;
+					 //startPos.m_nY += offsetY;
 					 return CheckPath(pEntity, DIRLEFT, nNumChecks, startPos);
 				 }
 
@@ -674,7 +674,7 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 					//Check the right path wall				
 					 startPos.m_nX += PathRight;
 					 //since golem favors horzontal movement offset the target
-					 startPos.m_nY += offsetY;
+					 //startPos.m_nY += offsetY;
 					 return CheckPath(pEntity, DIRRIGHT, nNumChecks, startPos);
 				 }
 				 else if(PathRight > nPathLeft)
@@ -682,7 +682,7 @@ bool CAI_Handler::CheckPath(const CBaseEntity* pEntity, const int nDirection,
 					//Check the left path wall
 					 startPos.m_nX -= nPathLeft;
 					 //since golem favors horzontal movement offset the target
-					 startPos.m_nY += offsetY;
+					 //startPos.m_nY += offsetY;
 					 return CheckPath(pEntity, DIRLEFT, nNumChecks, startPos);
 				 }
 			 }

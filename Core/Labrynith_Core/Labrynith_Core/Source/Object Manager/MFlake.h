@@ -29,7 +29,8 @@ private:
 	int OffSetFromCenterY;
 
 	void LightingProcess( int _X, int _Y );
-
+	void RenderObjects( int CameraX, int CameraY );
+	void RenderDebug( int CameraX, int CameraY );
 public:
 
 	MFlake( int _LayerWidth, int _LayerHeight, int _OffSetFromCenterX, int _OffSetFromCenterY, int _parentLayer );

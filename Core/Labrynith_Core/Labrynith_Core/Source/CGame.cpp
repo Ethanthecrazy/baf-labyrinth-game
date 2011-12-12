@@ -102,24 +102,25 @@ void CGame::Update()
 	// update
 	if( m_pGameStates.size() )
 		m_pGameStates[m_pGameStates.size() - 1]->Update(m_fElapsedTime);
+
+	CSGD_FModManager::GetInstance()->Update();
 }
 
 void CGame::Render()
 {
-	CSGD_Direct3D::GetInstance()->Clear(0, 0, 0);
-	CSGD_Direct3D::GetInstance()->DeviceBegin();
-	CSGD_Direct3D::GetInstance()->SpriteBegin();
+	CSGD_Direct3D* D3D = CSGD_Direct3D::GetInstance();
+	D3D->Clear(0, 0, 0);
+	D3D->DeviceBegin();
+	D3D->SpriteBegin();
 
 	for( unsigned int i = 0; i < m_pGameStates.size(); ++i )
 	{
 		m_pGameStates[i]->Render();
 	}
 
-	CSGD_Direct3D::GetInstance()->SpriteEnd();
-	CSGD_Direct3D::GetInstance()->DeviceEnd();
-	CSGD_Direct3D::GetInstance()->Present();
-
-	CSGD_FModManager::GetInstance()->Update() ;
+	D3D->SpriteEnd();
+	D3D->DeviceEnd();
+	D3D->Present();	
 }
 
 void CGame::ClearAllStates( void )
