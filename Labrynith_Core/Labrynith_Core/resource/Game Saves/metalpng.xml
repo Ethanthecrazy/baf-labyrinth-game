@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CharInfo>
+ <Char char ="''">
+     <Width width ="32"/>
+     <Offset offset ="0"/>
+ </Char>
+  <Char char ="!">
+     <Width width ="23"/>
+     <Offset offset ="25"/>
+ </Char>
+  <Char char ="'">
+     <Width width ="35"/>
+     <Offset offset ="19"/>
+ </Char>
+  <Char char ="#">
+     <Width width ="42"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="$">
+     <Width width ="42"/>
+     <Offset offset ="11"/>
+ </Char>
+   <Char char ="%">
+     <Width width ="55"/>
+     <Offset offset ="4"/>
+ </Char>
+   <Char char ="'">
+     <Width width ="46"/>
+     <Offset offset ="6"/>
+ </Char>
+   <Char char ="`">
+     <Width width ="22"/>
+     <Offset offset ="23"/>
+ </Char>
+   <Char char ="(">
+     <Width width ="27"/>
+     <Offset offset ="15"/>
+ </Char>
+   <Char char =")">
+     <Width width ="27"/>
+     <Offset offset ="15"/>
+ </Char>
+   <Char char ="*">
+     <Width width ="17"/>
+     <Offset offset ="17"/>
+ </Char>
+   <Char char ="+">
+     <Width width ="39"/>
+     <Offset offset ="15"/>
+ </Char>
+   <Char char =",">
+     <Width width ="21"/>
+     <Offset offset ="25"/>
+ </Char>
+   <Char char ="-">
+     <Width width ="25"/>
+     <Offset offset ="16"/>
+ </Char>
+   <Char char =".">
+     <Width width ="19"/>
+     <Offset offset ="20"/>
+ </Char>
+   <Char char ="/">
+     <Width width ="29"/>
+     <Offset offset ="24"/>
+ </Char>
+   <Char char ="0">
+     <Width width ="41"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="1">
+     <Width width ="29"/>
+     <Offset offset ="16"/>
+ </Char>
+   <Char char ="2">
+     <Width width ="38"/>
+     <Offset offset ="19"/>
+ </Char>
+   <Char char ="3">
+     <Width width ="38"/>
+     <Offset offset ="20"/>
+ </Char>
+   <Char char ="4">
+     <Width width ="39"/>
+     <Offset offset ="14"/>
+ </Char>
+   <Char char ="5">
+     <Width width ="39"/>
+     <Offset offset ="14"/>
+ </Char>
+   <Char char ="6">
+     <Width width ="39"/>
+     <Offset offset ="12"/>
+ </Char>
+   <Char char ="7">
+     <Width width ="33"/>
+     <Offset offset ="19"/>
+ </Char>
+   <Char char ="8">
+     <Width width ="40"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="9">
+     <Width width ="40"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char =":">
+     <Width width ="23"/>
+     <Offset offset ="18"/>
+ </Char>
+   <Char char =";">
+     <Width width ="21"/>
+     <Offset offset ="21"/>
+ </Char>
+   <Char char ="'">
+     <Width width ="29"/>
+     <Offset offset ="9"/>
+ </Char>
+   <Char char ="=">
+     <Width width ="44"/>
+     <Offset offset ="15"/>
+ </Char>
+   <Char char ="'">
+     <Width width ="30"/>
+     <Offset offset ="18"/>
+ </Char>
+   <Char char ="?">
+     <Width width ="37"/>
+     <Offset offset ="18"/>
+ </Char>
+   <Char char ="@">
+     <Width width ="50"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="A">
+     <Width width ="44"/>
+     <Offset offset ="11"/>
+ </Char>
+   <Char char ="B">
+     <Width width ="44"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="C">
+     <Width width ="41"/>
+     <Offset offset ="14"/>
+ </Char>
+   <Char char ="D">
+     <Width width ="41"/>
+     <Offset offset ="17"/>
+ </Char>
+   <Char char ="E">
+     <Width width ="37"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="F">
+     <Width width ="37"/>
+     <Offset offset ="18"/>
+ </Char>
+   <Char char ="G">
+     <Width width ="41"/>
+     <Offset offset ="14"/>
+ </Char>
+   <Char char ="H">
+     <Width width ="41"/>
+     <Offset offset ="8"/>
+ </Char>
+   <Char char ="I">
+     <Width width ="24"/>
+     <Offset offset ="22"/>
+ </Char>
+   <Char char ="J">
+     <Width width ="42"/>
+     <Offset offset ="12"/>
+ </Char>
+   <Char char ="K">
+     <Width width ="42"/>
+     <Offset offset ="9"/>
+ </Char>
+   <Char char ="L">
+     <Width width ="35"/>
+     <Offset offset ="18"/>
+ </Char>
+   <Char char ="M">
+     <Width width ="56"/>
+     <Offset offset ="6"/>
+ </Char>
+   <Char char ="N">
+     <Width width ="46"/>
+     <Offset offset ="12"/>
+ </Char>
+   <Char char ="O">
+     <Width width ="42"/>
+     <Offset offset ="11"/>
+ </Char>
+   <Char char ="P">
+     <Width width ="42"/>
+     <Offset offset ="15"/>
+ </Char>
+   <Char char ="Q">
+     <Width width ="42"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="R">
+     <Width width ="42"/>
+     <Offset offset ="9"/>
+ </Char>
+   <Char char ="S">
+     <Width width ="39"/>
+     <Offset offset ="13"/>
+ </Char>
+   <Char char ="T">
+     <Width width ="36"/>
+     <Offset offset ="11"/>
+ </Char>
+   <Char char ="U">
+     <Width width ="41"/>
+     <Offset offset ="14"/>
+ </Char>
+   <Char char ="V">
+     <Width width ="41"/>
+     <Offset offset ="12"/>
+ </Char>
+   <Char char ="W">
+     <Width width ="61"/>
+     <Offset offset ="3"/>
+ </Char>
+   <Char char ="X">
+     <Width width ="41"/>
+     <Offset offset ="10"/>
+ </Char>
+   <Char char ="Y">
+     <Width width ="41"/>
+     <Offset offset ="15"/>
+ </Char>
+   <Char char ="Z">
+     <Width width ="37"/>
+     <Offset offset ="15"/>
+ </Char>
+   <Char char ="[">
+     <Width width ="17"/>
+     <Offset offset ="27"/>
+ </Char>
+   <Char char ="'">
+     <Width width ="31"/>
+     <Offset offset ="17"/>
+ </Char>
+   <Char char ="]">
+     <Width width ="17"/>
+     <Offset offset ="29"/>
+ </Char>
+   <Char char ="^">
+     <Width width ="24"/>
+     <Offset offset ="16"/>
+ </Char>
+   <Char char ="_">
+     <Width width ="35"/>
+     <Offset offset ="17"/>
+ </Char>
+   <Char char ="`">
+     <Width width ="21"/>
+     <Offset offset ="24"/>
+ </Char>
+   <Char char ="a">
+     <Width width ="39"/>
+     <Offset offset ="15"/>
+ </Char>
+    <Char char ="b">
+     <Width width ="38"/>
+     <Offset offset ="17"/>
+ </Char>
+    <Char char ="c">
+     <Width width ="35"/>
+     <Offset offset ="17"/>
+ </Char>
+    <Char char ="d">
+     <Width width ="36"/>
+     <Offset offset ="17"/>
+ </Char>
+    <Char char ="e">
+     <Width width ="37"/>
+     <Offset offset ="21"/>
+ </Char>
+    <Char char ="f">
+     <Width width ="31"/>
+     <Offset offset ="17"/>
+ </Char>
+    <Char char ="g">
+     <Width width ="37"/>
+     <Offset offset ="16"/>
+ </Char>
+    <Char char ="h">
+     <Width width ="37"/>
+     <Offset offset ="16"/>
+ </Char>
+    <Char char ="i">
+     <Width width ="21"/>
+     <Offset offset ="25"/>
+ </Char>
+    <Char char ="j">
+     <Width width ="27"/>
+     <Offset offset ="23"/>
+ </Char>
+    <Char char ="k">
+     <Width width ="40"/>
+     <Offset offset ="14"/>
+ </Char>
+    <Char char ="l">
+     <Width width ="21"/>
+     <Offset offset ="26"/>
+ </Char>
+    <Char char ="m">
+     <Width width ="53"/>
+     <Offset offset ="8"/>
+ </Char>
+    <Char char ="n">
+     <Width width ="38"/>
+     <Offset offset ="18"/>
+ </Char>
+    <Char char ="o">
+     <Width width ="37"/>
+     <Offset offset ="21"/>
+ </Char>
+    <Char char ="p">
+     <Width width ="36"/>
+     <Offset offset ="17"/>
+ </Char>
+    <Char char ="q">
+     <Width width ="36"/>
+     <Offset offset ="14"/>
+ </Char>
+    <Char char ="r">
+     <Width width ="30"/>
+     <Offset offset ="23"/>
+ </Char>
+    <Char char ="s">
+     <Width width ="36"/>
+     <Offset offset ="16"/>
+ </Char>
+    <Char char ="t">
+     <Width width ="28"/>
+     <Offset offset ="20"/>
+ </Char>
+    <Char char ="u">
+     <Width width ="36"/>
+     <Offset offset ="13"/>
+ </Char>
+    <Char char ="v">
+     <Width width ="36"/>
+     <Offset offset ="16"/>
+ </Char>
+    <Char char ="w">
+     <Width width ="54"/>
+     <Offset offset ="9"/>
+ </Char>
+    <Char char ="x">
+     <Width width ="34"/>
+     <Offset offset ="18"/>
+ </Char>
+    <Char char ="y">
+     <Width width ="38"/>
+     <Offset offset ="22"/>
+ </Char>
+    <Char char ="z">
+     <Width width ="32"/>
+     <Offset offset ="18"/>
+ </Char>
+    <Char char ="{">
+     <Width width ="28"/>
+     <Offset offset ="20"/>
+ </Char>
+    <Char char ="|">
+     <Width width ="13"/>
+     <Offset offset ="27"/>
+ </Char>
+    <Char char ="}">
+     <Width width ="28"/>
+     <Offset offset ="28"/>
+ </Char>
+</CharInfo>
+

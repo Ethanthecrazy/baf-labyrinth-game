@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Wrappers">
+      <UniqueIdentifier>{fba39e87-4d85-459c-bcbd-0062e586914a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStates">
+      <UniqueIdentifier>{81ea65c4-7cd2-4a16-80d4-b125e7fe4793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager">
+      <UniqueIdentifier>{da9e7d4e-9a9d-4c31-a645-fabd3f66ba89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units">
+      <UniqueIdentifier>{85215bec-9ffc-408c-8ccd-64c4626dabc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="My Inspector Results">
+      <UniqueIdentifier>{7ec7d430-d5e0-4dc0-9a73-1747200a55f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{abee72b9-e52f-4b90-9bf1-ddb859189abe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messaging">
+      <UniqueIdentifier>{1a7c9705-ad45-4bb1-a638-d4bfd3797794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{6fae13a9-45bb-4573-b1d6-febdfcf0a7fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units\Objects">
+      <UniqueIdentifier>{c775d871-98ae-4249-b0ca-39d2419dc077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation Manager">
+      <UniqueIdentifier>{7ac88a11-bb10-4005-a53a-299c7eaba835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI Handler">
+      <UniqueIdentifier>{00e930f2-0086-425c-b323-e8c003a95d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units\Tiles">
+      <UniqueIdentifier>{4c81865b-1839-4bad-876e-e1496756107c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManager\Units\Golems">
+      <UniqueIdentifier>{dae51c15-ea31-44d2-96a7-0cac0fee0e51}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\winmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_Direct3D.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_DirectInput.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_TextureManager.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CGamePlayState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CMainMenuState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\MObjectManager.cpp">
+      <Filter>ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\MLayer.cpp">
+      <Filter>ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\MFlake.cpp">
+      <Filter>ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\CBaseEntity.cpp">
+      <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Threading\MSyncManager.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\CBaseObject.cpp">
+      <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Messaging\MEventSystem.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Messaging\MMessageSystem.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Messaging\Messages.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="CDataManager.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CBitFont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation Manager\CAnimation.cpp">
+      <Filter>Animation Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation Manager\CAnimationManager.cpp">
+      <Filter>Animation Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation Manager\CFrame.cpp">
+      <Filter>Animation Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CLoadLevelState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\CBaseGolem.cpp">
+      <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\CPlayer.cpp">
+      <Filter>ObjectManager\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CSpawner.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\HUD\CHUD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AI Handler\CAI_Handler.cpp">
+      <Filter>AI Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CAttractor.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrappers\CSGD_FModManager.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CExit.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Earth.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\COilCan.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CPowerGloves.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Fire.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Water.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Ice.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Air.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Lava.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Iron.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Light.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Golems\CGolem_Shadow.cpp">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\COil.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CDoor.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CButton.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CLightOrb.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CWaterTile.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CRamp.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CPit.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CElectricButton.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CElectricGenerator.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CMetal.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CGameOverState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CSaveSlotState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CBreakableWall.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\COptionsState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CPauseState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CCreditsState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Objects\CSteamPuff.cpp">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CHelpTile.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameStates\CHelpState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object Manager\Units\Tiles\CLightEffected.cpp">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Wrappers\CSGD_Direct3D.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\CSGD_DirectInput.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\CSGD_TextureManager.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGame.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CGamePlayState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CMainMenuState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\IGameState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\SGD_Util.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\MObjectManager.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\MLayer.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\MFlake.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BST.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UTimer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Threading\MSyncManager.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CBaseObject.h">
+      <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\Event.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\IListener.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\MEventSystem.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\Messages.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Messaging\MMessageSystem.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="CDataManagerState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CBitFont.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\CAnimation.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\CAnimationManager.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\CFrame.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation Manager\precompiled_header.h">
+      <Filter>Animation Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CLoadLevelState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CBaseGolem.h">
+      <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CPlayer.h">
+      <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CSpawner.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HUD\CHUD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AI Handler\CAI_Handler.h">
+      <Filter>AI Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\IUnitInterface.h">
+      <Filter>ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CAttractor.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wrappers\CSGD_FModManager.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CExit.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Earth.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\CBaseEntity.h">
+      <Filter>ObjectManager\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\COilCan.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CPowerGloves.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Fire.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Water.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Ice.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Air.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Lava.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Iron.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Light.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Golems\CGolem_Shadow.h">
+      <Filter>ObjectManager\Units\Golems</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\COil.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CDoor.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CButton.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CLightOrb.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CWaterTile.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CRamp.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CPit.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CMetal.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CElectricButton.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CElectricGenerator.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CGameOverState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CSaveSlotState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CBreakableWall.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\COptionsState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CPauseState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CCreditsState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Objects\CSteamPuff.h">
+      <Filter>ObjectManager\Units\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CHelpTile.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameStates\CHelpState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Object Manager\Units\Tiles\CLightEffected.h">
+      <Filter>ObjectManager\Units\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Inspector Results\r000mi4\r000mi4.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
+    <None Include="My Inspector Results\r001mi4\r001mi4.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
+    <None Include="My Inspector Results\r002mi4\r002mi4.insp">
+      <Filter>My Inspector Results</Filter>
+    </None>
+    <None Include="Icon.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Labrynith_Core.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
